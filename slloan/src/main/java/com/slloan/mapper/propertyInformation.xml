@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.propertyInformationDao">
+	<resultMap type="com.slloan.entity.PropertyInformation" id="propertyinfor">
+		<result column="ownership_And_percentage" property="ownership_And_percentage" />
+		<result column="property_Address" property="property_Address" />
+		<result column="conStruction_Area" property="conStruction_Area" />
+		<result column="inner_Area" property="inner_Area" />
+		<result column="sales_Contract_Number" property="sales_Contract_Number" />
+		<result column="certificate_of_Title" property="certificate_of_Title" />
+		<result column="proPerty_for" property="proPerty_for" />
+		<result column="the_Assessed_Value" property="the_Assessed_Value" />
+		<result column="original_Loan_Bank" property="original_Loan_Bank" />
+		<result column="original_Loan_Amount" property="original_Loan_Amount" />
+		<result column="loan_Outstanding_Balance" property="loan_Outstanding_Balance" />
+		<result column="house_Account" property="house_Account" />
+		<result column="enterprise_scale" property="enterprise_scale" />
+		<result column="transaCtion_Price" property="transaCtion_Price" />
+		<result column="purchase_Deposit" property="purchase_Deposit" />
+		<result column="supervision_of_funds" property="supervision_of_funds" />
+		<result column="new_loan_Bank" property="new_loan_Bank" />
+		<result column="former_seniority" property="former_seniority" />
+		<result column="source_of_income" property="source_of_income" />
+		<result column="new_Loan_Approval_Amount" property="new_Loan_Approval_Amount" />
+		<result column="new_Loan_Bank_Account_Number" property="new_Loan_Bank_Account_Number" />
+		<result column="note_DescriPtion" property="note_DescriPtion" />
+		<result column="state" property="state" />
+		<result column="ctime" property="ctime" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.slloan.entity.PropertyInformation">  
+       INSERT INTO property_information (
+	ownership_And_percentage,
+	property_Address,
+	conStruction_Area,
+	inner_Area,
+	sales_Contract_Number,
+	certificate_of_Title,
+	proPerty_for,
+	the_Assessed_Value,
+	original_Loan_Bank,
+	original_Loan_Amount,
+	loan_Outstanding_Balance,
+	house_Account,
+	transaCtion_Price,
+	purchase_Deposit,
+	supervision_of_funds,
+	new_loan_Bank,
+	new_Loan_Approval_Amount,
+	new_Loan_Bank_Account_Number,
+	note_DescriPtion,
+	start,
+	ctime
+)
+VALUES
+	(
+		#{ownership_And_percentage},#{property_Address},#{conStruction_Area},#{inner_Area},#{sales_Contract_Number},#{certificate_of_Title},#{proPerty_for},#{the_Assessed_Value},#{original_Loan_Bank},#{original_Loan_Amount},#{loan_Outstanding_Balance},				
+		#{house_Account},#{transaCtion_Price},#{purchase_Deposit},#{supervision_of_funds},#{new_loan_Bank},#{new_Loan_Approval_Amount},#{new_Loan_Bank_Account_Number},#{note_DescriPtion},#{start},#{ctime})
+
+    </insert>  
+     
+    <update id="update" parameterType="com.slloan.entity.PropertyInformation">    
+        update property_information set user_name=#{userName},user_age=#{age} where user_id=#{id}    
+    </update>   
+      
+    <delete id="delete" parameterType="com.slloan.entity.PropertyInformation">    
+        delete from property_information where user_id=#{id}    
+    </delete>    
+        
+   
+    <select id="findById" parameterType="int" resultType="com.slloan.entity.PropertyInformation">    
+        select user_id id,user_name userName,user_age age from t_user where user_id=#{id}    
+    </select>    
+        
+    <select id="findAll" resultType="com.slloan.entity.PropertyInformation">    
+        select user_id id,user_name userName,user_age age from t_user    
+    </select> 
+	
+</mapper>

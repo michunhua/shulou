@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../public/layui/css/layui.css">
+    <link rel="stylesheet" href="../public/css/navigate.css">
+    <link rel="stylesheet" href="../public/css/main.css">
+    <title>用户管理/ 角色/ 添加角色</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">logo 后台布局</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
+                    admin
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出登录</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll" id = 'nav'>
+          <!-- 导航内容 -->
+          <div class="layui-collapse">
+            <div class="layui-colla-item" id = 'navloan'>
+              <h2 class="layui-colla-title">贷款管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item " id = 'tree-create'>
+                        <a href="javascript:;">贷款创建</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../../loanManagement/loanCreate/loanCreateTable.html">贷款创建列表</a></dd>
+                            <dd><a href="../loan/loanerInfo">借款申请人个人资料</a></dd>
+                            <dd><a href="../../loanManagement/loanCreate/commomLoanerInfo.html">共同申请人个人资料</a></dd>
+                            <dd><a href="../../loanManagement/loanCreate/loanerMate.html">借款申请人配偶</a></dd>
+                            <dd><a href="../../loanManagement/loanCreate/commomMate.html">共同申请人配偶</a></dd>
+                            <dd><a href="../../loanManagement/loanCreate/loanInfo.html">申请借款信息</a></dd>
+                            <dd><a href="../../loanManagement/loanCreate/estateInfo.html">房产资料</a></dd>
+                            <dd><a href="../../loanManagement/loanFirst/imageInfo.html">影像资料</a></dd>
+                            <dd><a href="../../loanManagement/loanFirst/estateInfo.html">联系人信息</a></dd>
+                            <dd><a href="../../loanManagement/loanCreate/noteInfo.html">备注说明</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-trival'>
+                        <a href="javascript:;">贷款初审</a>
+                        <dl class="layui-nav-child">
+                          <dd><a href="../../loanManagement/loanFirst/loanFirstTable.html">贷款初审列表</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/loanerInfo.html">借款申请人个人资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/commomLoanerInfo.html">共同申请人个人资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/loanerMate.html">借款申请人配偶</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/commomMate.html">共同申请人配偶</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/loanInfo.html">申请借款信息</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/estateInfo.html">房产资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/imageInfo.html">影像资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/estateInfo.html">联系人信息</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/noteInfo.html">初审备注</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-final'>
+                        <a href="javascript:;">贷款终审</a>
+                        <dl class="layui-nav-child">
+                          <dd><a href="../../loanManagement/loanFinal/loanFinalTable.html">贷款终审列表</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/loanerInfo.html">借款申请人个人资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/commomLoanerInfo.html">共同申请人个人资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/loanerMate.html">借款申请人配偶</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/commomMate.html">共同申请人配偶</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/loanInfo.html">申请借款信息</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/estateInfo.html">房产资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/imageInfo.html">影像资料</a></dd>
+                          <dd><a href="../../loanManagement/loanFirst/estateInfo.html">联系人信息</a></dd>
+                          <dd><a href="../../loanManagement/loanFinal/noteInfo.html">终审备注</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-read'>
+                        <a href="../../loanManagement/loanInfoRead.html">贷款信息查看</a>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-confirm'>
+                        <a href="../../loanManagement/repayConfirm.html">回款确认</a>
+                      </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-gain'>
+                        <a href="../../loanManagement/gainProof.html">取证凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-relief'>
+                        <a href="../../loanManagement/reliefProof.html">解押凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-incare'>
+                        <a href="../../loanManagement/incareProof.html">进押凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navfinance'>
+              <h2 class="layui-colla-title">财务管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">财务审批</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../financial/financeapproval">审批列表</a></dd>
+                            <dd><a href="../financial/financenote">财务备注</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="../financial/transfervoucher">转账凭证</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="../financial/settlementvoucher">结算凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserInfo'>
+              <h2 class="layui-colla-title">个人信息</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                   <li class="layui-nav-item">
+                        <a href="../user/userinfo/updateuserInfo">个人信息修改</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="../user/userinfo/updatepassword">密码修改</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserManagement'>
+              <h2 class="layui-colla-title">用户管理</h2>
+              <div class="layui-colla-content layui-show">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">用户</a>
+                        <dl class="layui-nav-child">
+                            <dd class="layui-this"><a href="../user/ulist">用户列表</a></dd>
+                            <dd><a href="../user/addu">添加用户</a></dd>
+                            <dd><a href="../user/allotuser">分配角色</a></dd>
+                            <dd><a href="../user/delu">删除用户</a></dd>
+                            <dd><a href="../user/updateuser">修改用户信息</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">角色</a>
+                        <dl class="layui-nav-child">
+                            <dd class="layui-this"><a href="./rolelist">角色列表</a></dd>
+                            <dd><a href="./roleadd">添加角色</a></dd>
+                            <dd><a href="./updaterole">修改角色权限</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="container">
+          <!-- 头部导航 -->
+          <span class="layui-breadcrumb nav-title">
+            <a href="#">用户管理</a>
+            <a href="#">角色</a>
+            <a href="#">添加角色</a>
+          </span>
+          <hr>
+          <!-- 表单部分 -->
+          <form class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+              <label class="layui-form-label">角色名</label>
+              <div class="layui-input-inline">
+                <input type="text" name="title" required  lay-verify="required" placeholder="财务" autocomplete="off" class="layui-input role-name">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">角色描述</label>
+              <div class="layui-input-inline">
+                <input type="text" name="title" required  lay-verify="required" placeholder="角色描述" autocomplete="off" class="layui-input role-description">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">所属城市</label>
+              <div class="layui-input-inline">
+                <select name="city" required lay-verify="required" class="role-city">
+                  <option value=""></option>
+                  <option value="0">长沙</option>
+                  <option value="0">北京</option>
+                  <option value="1">上海</option>
+                  <option value="2">广州</option>
+                  <option value="3">深圳</option>
+                  <option value="4">杭州</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">备注说明</label>
+              <div class="layui-input-inline">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea role-note" rows="12" cols="80"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">权限配置</label>
+              <div class="layui-input-inline">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea role-power" rows="12" cols="80"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">贷款管理</label>
+              <div class="layui-input-block role-loan">
+                <input type="checkbox" name="1" title="回款确认">
+                <input type="checkbox" name="2" title="贷款终审">
+                <input type="checkbox" name="3" title="贷款创建">
+                <input type="checkbox" name="4" title="贷款初审">
+                <input type="checkbox" name="5" title="贷款信息查看">
+                <input type="checkbox" name="6" title="取证凭证上传">
+                <input type="checkbox" name="7" title="进押凭证上传">
+                <input type="checkbox" name="8" title="解押凭证上传">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">财务管理</label>
+              <div class="layui-input-block role-finance">
+                <input type="checkbox" name="8" title="财务审批">
+                <input type="checkbox" name="9" title="放款审批">
+                <input type="checkbox" name="10" title="结算凭证上传">
+                <input type="checkbox" name="11" title="转账凭证上传">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">个人信息</label>
+              <div class="layui-input-block role-info">
+                <input type="checkbox" name="12" title="个人信息修改">
+                <input type="checkbox" name="13" title="密码修改">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">角色设定</label>
+              <div class="layui-input-block role-set">
+                <input type="checkbox" name="14" title="添加角色">
+                <input type="checkbox" name="15" title="修改角色信息">
+                <input type="checkbox" name="16" title="删除角色">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">权限设置</label>
+              <div class="layui-input-block role-handle">
+                <input type="checkbox" name="17" title="分配权限">
+                <input type="checkbox" name="18" title="删除权限">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">用户管理</label>
+              <div class="layui-input-block role-manage">
+                <input type="checkbox" name="19" title="添加用户">
+                <input type="checkbox" name="20" title="分配角色">
+                <input type="checkbox" name="21" title="删除用户">
+                <input type="checkbox" name="22" title="修改用户信息">
+              </div>
+            </div>
+            
+          </form>
+          <div class="layui-form-item">
+              <div class="layui-input-block">
+                <!-- <button class="layui-btn" lay-submit lay-filter="formDemo" >立即提交</button> -->
+                <!-- <button class="layui-btn" id = 'send-data'>立即提交</button> -->
+                <!-- <input id = 'send-data' type="button" name="" value="立即提交"> -->
+                <button id = 'send-data' type="reset" class="layui-btn">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 版权所有
+    </div>
+</div>
+
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/rolejs/addRole.js"></script>
+</body>
+</html>

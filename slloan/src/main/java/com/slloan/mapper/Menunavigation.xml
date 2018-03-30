@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.MenunMainAvigationDao">
+	<resultMap type="com.slloan.entity.MenunMainAvigationEntity" id="baseresultmenuainavigation">
+		<result column="mainMenuid" property="mainMenuID" />
+		<result column="menuName" property="menuName" />
+		<result column="url" property="url" />
+	</resultMap>
+	
+	<select id="list" resultType="com.slloan.entity.MenunMainAvigationEntity">
+		select * from menu_manager
+	</select>
+	
+</mapper>

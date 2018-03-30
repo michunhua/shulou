@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.PagingDao">
+	<resultMap type="com.slloan.entity.UserRightsManagement" id="umanagement">
+		<result column="userName" property="userName" />
+		<result column="password" property="password" />
+		<result column="assigning_Roles" property="assigning_Roles" />
+		<result column="employeeis_name" property="employeeis_name" />
+		<result column="creation_date" property="creation_date" />
+		<result column="Note" property="Note"/>
+	</resultMap>
+	<select id="queryUserInfo" parameterType="com.slloan.entity.Page" resultMap="umanagement">
+        select * from usermanagement limit #{startRow},#{pageSize}
+    </select>
+    <select id="searchTotalCount"  resultType="java.lang.Integer">
+        select count(id) from usermanagement 
+    </select>
+    <delete id="deleteInvition" parameterType="java.lang.Integer">
+        delete from usermanagement
+        where
+        id=#{id}
+    </delete>
+    <update id="updateUserById" parameterType="java.lang.Integer">
+    	update usermanagement set 
+    	username=#{username},password=#{password},employeeis_name = #{employeeisname},assigning_Roles=#{assigningroles}
+    	 where  id=#{id}
+    </update>
+</mapper>

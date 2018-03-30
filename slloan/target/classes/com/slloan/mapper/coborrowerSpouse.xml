@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.coborrowerSpouseDao">
+	<resultMap type="com.slloan.entity.CoborrowerSpouse" id="basecoborroResult">
+		<result column="name" property="name" />
+		<result column="id_Type" property="id_Type" />
+		<result column="id_Number" property="id_Number" />
+		<result column="uni_Name" property="uni_Name" />
+		<result column="unit_Phone" property="unit_Phone" />
+		<result column="home_Phone" property="home_Phone" />
+		<result column="mobile_Phone" property="mobile_Phone" />
+		<result column="monthly_Income" property="monthly_Income" />
+		<result column="start" property="start" />
+		<result column="ctime" property="ctime" />
+	</resultMap>
+	<insert id="save" parameterType="com.slloan.entity.CoborrowerSpouse">
+		INSERT INTO co_borrower_spouse (
+			NAME,
+			id_Type,
+			id_Number,
+			uni_Name,
+			unit_Phone,
+			home_Phone,
+			mobile_Phone,
+			monthly_Income,
+			START,
+			ctime
+			)
+		VALUES
+			(
+			#{name},#{id_Type},#{id_Number},#{uni_Name},#{unit_Phone},#{home_Phone},#{mobile_Phone},#{monthly_Income},#{start},#{ctime})
+	</insert>
+	<!-- <update id="update" parameterType="coborro"> update t_user set user_name=#{userName},user_age=#{age} 
+		where user_id=#{id} </update> <delete id="delete" parameterType="coborro"> 
+		delete from t_user where user_id=#{id} </delete> mybsits_config中配置的alias类别名,也可直接配置resultType为类路径 
+		<select id="findById" parameterType="int" resultType="coborro"> select user_id 
+		id,user_name userName,user_age age from t_user where user_id=#{id} </select> 
+		<select id="findAll" resultType="coborro"> select user_id id,user_name userName,user_age 
+		age from t_user </select> -->
+	<!-- <delect id="delete" parameterType="com.slloan.entity.CoborrowerSpouse">
+		DELETE
+		FROM
+			co_borrower_spouse
+		WHERE
+			id = #{id}
+	</delect> -->
+	<update id="update" parameterType="com.slloan.entity.CoborrowerSpouse">
+		update
+		apply_for_loan_information set
+		name=#{name},id_Type=#{id_Type},id_Number=#{id_Number},uni_Name=#{uni_Name},unit_Phone=#{unit_Phone},home_Phone=#{home_Phone},mobile_Phone=#{mobile_Phone},monthly_Income=#{monthly_Income},start=#{start},ctime=#{ctime}
+		where id=#{id}
+	</update>
+</mapper>

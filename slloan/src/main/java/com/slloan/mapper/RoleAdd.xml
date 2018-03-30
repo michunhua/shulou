@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.RoleAddDao">
+	<resultMap type="com.slloan.entity.AddRole" id="roleaadddao">
+<!-- 			<result column="id" property="id" /> -->
+		<result column="rolename" property="roleName" />
+		<result column="description" property="descriPtion" />
+		<result column="note" property="note" />
+		<result column="createdate" property="createDate" />
+		<result column="belongs_city" property="belongs_City" />
+		<result column="configuration" property="configuration"/>
+	</resultMap>
+	<!-- 列表分页展示 -->
+	<select id="getRolePage" resultType="Map" resultMap="roleaadddao">
+		select id,rolename,createdate 
+			from add_role 
+			<if test="start!=null and limit!=null">
+				limit #{page},#{limit} 
+			</if>
+	</select>
+	<!-- 查询用户总记录数 -->
+	<select id="getRoleCount"  resultType="Integer">
+     	 SELECT COUNT(*) FROM add_role 
+     </select>
+	
+	<select id="selectRoleId" parameterType="java.lang.String" resultType="com.slloan.entity.AddRole">
+		select * from add_role where rolename = #{rolename}
+	</select>
+	<insert id="addRoleUser" parameterType="com.slloan.entity.AddRole"  useGeneratedKeys="true" keyProperty="id">
+		insert into add_role(rolename,description,note,createdate,belongs_city,configuration)
+		 values(#{roleName},#{descriPtion},#{belongs_City},#{note},#{configuration},#{createDate})
+	</insert>
+	<!-- 批量删除 -->
+	 <delete id="batchDeletes" parameterType="java.util.List">
+            DELETE FROM add_role where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
+            #{item}   
+         </foreach>
+    </delete>
+    
+    <!-- 修改查询 -->
+    <select id="updateselectId" parameterType="Integer"
+		resultType="com.slloan.entity.AddRole">
+		SELECT * FROM add_role WHERE id = #{id}
+	</select>
+	
+	<!-- 修改 -->
+	<update id="updateRole" parameterType="com.slloan.entity.AddRole">
+		update add_role set rolename = #{roleName},descriPtion=#{descriPtion},
+		note=#{note},belongs_city=#{belongs_City},configuration = #{configuration} WHERE id = #{id}
+	</update>
+	
+	<!-- 根据角色得到所属城市还有角色 -->
+	<select id="accordingtoroleCity" parameterType="map" resultMap="roleaadddao">
+		select roleName,belongs_City,id from add_role order by   rolename=#{rolename} desc
+	</select>
+	 
+</mapper>

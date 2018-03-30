@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.UserDao">
+	<resultMap type="com.slloan.entity.UserLogin" id="userlogin">
+		<result column="username" property="userName" />
+		<result column="password" property="passWord" />
+		<result column="employeeis_name" property="employeeis_Name" />
+		<result column="distribution_role" property="distribution_Role" />
+		<result column="belongs_city" property="belongs_City" />
+		<result column="note" property="note" />
+	</resultMap>
+
+	<insert id="addUser" parameterType="com.slloan.entity.UserLogin">
+		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note) 
+		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note})
+		
+	</insert>
+	<!-- 删除  -->
+	<delete id="deleteId" parameterType="Integer">
+		delete from User_Login where id=#{id}
+	</delete>
+	
+	<!-- 修改查询 -->
+    <select id="updateselectId" parameterType="Integer" resultType="userlogin">
+		SELECT * FROM User_Login WHERE id = #{id}
+	</select>
+	
+	<update id="updateUser" parameterType="com.slloan.entity.UserLogin">
+		update User_Login set username = #{userName},password=#{passWord},
+		employeeis_name=#{employeeis_Name},distribution_role=#{distribution_Role}
+		,belongs_city=#{belongs_City},
+		note=#{note} WHERE id = #{id}
+	</update>
+	<select id="selectById" parameterType="String">
+		select * from User_Login where id= #{id}
+	</select>
+	<!-- 登录 -->
+	<select id="logindelu" resultType="com.slloan.entity.UserLogin" parameterType="Map">
+	
+<!-- 				SELECT u.username 用户名,u.password 用户密码,per.url 权限分配地址,r.id 角色ID,r.rolename 分配角色名,u.belongs_city 分配权限ID,per.checkboxid -->
+<!-- 			from user_login u, add_role  r, permission per -->
+<!-- 				where  -->
+<!-- 				u.id = r.id and r.id = per.role_id -->
+<!-- 				 and username=#{username,jdbcType=VARCHAR} -->
+<!-- 				 and u.password= #{password,jdbcType=VARCHAR} -->
+	
+	
+		select username,password from User_Login where
+		username=#{username,jdbcType=VARCHAR}
+		and password =
+		#{password,jdbcType=VARCHAR}
+	</select>
+	<!-- <update id="updatePassWord" parameterType="com.slloan.entity.UserLogin">
+		update  User_Login set password = #{newpassword},username = #{userName} where password = #{passWord} 
+	</update> -->
+	
+	<!-- <select id="list"  resultType="userlogin">
+		select * from userlogin 
+	</select> -->
+	<!-- 列表分页展示 -->
+	<select id="getUserByPage"  resultType="map" resultMap="userlogin">
+        select * from User_Login 
+        	<if test="start!=null and limit!=null">
+        		limit #{page},#{limit} 
+        	</if>
+        
+     </select>
+     <!-- 查询用户总记录数 -->
+     <select id="getCount"  resultType="Integer">
+     	 SELECT COUNT(*) FROM User_Login 
+     </select>
+     <select id="list" resultType="com.slloan.entity.UserLogin">
+     	select distribution_Role from add_role;
+     </select>
+	<!-- <select id="Logindelu" parameterType="Map" resultType="String">
+		select username,pwd from login where username=#{username,jdbcType=VARCHAR} and pwd = #{pwd,jdbcType=VARCHAR}
+	</select> -->
+	
+<!-- 	<insert id="addrole"  parameterMap="userlogin"> -->
+<!-- 		insert into -->
+<!-- 		(roleName,descriPtion,note,belongs_City,configuration,loan_management -->
+<!-- 		,repayment_confirmation,loan_Final_review,loan_Create,loan_First_trial,loan_information, -->
+<!-- 		qz_certificate,Incarceration_certificate,jy_certificate -->
+<!-- 		,finance_Management,finance_sp,loan_Sp,setTlement_pz,sransfer_Accounts_Pz,personal_information_sz, -->
+<!-- 		personal_information_xg,password_Modify,role_Setup,add_Role,modify_Role,del_Role,qx__Setup,fp_Jurisdiction,del_Jurisdiction,user_Administration, -->
+<!-- 		add_User,fp_Role,del_User,modify_user,method,city,county) -->
+<!-- 		values(#{roleName},#{descriPtion},#{note},#{belongs_City},#{configuration},#{loan_management},#{repayment_confirmation},#{loan_Final_review},#{loan_Create},#{loan_First_trial},#{loan_information},#{qz_certificate},#{Incarceration_certificate},#{jy_certificate},#{finance_Management},#{finance_sp},#{loan_Sp},#{Settlement_pz},#{Transfer_accounts_pz},#{personal_information_sz}, -->
+<!-- 		#{personal_information_xg},#{password_Modify},#{role_Setup},#{add_Role},#{modify_Role},#{del_Role},#{qx__Setup},#{fp_Jurisdiction},#{del_Jurisdiction},#{user_Administration},#{add_User},#{fp_Role},#{del_User},#{modify_user},#{method},#{city},#{county}) -->
+<!-- 	</insert> -->
+	<select id="getRolePage" resultType="Map" resultMap="userlogin">
+		select id,rolename,createdate 
+			from User_Login 
+			<if test="start!=null and limit!=null">
+				limit #{page},#{limit} 
+			</if>
+	</select>
+	<!-- 查询用户总记录数 -->
+	<select id="getRoleCount"  resultType="Integer">
+     	 SELECT COUNT(*) FROM User_Login 
+     </select>
+</mapper>

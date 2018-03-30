@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.ApplyForLoanInformationDao">
+	<resultMap type="com.slloan.entity.ApplyForLoanInformation"
+		id="baseappforRole">
+		<result column="amount" property="amount" />
+		<result column="time_Limit" property="time_Limit" />
+		<result column="borrowing_Variety" property="nborrowing_Varietyame" />
+		<result column="repayment" property="repayment" />
+		<result column="receiving_Bank_Name" property="receiving_Bank_Name" />
+		<result column="receiving_Account_Name" property="receiving_Account_Name" />
+		<result column="receiving_Account" property="receiving_Account" />
+		<result column="repayment_Bank_Name" property="repayment_Bank_Name" />
+		<result column="repayment_Account_Name" property="repayment_Account_Name" />
+		<result column="repayment_Account_Number" property="repayment_Account_Number" />
+		<result column="start" property="start" />
+		<result column="ctime" property="ctime" />
+	</resultMap>
+	<insert id="save" parameterType="com.slloan.entity.ApplyForLoanInformation">
+		INSERT INTO apply_for_loan_information (
+			amount,
+			time_Limit,
+			borrowing_Variety,
+			repayment,
+			receiving_Bank_Name,
+			receiving_Account_Name,
+			receiving_Account,
+			repayment_Bank_Name,
+			repayment_Account_Name,
+			repayment_Account_Number,
+			start,
+			ctime
+		)
+		VALUES
+		(
+			#{amount},#{time_Limit},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{start},#{ctime})
+	</insert>
+	<!-- <delect id="delete" parameterType="com.slloan.entity.ApplyForLoanInformation">
+		DELETE
+			FROM
+				apply_for_loan_information
+			WHERE
+				id = #{id}
+	</delect> -->
+	<update id="update" parameterType="com.slloan.entity.ApplyForLoanInformation">    
+        UPDATE apply_for_loan_information
+		SET amount = #{amount},
+			time_Limit = #{time_Limit},
+			borrowing_Variety = #{borrowing_Variety},
+			repayment = #{repayment},
+			receiving_Bank_Name = #{receiving_Bank_Name},
+			receiving_Account_Name = #{receiving_Account_Name},
+			receiving_Account = #{receiving_Account},
+			repayment_Bank_Name = #{repayment_Bank_Name},
+			repayment_Account_Name = #{repayment_Account_Name},
+			repayment_Account_Number = #{repayment_Account_Number},
+			START = #{start},
+			ctime = #{ctime}
+		WHERE
+			id = #{id}
+    </update> 
+    <select id="findAll" parameterType="com.slloan.entity.ApplyForLoanInformation">
+    	SELECT
+	amount amount,
+	time_Limit time_Limit,
+	borrowing_Variety borrowing_Variety,
+	repayment repayment,
+	receiving_Bank_Name receiving_Bank_Name,
+	receiving_Account_Name receiving_Account_Name,
+	receiving_Account receiving_Account,
+	repayment_Bank_Name repayment_Bank_Name,
+	repayment_Account_Name repayment_Account_Name,
+	repayment_Account_Number repayment_Account_Number,
+	START START,
+	ctime ctime
+FROM
+	apply_for_loan_information
+    </select>
+    <select id="findById" parameterType="com.slloan.entity.ApplyForLoanInformation"> 
+        SELECT
+	amount amount,
+	time_Limit time_Limit,
+	borrowing_Variety borrowing_Variety,
+	repayment repayment,
+	receiving_Bank_Name receiving_Bank_Name,
+	receiving_Account_Name receiving_Account_Name,
+	receiving_Account receiving_Account,
+	repayment_Bank_Name repayment_Bank_Name,
+	repayment_Account_Name repayment_Account_Name,
+	repayment_Account_Number repayment_Account_Number,
+	START START,
+	ctime ctime
+FROM
+	apply_for_loan_information  where id=#{id}
+    </select>
+</mapper>

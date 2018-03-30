@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.personalProfileDao">
+	<resultMap type="com.slloan.entity.PersonalProfile" id="personalpr">
+		<result column="name" property="name" />
+<result column="phoneticize" property="phoneticize" />
+<result column="id_type" property="id_type" />
+<result column="id_number" property="id_number" />
+<result column="relationship_with_borrower" property="relationship_with_borrower" />
+<result column="sex" property="sex" />
+<result column="Local_domicile" property="Local_domicile" />
+<result column="household_registration" property="household_registration" />
+<result column="marital_status" property="marital_status" />
+<result column="housing_condition_now" property="housing_condition_now" />
+<result column="birthday" property="birthday" />
+<result column="home_address_now" property="home_address_now" />
+<result column="home_phone" property="home_phone" />
+<result column="mobile_Phone" property="mobile_Phone" />
+<result column="email" property="email" />
+<result column="present_address_zip_code" property="present_address_zip_code" />
+<result column="vocation" property="vocation" />
+<result column="unit_industry" property="unit_industry" />
+<result column="uni_name" property="uni_name" />
+<result column="unit_address" property="unit_address" />
+<result column="enterprise_scale" property="enterprise_scale" />
+<result column="Revenue_in_the_previous_year" property="Revenue_in_the_previous_year" />
+<result column="asset_scale" property="asset_scale" />
+<result column="postCode" property="postCode" />
+<result column="job_category" property="job_category" />
+<result column="seniority" property="seniority" />
+<result column="former_unit_name" property="former_unit_name" />
+<result column="former_seniority" property="former_seniority" />
+<result column="source_of_income" property="source_of_income" />
+<result column="monthly_income" property="monthly_income" />
+<result column="Income_from_investment" property="Income_from_investment" />
+<result column="Other_income" property="Other_income" />
+<result column="family_number" property="family_number" />
+<result column="monthly_expenditure" property="monthly_expenditure" />
+<result column="postal_address" property="postal_address" />
+<result column="start" property="start" />
+<result column="ctime" property="ctime" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.slloan.entity.PersonalProfile">
+		INSERT INTO borrow_information (
+		name,phoneticize,id_type,
+				id_number,
+				relationship_with_borrower,
+				sex,
+				Local_domicile,
+				household_registration,
+				marital_status,
+				housing_condition_now,
+				birthday,
+				home_address_now,
+				home_phone,
+				mobile_phone,
+				email,
+				present_address_zip_code,
+				vocation,
+				unit_industry,
+				uni_name,
+				unit_address,
+				enterprise_scale,
+				Revenue_in_the_previous_year,
+				asset_scale,
+				unit_phone,
+				postCode,
+				job_category,
+				seniority,
+				former_unit_name,
+				former_seniority,
+				source_of_income,
+				monthly_income,
+				Income_from_investment,
+				Rent_income,
+				Other_income,
+				family_number,
+				monthly_expenditure,
+				postal_address,
+				start,
+				ctime
+)
+VALUES
+	(
+		#{name},
+#{phoneticize},
+#{id_type},
+#{id_number},
+#{relationship_with_borrower},
+#{sex},
+#{Local_domicile},
+#{household_registration},
+#{marital_status},
+#{housing_condition_now},
+#{birthday},
+#{home_address_now},
+#{home_phone},
+#{mobile_phone},
+#{email},
+#{present_address_zip_code},
+#{vocation},
+#{unit_industry},
+#{uni_name},
+#{unit_address},
+#{enterprise_scale},
+#{Revenue_in_the_previous_year},
+#{asset_scale},
+#{unit_phone},
+#{postCode},
+#{job_category},
+#{seniority},
+#{former_unit_name},
+#{former_seniority},
+#{source_of_income},
+#{monthly_income},
+#{Income_from_investment},
+#{Rent_income},
+#{Other_income},
+#{family_number},
+#{monthly_expenditure},
+#{postal_address},
+#{start},
+#{ctime})
+
+	</insert>
+	<!-- <update id="update" parameterType="personalpr"> 
+	update t_user set user_name=#{userName},user_age=#{age} where user_id=#{id}
+	</update> 
+	<delete id="delete" parameterType="personalpr"> 
+		delete from t_user where user_id=#{id} 
+		</delete> 
+		mybsits_config中配置的alias类别名,也可直接配置resultType为类路径 
+		<select id="findById" parameterType="int" resultType="personalpr"> 
+		select 
+		user_id id,user_name userName,user_age age from t_user where user_id=#{id} 
+		</select> 
+		<select id="findAll" resultType="personalpr"> 
+		select user_id id,user_name 
+		userName,user_age age from t_user 
+		
+		</select> 
+		
+		-->
+</mapper>

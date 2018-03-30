@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.AddPermissionDao">
+	<resultMap type="com.slloan.entity.PermissionEntity" id="BaseResultpermission">
+		<result column="role_id" property="r_id" />
+<!-- 		<result column="name" property="name" /> -->
+<!-- 		<result column="permissionname" property="permissionname" /> -->
+		<result column="url" property="url" />
+		<result column="checkboxid" property="checkboxid" />
+	</resultMap>
+	<!-- 插入权限 -->
+	<insert id="addPermission" parameterType="com.slloan.entity.PermissionEntity"  useGeneratedKeys="true" keyProperty="id">
+		insert into permission(role_id,url,checkboxid) values(#{r_id},#{url},#{checkboxID})
+	</insert>
+	<!-- <sql id="getTestTbValue">
+		<trim prefix="," suffixOverrides=",">
+			<if test="testA!=null and testA!='null' and testA!=''">
+				
+			</if>
+		</trim>
+	</sql> -->
+	<!-- 修改权限 -->
+	<update id="updateRole" parameterType="Integer">
+		update from permission where
+	</update>
+	
+	<!-- 批量删除 -->
+	 <delete id="batchDeletes" parameterType="java.util.List">
+            DELETE FROM permission where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
+            #{item}   
+         </foreach>
+    </delete>
+</mapper>

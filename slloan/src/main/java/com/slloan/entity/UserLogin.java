@@ -1,0 +1,136 @@
+package com.slloan.entity;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 添加用户
+ * @author Administrator
+ *
+ */
+		
+public class UserLogin implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	private Integer id;
+	private String userName;//用户名
+	private String passWord;//密码
+	private String employeeis_Name;//员工姓名
+	private String distribution_Role;//分配角色
+	private String belongs_City;//所属城市
+	private String note;//备注
+	private List<UserRole> userRole;//角色
+	private List<PermissionEntity> permissionEntity;//权限
+	public UserLogin(){
+		
+	}
+	
+	public UserLogin(String userName, String passWord) {
+		super();
+		this.userName = userName;
+		this.passWord = passWord;
+	}
+	public UserLogin(String userName, String passWord, String employeeis_Name, String distribution_Role,
+			String belongs_City, String note) {
+		super();
+		this.userName = userName;
+		this.passWord = passWord;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+	}
+
+
+	public UserLogin(Integer id, String userName, String passWord, String employeeis_Name, String distribution_Role,
+			String belongs_City, String note) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.passWord = passWord;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.userRole = userRole;
+		this.permissionEntity = permissionEntity;
+	}
+
+	public List<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(List<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+
+	public List<PermissionEntity> getPermissionEntity() {
+		return permissionEntity;
+	}
+
+	public void setPermissionEntity(List<PermissionEntity> permissionEntity) {
+		this.permissionEntity = permissionEntity;
+	}
+
+	public String getBelongs_City() {
+		return belongs_City;
+	}
+
+	public void setBelongs_City(String belongs_City) {
+		this.belongs_City = belongs_City;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassWord() {
+		return passWord;
+	}
+	public void setPassWord(String passWord) {
+		this.passWord = passWord;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public String getEmployeeis_Name() {
+		return employeeis_Name;
+	}
+
+	public void setEmployeeis_Name(String employeeis_Name) {
+		this.employeeis_Name = employeeis_Name;
+	}
+
+	public String getDistribution_Role() {
+		return distribution_Role;
+	}
+
+	public void setDistribution_Role(String distribution_Role) {
+		this.distribution_Role = distribution_Role;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	@Override
+	public String toString() {
+		return "UserLogin [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", employeeis_Name="
+				+ employeeis_Name + ", distribution_Role=" + distribution_Role + ", belongs_City=" + belongs_City
+				+ ", note=" + note + ", userRole=" + userRole + ", permissionEntity=" + permissionEntity + "]";
+	}
+	
+}

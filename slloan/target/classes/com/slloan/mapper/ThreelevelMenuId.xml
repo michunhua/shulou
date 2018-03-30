@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.ThreelevelMenuDao">
+	<resultMap type="com.slloan.entity.ThreelevelMenuEntity" id="BaseResultThreeId">
+		<result column="threeSubmenuid" property="threeSubmenuid" />
+		<result column="menuname" property="menuname" />
+		<result column="url" property="url" />
+		<result column="fatherid" property="fatherid" />
+	</resultMap>
+	
+	<select id="getSecondMenuid" resultMap="BaseResultThreeId" parameterType="java.lang.String">
+		select * from three_stage_node  where fatherid =#{id,jdbcType=VARCHAR}
+	</select>
+</mapper>
