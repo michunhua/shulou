@@ -163,4 +163,12 @@ public class RoleAddServiceImpl implements RoleAddService{
 		return roleAddDao.selectByRId(map);
 	}
 
+//	@Override
+//	public AddRole accordingtoroleCity(AddRole param) {
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("rolename", param.getRoleName());
+//		map.put("belongs_city", param.getBelongs_City());
+//		return roleAddDao.accordingtoroleCity(map);
+//	}
+
 }

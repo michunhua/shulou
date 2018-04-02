@@ -111,8 +111,13 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public AddRole accordingtoroleCity(Map<String, String> param) {
-		return roleaddDao.accordingtoroleCity(param);
+	public AddRole accordingtoroleCity(AddRole param) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("rolename", param.getRoleName());
+		map.put("belongs_city", param.getBelongs_City());
+//		map.put("rolename", "财务");
+//		map.put("belongs_city", "北京");
+		return roleaddDao.accordingtoroleCity(map);
 	}
 
 	@Override
@@ -128,12 +133,14 @@ public class UserServiceImpl implements UserService{
 		pageBean.setCurrPage(currentPage);
 		//每页显示的数据
 		int pageSize = 10;
-		pageBean.setCurrPage(currentPage);
+		pageBean.setCurrPage(pageSize);
 		//封装总记录数
 		int totalCount = userdao.getCount();
+		pageBean.setTotalCount(totalCount);
 		//封装总页数
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据

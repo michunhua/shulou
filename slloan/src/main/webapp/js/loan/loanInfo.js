@@ -32,8 +32,6 @@ var collectData = function() {
   data.repayBank = e('.repay-bank').value
   data.repayCcount = e('.repay-ccount').value
   data.reapyAccountbank = e('.reapy-accountbank').value
-  data.start='start'
-  data.ctime = new Date()
   return data
 }
 
@@ -56,8 +54,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/ApplyLoaninformation'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data, null)
   })

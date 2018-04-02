@@ -57,10 +57,6 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
-  data.a = '11.6'
-  data.b='b'
-  data.c = 'c'
-  data.d='d'
   return data
 }
 
@@ -83,8 +79,8 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/commonApplydata'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data, null)
   })

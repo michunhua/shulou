@@ -69,11 +69,12 @@ public class RoleAddController {
 	 * 得到所有城市
 	 * @return
 	 */
-	@RequestMapping(value="/getallcity")
+	@RequestMapping(value="getallcity",method = RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
 	public String getrole(){
 		List<UtilCity> rolelist = districtService.getProvinces();
-		if(rolelist !=null){
-			 return JSON.toJSONString("success");
+		if(rolelist.size()>0){
+			 return JSON.toJSONString(rolelist);
 		}else{
 			logger.debug("获取城市失败:"+rolelist);
 			 return JSON.toJSONString("fail");
@@ -162,7 +163,7 @@ public class RoleAddController {
 	/**
 	 * 修改角色保存
 	 */
-	@RequestMapping(value="/updateadd",method=RequestMethod.POST)
+	@RequestMapping(value="/updateadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String updateId(HttpServletRequest req,AddRole addrole){
 		 boolean isResult = roleAddService.updateRole(addrole);
@@ -184,7 +185,7 @@ public class RoleAddController {
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
-	@RequestMapping(value="/addpowerlimit",method=RequestMethod.POST)
+	@RequestMapping(value="/addpowerlimit",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String addpowerlimit(HttpServletRequest req ,PermissionEntity permission) throws UnsupportedEncodingException{
 		req.setCharacterEncoding("utf-8");
@@ -204,6 +205,12 @@ public class RoleAddController {
 		
 		AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate);
 		boolean rt = roleAddService.addRoleUser(addrole);//插入角色
+		AddRole add = new AddRole();
+		add.setRoleName(roleName);//角色
+		add.setBelongs_City(belongs_City);//城市
+		AddRole rid= roleAddService.selectByRId(add);
+//		initrolecs(rid.getRoleName(),rid.getBelongs_City());
+		initrolecs(rid);
 		ll.add(configuration);
 		AddRole selectid ;
 		List<String> l = new ArrayList<String>();
@@ -382,7 +389,22 @@ public class RoleAddController {
 		
 		return JSON.toJSONString("success");
 	}
+	/**
+	 * 初始化角色与城市
+	 * 
+	 */
+	@RequestMapping(value="/initrole",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	private String initrolecs(AddRole param) {
+		AddRole addrole = new AddRole();
+			addrole.setRoleName(param.getRoleName());
+			addrole.setBelongs_City(param.getBelongs_City());
+		AddRole add = userservice.accordingtoroleCity(addrole);
+		return JSON.toJSONString(add);
+	
+	}
 
+	
 	private List jsobj(JSONObject jspurview) {
 		List<String>list = new ArrayList<String>();
 		String paymentConfirm = jspurview.getString("power0");//回款确认

@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../public/layui/css/layui.css">
+    <link rel="stylesheet" href="../public/css/navigate.css">
+    <link rel="stylesheet" href="../public/css/main.css">
+    <title>贷款管理/ 贷款创建/ 共同申请人个人资料</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">logo 后台布局</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
+                    admin
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出登录</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll" id = 'nav'>
+          <!-- 导航内容 -->
+          <div class="layui-collapse">
+            <div class="layui-colla-item" id = 'navloan'>
+              <h2 class="layui-colla-title">贷款管理</h2>
+              <div class="layui-colla-content layui-show">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item " id = 'tree-create'>
+                        <a href="javascript:;">贷款创建</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
+                            <dd><a href="../../slloan/loan/loanjoin">借款申请人个人资料</a></dd>
+                            <dd><a href="../../slloan/loan/loancom">共同申请人个人资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanerma">借款申请人配偶</a></dd>
+                            <dd><a href="../../slloan/loan/loancomm">共同申请人配偶</a></dd>
+                            <dd><a href="../../slloan/loan/loanapply">申请借款信息</a></dd>
+                            <dd><a href="../../slloan/loan/loanesta">房产资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanimag">影像资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanlink">联系人信息</a></dd>
+                            <dd><a href="../../slloan/loan/loannote">备注说明</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-trival'>
+                        <a href="javascript:;">贷款初审</a>
+                        <dl class="layui-nav-child">
+                         <dd><a href="../../slloan/loan/loancreas">贷款创建列表</a></dd>
+                            <dd><a href="../../slloan/loan/loanjoins">借款申请人个人资料</a></dd>
+                            <dd><a href="../../slloan/loan/loancoms">共同申请人个人资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanermas">借款申请人配偶</a></dd>
+                            <dd><a href="../../slloan/loan/loancomms">共同申请人配偶</a></dd>
+                            <dd><a href="../../slloan/loan/loanapplys">申请借款信息</a></dd>
+                            <dd><a href="../../slloan/loan/loanestas">房产资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanimags">影像资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanlinks">联系人信息</a></dd>
+                            <dd><a href="../../slloan/loan/loannotes">备注说明</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed" id = 'tree-final'>
+                        <a href="javascript:;">贷款终审</a>
+                        <dl class="layui-nav-child">
+                           <dd><a href="../../slloan/loan/loancreass">贷款创建列表</a></dd>
+                            <dd><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></dd>
+                            <dd class="layui-this"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanermass">借款申请人配偶</a></dd>
+                            <dd><a href="../../slloan/loan/loancommss">共同申请人配偶</a></dd>
+                            <dd><a href="../../slloan/loan/loanapplyss">申请借款信息</a></dd>
+                            <dd><a href="../../slloan/loan/loanestass">房产资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanimagss">影像资料</a></dd>
+                            <dd><a href="../../slloan/loan/loanlinkss">联系人信息</a></dd>
+                            <dd><a href="../../slloan/loan/loannotess">备注说明</a></dd>
+                        </dl>
+                    </li>
+                     <li class="layui-nav-item " id = 'tree-read'>
+                        <a href="../../slloan/loan/anin">贷款信息查看</a>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-confirm'>
+                        <a href="../../slloan/loan/repa">回款确认</a>
+                      </dl>
+                    </li>
+                    <li class="layui-nav-item" id = 'tree-gain'>
+                        <a href="../../slloan/loan/gain">取证凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-relief'>
+                        <a href="../../slloan/loan/reli">解押凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id = 'tree-incare'>
+                        <a href="../../slloan/loan/inca">进押凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navfinance'>
+              <h2 class="layui-colla-title">财务管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">财务审批</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../../slloan/loan/fina">审批列表</a></dd>
+                            <dd><a href="../../slloan/loan/note">财务备注</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="../../slloan/loan/trans">转账凭证</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="../../slloan/loan/clear">结算凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserInfo'>
+              <h2 class="layui-colla-title">个人信息</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="../user/userinfo/updateuserInfo">个人信息修改</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="../user/userinfo/updatepassword">密码修改</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserManagement'>
+              <h2 class="layui-colla-title">用户管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">用户</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../user/ulist">用户列表</a></dd>
+                            <dd><a href="../user/addu">添加用户</a></dd>
+                            <dd><a href="../user/allotuser">分配角色</a></dd>
+                            <dd><a href="../user/delu">删除用户</a></dd>
+                            <dd><a href="../user/updateuser">修改用户信息</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">角色</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="./rolelist">角色列表</a></dd>
+                            <dd><a href="./roleadd">添加角色</a></dd>
+                            <dd><a href="./updaterole">修改角色权限</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <!-- 顶部导航 -->
+        <ul class="layui-nav" lay-filter="">
+          <li class="layui-nav-item"><a href="">贷款创建列表</a></li>
+          <li class="layui-nav-item"><a href="">借款申请人个人资料</a></li>
+          <li class="layui-nav-item layui-this"><a href="">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="javascript:;">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="">房产资料</a></li>
+          <li class="layui-nav-item"><a href="">影像资料</a></li>
+          <li class="layui-nav-item"><a href="">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="">备注说明</a></li>
+        </ul>
+        <div class="container">
+          <!-- 具体页面导航 -->
+          <span class="layui-breadcrumb nav-title">
+            <a href="">贷款管理</a>
+            <a href="">贷款创建</a>
+            <a href="">共同申请人个人资料</a>
+          </span>
+          <hr>
+          <!-- 表单部分 -->
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+              <label class="layui-form-label">中文名</label>
+              <div class="layui-input-inline">
+                <input type="text" name="title" required  lay-verify="required" placeholder="如 张三" autocomplete="off" class="layui-input ch-name">
+              </div>
+              <label class="layui-form-label">拼音或英文名</label>
+              <div class="layui-input-inline">
+                <input type="text" name="title" required  lay-verify="required" placeholder="如 zhangsan" autocomplete="off" class="layui-input en-name">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">证件类型</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="paperwork-type">
+                  <option value=""></option>
+                  <option value="0">北京</option>
+                  <option value="1">上海</option>
+                  <option value="2">广州</option>
+                  <option value="3">深圳</option>
+                  <option value="4">杭州</option>
+                  <option value="5">其他</option>
+                </select>
+              </div>
+              <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input">
+              </div>
+              <label class="layui-form-label">证件号码</label>
+              <div class="layui-input-inline">
+                <input type="text" name="title" required  lay-verify="required" placeholder="如 zhangsan" autocomplete="off" class="layui-input paperwork-numb">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">国家或地区</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="country">
+                  <option value=""></option>
+                  <option value="0">北京</option>
+                  <option value="1">上海</option>
+                  <option value="2">广州</option>
+                  <option value="3">深圳</option>
+                  <option value="4">杭州</option>
+                  <option value="5">其他</option>
+                </select>
+              </div>
+              <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入国家或地区" autocomplete="off" class="layui-input">
+              </div>
+              <label class="layui-form-label">性别</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="gender">
+                  <option value=""></option>
+                  <option value="0">男</option>
+                  <option value="1">女</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">本地户籍</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="census">
+                  <option value=""></option>
+                  <option value="0">是</option>
+                  <option value="1">否</option>
+                  <option value="5">其他</option>
+                </select>
+              </div>
+              <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入户籍地" autocomplete="off" class="layui-input">
+              </div>
+              <label class="layui-form-label">婚姻状况</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="marriage">
+                  <option value=""></option>
+                  <option value="0">已婚</option>
+                  <option value="1">未婚</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">现住房情况</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="housing">
+                  <option value=""></option>
+                  <option value="0">房改/继承</option>
+                  <option value="1">按揭自置</option>
+                  <option value="1">无按揭自置</option>
+                  <option value="1">与父母共住</option>
+                  <option value="1">租房</option>
+                  <option value="1">公司提供</option>
+                  <option value="5">其他</option>
+                </select>
+              </div>
+              <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入住房情况" autocomplete="off" class="layui-input">
+              </div>
+              <label class="layui-form-label">出生日期</label>
+              <div class="layui-input-inline">
+                <input type="text" class="layui-input birthday" id="test1" placeholder="年/月/日">
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">现住地址</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="省/县/乡/村/街道/门牌号" autocomplete="off" class="layui-input current-address">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">住宅电话</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input residence-phone">
+              </div>
+              <label class="layui-form-label">移动电话</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="158 7837 9527" autocomplete="off" class="layui-input mobile-phone">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">E-mail</label>
+              <div class="layui-input-inline">
+                <input type="email" name="password" required lay-verify="required" placeholder="abc@qq.com" autocomplete="off" class="layui-input E-mail">
+              </div>
+              <label class="layui-form-label">现住址邮编</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="518000" autocomplete="off" class="layui-input zip-code">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">职业</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="管理人员" autocomplete="off" class="layui-input career">
+              </div>
+              <label class="layui-form-label">单位属行业</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="金融" autocomplete="off" class="layui-input unit-industry">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">现单位名称</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="三体第一舰队" autocomplete="off" class="layui-input unit-name">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">现单位地址</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="省/县/乡/村/街道/门牌号" autocomplete="off" class="layui-input unit-address">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">企业人数</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="人" autocomplete="off" class="layui-input company-number">
+              </div>
+              <label class="layui-form-label">上年营收</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元" autocomplete="off" class="layui-input lastyear-income">
+              </div>
+              <label class="layui-form-label">资产规模</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元" autocomplete="off" class="layui-input asset-size">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">单位电话</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input unit-phone">
+              </div>
+              <label class="layui-form-label">现单位邮编</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="518000" autocomplete="off" class="layui-input unit-code">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">职业类别</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="管理人员" autocomplete="off" class="layui-input jobs-type">
+              </div>
+              <label class="layui-form-label">现单位工龄</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder=" 月" autocomplete="off" class="layui-input unit-time">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">前单位名称</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="太空舰队" autocomplete="off" class="layui-input lastunit-name">
+              </div>
+              <label class="layui-form-label">前单位工龄</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder=" 年" autocomplete="off" class="layui-input lastunit-time">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">收入及来源</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input income-source">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">薪金</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input salary">
+              </div>
+              <label class="layui-form-label">投资收益</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input investment">
+              </div>
+              <label class="layui-form-label">租金收入</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input rent">
+              </div>
+              <label class="layui-form-label">其他收入</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input added">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">供养人数</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder=" 人" autocomplete="off" class="layui-input support-people">
+              </div>
+              <label class="layui-form-label">月支出</label>
+              <div class="layui-input-inline">
+                <input type="text" name="password" required lay-verify="required" placeholder=" 元" autocomplete="off" class="layui-input expenses">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">通讯地址</label>
+              <div class="layui-input-inline">
+                <select name="city" lay-verify="required" class="communication">
+                  <option value=""></option>
+                  <option value="1">现住址</option>
+                  <option value="1">现单位地址</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 版权所有
+    </div>
+</div>
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
+<script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/loanfinal/commomLoanerInfo.js"></script>
+</body>
+</html>

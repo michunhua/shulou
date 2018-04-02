@@ -53,7 +53,13 @@
 	
 	<!-- 根据角色得到所属城市还有角色 -->
 	<select id="accordingtoroleCity" parameterType="map" resultMap="roleaadddao">
-		select roleName,belongs_City,id from add_role order by   rolename=#{rolename} desc
+<!-- 		select roleName,belongs_City,id from add_role order by   rolename=#{rolename} desc -->
+		select roleName,belongs_City,id from add_role 
+		<where>
+			<if test="rolename !='' and rolename !=null">rolename= #{rolename}</if>
+			<if test="belongs_city !='' and belongs_city !=null">and belongs_city = #{belongs_city}</if>
+		</where>
+
 	</select>
 	 
 	 

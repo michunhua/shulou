@@ -16,7 +16,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 			<bean class="com.slloan.util.FileTypeInterceptor"></bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
+			<mvc:mapping path="/user/**"/>
 				<bean class="com.slloan.util.interceptordelu"></bean>	
 		</mvc:interceptor>
 	</mvc:interceptors>

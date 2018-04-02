@@ -34,7 +34,7 @@ public interface RoleAddDao extends BaseDao<AddRole>{
 	 /**
 		 * 根据角色名得到所属城市
 		 */
-	 public AddRole accordingtoroleCity(Map<String,String>param);
+	 public AddRole accordingtoroleCity(Map<String,Object>param);
 	 	/**
 	     * 分页操作，调用findByPage limit分页方法
 	     * @param map
