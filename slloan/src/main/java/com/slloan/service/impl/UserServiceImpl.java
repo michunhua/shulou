@@ -39,8 +39,9 @@ public class UserServiceImpl implements UserService{
 		String employeeis_Name = t.getEmployeeis_Name();
 		String belongs_City =t.getBelongs_City();//所属城市
 		String note = t.getNote();//备注
+		Integer r_id = t.getR_id();
 		String distribution_Role = t.getDistribution_Role();//分配角色
-		UserLogin user = new UserLogin(id,userName,password,employeeis_Name,belongs_City,distribution_Role,note);
+		UserLogin user = new UserLogin(id,userName,password,employeeis_Name,belongs_City,distribution_Role,note,r_id);
 		boolean isResult= userdao.addUser(user);
 			if(isResult == true){
 				return isResult;
@@ -66,6 +67,7 @@ public class UserServiceImpl implements UserService{
 		 String distribution_Role = user.getDistribution_Role();//分配角色
 		 String belongs_City =user.getBelongs_City();//所属城市
 		 String note = user.getNote();//备注
+		 Integer rid = user.getR_id();
 		 UserLogin u = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note);
 		boolean isResult = userdao.updateUser(u);
 		if(isResult == true){

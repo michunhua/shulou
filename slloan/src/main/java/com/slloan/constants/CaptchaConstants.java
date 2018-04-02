@@ -7,7 +7,7 @@ package com.slloan.constants;
  */
 public class  CaptchaConstants {
 	//登录
-	public final static String LOGIN = "checkLogin.do";
+	public final static String LOGIN = "checkLogin";
 	
 	public final static String VERIFICATIONCODE = "verificationcode";
 }

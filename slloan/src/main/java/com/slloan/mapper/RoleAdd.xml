@@ -56,4 +56,21 @@
 		select roleName,belongs_City,id from add_role order by   rolename=#{rolename} desc
 	</select>
 	 
+	 
+	 <select id="find" parameterType="map" resultType="com.slloan.entity.AddRole">
+	 		select * from add_role 
+	 		<trim prefix="where" prefixOverrides="and|or">
+	 		<if test="id !=null and id !=''"> and id =#{id}</if>
+	 		<if test="belongscity !=null and belongscity !=''"> and belongs_city=#{belongscity}</if>
+			<if test="rolename !=null and rolename !=''">and rolename =#{rolename}</if>
+	 		</trim>
+	 </select> 
+	 <select id="selectByRId" parameterType="map" resultType="com.slloan.entity.AddRole">
+	 		select * from add_role  where roleName =#{roleName} and belongs_City =#{belongs_City}
+<!-- 	 		<trim prefix="where" prefixOverrides="and|or"> -->
+<!-- 	 		<if test="rolename !=null and rolename !=''"> and roleName =#{roleName}</if> -->
+<!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->
+<!-- 	 		</trim> -->
+	 </select> 
+	 
 </mapper>

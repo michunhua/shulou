@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 		
-public class UserLogin implements Serializable{
+public class UserLogin<T> implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private Integer id;
@@ -19,8 +19,8 @@ public class UserLogin implements Serializable{
 	private String distribution_Role;//分配角色
 	private String belongs_City;//所属城市
 	private String note;//备注
-	private List<UserRole> userRole;//角色
-	private List<PermissionEntity> permissionEntity;//权限
+	private Integer r_id;//角色ID
+	private List<T> userRole;//角色
 	public UserLogin(){
 		
 	}
@@ -30,7 +30,21 @@ public class UserLogin implements Serializable{
 		this.userName = userName;
 		this.passWord = passWord;
 	}
-	public UserLogin(String userName, String passWord, String employeeis_Name, String distribution_Role,
+
+	public UserLogin(String userName, String passWord,
+			String employeeis_Name, String distribution_Role,
+			String belongs_City, String note, Integer r_id) {
+		super();
+		this.userName = userName;
+		this.passWord = passWord;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.r_id = r_id;
+	}
+	public UserLogin(String userName, String passWord,
+			String employeeis_Name, String distribution_Role,
 			String belongs_City, String note) {
 		super();
 		this.userName = userName;
@@ -40,10 +54,8 @@ public class UserLogin implements Serializable{
 		this.belongs_City = belongs_City;
 		this.note = note;
 	}
-
-
 	public UserLogin(Integer id, String userName, String passWord, String employeeis_Name, String distribution_Role,
-			String belongs_City, String note) {
+			String belongs_City, String note, Integer r_id) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -52,24 +64,24 @@ public class UserLogin implements Serializable{
 		this.distribution_Role = distribution_Role;
 		this.belongs_City = belongs_City;
 		this.note = note;
+		this.r_id = r_id;
 		this.userRole = userRole;
-		this.permissionEntity = permissionEntity;
 	}
 
-	public List<UserRole> getUserRole() {
+	public Integer getR_id() {
+		return r_id;
+	}
+
+	public void setR_id(Integer r_id) {
+		this.r_id = r_id;
+	}
+
+	public List<T> getUserRole() {
 		return userRole;
 	}
 
-	public void setUserRole(List<UserRole> userRole) {
+	public void setUserRole(List<T> userRole) {
 		this.userRole = userRole;
-	}
-
-	public List<PermissionEntity> getPermissionEntity() {
-		return permissionEntity;
-	}
-
-	public void setPermissionEntity(List<PermissionEntity> permissionEntity) {
-		this.permissionEntity = permissionEntity;
 	}
 
 	public String getBelongs_City() {
@@ -126,11 +138,12 @@ public class UserLogin implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public String toString() {
 		return "UserLogin [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", employeeis_Name="
 				+ employeeis_Name + ", distribution_Role=" + distribution_Role + ", belongs_City=" + belongs_City
-				+ ", note=" + note + ", userRole=" + userRole + ", permissionEntity=" + permissionEntity + "]";
+				+ ", note=" + note + ", r_id=" + r_id + ", userRole=" + userRole + "]";
 	}
-	
+
 }

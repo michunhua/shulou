@@ -9,11 +9,12 @@
 		<result column="distribution_role" property="distribution_Role" />
 		<result column="belongs_city" property="belongs_City" />
 		<result column="note" property="note" />
+		<result column="r_id" property="r_id" />
 	</resultMap>
 
 	<insert id="addUser" parameterType="com.slloan.entity.UserLogin">
-		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note) 
-		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note})
+		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note,r_id) 
+		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note},#{r_id})
 		
 	</insert>
 	<!-- 删除  -->
@@ -46,7 +47,7 @@
 <!-- 				 and u.password= #{password,jdbcType=VARCHAR} -->
 	
 	
-		select username,password from User_Login where
+		select * from User_Login where
 		username=#{username,jdbcType=VARCHAR}
 		and password =
 		#{password,jdbcType=VARCHAR}

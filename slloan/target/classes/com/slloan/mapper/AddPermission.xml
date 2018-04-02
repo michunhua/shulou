@@ -32,4 +32,8 @@
             #{item}   
          </foreach>
     </delete>
+     
+	 <select id="find" parameterType="map" resultType="com.slloan.entity.PermissionEntity">
+	 		select url,checkboxid,role_id from permission where role_id =#{rid}
+	 </select>
 </mapper>

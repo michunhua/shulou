@@ -18,7 +18,6 @@ public class AddRole{
 	private String configuration;//权限配置
 	private String createDate;//创建日期
 	
-	
 	/*private String loan_management;//贷款管理
 	private String repayment_confirmation;//回款确认
 	private String loan_Final_review;//贷款终审

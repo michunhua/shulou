@@ -29,7 +29,7 @@ import com.slloan.service.inter.LoginService;
 
 /**
  * 
- * @author asus- 用户管理
+ * @author asus- 登录
  *
  */
 //@WebService(name="/UserWXPServlet")
@@ -90,14 +90,14 @@ public class LoginController{
 	}
 	
 			//用户管理添加
-			@RequestMapping(value = "usergladd.do")
+			@RequestMapping(value = "usergladd")
 			public String useradd(){
 				System.out.println("用户管理添加进来了");
 				return "tjuser";
 			}
 			
 			//权限添加
-			@RequestMapping(value = "radd.do")
+			@RequestMapping(value = "radd")
 			public String roleadd(){
 				System.out.println("权限添加进来了");
 				return "roletj";

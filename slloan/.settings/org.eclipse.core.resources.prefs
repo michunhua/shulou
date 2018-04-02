@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/slloan/controller/ApplyForLoanInformationController.java=UTF-8
 encoding//src/main/java/com/slloan/controller/CoborrowerSpouseController.java=UTF-8
+encoding//src/main/java/com/slloan/util/ExceptionHandler.java=UTF-8
+encoding//src/main/java/com/slloan/util/FileTypeInterceptor.java=UTF-8
 encoding/<project>=UTF-8

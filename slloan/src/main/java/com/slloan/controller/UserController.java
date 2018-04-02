@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,8 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.entity.AddRole;
 import com.slloan.entity.Page;
+import com.slloan.entity.PermissionEntity;
 import com.slloan.entity.UserLogin;
+import com.slloan.service.inter.AddPermissionService;
+import com.slloan.service.inter.LoginService;
+import com.slloan.service.inter.RoleAddService;
 import com.slloan.service.inter.UserService;
 import com.slloan.util.Json;
 
@@ -40,7 +46,10 @@ public class UserController {
 	
 	@Autowired
 	private UserService userservice;
-	
+	@Autowired
+	private RoleAddService roleAddService;
+	@Autowired
+	private AddPermissionService addPermissionService;
 	@Autowired
 	HttpServletRequest req;
 	/**
@@ -70,11 +79,15 @@ public class UserController {
 			JSONObject jsonobj = new JSONObject().fromObject(json);
 			String username = jsonobj.getString("userName");
 			String password = jsonobj.getString("password");
-			String employeeis_Name = jsonobj.getString("employee");
-			String distribution_Role = jsonobj.getString("role");
-			String belongs_City = jsonobj.getString("city");
+			String employeeis_Name = jsonobj.getString("employee");//员工姓名
+			String distribution_Role = jsonobj.getString("role");//分配角色
+			String belongs_City = jsonobj.getString("city");//所属城市
 			String note = jsonobj.getString("note");
-			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note);
+			AddRole add = new AddRole();
+			add.setRoleName(distribution_Role);//角色
+			add.setBelongs_City(belongs_City);//城市
+			AddRole rid= roleAddService.selectByRId(add);
+			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note,rid.getId());
 			 isResult=	userservice.addUser(u);
 			
 		} catch (Exception e) {
@@ -166,9 +179,33 @@ public class UserController {
 	public Object updateselectId(HttpSession session,HttpServletRequest req,HttpServletResponse response) throws IOException{
 		String username = req.getParameter("username");
 		String password  = req.getParameter("password");
+		List<Object> li = new ArrayList<Object>();
 		UserLogin user = new UserLogin(username,password);
 		UserLogin userlogin = userservice.logindelu(user);
+		AddRole addrole = new AddRole();
+		PermissionEntity permission = new PermissionEntity();
+		UserLogin pageBean = new UserLogin();
+		addrole.setId(userlogin.getR_id());
+		addrole.setRoleName(userlogin.getDistribution_Role());//分配角色
+		addrole.setBelongs_City(userlogin.getBelongs_City());//所属城市
+		List<AddRole> listrole= roleAddService.find(addrole);
+		for(AddRole role : listrole){
+			li.add(role);
+			int zh =role.getId();
+			String zhrole = String.valueOf(zh);
+			permission.setR_id(zhrole);
+		}
 		
+		List<PermissionEntity> rolepermission=	addPermissionService.find(permission);
+			for(PermissionEntity entity : rolepermission){
+				li.add(entity);
+			}
+		//		li.add(addrole);
+		li.add(userlogin);
+	
+//		List<AddRole> r = neW ARRAYLIST<ADDROLE>();
+//		LIST<USERLOGIN> DD = new ArrayList<UserLogin>();
+//		userlogin.setUserRole(r);
 		if(userlogin !=null){
 			 ServletContext application=session.getServletContext();
 	            Map<String, String> loginMap = (Map<String, String>)application.getAttribute("loginMap");
@@ -191,7 +228,8 @@ public class UserController {
 			 loginMap.put(userlogin.getUserName(),session.getId());
 			 application.setAttribute("loginMap", loginMap);
 			 session.setAttribute("username",user.getUserName());
-			return  JSON.toJSONString("登录成功！");
+			 pageBean.setUserRole(li);
+			return  JSON.toJSONString("登录成功！"+pageBean);
 		}else{
 			//登录失败
             System.out.println("登录失败！");
@@ -272,15 +310,75 @@ public class UserController {
 		}
 	
 	
+//	/**
+//	 * 登出 方法一
+//	 * @param session
+//	 * @return
+//	 */
+//	@RequestMapping(value="/exit")
+//	public String exit(HttpSession session){
+//		 session.invalidate();  
+//		return "index/index";
+//	}
+	
 	/**
-	 * 登出
+	 * 登出 方法二
 	 * @param session
 	 * @return
+	 * @throws IOException 
 	 */
-	public String exit(HttpSession session){
-		 session.invalidate();  
+	@RequestMapping(value="/exit")
+	public String exit(HttpServletRequest req,HttpServletResponse res) throws IOException{
+		UserLogin userlogin = (UserLogin)req.getSession().getAttribute("loginMap");
+		//清除页面缓存 在html页里
+		res.setHeader("Pragma", "No-cache");
+		res.setHeader("Cache-Control", "no-cache");
+		res.flushBuffer();
+		//删除登录cookie
+//		Cookie userNameCookie = new Cookie("loginUserName", userlogin.getUserName());
+//		Cookie passWordCokie = new Cookie("loginPassowrd",userlogin.getPassWord());
+//		userNameCookie.setMaxAge(0);//设置0为立即删除该cooke
+//		userNameCookie.setPath("/");//删除指定路径的COOKIE，不设置该路径
+//		passWordCokie.setMaxAge(0);
+//		passWordCokie.setPath("/");
+//		res.addCookie(userNameCookie);
+//		res.addCookie(passWordCokie);
+		
+		Cookie[] cookie = req.getCookies();
+		for(Cookie c: cookie){
+			//方法一
+			/*if("autoLogin".equals(c.getName())){
+				c.setMaxAge(0);
+				res.addCookie(c);
+			}*/
+			//方法二
+			if(null == c){
+				System.out.println("没有cookie");
+			}else{
+				for(Cookie cc:cookie){
+					if(cc.getName().equals("name_test")){
+						cc.setValue(null);
+						cc.setMaxAge(0);
+						cc.setPath("/");
+						res.addCookie(cc);;
+						break;
+					}
+				}
+			}
+		}
+//		 session.invalidate();  
+		req.getSession().removeAttribute("loginMap");
+		req.getSession().invalidate();//清除 session 中的所有信息  
 		return "index/index";
 	}
+	
+	 //创建cookie，并将新cookie添加到“响应对象”response中。
+    public void addCookie(HttpServletResponse response){
+        Cookie cookie = new Cookie("name_test","value_test");//创建新cookie
+        cookie.setMaxAge(5 * 60);// 设置存在时间为5分钟
+        cookie.setPath("/");//设置作用域
+        response.addCookie(cookie);//将cookie添加到response的cookie数组中返回给客户端
+    }
 	/***
 	 * 主页面
 	 * @return
@@ -348,5 +446,13 @@ public class UserController {
 	@RequestMapping(value = "userinfo/updatepassword")
 	public String updatePassword(){
 		return "userInfo/updatePassword";
+	}
+	/***
+	 * 跳转到firstPage.html
+	 * @return
+	 */
+	@RequestMapping(value = "firstPage")
+	public String firstPage(){
+		return "index/firstPage";
 	}
 }

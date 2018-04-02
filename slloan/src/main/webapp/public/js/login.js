@@ -38,7 +38,9 @@ var sendLogin = function(url, data, callback) {
 }
 
 var firstPage = function() {
-  window.location.href = '../user/login'
+	var name = document.getElementById('username').value;
+	var pwd = document.getElementById('password').value;
+  window.location.href = '../user/login?username='+name+'&password='+pwd
 }
 
 var verification = function(data) {

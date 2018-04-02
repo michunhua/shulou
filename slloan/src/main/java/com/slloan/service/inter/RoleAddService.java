@@ -45,4 +45,14 @@ public interface RoleAddService extends BaseDao<AddRole>{
      * @return
      */
 	Page<AddRole> getRolePage(int currentPage);
+	
+	public List<AddRole> find(AddRole addrole);
+	
+	/**
+	 * 
+	 * @param addrole 角色名&城市
+	 * @return Object
+	 */
+	
+	public AddRole selectByRId(AddRole addrole);
 }

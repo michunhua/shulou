@@ -66,7 +66,6 @@
   		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
   		<init-param>
   			<param-name>contextConfigLocation</param-name>
-  						contextConfigLocation
   			<param-value>classpath:spring.xml</param-value>
   		</init-param>
   		<load-on-startup>1</load-on-startup>
@@ -86,6 +85,24 @@
 <!--   <listener> -->
 <!-- <listener-class>com.slloan.util.OnlineUserListener</listener-class> -->
 <!-- </listener> -->
-
- 
+ <error-page>  
+        <error-code>405</error-code>  
+        <location>/WEB-INF/jsp/error/405.html</location>  
+    </error-page>  
+    <error-page>  
+        <error-code>404</error-code>  
+        <location>/WEB-INF/jsp/error/404.html</location>  
+    </error-page>  
+    <error-page>  
+        <error-code>500</error-code>  
+        <location>/WEB-INF/jsp/error/500.html</location>  
+    </error-page>  
+     <error-page>  
+        <error-code>400</error-code>  
+        <location>/WEB-INF/jsp/error/400.html</location>  
+    </error-page>  
+<!--         <exception-type>java.lang.Throwable</exception-type>   -->
+<!--         <location>/WEB-INF/jsp/error/filetype/500.html</location>   -->
+<!--     </error-page> -->
+    
 </web-app>

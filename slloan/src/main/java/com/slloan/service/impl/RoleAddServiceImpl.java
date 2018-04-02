@@ -1,5 +1,6 @@
 package com.slloan.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import com.slloan.dao.RoleAddDao;
 import com.slloan.entity.AddRole;
 import com.slloan.entity.Page;
 import com.slloan.entity.PermissionEntity;
+import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.RoleAddService;
 import com.slloan.util.DateUtils;
 
@@ -63,7 +65,6 @@ public class RoleAddServiceImpl implements RoleAddService{
 	public List<AddRole> find(Map<String, Object> map) {
 		return null;
 	}
-
 	//添加角色
 	@Override
 	public boolean addRoleUser(AddRole addrole) {
@@ -143,6 +144,23 @@ public class RoleAddServiceImpl implements RoleAddService{
 		List<AddRole> lists = roleAddDao.getRolePage(map);
 		pageBean.setLists(lists);
 			return pageBean;
+	}
+
+	@Override
+	public List<AddRole> find(AddRole map) {
+		Map<String, Object> param = new HashMap<String,Object>();
+			param.put("id", map.getId());
+			param.put("rolename", map.getRoleName());
+			param.put("belongscity", map.getBelongs_City());
+		return roleAddDao.find(param);
+	}
+
+	@Override
+	public AddRole selectByRId(AddRole addrole) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("roleName", addrole.getRoleName());
+		map.put("belongs_City", addrole.getBelongs_City());
+		return roleAddDao.selectByRId(map);
 	}
 
 }

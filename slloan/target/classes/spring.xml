@@ -25,7 +25,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 <!-- <mvc:default-servlet-handler/> -->
 <!-- 引用属性文件 -->
 <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
-
+<import resource="spring-mvc.xml"/>
+<import resource="spring-config.xml"/>
 <!-- <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/> -->
 <!-- <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/> -->
 
@@ -148,5 +149,6 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
     <property name="prefix" value="/WEB-INF/jsp/"/>  
     <property name="suffix" value=".html"/>
 </bean>
+
 </beans>
  

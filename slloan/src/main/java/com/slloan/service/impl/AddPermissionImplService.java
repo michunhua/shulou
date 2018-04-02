@@ -1,5 +1,6 @@
 package com.slloan.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.LogManager;
@@ -59,6 +60,14 @@ public class AddPermissionImplService  implements AddPermissionService{
 	@Override
 	public List<PermissionEntity> getRolePermissiondata(Map<String, String> param) {
 		return addpermissiondao.getRolePermissiondata(param);
+	}
+
+
+	@Override
+	public List<PermissionEntity> find(PermissionEntity map) {
+		Map<String,Object> param = new HashMap<String,Object>();
+			param.put("rid", map.getR_id());
+		return addpermissiondao.find(param);
 	}
 
 

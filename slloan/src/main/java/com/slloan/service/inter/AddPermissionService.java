@@ -21,4 +21,5 @@ public interface AddPermissionService{
 //	public boolean updateRole(Integer id);
 //	boolean addpermission(PermissionEntity permision);
 	public List<PermissionEntity> getRolePermissiondata(Map<String,String>param);//得到角色权限数据
+	public List<PermissionEntity> find(PermissionEntity map);
 }
