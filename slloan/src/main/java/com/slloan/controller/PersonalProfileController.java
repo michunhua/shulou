@@ -15,6 +15,13 @@ import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
 
+
+
+/**
+ * 借款申请人资料
+ * @author Administrator
+ *
+ */
 @Controller(value = "personalprofilecontroller")
 @RequestMapping("loan")
 public class PersonalProfileController {
@@ -23,13 +30,13 @@ public class PersonalProfileController {
 	private PersonalProfileService personalprofileservice;
 
 	@ResponseBody
-	@RequestMapping("/saveww.do")
+	@RequestMapping("/loanApplypersonaldata")
 	public String save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 
-		String name=obj.getString("cname");  // 共同借款人姓名
+		 String name=obj.getString("cname");  // 共同借款人姓名
 		 String phoneticize=obj.getString("ename");  // 拼音、英文姓名
 		 String id_type=obj.getString("paperwork");  // 身份证件类型
 		 String id_number=obj.getString("paperNumb"); // 身份证件号码
@@ -65,7 +72,7 @@ public class PersonalProfileController {
 		 double Rent_income = Double.valueOf(obj.getString("supportPeople"));// 租金收入
 		 double Other_income = Double.valueOf(obj.getString("expenses"));// 其他收入
 		 String family_number=obj.getString("communication");  // 供养人数
-		
+//		 double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
 		 double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
 		 String postal_address=obj.getString("b");  // 通讯地址
 		 String start=obj.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清

@@ -29,6 +29,8 @@ var collectData = function() {
   data.unitPhone = e('.unit-phone').value
   data.mobiePhone = e('.mobie-phone').value
   data.salary = e('.salary').value
+  data.start ='a'
+  data.ctime = 'b'
   return data
 }
 
@@ -51,8 +53,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/loanApplyspouse'
     log(data)
     sendAjax(method, url, data, null)
   })

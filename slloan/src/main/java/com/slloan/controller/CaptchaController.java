@@ -11,7 +11,9 @@ import javax.servlet.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.lowagie.text.pdf.codec.Base64.OutputStream;
 import com.slloan.constants.CaptchaConstants;
 import com.slloan.util.GraphicHelper;
@@ -39,7 +41,8 @@ public class CaptchaController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value=CaptchaConstants.VERIFICATIONCODE,method=RequestMethod.GET)
-	protected void service(HttpServletRequest request, HttpServletResponse response)  
+	@ResponseBody
+	protected String service(HttpServletRequest request, HttpServletResponse response)  
 	        throws ServletException, IOException { 
 		// 获得 当前请求 对应的 会话对象  
 		HttpSession session = request.getSession();
@@ -58,6 +61,7 @@ public class CaptchaController {
 	    session.setAttribute(uri, code);  
 	  
 	    System.out.println(session.getAttribute(uri));  
+	    return JSON.toJSONString(code);
 	}
 }
 

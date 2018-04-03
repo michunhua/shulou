@@ -19,7 +19,7 @@ public class DateUtils {
 
     public static final SimpleDateFormat YYYY_MM_DD_HH_MM_SS_SSS_FULL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-    public static final SimpleDateFormat YYYY_MM_DD_HH_MM_SS_FULL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static final SimpleDateFormat YYYY_MM_DD_HH_MM_SS_FULL = new SimpleDateFormat("yyyy-MM-dd");
 
     public static final SimpleDateFormat YYYY_MM_DD_FULL = new SimpleDateFormat("yyyy-MM-dd");
 

@@ -2,6 +2,7 @@ package com.slloan.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import com.slloan.service.inter.AddPermissionService;
 import com.slloan.service.inter.LoginService;
 import com.slloan.service.inter.RoleAddService;
 import com.slloan.service.inter.UserService;
+import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
@@ -65,7 +67,18 @@ public class UserController {
 		int pageSize = Integer.parseInt(limit);
 		return JSON.toJSONString(userservice.getUserByPage(startPos));
 	}
-	
+	/**
+	 * 初始化角色与城市
+	 */
+	/*@RequestMapping(value="/initrole",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String initrolecs(AddRole rid){
+		AddRole addrole = new AddRole();
+			addrole.setRoleName(rid.getRoleName());
+			addrole.setBelongs_City(rid.getBelongs_City());
+		AddRole add = userservice.accordingtoroleCity(addrole);
+		return JSON.toJSONString(add);
+	}*/
 	/**
 	 * 用户添加
 	 * @return
@@ -83,11 +96,13 @@ public class UserController {
 			String distribution_Role = jsonobj.getString("role");//分配角色
 			String belongs_City = jsonobj.getString("city");//所属城市
 			String note = jsonobj.getString("note");
+			String createDate = DateUtils.getInDateTime((new Date()));//日期
 			AddRole add = new AddRole();
 			add.setRoleName(distribution_Role);//角色
 			add.setBelongs_City(belongs_City);//城市
 			AddRole rid= roleAddService.selectByRId(add);
-			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note,rid.getId());
+//			initrolecs(rid);
+			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note,rid.getId(),createDate);
 			 isResult=	userservice.addUser(u);
 			
 		} catch (Exception e) {
@@ -248,9 +263,15 @@ public class UserController {
 	 */
 	@RequestMapping(value="/updatepwd",method=(RequestMethod.POST),produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updatepwd(@RequestParam("oldpassword")String newpassword,
-			@RequestParam("username")String username,@RequestParam("newpassword")String passWord){
-		boolean isResult = userservice.updatePassWord(username, passWord, newpassword);
+	public String updatepwd(HttpServletRequest req){
+		
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
+		String username = obj.getString("username");
+		String passWord = obj.getString("oldpassword");
+		String newpassword = obj.getString("newpassword");
+//		UserLoginUpdate updateupdate = new UserLoginUpdate();
+		boolean isResult = userservice.updatePassWord(username, newpassword, passWord);
 			if(isResult == true){
 				return JSON.toJSONString(isResult);
 			}else

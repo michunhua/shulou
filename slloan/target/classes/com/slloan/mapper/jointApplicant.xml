@@ -27,6 +27,7 @@
 		<result column="enterprise_scale" property="enterprise_scale" />
 		<result column="Revenue_in_the_previous_year" property="Revenue_in_the_previous_year" />
 		<result column="asset_scale" property="asset_scale" />
+		<result column="unit_phone" property="unit_phone" />
 		<result column="postCode" property="postCode" />
 		<result column="job_category" property="job_category" />
 		<result column="seniority" property="seniority" />
@@ -35,6 +36,7 @@
 		<result column="source_of_income" property="source_of_income" />
 		<result column="monthly_income" property="monthly_income" />
 		<result column="Income_from_investment" property="Income_from_investment" />
+		<result column="Rent_income" property="Rent_income" />
 		<result column="Other_income" property="Other_income" />
 		<result column="family_number" property="family_number" />
 		<result column="monthly_expenditure" property="monthly_expenditure" />

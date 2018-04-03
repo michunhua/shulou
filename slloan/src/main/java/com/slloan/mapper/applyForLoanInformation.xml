@@ -94,4 +94,5 @@ FROM
 FROM
 	apply_for_loan_information  where id=#{id}
     </select>
+    
 </mapper>

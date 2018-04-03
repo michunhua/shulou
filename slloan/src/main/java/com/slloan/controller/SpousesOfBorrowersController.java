@@ -15,14 +15,20 @@ import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
 
+
+/**
+ * 借款人配偶
+ * @author Administrator
+ *
+ */
 @Controller(value="spousesOfborrowerscontroller")
-@RequestMapping("loan")
+@RequestMapping("/loan")
 public class SpousesOfBorrowersController {
 
 	@Autowired
 	private SpousesOfBorrowersService spousesofborrowers;
 	@ResponseBody
-	@RequestMapping("/savewe.do")
+	@RequestMapping("/loanApplyspouse")
 	public String save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
@@ -36,8 +42,8 @@ public class SpousesOfBorrowersController {
 		String home_Phone = obj.getString("unitPhone"); // 住宅电话
 		String mobile_Phone = obj.getString("mobiePhone"); // 手机
 		String monthly_Income = obj.getString("salary"); // 月收入
-		String start =obj.getString("a");
-		String ctime = obj.getString("b");
+		String start =obj.getString("start");
+		String ctime = obj.getString("ctime");
 		
 
 		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,

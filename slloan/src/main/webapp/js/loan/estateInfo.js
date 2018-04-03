@@ -40,6 +40,8 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
+  data.start='a'
+  data.ctiam='b'
   return data
 }
 
@@ -63,7 +65,7 @@ var sendData = function() {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/estateInfo'
+    var url = '/slloan/loan/housepropertydata'
     log(data)
     sendAjax(method, url, data, null)
   })

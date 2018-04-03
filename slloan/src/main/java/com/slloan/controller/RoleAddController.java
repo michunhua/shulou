@@ -210,7 +210,7 @@ public class RoleAddController {
 		add.setBelongs_City(belongs_City);//城市
 		AddRole rid= roleAddService.selectByRId(add);
 //		initrolecs(rid.getRoleName(),rid.getBelongs_City());
-		initrolecs(rid);
+//		initrolecs(rid);
 		ll.add(configuration);
 		AddRole selectid ;
 		List<String> l = new ArrayList<String>();
@@ -390,16 +390,36 @@ public class RoleAddController {
 		return JSON.toJSONString("success");
 	}
 	/**
-	 * 初始化角色与城市
+	 * 查询角色传值到用户
 	 * 
 	 */
 	@RequestMapping(value="/initrole",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
-	private String initrolecs(AddRole param) {
+	private String initrolecs() {
+		List<AddRole> add = roleAddService.list();
+		if(add !=null){
+			return JSON.toJSONString(add);
+		}else{
+			return JSON.toJSONString("fail");
+		}
+		
+	
+	}
+	
+	/**
+	 * 查询城市传值到用户
+	 * 
+	 */
+	@RequestMapping(value="/initcity",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	private String initrolecss(HttpServletRequest req,AddRole param) {
+		String paramdata = req.getParameter("data");
+		JSONObject jsonObject = new JSONObject().fromObject(paramdata);
+		String roleName = jsonObject.getString("id");
+		int rid = Integer.parseInt(roleName);
 		AddRole addrole = new AddRole();
-			addrole.setRoleName(param.getRoleName());
-			addrole.setBelongs_City(param.getBelongs_City());
-		AddRole add = userservice.accordingtoroleCity(addrole);
+			addrole.setId(rid);
+		AddRole add = roleAddService.accordingtoroleCity(addrole);
 		return JSON.toJSONString(add);
 	
 	}

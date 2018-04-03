@@ -14,7 +14,11 @@ import com.slloan.service.inter.PropertyInformationService;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
-
+/**
+ * 房产资料
+ * @author Administrator
+ *
+ */
 @Controller(value="propertyinformationcontroller")
 @RequestMapping("loan")
 public class PropertyInformationController {
@@ -22,7 +26,7 @@ public class PropertyInformationController {
 	@Autowired
 	private PropertyInformationService propertyinformationservice;
 	@ResponseBody
-	@RequestMapping("/saveq.do")
+	@RequestMapping("/housepropertydata")
 	public String save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
@@ -47,8 +51,8 @@ public class PropertyInformationController {
 		String new_Loan_Approval_Amount = obj.getString("funds"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = obj.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = obj.getString("newApproved"); // 备注
-		String start=obj.getString("a");
-		String ctime = obj.getString("b");
+		String start=obj.getString("start"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime = obj.getString("ctiam"); //更新时间
 
 		PropertyInformation preperty = new PropertyInformation(ownership_And_percentage, property_Address,
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,

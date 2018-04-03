@@ -31,7 +31,7 @@ public class JointApplicantController {
 	private JointApplicantService jointapplicant;
 
 	@ResponseBody
-	@RequestMapping(value="/commonApplydata",method=(RequestMethod.GET),produces="application/json;charset=utf-8")
+	@RequestMapping(value="/commonApplydata")
 	public String save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
@@ -75,8 +75,8 @@ public class JointApplicantController {
 		 String family_number=obj.getString("communication");  // 供养人数
 		 double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
 		 String postal_address=obj.getString("b");  // 通讯地址
-		 String start=obj.getString("c");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		 String ctime=obj.getString("d");  // 创建时间
+		 String start=obj.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String ctime=obj.getString("ctime");  // 创建时间
 
 	
 	
@@ -99,206 +99,207 @@ public class JointApplicantController {
 		}
 
 	}
+
+		@RequestMapping(value = "/loancrea")
+		public String loancrea(){
+			System.out.println("--------------------------");
+			return "loan/loanCreateTable";
+		}
+
+		@RequestMapping(value = "/loanjoin")
+		public String loanjoin(){
+			System.out.println("--------------------------");
+			return "loan/loanerInfo";
+		}
+		@RequestMapping(value = "/loancom")
+		public String loancom(){
+			System.out.println("--------------------------");
+			return "loan/commomLoanerInfo";
+		}
+		
+		@RequestMapping(value = "/loanerma")	
+		public String loanerma(){
+			System.out.println("--------------------------");
+			return "loan/loanerMate";
+		}
+		
+		@RequestMapping(value = "/loancomm")
+		public String loancomm(){
+			System.out.println("--------------------------");
+			return "loan/commomMate";
+		}
+		
+		@RequestMapping(value = "/loanapply")
+		public String loanapply(){
+			System.out.println("--------------------------");
+			return "loan/loanInfo";
+		}
+		@RequestMapping(value = "/loanesta")
+		public String loanesta(){
+			System.out.println("--------------------------");
+			return "loan/estateInfo";
+		}
+		
+		@RequestMapping(value = "/loanimag")
+		public String loanimag(){
+			System.out.println("--------------------------");
+			return "loan/imageInfo";
+		}
+		
+		@RequestMapping(value = "/loanlink")
+		public String loanlink(){
+			System.out.println("--------------------------");
+			return "loan/linkInfo";
+		}
+		
+		@RequestMapping(value = "/loannote")
+		public String loannote(){
+			System.out.println("--------------------------");
+			return "loan/noteInfo";
+		}
+		
+		@RequestMapping(value = "/loancreas")
+		public String loancreas(){
+			System.out.println("--------------------------");
+			return "loanfirst/loanFirstTable";
+		}
+
+		@RequestMapping(value = "/loanjoins")
+		public String loanjoins(){
+			System.out.println("--------------------------");
+			return "loanfirst/loanerInfo";
+		}
+		@RequestMapping(value = "/loancoms")
+		public String loancoms(){
+			System.out.println("--------------------------");
+			return "loanfirst/commomLoanerInfo";
+		}
+		
+		@RequestMapping(value = "/loanermas")	
+		public String loanermas(){
+			System.out.println("--------------------------");
+			return "loanfirst/loanerMate";
+		}
+		
+		@RequestMapping(value = "/loancomms")
+		public String loancomms(){
+			System.out.println("--------------------------");
+			return "loanfirst/commomMate";
+		}
+		
+		@RequestMapping(value = "/loanapplys")
+		public String loanapplys(){
+			System.out.println("--------------------------");
+			return "loanfirst/loanInfo";
+		}
+		@RequestMapping(value = "/loanestas")
+		public String loanestas(){
+			System.out.println("--------------------------");
+			return "loanfirst/estateInfo";
+		}
+		
+		@RequestMapping(value = "/loanimags")
+		public String loanimags(){
+			System.out.println("--------------------------");
+			return "loanfirst/imageInfo";
+		}
+		
+		@RequestMapping(value = "/loanlinks")
+		public String loanlinks(){
+			System.out.println("--------------------------");
+			return "loanfirst/linkInfo";
+		}
+		
+		@RequestMapping(value = "/loannotes")
+		public String loannotes(){
+			System.out.println("--------------------------");
+			return "loanfirst/noteInfo";
+		}
+		
+		@RequestMapping(value = "/loancreass")
+		public String loancreass(){
+			System.out.println("--------------------------");
+			return "loanfinal/loanFinalTable";
+		}
+
+		@RequestMapping(value = "/loanjoinss")
+		public String loanjoinss(){
+			System.out.println("--------------------------");
+			return "loloanfinalan/loanerInfo";
+		}
+		@RequestMapping(value = "/loancomss")
+		public String loancomss(){
+			System.out.println("--------------------------");
+			return "loanfinal/commomLoanerInfo";
+		}
+		
+		@RequestMapping(value = "/loanermass")	
+		public String loanermass(){
+			System.out.println("--------------------------");
+			return "loanfinal/loanerMate";
+		}
+		
+		@RequestMapping(value = "/loancommss")
+		public String loancommss(){
+			System.out.println("--------------------------");
+			return "loanfinal/commomMate";
+		}
+		
+		@RequestMapping(value = "/loanapplyss")
+		public String loanapplyss(){
+			System.out.println("--------------------------");
+			return "loanfinal/loanInfo";
+		}
+		@RequestMapping(value = "/loanestass")
+		public String loanestass(){
+			System.out.println("--------------------------");
+			return "loanfinal/estateInfo";
+		}
+		
+		@RequestMapping(value = "/loanimagss")
+		public String loanimagss(){
+			System.out.println("--------------------------");
+			return "loanfinal/imageInfo";
+		}
+		
+		@RequestMapping(value = "/loanlinkss")
+		public String loanlinkss(){
+			System.out.println("--------------------------");
+			return "loanfinal/linkInfo";
+		}
+		
+		@RequestMapping(value = "/loannotess")
+		public String loannotess(){
+			System.out.println("--------------------------");
+			return "loanfinal/noteInfo";	
+		}
+
+	     
+	     @RequestMapping(value = "/anin")
+	 	public String anin(){
+	 		System.out.println("--------------------------");
+	 		return "/loanInfoRead";	
+	 	}
+	     @RequestMapping(value = "/repa")
+	  	public String repa(){
+	  		System.out.println("--------------------------");
+	  		return "/repayConfirm";	
+	  	}
+	     @RequestMapping(value = "/gain")
+	  	public String gain(){
+	  		System.out.println("--------------------------");
+	  		return "/gainProof";	
+	  	}
+	     @RequestMapping(value = "/reli")
+	  	public String reli(){
+	  		System.out.println("--------------------------");
+	  		return "/relieProof";	
+	  	}
+	     @RequestMapping(value = "/inca")
+	  	public String inca(){
+	  		System.out.println("--------------------------");
+	  		return "/incareProof";	
+	  	}
 	
-	
-	@RequestMapping(value = "/loancrea")
-	public String loancrea(){
-		System.out.println("--------------------------");
-		return "loan/loanCreateTable";
 	}
 
-	@RequestMapping(value = "/loanjoin")
-	public String loanjoin(){
-		System.out.println("--------------------------");
-		return "loan/loanerInfo";
-	}
-	@RequestMapping(value = "/loancom")
-	public String loancom(){
-		System.out.println("--------------------------");
-		return "loan/commomLoanerInfo";
-	}
-	
-	@RequestMapping(value = "/loanerma")	
-	public String loanerma(){
-		System.out.println("--------------------------");
-		return "loan/loanerMate";
-	}
-	
-	@RequestMapping(value = "/loancomm")
-	public String loancomm(){
-		System.out.println("--------------------------");
-		return "loan/commomMate";
-	}
-	
-	@RequestMapping(value = "/loanapply")
-	public String loanapply(){
-		System.out.println("--------------------------");
-		return "loan/loanInfo";
-	}
-	@RequestMapping(value = "/loanesta")
-	public String loanesta(){
-		System.out.println("--------------------------");
-		return "loan/estateInfo";
-	}
-	
-	@RequestMapping(value = "/loanimag")
-	public String loanimag(){
-		System.out.println("--------------------------");
-		return "loan/imageInfo";
-	}
-	
-	@RequestMapping(value = "/loanlink")
-	public String loanlink(){
-		System.out.println("--------------------------");
-		return "loan/linkInfo";
-	}
-	
-	@RequestMapping(value = "/loannote")
-	public String loannote(){
-		System.out.println("--------------------------");
-		return "loan/noteInfo";
-	}
-	
-	@RequestMapping(value = "/loancreas")
-	public String loancreas(){
-		System.out.println("--------------------------");
-		return "loanfirst/loanFirstTable";
-	}
-
-	@RequestMapping(value = "/loanjoins")
-	public String loanjoins(){
-		System.out.println("--------------------------");
-		return "loanfirst/loanerInfo";
-	}
-	@RequestMapping(value = "/loancoms")
-	public String loancoms(){
-		System.out.println("--------------------------");
-		return "loanfirst/commomLoanerInfo";
-	}
-	
-	@RequestMapping(value = "/loanermas")	
-	public String loanermas(){
-		System.out.println("--------------------------");
-		return "loanfirst/loanerMate";
-	}
-	
-	@RequestMapping(value = "/loancomms")
-	public String loancomms(){
-		System.out.println("--------------------------");
-		return "loanfirst/commomMate";
-	}
-	
-	@RequestMapping(value = "/loanapplys")
-	public String loanapplys(){
-		System.out.println("--------------------------");
-		return "loanfirst/loanInfo";
-	}
-	@RequestMapping(value = "/loanestas")
-	public String loanestas(){
-		System.out.println("--------------------------");
-		return "loanfirst/estateInfo";
-	}
-	
-	@RequestMapping(value = "/loanimags")
-	public String loanimags(){
-		System.out.println("--------------------------");
-		return "loanfirst/imageInfo";
-	}
-	
-	@RequestMapping(value = "/loanlinks")
-	public String loanlinks(){
-		System.out.println("--------------------------");
-		return "loanfirst/linkInfo";
-	}
-	
-	@RequestMapping(value = "/loannotes")
-	public String loannotes(){
-		System.out.println("--------------------------");
-		return "loanfirst/noteInfo";
-	}
-	
-	@RequestMapping(value = "/loancreass")
-	public String loancreass(){
-		System.out.println("--------------------------");
-		return "loanfinal/loanFinalTable";
-	}
-
-	@RequestMapping(value = "/loanjoinss")
-	public String loanjoinss(){
-		System.out.println("--------------------------");
-		return "loloanfinalan/loanerInfo";
-	}
-	@RequestMapping(value = "/loancomss")
-	public String loancomss(){
-		System.out.println("--------------------------");
-		return "loanfinal/commomLoanerInfo";
-	}
-	
-	@RequestMapping(value = "/loanermass")	
-	public String loanermass(){
-		System.out.println("--------------------------");
-		return "loanfinal/loanerMate";
-	}
-	
-	@RequestMapping(value = "/loancommss")
-	public String loancommss(){
-		System.out.println("--------------------------");
-		return "loanfinal/commomMate";
-	}
-	
-	@RequestMapping(value = "/loanapplyss")
-	public String loanapplyss(){
-		System.out.println("--------------------------");
-		return "loanfinal/loanInfo";
-	}
-	@RequestMapping(value = "/loanestass")
-	public String loanestass(){
-		System.out.println("--------------------------");
-		return "loanfinal/estateInfo";
-	}
-	
-	@RequestMapping(value = "/loanimagss")
-	public String loanimagss(){
-		System.out.println("--------------------------");
-		return "loanfinal/imageInfo";
-	}
-	
-	@RequestMapping(value = "/loanlinkss")
-	public String loanlinkss(){
-		System.out.println("--------------------------");
-		return "loanfinal/linkInfo";
-	}
-	
-	@RequestMapping(value = "/loannotess")
-	public String loannotess(){
-		System.out.println("--------------------------");
-		return "loanfinal/noteInfo";	
-	}
-
-     
-     @RequestMapping(value = "/anin")
- 	public String anin(){
- 		System.out.println("--------------------------");
- 		return "/loanInfoRead";	
- 	}
-     @RequestMapping(value = "/repa")
-  	public String repa(){
-  		System.out.println("--------------------------");
-  		return "/repayConfirm";	
-  	}
-     @RequestMapping(value = "/gain")
-  	public String gain(){
-  		System.out.println("--------------------------");
-  		return "/gainProof";	
-  	}
-     @RequestMapping(value = "/reli")
-  	public String reli(){
-  		System.out.println("--------------------------");
-  		return "/relieProof";	
-  	}
-     @RequestMapping(value = "/inca")
-  	public String inca(){
-  		System.out.println("--------------------------");
-  		return "/incareProof";	
-  	}
-}

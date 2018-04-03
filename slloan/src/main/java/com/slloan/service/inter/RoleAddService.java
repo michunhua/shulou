@@ -9,6 +9,7 @@ import com.slloan.dao.BaseDao;
 import com.slloan.entity.AddRole;
 import com.slloan.entity.Page;
 import com.slloan.entity.PermissionEntity;
+import com.slloan.entity.UserLogin;
 
 /**
  * 角色添加
@@ -55,4 +56,13 @@ public interface RoleAddService extends BaseDao<AddRole>{
 	 */
 	
 	public AddRole selectByRId(AddRole addrole);
+	
+	/**
+	 * 根据角色名得到所属城市
+	 */
+	public AddRole accordingtoroleCity(AddRole param);
+	
+	//查询所有的角色
+	public List<AddRole> list();
+	
 }

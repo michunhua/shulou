@@ -54,10 +54,9 @@
 	<!-- 根据角色得到所属城市还有角色 -->
 	<select id="accordingtoroleCity" parameterType="map" resultMap="roleaadddao">
 <!-- 		select roleName,belongs_City,id from add_role order by   rolename=#{rolename} desc -->
-		select roleName,belongs_City,id from add_role 
+		select belongs_City from add_role 
 		<where>
-			<if test="rolename !='' and rolename !=null">rolename= #{rolename}</if>
-			<if test="belongs_city !='' and belongs_city !=null">and belongs_city = #{belongs_city}</if>
+			<if test="id !='' and id !=null">id= #{id}</if>
 		</where>
 
 	</select>
@@ -71,8 +70,17 @@
 			<if test="rolename !=null and rolename !=''">and rolename =#{rolename}</if>
 	 		</trim>
 	 </select> 
+	 <!-- 查询角色 -->
 	 <select id="selectByRId" parameterType="map" resultType="com.slloan.entity.AddRole">
 	 		select * from add_role  where roleName =#{roleName} and belongs_City =#{belongs_City}
+<!-- 	 		<trim prefix="where" prefixOverrides="and|or"> -->
+<!-- 	 		<if test="rolename !=null and rolename !=''"> and roleName =#{roleName}</if> -->
+<!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->
+<!-- 	 		</trim> -->
+	 </select> 
+	  <!-- 查询角色传到用户 -->
+	 <select id="list" resultType="com.slloan.entity.AddRole">
+	 		select rolename,id from add_role
 <!-- 	 		<trim prefix="where" prefixOverrides="and|or"> -->
 <!-- 	 		<if test="rolename !=null and rolename !=''"> and roleName =#{roleName}</if> -->
 <!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->

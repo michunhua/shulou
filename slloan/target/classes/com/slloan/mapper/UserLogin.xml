@@ -10,11 +10,12 @@
 		<result column="belongs_city" property="belongs_City" />
 		<result column="note" property="note" />
 		<result column="r_id" property="r_id" />
+		<result column="create_date" property="createDate" />
 	</resultMap>
 
 	<insert id="addUser" parameterType="com.slloan.entity.UserLogin">
-		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note,r_id) 
-		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note},#{r_id})
+		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note,r_id,create_date) 
+		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note},#{r_id},#{createDate})
 		
 	</insert>
 	<!-- 删除  -->
