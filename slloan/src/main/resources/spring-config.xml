@@ -34,10 +34,12 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
                 <!-- 遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/error_fileupload.jsp页面 -->  
                 <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">WEB-INF/error/filetype</prop>  
                 <!-- 处理其它异常(包括Controller抛出的) -->  
-                <prop key="java.lang.Throwable">/WEB-INF/jsp/error/404.html</prop>  
+<!--                 <prop key="java.lang.Throwable">/WEB-INF/jsp/error/404.html</prop>   -->
+					<prop key="java.lang.Throwable">/error/500</prop>  
             </props>  
         </property>  
-    </bean>  
+    </bean> 
+    
 <bean class="com.slloan.util.ExceptionHandler"></bean>
 </beans>
  
