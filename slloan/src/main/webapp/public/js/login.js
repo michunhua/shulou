@@ -38,9 +38,7 @@ var sendLogin = function(url, data, callback) {
 }
 
 var firstPage = function() {
-	var name = document.getElementById('username').value;
-	var pwd = document.getElementById('password').value;
-  window.location.href = '../user/login?username='+name+'&password='+pwd
+  window.location.href = './home/firstPage.html'
 }
 
 var verification = function(data) {
@@ -55,29 +53,60 @@ var verification = function(data) {
     }
 }
 
-var sendAjax = function(url) {
+var sendAjax = function(method, url, data) {
 	var xhr = new XMLHttpRequest()
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			console.log(xhr.responseText)
 		}
 	}
-	xhr.open('get', url)
-	xhr.send()
+	xhr.open(method, url)
+	xhr.send(data)
+}
+
+// 获取验证码
+var code = function() {
+	var method = 'GET'
+	var url = '/slloan/verificationcode'
+	var data = ''
+	sendAjax(method, url, data)
+}
+
+code()
+
+// 发送数据
+var lsendAjax = function(method, url, datas, callback) {
+    $.ajax({
+      type: method,
+      url: url,
+      data: {"username":$("#userName").val(),"password":$("#password").val()},
+      success: callback
+    })
+}
+
+// 收集数据
+var collectData = function() {
+    var data = {}
+    data.username = document.querySelector('#userName').value
+    data.password  = document.querySelector('#password').value
+    return data
 }
 
 var login = function() {
-    var data = {}
-    data.name = document.querySelector('#userName')
-    data.password = document.querySelector('#password')
-    var datas = JSON.stringify(data)
+    // var data = {}
+    // data.name = document.querySelector('#userName')
+    // data.password = document.querySelector('#password')
+    // var datas = JSON.stringify(data)
 
 
     var loginBtn = document.querySelector('#login-btn')
     loginBtn.addEventListener('click', function () {
         log('click')
-				// sendAjax('/login')
-        firstPage()
+				var method = 'GET'
+				var url = '/slloan/user/login'
+				var data = collectData()
+				lsendAjax(method, url, data, null)
+        // firstPage()
     })
 }
 

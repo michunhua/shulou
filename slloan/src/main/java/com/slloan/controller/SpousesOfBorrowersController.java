@@ -1,10 +1,13 @@
 package com.slloan.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -56,4 +59,29 @@ public class SpousesOfBorrowersController {
 			return JSON.toJSONString("fail");
 		}
 	}
+	
+//	@RequestMapping(value="")	
+//	@ResponseBody
+//	
+//	public String update(SpousesOfBorrowers spousesOfBorrowers){
+//		boolean isResult = spousesofborrowers.update(spousesOfBorrowers);
+//		if (isResult == true) {
+//			return JSON.toJSONString(isResult);
+//		}else {
+//			return JSON.toJSONString(isResult);
+//		}
+//
+//	}
+//	
+//	@RequestMapping(value = "")
+//	@ResponseBody
+//	
+//	public String delete(@RequestParam("id")Integer id){
+//		boolean isResult = spousesofborrowers.delete(id);
+//		if (isResult == true) {
+//			return JSON.toJSONString(isResult);
+//		}else {
+//			return JSON.toJSONString(isResult);
+//		}
+//	}
 }

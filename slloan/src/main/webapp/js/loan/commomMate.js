@@ -25,48 +25,18 @@ var collectData = function() {
   data.a = new Date()
   data.b = 'b'
   data.cname = e('.ch-name').value
-  // data.ename = e('.en-name').value
   data.paperwork = e('.paperwork-type').value
   data.paperNumb = e('.paperwork-numb').value
-  // data.country = e('.country').value
-  // data.gender = e('.gender').value
-  // data.census = e('.census').value
-  // data.marriage = e('.marriage').value
-  // data.housing = e('.housing').value
-  // data.birthday = e('.birthday').value
-  // data.currentAddress = e('.current-address').value
-  // data.residencePhone = e('.residence-phone').value
   data.mobilePhone = e('.mobile-phone').value
-  // data.email = e('.E-mail').value
-  // data.code = e('.zip-code').value
-  // data.career = e('.career').value
-  // data.unit = e('.unit-industry').value
   data.unitName = e('.unit-name').value
-  // data.unitAddress = e('.unit-address').value
-  // data.companyNumber = e('.company-number').value
-  // data.lastyearIncome = e('.lastyear-income').value
-  // data.assetSize = e('.asset-size').value
   data.unitPhone = e('.unit-phone').value
   data.housePhone = e('.house-phone').value
-  // data.unitCode = e('.unit-code').value
-  // data.jobsType = e('.jobs-type').value
-  // data.unitTime = e('.unit-time').value
-  // data.lastunitName = e('.lastunit-name').value
-  // data.lastunitTime = e('.lastunit-time').value
-  // data.incomeSource = e('.income-source').value
   data.salary = e('.salary').value
-  // data.investment = e('.investment').value
-  // data.rent = e('.rent').value
-  // data.added = e('.added').value
-  // data.supportPeople = e('.support-people').value
-  // data.expenses = e('.expenses').value
-  // data.communication = e('.communication').value
   return data
 }
 
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -76,12 +46,10 @@ var sendAjax = function(method, url, datas, callback) {
 }
 
 
-// 发送数据
+// 提交按钮点击事件&发送数据
 var sendData = function(element) {
-  log('send data to server')
-  var evs = document.querySelector(element)
+  var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/commonApplyspouse'
@@ -90,10 +58,19 @@ var sendData = function(element) {
   })
 }
 
+// 取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+  })
+}
+
 //
 var __main = function() {
-  log( "run")
   sendData('#save-coMate')
+  cancelBtn('#cancel')
 }
 
 __main()

@@ -32,11 +32,11 @@ var collectData = function() {
   data.repayBank = e('.repay-bank').value
   data.repayCcount = e('.repay-ccount').value
   data.reapyAccountbank = e('.reapy-accountbank').value
-  data.start='a'
-	  data.ctime='n'
+  data.start = 'a'
+  data.ctime = 'b'
   return data
 }
-
+	
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
   log('send data method')
@@ -49,17 +49,26 @@ var sendAjax = function(method, url, datas, callback) {
 }
 
 
-// 发送数据
+// 提交按钮点击事件&发送数据
 var sendData = function(element) {
   log('send data to server')
-  var evs = document.querySelector(element)
+  var evs = e(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/ApplyLoaninformation'
-    log(data)
+    log(data)	
     sendAjax(method, url, data, null)
+  })
+}
+
+// 取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
   })
 }
 
@@ -67,6 +76,7 @@ var sendData = function(element) {
 var __main = function() {
   log( "run")
   sendData('#save-loaner')
+  cancelBtn('#cancel')
 }
 
 __main()

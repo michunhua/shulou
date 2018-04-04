@@ -61,8 +61,6 @@ var collectData = function() {
   data.b='b'
   data.start = 'c'
   data.ctime ='d'
-		  
-
   return data
 }
 
@@ -78,10 +76,10 @@ var sendAjax = function(method, url, datas, callback) {
 }
 
 
-// 发送数据
+// 提交按钮&发送数据
 var sendData = function() {
   log('send data to server')
-  var evs = document.querySelector('#save-loaner')
+  var evs = e('#save-loaner')
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
@@ -92,10 +90,21 @@ var sendData = function() {
   })
 }
 
+// 取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+  })
+}
+
+
 //
 var __main = function() {
   log( "run")
   sendData()
+  cancelBtn('#cancel')
 }
 
 __main()

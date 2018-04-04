@@ -1,5 +1,7 @@
 package com.slloan.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.dao.ApplyForLoanInformationDao;
 import com.slloan.entity.ApplyForLoanInformation;
 import com.slloan.service.inter.ApplyForLoanInformationService;
 import com.slloan.util.Json;
@@ -22,6 +26,9 @@ public class ApplyForLoanInformationController {
 
 	@Autowired
 	private ApplyForLoanInformationService applyForLoanInformationservice;
+	
+	@Autowired
+	private ApplyForLoanInformationDao appdao;
 
 	/**
 	 * 申请借款信息
@@ -63,9 +70,32 @@ public class ApplyForLoanInformationController {
 	}
 	
 	/**
-	 * 贷款创建列表
+	 * 修改参数
 	 */
-
-
+	@RequestMapping(value="/modifyuser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String update(ApplyForLoanInformation applyForLoanInformation){
+		boolean isResult = applyForLoanInformationservice.update(applyForLoanInformation);
+		if (isResult == true) {
+			return JSON.toJSONString(isResult);
+		}else{
+			return JSON.toJSONString("fail");
+		}
+		
+	}
+	
+	/**
+	 * 删除数据
+	 */
+	@RequestMapping(value="")
+	@ResponseBody
+	public String delete(@RequestParam("id")Integer id){
+		boolean isResult = applyForLoanInformationservice.delete(id);
+		if (isResult == true) {
+			return JSON.toJSONString(isResult);
+		}else {
+			return JSON.toJSONString(isResult);
+		}
+ 	}
 
 }

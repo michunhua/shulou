@@ -41,7 +41,7 @@ var getEachData = function(arr, obj) {
 
 // 添加权限
 var addPower = function(data) {
-  var area = document.querySelector('.role-power')
+  var area = e('.role-power')
   var len = data.length
   if(len >= 0) {
     area.innerText = powerShow.join()
@@ -50,7 +50,7 @@ var addPower = function(data) {
 
 // 添加权限函数
 var addsomePower = function(element) {
-  var loan = document.querySelector(element)
+  var loan = e(element)
   var info = loan.querySelectorAll('.layui-form-checked')
   var into = loan.querySelectorAll('.layui-form-checkbox')
 
@@ -74,18 +74,13 @@ var addsomePower = function(element) {
 
 // 删除选中权限
 var removeSelectPower = function(element) {
-  var loan = document.querySelector(element)
+  var loan = e(element)
   loan.addEventListener('click', function(event) {
     addsomePower(element)
   })
 }
 
-removeSelectPower('.role-loan')
-removeSelectPower('.role-finance')
-removeSelectPower('.role-info')
-removeSelectPower('.role-set')
-removeSelectPower('.role-handle')
-removeSelectPower('.role-manage')
+
 
 // 错误处理
 var errorProcess = function(code) {
@@ -99,10 +94,10 @@ var errorProcess = function(code) {
 // 收集数据
 var collectData = function() {
   var data = {}
-   data.name = document.querySelector('.role-name').value
-   data.description = document.querySelector('.role-description').value
-   data.city = document.querySelector('.role-city').value
-   data.note = document.querySelector('.role-note').value
+   data.name = e('.role-name').value
+   data.description = e('.role-description').value
+   data.city = e('.role-city').value
+   data.note = e('.role-note').value
    // data.setPurview = document.querySelector('.role-power').value
    data.setPurview = getEachData(powerShow, Opower)
    return data
@@ -130,4 +125,67 @@ var sendForm = function() {
   })
 }
 
-sendForm()
+// 取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var roleText = e('.role-power')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    roleText.innerText = ''
+  })
+}
+
+// 重新渲染表单
+function renderForm(){
+  layui.use('form', function(){
+   var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+   form.render();
+  });
+ }
+
+// 获取城市 ajax
+var obtainAjax = function(method, url, datas) {
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        var evs = document.querySelector('.role-city')
+        var datas = data
+        var len = datas.length
+        for(var i = 0; i < len; i++) {
+          var options = document.createElement('option')
+          options.value = datas[i].name
+          options.innerText = datas[i].name
+          evs.appendChild(options)
+        }
+        renderForm()
+      }
+    })
+}
+
+
+
+// 获取城市
+var obtainCity = function() {
+  var method = 'GET'
+  var url = '/slloan/role/getallcity'
+  var datas = ''
+  obtainAjax(method, url, datas)
+}
+
+
+var __main = function() {
+  obtainCity()                        // 获取并渲染城市
+  removeSelectPower('.role-loan')     // 贷款权限 按钮
+  removeSelectPower('.role-finance')  // 财务权限 按钮
+  removeSelectPower('.role-info')     // 个人信息权限 按钮
+  removeSelectPower('.role-set')      // 角色设定权限 按钮
+  removeSelectPower('.role-handle')   // 权限设置 按钮
+  removeSelectPower('.role-manage')   // 用户管理 按钮
+  sendForm()                          // 保存按钮点击发送&数据
+  cancelBtn('#cancel')                // 取消按钮点击重置表单
+}
+
+__main()

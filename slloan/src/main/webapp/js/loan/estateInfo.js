@@ -19,7 +19,6 @@ layui.use('laydate', function(){
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.owner = e('.owner').value
   data.accounting = e('.accounting').value
@@ -47,7 +46,6 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -57,12 +55,10 @@ var sendAjax = function(method, url, datas, callback) {
 }
 
 
-// 发送数据
+// 提交按钮点击事件&发送数据
 var sendData = function() {
-  log('send data to server')
-  var evs = document.querySelector('#save-loaner')
+  var evs = e('#save-loaner')
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/housepropertydata'
@@ -71,10 +67,19 @@ var sendData = function() {
   })
 }
 
+// 取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+  })
+}
+
 //
 var __main = function() {
-  log( "run")
   sendData()
+  cancelBtn('#cancel')
 }
 
 __main()

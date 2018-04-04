@@ -10,13 +10,13 @@ import java.io.Serializable;
 public class CoborrowerSpouse implements Serializable{
 	
 	private Integer id;
-	private String name;							//共同借款人配偶姓名
+	private String name;						//共同借款人配偶姓名
 	private String id_Type;          			//身份证件类型
 	private String id_Number;					//身份证件号码
-	private String uni_Name;						//单位名称
+	private String uni_Name;					//单位名称
 	private String unit_Phone;					//单位电话
 	private String home_Phone;					//住宅电话
-	private String mobile_Phone;					//手机
+	private String mobile_Phone;				//手机
 	private String monthly_Income;				//月收入
 	private String start;
 	private String ctime;

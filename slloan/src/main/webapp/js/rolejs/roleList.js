@@ -1,26 +1,3 @@
-// layui.use('table', function(){
-//   var table = layui.table;
-//
-//   //第一个实例
-//   table.render({
-//     elem: '#demo'
-//     ,height: 315
-//     // ,url: '/demo/table/user/' //数据接口
-//     ,url: '/slloan/role/rolemanagement.do'
-//     ,page: true //开启分页
-//     ,cols: [[ //表头
-//       {checkbox: false, width:200,  fixed: 'left'}
-//       ,{field: 'totalCount', title: '序号', width:200}
-//       ,{field: 'roleName', title: '角色', width:200, sort: true}
-//       ,{field: 'createDate', title: '创建时间', width:200}
-//     ]]
-//   });
-// });
-
-
-
-
-
 // 发送 ajax
 var sendAjax = function(method, url, datas) {
     $.ajax({
@@ -136,7 +113,7 @@ var singlesendAjax = function(method, url, datas, callback) {
       var findEl = document.querySelector('.update')
       findEl.addEventListener('click', function() {
         var method = 'GET'
-        var url = '/slloan/role/selectbyid'
+        var url = '/role/selectbyid'
         var data = {'id':'150'}
         console.log('update')
         singlesendAjax(method, url, data, null)
@@ -148,7 +125,7 @@ var singlesendAjax = function(method, url, datas, callback) {
     var findEl = document.querySelector(element)
     findEl.addEventListener('click', function() {
       var method = 'GET'
-      var url = '/slloan/role/updateadd'
+      var url = 'role/update'
       var data = {'id':'150'}
       console.log('update')
       singlesendAjax(method, url, data, null)

@@ -1,5 +1,7 @@
 package com.slloan.service.impl;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +49,13 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 
 	@Override
 	public boolean delete(int id) {
+		boolean isResilt = app.delete(id);
+		if(isResilt == true){
+			return true;
+		}else {
+			return false;
+		}
 		
-		return app.delete(id);
 	}
 
 	
@@ -60,8 +67,26 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 
 	@Override
 	public boolean update(ApplyForLoanInformation applyForLoanInformation) {
-		// TODO Auto-generated method stub
-		return false;
+		 String amount =applyForLoanInformation.getAmount();						//金额
+		 String time_Limit=applyForLoanInformation.getTime_Limit();					//期限
+		 String borrowing_Variety=applyForLoanInformation.getBorrowing_Variety();    		//借款品种
+		 String repayment=applyForLoanInformation.getRepayment();					//还款方式
+		 String receiving_Bank_Name=applyForLoanInformation.getReceiving_Bank_Name();  		//收款银行名称
+		 String receiving_Account_Name=applyForLoanInformation.getReceiving_Account_Name();	    //收款账户名
+		 String receiving_Account=applyForLoanInformation.getReceiving_Account();    		//收款账号
+		 String repayment_Bank_name=applyForLoanInformation.getRepayment_Bank_name();  		//还款银行名称
+		 String repayment_Account_Name=applyForLoanInformation.getRepayment_Account_Name(); 		//还款账户名
+		 String repayment_Account_Number=applyForLoanInformation.getRepayment_Account_Number();		//还款账号
+		 String start = applyForLoanInformation.getStart();
+		 String ctime = applyForLoanInformation.getCtime();
+		 ApplyForLoanInformation apc = new ApplyForLoanInformation(amount,time_Limit,borrowing_Variety,repayment,receiving_Bank_Name,receiving_Account_Name,receiving_Account,repayment_Bank_name,repayment_Account_Name,repayment_Account_Number,start,ctime);
+		 boolean isResult = app.update(apc);
+		 if (isResult == true) {
+			return true;
+		}else{
+			return false;
+		}
+			
 	}
 
 	@Override
@@ -69,9 +94,5 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
-	
-	
 
 }

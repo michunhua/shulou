@@ -2,10 +2,12 @@ package com.slloan.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -23,7 +25,7 @@ import net.sf.json.JSONObject;
  * @author Administrator
  *
  */
-@Controller(value="jointapplicantcontroll")
+@Controller(value = "jointapplicantcontroll")
 @RequestMapping("loan")
 public class JointApplicantController {
 
@@ -31,65 +33,66 @@ public class JointApplicantController {
 	private JointApplicantService jointapplicant;
 
 	@ResponseBody
-	@RequestMapping(value="/commonApplydata")
+	@RequestMapping(value = "/commonApplydata")
 	public String save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 
-		String name=obj.getString("cname");  // 共同借款人姓名
-		 String phoneticize=obj.getString("ename");  // 拼音、英文姓名
-		 String id_type=obj.getString("paperwork");  // 身份证件类型
-		 String id_number=obj.getString("paperNumb"); // 身份证件号码
-		 String relationship_with_borrower=obj.getString("country"); // 与借款人关系
-		 String country_and_region=obj.getString("gender");  // 国家及地区
-		 String sex=obj.getString("census");  // 性别: 0男 1女
-		 String Local_domicile=obj.getString("marriage");  // 本地户籍
-		 String household_registration=obj.getString("housing");  // 户籍所在地
-		 String marital_status=obj.getString("birthday");  // 婚姻情况0已婚，1未婚
-		 String housing_condition_now=obj.getString("currentAddress");  // 0房改/继承 1按揭自置2无按揭自置 3与父母同住 4租借// 5公司提供 6其他
-		 String birthday=obj.getString("residencePhone");  // 出生日期
-		 String home_address_now=obj.getString("mobilePhone");  // 现住房地址
-		 String home_phone=obj.getString("email");  // 住宅电话
-		 String mobile_phone=obj.getString("code");  // 移动电话
-		 String email=obj.getString("career");  // E-mail
-		 String present_address_zip_code=obj.getString("unit");  // 现住址邮编
-		 String vocation=obj.getString("unitName");  // 职业
-		 String unit_industry=obj.getString("unitAddress");  // 现单位所处行业
-		 String uni_name=obj.getString("companyNumber");  // 现单位名称
-		 String unit_address=obj.getString("lastyearIncome");  // 现单位地址
-		 String enterprise_scale=obj.getString("assetSize");  // 就职企业规模
-		 double Revenue_in_the_previous_year=Double.valueOf(obj.getString("unitPhone"));
-		 String asset_scale=obj.getString("unitCode");  // 资产规模
-		 String unit_phone=obj.getString("jobsType");  // 单位电话
-		 String postCode=obj.getString("unitTime");  // 单位邮编
-		 String job_category=obj.getString("lastunitName");  // 职位类别
-		 String seniority=obj.getString("lastunitTime");  // 现单位工龄
-		 String former_unit_name=obj.getString("incomeSource");  // 前单位名称
-		 String former_seniority=obj.getString("salary");  // 前单位工龄
-		 String source_of_income=obj.getString("investment");  // 收入来源
-		 double monthly_income = Double.valueOf(obj.getString("rent"));  // 月收入
-		 double Income_from_investment = Double.valueOf(obj.getString("added"));// 投资收益
-		 double Rent_income = Double.valueOf(obj.getString("supportPeople"));// 租金收入
-		 double Other_income = Double.valueOf(obj.getString("expenses"));// 其他收入
-		 String family_number=obj.getString("communication");  // 供养人数
-		 double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
-		 String postal_address=obj.getString("b");  // 通讯地址
-		 String start=obj.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		 String ctime=obj.getString("ctime");  // 创建时间
+		String name = obj.getString("cname"); // 共同借款人姓名
+		String phoneticize = obj.getString("ename"); // 拼音、英文姓名
+		String id_type = obj.getString("paperwork"); // 身份证件类型
+		String id_number = obj.getString("paperNumb"); // 身份证件号码
+		String relationship_with_borrower = obj.getString("country"); // 与借款人关系
+		String country_and_region = obj.getString("gender"); // 国家及地区
+		String sex = obj.getString("census"); // 性别: 0男 1女
+		String Local_domicile = obj.getString("marriage"); // 本地户籍
+		String household_registration = obj.getString("housing"); // 户籍所在地
+		String marital_status = obj.getString("birthday"); // 婚姻情况0已婚，1未婚
+		String housing_condition_now = obj.getString("currentAddress"); // 0房改/继承
+																		// 1按揭自置2无按揭自置
+																		// 3与父母同住
+																		// 4租借//
+																		// 5公司提供
+																		// 6其他
+		String birthday = obj.getString("residencePhone"); // 出生日期
+		String home_address_now = obj.getString("mobilePhone"); // 现住房地址
+		String home_phone = obj.getString("email"); // 住宅电话
+		String mobile_phone = obj.getString("code"); // 移动电话
+		String email = obj.getString("career"); // E-mail
+		String present_address_zip_code = obj.getString("unit"); // 现住址邮编
+		String vocation = obj.getString("unitName"); // 职业
+		String unit_industry = obj.getString("unitAddress"); // 现单位所处行业
+		String uni_name = obj.getString("companyNumber"); // 现单位名称
+		String unit_address = obj.getString("lastyearIncome"); // 现单位地址
+		String enterprise_scale = obj.getString("assetSize"); // 就职企业规模
+		double Revenue_in_the_previous_year = Double.valueOf(obj.getString("unitPhone"));
+		String asset_scale = obj.getString("unitCode"); // 资产规模
+		String unit_phone = obj.getString("jobsType"); // 单位电话
+		String postCode = obj.getString("unitTime"); // 单位邮编
+		String job_category = obj.getString("lastunitName"); // 职位类别
+		String seniority = obj.getString("lastunitTime"); // 现单位工龄
+		String former_unit_name = obj.getString("incomeSource"); // 前单位名称
+		String former_seniority = obj.getString("salary"); // 前单位工龄
+		String source_of_income = obj.getString("investment"); // 收入来源
+		double monthly_income = Double.valueOf(obj.getString("rent")); // 月收入
+		double Income_from_investment = Double.valueOf(obj.getString("added"));// 投资收益
+		double Rent_income = Double.valueOf(obj.getString("supportPeople"));// 租金收入
+		double Other_income = Double.valueOf(obj.getString("expenses"));// 其他收入
+		String family_number = obj.getString("communication"); // 供养人数
+		double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
+		String postal_address = obj.getString("b"); // 通讯地址
+		String start = obj.getString("start"); // 状态
+												// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime = obj.getString("ctime"); // 创建时间
 
-	
-	
-		JointApplicant joint = new JointApplicant(name, phoneticize, id_type,id_number,
-				relationship_with_borrower,  country_and_region,  sex, Local_domicile,
-				household_registration, marital_status,  housing_condition_now, birthday,
-				home_address_now,  home_phone, mobile_phone,email,
-				present_address_zip_code,vocation,unit_industry, uni_name,
-				 unit_address, enterprise_scale, Revenue_in_the_previous_year,asset_scale,
-				 unit_phone, postCode, job_category, seniority, former_unit_name,
-				former_seniority,source_of_income, monthly_income, Income_from_investment,
-				Rent_income,  Other_income, family_number,monthly_expenditure,
-				 postal_address,  start, ctime);
+		JointApplicant joint = new JointApplicant(name, phoneticize, id_type, id_number, relationship_with_borrower,
+				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
+				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
+				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
+				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
+				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
+				postal_address, start, ctime);
 		boolean jo = jointapplicant.save(joint);// 插入角色
 
 		if (jo == true) {
@@ -100,206 +103,403 @@ public class JointApplicantController {
 
 	}
 
-		@RequestMapping(value = "/loancrea")
-		public String loancrea(){
-			System.out.println("--------------------------");
-			return "loan/loanCreateTable";
-		}
+	/**
+	 * 删除
+	 */
+//	@RequestMapping(value = "")
+//	@ResponseBody
+//	public String delete(@RequestParam("id") Integer id) {
+//		boolean isReslt = jointapplicant.delete(id);
+//		if (isReslt == true) {
+//			return JSON.toJSONString(isReslt);
+//		} else {
+//			return JSON.toJSONString(isReslt);
+//		}
+//	}
 
-		@RequestMapping(value = "/loanjoin")
-		public String loanjoin(){
-			System.out.println("--------------------------");
-			return "loan/loanerInfo";
-		}
-		@RequestMapping(value = "/loancom")
-		public String loancom(){
-			System.out.println("--------------------------");
-			return "loan/commomLoanerInfo";
-		}
-		
-		@RequestMapping(value = "/loanerma")	
-		public String loanerma(){
-			System.out.println("--------------------------");
-			return "loan/loanerMate";
-		}
-		
-		@RequestMapping(value = "/loancomm")
-		public String loancomm(){
-			System.out.println("--------------------------");
-			return "loan/commomMate";
-		}
-		
-		@RequestMapping(value = "/loanapply")
-		public String loanapply(){
-			System.out.println("--------------------------");
-			return "loan/loanInfo";
-		}
-		@RequestMapping(value = "/loanesta")
-		public String loanesta(){
-			System.out.println("--------------------------");
-			return "loan/estateInfo";
-		}
-		
-		@RequestMapping(value = "/loanimag")
-		public String loanimag(){
-			System.out.println("--------------------------");
-			return "loan/imageInfo";
-		}
-		
-		@RequestMapping(value = "/loanlink")
-		public String loanlink(){
-			System.out.println("--------------------------");
-			return "loan/linkInfo";
-		}
-		
-		@RequestMapping(value = "/loannote")
-		public String loannote(){
-			System.out.println("--------------------------");
-			return "loan/noteInfo";
-		}
-		
-		@RequestMapping(value = "/loancreas")
-		public String loancreas(){
-			System.out.println("--------------------------");
-			return "loanfirst/loanFirstTable";
-		}
-
-		@RequestMapping(value = "/loanjoins")
-		public String loanjoins(){
-			System.out.println("--------------------------");
-			return "loanfirst/loanerInfo";
-		}
-		@RequestMapping(value = "/loancoms")
-		public String loancoms(){
-			System.out.println("--------------------------");
-			return "loanfirst/commomLoanerInfo";
-		}
-		
-		@RequestMapping(value = "/loanermas")	
-		public String loanermas(){
-			System.out.println("--------------------------");
-			return "loanfirst/loanerMate";
-		}
-		
-		@RequestMapping(value = "/loancomms")
-		public String loancomms(){
-			System.out.println("--------------------------");
-			return "loanfirst/commomMate";
-		}
-		
-		@RequestMapping(value = "/loanapplys")
-		public String loanapplys(){
-			System.out.println("--------------------------");
-			return "loanfirst/loanInfo";
-		}
-		@RequestMapping(value = "/loanestas")
-		public String loanestas(){
-			System.out.println("--------------------------");
-			return "loanfirst/estateInfo";
-		}
-		
-		@RequestMapping(value = "/loanimags")
-		public String loanimags(){
-			System.out.println("--------------------------");
-			return "loanfirst/imageInfo";
-		}
-		
-		@RequestMapping(value = "/loanlinks")
-		public String loanlinks(){
-			System.out.println("--------------------------");
-			return "loanfirst/linkInfo";
-		}
-		
-		@RequestMapping(value = "/loannotes")
-		public String loannotes(){
-			System.out.println("--------------------------");
-			return "loanfirst/noteInfo";
-		}
-		
-		@RequestMapping(value = "/loancreass")
-		public String loancreass(){
-			System.out.println("--------------------------");
-			return "loanfinal/loanFinalTable";
-		}
-
-		@RequestMapping(value = "/loanjoinss")
-		public String loanjoinss(){
-			System.out.println("--------------------------");
-			return "loloanfinalan/loanerInfo";
-		}
-		@RequestMapping(value = "/loancomss")
-		public String loancomss(){
-			System.out.println("--------------------------");
-			return "loanfinal/commomLoanerInfo";
-		}
-		
-		@RequestMapping(value = "/loanermass")	
-		public String loanermass(){
-			System.out.println("--------------------------");
-			return "loanfinal/loanerMate";
-		}
-		
-		@RequestMapping(value = "/loancommss")
-		public String loancommss(){
-			System.out.println("--------------------------");
-			return "loanfinal/commomMate";
-		}
-		
-		@RequestMapping(value = "/loanapplyss")
-		public String loanapplyss(){
-			System.out.println("--------------------------");
-			return "loanfinal/loanInfo";
-		}
-		@RequestMapping(value = "/loanestass")
-		public String loanestass(){
-			System.out.println("--------------------------");
-			return "loanfinal/estateInfo";
-		}
-		
-		@RequestMapping(value = "/loanimagss")
-		public String loanimagss(){
-			System.out.println("--------------------------");
-			return "loanfinal/imageInfo";
-		}
-		
-		@RequestMapping(value = "/loanlinkss")
-		public String loanlinkss(){
-			System.out.println("--------------------------");
-			return "loanfinal/linkInfo";
-		}
-		
-		@RequestMapping(value = "/loannotess")
-		public String loannotess(){
-			System.out.println("--------------------------");
-			return "loanfinal/noteInfo";	
-		}
-
-	     
-	     @RequestMapping(value = "/anin")
-	 	public String anin(){
-	 		System.out.println("--------------------------");
-	 		return "/loanInfoRead";	
-	 	}
-	     @RequestMapping(value = "/repa")
-	  	public String repa(){
-	  		System.out.println("--------------------------");
-	  		return "/repayConfirm";	
-	  	}
-	     @RequestMapping(value = "/gain")
-	  	public String gain(){
-	  		System.out.println("--------------------------");
-	  		return "/gainProof";	
-	  	}
-	     @RequestMapping(value = "/reli")
-	  	public String reli(){
-	  		System.out.println("--------------------------");
-	  		return "/relieProof";	
-	  	}
-	     @RequestMapping(value = "/inca")
-	  	public String inca(){
-	  		System.out.println("--------------------------");
-	  		return "/incareProof";	
-	  	}
-	
+	/**
+	 * 贷款创建列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancrea")
+	public String loancrea() {
+		System.out.println("--------------------------");
+		return "loan/loanCreateTable";
 	}
 
+	/**
+	 * 申请人资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanjoin")
+	public String loanjoin() {
+		System.out.println("--------------------------");
+		return "loan/loanerInfo";
+	}
+
+	/**
+	 * 共同申请人资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancom")
+	public String loancom() {
+		System.out.println("--------------------------");
+		return "loan/commomLoanerInfo";
+	}
+
+	/**
+	 * 申请人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanerma")
+	public String loanerma() {
+		System.out.println("--------------------------");
+		return "loan/loanerMate";
+	}
+
+	/**
+	 * 共同申请人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancomm")
+	public String loancomm() {
+		System.out.println("--------------------------");
+		return "loan/commomMate";
+	}
+
+	/**
+	 * 申请借款资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanapply")
+	public String loanapply() {
+		System.out.println("--------------------------");
+		return "loan/loanInfo";
+	}
+
+	/**
+	 * 房产资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanesta")
+	public String loanesta() {
+		System.out.println("--------------------------");
+		return "loan/estateInfo";
+	}
+
+	/**
+	 * 影像资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanimag")
+	public String loanimag() {
+		System.out.println("--------------------------");
+		return "loan/imageInfo";
+	}
+
+	/**
+	 * 联系人信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanlink")
+	public String loanlink() {
+		System.out.println("--------------------------");
+		return "loan/linkInfo";
+	}
+
+	/**
+	 * 备注说明
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannote")
+	public String loannote() {
+		System.out.println("--------------------------");
+		return "loan/noteInfo";
+	}
+
+	/**
+	 * 贷款初审列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancreas")
+	public String loancreas() {
+		System.out.println("--------------------------");
+		return "loanfirst/loanFirstTable";
+	}
+
+	/**
+	 * 贷款初审借款人资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanjoins")
+	public String loanjoins() {
+		System.out.println("--------------------------");
+		return "loanfirst/loanerInfo";
+	}
+
+	/**
+	 * 贷款初审共同借款人资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancoms")
+	public String loancoms() {
+		System.out.println("--------------------------");
+		return "loanfirst/commomLoanerInfo";
+	}
+
+	/**
+	 * 贷款初审借款人配偶信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanermas")
+	public String loanermas() {
+		System.out.println("--------------------------");
+		return "loanfirst/loanerMate";
+	}
+
+	/**
+	 * 贷款初审共同借款人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancomms")
+	public String loancomms() {
+		System.out.println("--------------------------");
+		return "loanfirst/commomMate";
+	}
+
+	/**
+	 * 贷款初审借款资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanapplys")
+	public String loanapplys() {
+		System.out.println("--------------------------");
+		return "loanfirst/loanInfo";
+	}
+
+	/**
+	 * 贷款初审房产资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanestas")
+	public String loanestas() {
+		System.out.println("--------------------------");
+		return "loanfirst/estateInfo";
+	}
+
+	/**
+	 * 贷款初审影像资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanimags")
+	public String loanimags() {
+		System.out.println("--------------------------");
+		return "loanfirst/imageInfo";
+	}
+
+	/**
+	 * 贷款初审联系人信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanlinks")
+	public String loanlinks() {
+		System.out.println("--------------------------");
+		return "loanfirst/linkInfo";
+	}
+
+	/**
+	 * 贷款初审备注
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannotes")
+	public String loannotes() {
+		System.out.println("--------------------------");
+		return "loanfirst/noteInfo";
+	}
+
+	/**
+	 * 贷款终审贷款列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancreass")
+	public String loancreass() {
+		System.out.println("--------------------------");
+		return "loanfinal/loanFinalTable";
+	}
+
+	/**
+	 * 贷款终审申请人资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanjoinss")
+	public String loanjoinss() {
+		System.out.println("--------------------------");
+		return "loanfinal/loanerInfo";
+	}
+
+	/**
+	 * 贷款终审共同借款人资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancomss")
+	public String loancomss() {
+		System.out.println("--------------------------");
+		return "loanfinal/commomLoanerInfo";
+	}
+
+	/**
+	 * 贷款终审申请人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanermass")
+	public String loanermass() {
+		System.out.println("--------------------------");
+		return "loanfinal/loanerMate";
+	}
+
+	/**
+	 * 贷款终审共同申请人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loancommss")
+	public String loancommss() {
+		System.out.println("--------------------------");
+		return "loanfinal/commomMate";
+	}
+
+	/**
+	 * 贷款终审贷款申请信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanapplyss")
+	public String loanapplyss() {
+		System.out.println("--------------------------");
+		return "loanfinal/loanInfo";
+	}
+
+	/**
+	 * 贷款终审房产资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanestass")
+	public String loanestass() {
+		System.out.println("--------------------------");
+		return "loanfinal/estateInfo";
+	}
+
+	/**
+	 * 贷款终审影像资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanimagss")
+	public String loanimagss() {
+		System.out.println("--------------------------");
+		return "loanfinal/imageInfo";
+	}
+
+	/**
+	 * 贷款终审联系人信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanlinkss")
+	public String loanlinkss() {
+		System.out.println("--------------------------");
+		return "loanfinal/linkInfo";
+	}
+
+	/**
+	 * 贷款终审备注
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannotess")
+	public String loannotess() {
+		System.out.println("--------------------------");
+		return "loanfinal/noteInfo";
+	}
+
+	/**
+	 * 贷款信息查看
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/anin")
+	public String anin() {
+		System.out.println("--------------------------");
+		return "/loanInfoRead";
+	}
+
+	/**
+	 * 回款确认
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/repa")
+	public String repa() {
+		System.out.println("--------------------------");
+		return "/repayConfirm";
+	}
+
+	/**
+	 * 取证凭证
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/gain")
+	public String gain() {
+		System.out.println("--------------------------");
+		return "/gainProof";
+	}
+
+	/**
+	 * 解压凭证
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/reli")
+	public String reli() {
+		System.out.println("--------------------------");
+		return "/reliefProof";
+	}
+
+	/**
+	 * 进押凭证
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/inca")
+	public String inca() {
+		System.out.println("--------------------------");
+		return "/incareProof";
+	}
+
+}

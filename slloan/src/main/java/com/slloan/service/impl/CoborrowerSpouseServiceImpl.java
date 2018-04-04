@@ -38,14 +38,35 @@ public class CoborrowerSpouseServiceImpl implements CoborrowerSpouseService {
 	}
 	@Override
 	public boolean update(CoborrowerSpouse coborrowerSpouse) {
-		// TODO Auto-generated method stub
-		return false;
+		 String name =coborrowerSpouse.getName();						//金额
+		 String id_Type=coborrowerSpouse.getId_Type();					//期限
+		 String id_Number=coborrowerSpouse.getId_Number();    		//借款品种
+		 String uni_Name=coborrowerSpouse.getUni_Name();					//还款方式
+		 String unit_Phone=coborrowerSpouse.getUnit_Phone();  		//收款银行名称
+		 String home_Phone=coborrowerSpouse.getHome_Phone();	    //收款账户名
+		 String mobile_Phone=coborrowerSpouse.getMobile_Phone();    		//收款账号
+		 String monthly_Income=coborrowerSpouse.getMonthly_Income();  		//还款银行名称
+		 String start = coborrowerSpouse.getStart();
+		 String ctime = coborrowerSpouse.getCtime();
+		 CoborrowerSpouse cob = new CoborrowerSpouse(name,id_Type,id_Number,uni_Name,unit_Phone,home_Phone,mobile_Phone,monthly_Income,start,ctime);
+		boolean isResult = coborrowerSpouseDao.update(cob);
+		if (isResult == true) {
+			return true;
+		}else{
+			return false;
+		}
+			
+		
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean	isResult = 	coborrowerSpouseDao.delete(id);
+		if(isResult == true){
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	@Override

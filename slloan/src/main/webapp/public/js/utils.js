@@ -5,7 +5,7 @@ var log = console.log.bind(console)
 
 // 获取一个 DOM 数组
 var es = function(elements) {
-    return document.querySelector(elements)
+    return document.querySelectorAll(elements)
 }
 
 //  获取一个 DOM 节点

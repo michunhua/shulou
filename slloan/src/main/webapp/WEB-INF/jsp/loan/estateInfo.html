@@ -17,7 +17,6 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
                     admin
                 </a>
                 <dl class="layui-nav-child">
@@ -143,7 +142,7 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;">用户</a>
                         <dl class="layui-nav-child">
-                            <dd class="layui-this"><a href="../user/ulist">用户列表</a></dd>
+                            <dd><a href="../user/ulist">用户列表</a></dd>
                             <dd><a href="../user/addu">添加用户</a></dd>
                             <dd><a href="../user/allotuser">分配角色</a></dd>
                             <dd><a href="../user/delu">删除用户</a></dd>
@@ -153,7 +152,7 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;">角色</a>
                         <dl class="layui-nav-child">
-                          <dd class="layui-this"><a href="../role/rolelist">角色列表</a></dd>
+                          <dd><a href="../role/rolelist">角色列表</a></dd>
                             <dd><a href="../role/roleadd">添加角色</a></dd>
                             <dd><a href="../role/updaterole">修改角色权限</a></dd>
                         </dl>
@@ -302,12 +301,12 @@
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
             </div>
-            
+
           </form>
           <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn"  lay-filter="formDemo" id = 'save-loaner'>立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+                <button class="layui-btn"  lay-filter="formDemo" id = 'save-loaner'>保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id = 'cancel'>取消</button>
               </div>
             </div>
         </div>
@@ -320,6 +319,7 @@
 </div>
 <script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
 <script type="text/javascript" src="../js/loan/estateInfo.js"></script>
 </body>

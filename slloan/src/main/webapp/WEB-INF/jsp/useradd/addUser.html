@@ -17,7 +17,6 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
                     admin
                 </a>
                 <dl class="layui-nav-child">
@@ -42,7 +41,7 @@
                         <dl class="layui-nav-child">
                             <dd><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
                             <dd><a href="../../slloan/loan/loanjoin">借款申请人个人资料</a></dd>
-                            <dd class="layui-this"><a href="../../slloan/loan/loancom">共同申请人个人资料</a></dd>
+                            <dd><a href="../../slloan/loan/loancom">共同申请人个人资料</a></dd>
                             <dd><a href="../../slloan/loan/loanerma">借款申请人配偶</a></dd>
                             <dd><a href="../../slloan/loan/loancomm">共同申请人配偶</a></dd>
                             <dd><a href="../../slloan/loan/loanapply">申请借款信息</a></dd>
@@ -83,23 +82,23 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item " id = 'tree-read'>
-                        <a href="../../loanManagement/loanInfoRead.html">贷款信息查看</a>
-                    </li>
-                    <li class="layui-nav-item " id = 'tree-confirm'>
-                        <a href="../../loanManagement/repayConfirm.html">回款确认</a>
-                      </dl>
-                    </li>
-                    <li class="layui-nav-item " id = 'tree-gain'>
-                        <a href="../../loanManagement/gainProof.html">取证凭证</a>
+                        <a href="../../slloan/loan/anin">贷款信息查看</a>
+                      </li>
+                      <li class="layui-nav-item ">
+                          <a href="../../slloan/loan/repa">回款确认</a>
                         </dl>
-                    </li>
-                    <li class="layui-nav-item " id = 'tree-relief'>
-                        <a href="../../loanManagement/reliefProof.html">解押凭证</a>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item " id = 'tree-incare'>
-                        <a href="../../loanManagement/incareProof.html">进押凭证</a>
-                    </li>
+                      </li>
+                      <li class="layui-nav-item layui-this">
+                          <a href="../../slloan/loan/gain">取证凭证</a>
+                          </dl>
+                      </li>
+                      <li class="layui-nav-item ">
+                          <a href="../../slloan/loan/reli">解押凭证</a>
+                          </dl>
+                      </li>
+                      <li class="layui-nav-item ">
+                          <a href="../../slloan/loan/inca">进押凭证</a>
+                      </li>
                 </ul>
               </div>
             </div>
@@ -143,8 +142,8 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;">用户</a>
                         <dl class="layui-nav-child">
-                           <dd class="layui-this"><a href="../user/ulist">用户列表</a></dd>
-                            <dd><a href="../user/addu">添加用户</a></dd>
+                           <dd><a href="../user/ulist">用户列表</a></dd>
+                            <dd class="layui-this"><a href="../user/addu">添加用户</a></dd>
                             <dd><a href="../user/allotuser">分配角色</a></dd>
                             <dd><a href="../user/delu">删除用户</a></dd>
                             <dd><a href="../user/updateuser">修改用户信息</a></dd>
@@ -198,13 +197,8 @@
             <div class="layui-form-item">
               <label class="layui-form-label">分配角色</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="role">
+                <select name="city" lay-verify="required" lay-filter="role" class="role">
                   <option value=""></option>
-                  <option value="0">按揭员</option>
-                  <option value="1">初审</option>
-                  <option value="2">终审</option>
-                  <option value="3">审批财务</option>
-                  <option value="4">放款财务</option>
                 </select>
               </div>
             </div>
@@ -212,12 +206,6 @@
               <label class="layui-form-label">所属城市</label>
               <div class="layui-input-inline">
                 <select name="city" lay-verify="required" class="city">
-                  <option value=""></option>
-                  <option value="0">深圳</option>
-                  <option value="1">广州</option>
-                  <option value="2">北京</option>
-                  <option value="3">上海</option>
-                  <option value="4">南京</option>
                 </select>
               </div>
             </div>
@@ -227,13 +215,13 @@
                 <textarea name="desc" class="text-note" placeholder="请输入内容" class="layui-textarea" rows="8" cols="80"></textarea>
               </div>
             </div>
-            <div class="layui-form-item">
-              <div class="layui-input-block">
-                <button id = 'save-data' type="reset" class="layui-btn">确定保存</button>
-                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
-              </div>
-            </div>
           </form>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <button id = 'save-data' type="reset" class="layui-btn">确定保存</button>
+              <button type="reset" class="layui-btn layui-btn-primary" id  = 'cancel'>取消</button>
+            </div>
+          </div>
         </div>
 
     </div>
@@ -243,10 +231,10 @@
         © 版权所有
     </div>
 </div>
-
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
 <script type="text/javascript" src="../js/userjs/addUser.js"></script>
-<!--     <script src="./bootstrap-treeview.js"></script> -->
 </body>
 </html>

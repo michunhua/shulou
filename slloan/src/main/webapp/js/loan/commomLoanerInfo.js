@@ -1,4 +1,4 @@
-//自定义
+	//自定义
 var log = console.log.bind(console)
 
 // 自定义
@@ -57,16 +57,15 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
-  data.a=12.5
-  data.b='n'
-  data.start='c'
-  data.ctime='d'
+  data.a = '12.3'
+  data.b = 'b'
+  data.start = 'c'
+  data.ctime = 'd'
   return data
 }
 
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -76,10 +75,9 @@ var sendAjax = function(method, url, datas, callback) {
 }
 
 
-// 发送数据
+// 提交按钮点击事件&发送数据
 var sendData = function(element) {
-  log('send data to server')
-  var evs = document.querySelector(element)
+  var evs = e(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
@@ -90,10 +88,19 @@ var sendData = function(element) {
   })
 }
 
+// 取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+  })
+}
+
 //
 var __main = function() {
-  log( "run")
   sendData('#save-data')
+  cancelBtn('#cancel')
 }
 
 __main()

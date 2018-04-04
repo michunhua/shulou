@@ -17,7 +17,9 @@ public interface personalProfileDao {
 		
 		boolean delete(int id); 
 		
-		boolean update(PersonalProfile personalProfile);  
+		
 		
 		List<PersonalProfile> findAll();
+
+		boolean update(PersonalProfile personalProfile);
 }

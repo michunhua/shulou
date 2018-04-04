@@ -189,9 +189,12 @@ public class UserController {
 	 * @return
 	 * @throws IOException 
 	 */
-	@RequestMapping(value="/login",method={RequestMethod.GET,RequestMethod.POST},produces="application/json;charset=utf-8")
+	@RequestMapping(value="/login",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Object updateselectId(HttpSession session,HttpServletRequest req,HttpServletResponse response) throws IOException{
+		req.setCharacterEncoding("utf-8");
+//		String data = req.getParameter("data");
+//		JSONObject jsonobject = new JSONObject().fromObject(data);
 		String username = req.getParameter("username");
 		String password  = req.getParameter("password");
 		List<Object> li = new ArrayList<Object>();
@@ -216,7 +219,7 @@ public class UserController {
 				li.add(entity);
 			}
 		//		li.add(addrole);
-		li.add(userlogin);
+//		li.add(userlogin);
 	
 //		List<AddRole> r = neW ARRAYLIST<ADDROLE>();
 //		LIST<USERLOGIN> DD = new ArrayList<UserLogin>();

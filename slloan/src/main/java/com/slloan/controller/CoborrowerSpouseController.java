@@ -2,12 +2,15 @@
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -23,7 +26,7 @@ import net.sf.json.JSONObject;
  * @author xue
  *
  */
-@Controller(value="coborrowerspousecontroller")
+@Controller(value="coborrowers")
 @RequestMapping("loan")
 public class CoborrowerSpouseController {
 	
@@ -36,23 +39,9 @@ public class CoborrowerSpouseController {
 
 	String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
 	JSONObject obj = new JSONObject().fromObject(role_constant);
-//		String name = req.getParameter("cname"); // 閲戦
-//		String id_Type = req.getParameter("paperwork"); // 鏈熼檺
-//		String id_Number = req.getParameter("paperNumb"); // 鍊熸鍝佺 
-//		String uni_Name = req.getParameter("unitName"); // 杩樻鏂瑰紡
-//		String unit_Phone = req.getParameter("unitPhone"); // 鏀舵閾惰鍚嶇О
-//		String home_Phone = req.getParameter("housePhone"); // 鏀舵璐︽埛鍚�
-//		String mobile_Phone = req.getParameter("mobilePhone"); // 鏀舵璐﹀彿
-//		String monthly_Income = req.getParameter("salary"); // 杩樻閾惰鍚嶇О
-//		
-////		String monthly_Income = String.valueOf( req.getParameter("tatle"));
-//		String start = req.getParameter("1");
-//		String ctime = req.getParameter("2");
-		
-		
 
-	 Date now = new Date( );
-     SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd.hh:mm:ss");
+	 	Date now = new Date( );
+     	SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd.hh:mm:ss");
 		String name = obj.getString("cname"); // 共同借款人配偶姓名戦
 		String id_Type = obj.getString("paperwork"); //身份证件类型
 		String id_Number =obj.getString("paperNumb"); // 身份证件号码
@@ -74,10 +63,41 @@ public class CoborrowerSpouseController {
 		}
 
 	}
-//	@RequestMapping("/aa.do")
-//	public String t(){
-//		
-//		return "tjuser";
+	
+	
+	/**
+	 * 根据id 删除用户
+	 * @param req
+	 * @return
+	 */
+	
+//	@ResponseBody
+//	@RequestMapping("/commonApplyspouse")
+//	public String delete(@RequestParam("id")Integer id){
+//		boolean isResult = coborrowerSpouseService.delete(id);
+//		if (isResult == true) {
+//			return JSON.toJSONString(isResult);
+//		}else {
+//			return JSON.toJSONString(isResult);
+//		}
 //		
 //	}
+//	
+//	 /**  
+//     * 获取所有用户列表  
+//     * @param request  
+//     * @return  
+//     */  
+//	@ResponseBody
+//    @RequestMapping("/commonApplyspouse")  
+//    public String getAllUser1(HttpServletRequest req,Model model){  
+//		List<CoborrowerSpouse>  cobrr = coborrowerSpouseService.findAll();  
+//        model.addAttribute("userList", cobrr);  
+//        req.setAttribute("userList", cobrr);  
+//        return "/loancreate";  
+//    }  
+//    
+    
+   
+	
 }
