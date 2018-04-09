@@ -3,7 +3,7 @@
 
 <mapper namespace="com.slloan.dao.AddPermissionDao">
 	<resultMap type="com.slloan.entity.PermissionEntity" id="BaseResultpermission">
-		<result column="role_id" property="r_id" />
+		<result column="r_id" property="r_id" />
 <!-- 		<result column="name" property="name" /> -->
 <!-- 		<result column="permissionname" property="permissionname" /> -->
 		<result column="url" property="url" />
@@ -11,7 +11,7 @@
 	</resultMap>
 	<!-- 插入权限 -->
 	<insert id="addPermission" parameterType="com.slloan.entity.PermissionEntity"  useGeneratedKeys="true" keyProperty="id">
-		insert into permission(role_id,url,checkboxid) values(#{r_id},#{url},#{checkboxID})
+		insert into permission(r_id,url,checkboxid) values(#{r_id},#{url},#{checkboxID})
 	</insert>
 	<!-- <sql id="getTestTbValue">
 		<trim prefix="," suffixOverrides=",">
@@ -34,6 +34,6 @@
     </delete>
      
 	 <select id="find" parameterType="map" resultType="com.slloan.entity.PermissionEntity">
-	 		select url,checkboxid,role_id from permission where role_id =#{rid}
+	 		select checkboxid,r_id from permission where r_id =#{rid}
 	 </select>
 </mapper>

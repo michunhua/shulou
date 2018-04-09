@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService{
 		String employeeis_Name = t.getEmployeeis_Name();
 		String belongs_City =t.getBelongs_City();//所属城市
 		String note = t.getNote();//备注
-		String createDate = t.getCreateDate();
+		String createDate = t.getCreate_Date();
 		Integer r_id = t.getR_id();
 		String distribution_Role = t.getDistribution_Role();//分配角色
 		UserLogin user = new UserLogin(id,userName,password,employeeis_Name,distribution_Role,belongs_City,note,r_id,createDate);

@@ -7,6 +7,7 @@ public class Json implements  Serializable{
 	private boolean status;
     private String msg;
     private Object obj;
+    private String value;//增加一个状态值
     public Json() {
         super();
     }
@@ -22,7 +23,13 @@ public class Json implements  Serializable{
         this.msg = msg;
         this.obj = obj;
     }
-
+    public Json(boolean status, String msg, Object obj,String value) {
+        super();
+        this.status = status;
+        this.msg = msg;
+        this.obj = obj;
+        this.value = value;
+    }
     public boolean getStatus() {
         return status;
     }
@@ -46,4 +53,13 @@ public class Json implements  Serializable{
     public void setObj(Object obj) {
         this.obj = obj;
     }
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+    
 }

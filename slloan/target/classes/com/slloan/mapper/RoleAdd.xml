@@ -63,7 +63,7 @@
 	 
 	 
 	 <select id="find" parameterType="map" resultType="com.slloan.entity.AddRole">
-	 		select * from add_role 
+	 		select id,rolename,belongs_city,configuration from add_role 
 	 		<trim prefix="where" prefixOverrides="and|or">
 	 		<if test="id !=null and id !=''"> and id =#{id}</if>
 	 		<if test="belongscity !=null and belongscity !=''"> and belongs_city=#{belongscity}</if>

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,15 +24,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.constants.CaptchaConstants;
 import com.slloan.entity.AddRole;
 import com.slloan.entity.Page;
 import com.slloan.entity.PermissionEntity;
+import com.slloan.entity.ResultList;
 import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.AddPermissionService;
 import com.slloan.service.inter.LoginService;
 import com.slloan.service.inter.RoleAddService;
 import com.slloan.service.inter.UserService;
 import com.slloan.util.DateUtils;
+import com.slloan.util.GraphicHelper;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
@@ -188,21 +193,26 @@ public class UserController {
 	 * @param id 参数
 	 * @return
 	 * @throws IOException 
+	 * @throws ServletException 
 	 */
 	@RequestMapping(value="/login",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public Object updateselectId(HttpSession session,HttpServletRequest req,HttpServletResponse response) throws IOException{
+	public Object updateselectId(HttpSession session,HttpServletRequest req,HttpServletResponse response) throws IOException, ServletException{
 		req.setCharacterEncoding("utf-8");
 //		String data = req.getParameter("data");
 //		JSONObject jsonobject = new JSONObject().fromObject(data);
 		String username = req.getParameter("username");
 		String password  = req.getParameter("password");
+		String paramcode = req.getParameter("code");
+		String  code = CaptchaController.codeyzm();
+		System.out.println("控制台的验证码 "+code);
+		
 		List<Object> li = new ArrayList<Object>();
 		UserLogin user = new UserLogin(username,password);
 		UserLogin userlogin = userservice.logindelu(user);
 		AddRole addrole = new AddRole();
 		PermissionEntity permission = new PermissionEntity();
-		UserLogin pageBean = new UserLogin();
+		ResultList<Object> pageBean = new ResultList<Object>();//返回权限集合
 		addrole.setId(userlogin.getR_id());
 		addrole.setRoleName(userlogin.getDistribution_Role());//分配角色
 		addrole.setBelongs_City(userlogin.getBelongs_City());//所属城市
@@ -219,12 +229,13 @@ public class UserController {
 				li.add(entity);
 			}
 		//		li.add(addrole);
-//		li.add(userlogin);
-	
+		li.add(userlogin);
+		
 //		List<AddRole> r = neW ARRAYLIST<ADDROLE>();
 //		LIST<USERLOGIN> DD = new ArrayList<UserLogin>();
 //		userlogin.setUserRole(r);
 		if(userlogin !=null){
+			 if(paramcode.toLowerCase().equals(code.toLowerCase())){
 			 ServletContext application=session.getServletContext();
 	            Map<String, String> loginMap = (Map<String, String>)application.getAttribute("loginMap");
 			if(loginMap == null){
@@ -234,29 +245,89 @@ public class UserController {
 				if(userlogin.getUserName().equals(key)){
 					if(session.getId().equals(loginMap.get(key))){
 						 System.out.println("在同一地点多次登录");
-						return JSON.toJSONString(username+"在同一地点多次登录！");
+//						return JSON.toJSONString(username+"在同一地点多次登录！");
+						 return new Json(false,"fail","在同一地点多次登录！","multiplelogon");
 					}else{
 //						response.sendRedirect("/signin");
 						 System.out.println("异地登录被拒绝！");
-						return JSON.toJSONString(username+"异地登录被拒绝！该用户已经登录！");
-						
+//						return JSON.toJSONString(username+"异地登录被拒绝！该用户已经登录！");
+						 return new Json(false,"fail","异地登录被拒绝！该用户已经登录！","loginrefusal");
 					}
 				}
 			}
 			 loginMap.put(userlogin.getUserName(),session.getId());
 			 application.setAttribute("loginMap", loginMap);
 			 session.setAttribute("username",user.getUserName());
-			 pageBean.setUserRole(li);
-			return  JSON.toJSONString("登录成功！"+pageBean);
+//			 for(Object obj : li){
+//				 System.out.println(obj.toString());
+				 pageBean.setLists(li);
+//			 }
+			
+			
+//				   response.encodeRedirectURL("ulist");
+//					return  JSON.toJSONString("验证码输入证确登录成功:"+li);
+//			 		return new Json(true,"success","验证码输入证确登录成功:"+pageBean,"loginsuccess");
+				 return new Json(true,"success",pageBean,"loginsuccess");
+				}else{
+//					 response.encodeRedirectURL("signin");
+//					req.getRequestDispatcher("signin").forward(req, response);
+					
+//					return JSON.toJSONString("","验证码输入错误");
+					return new Json(false,"fail","验证码输入错误");
+				}
+//				 return  "fff";
+			
 		}else{
 			//登录失败
             System.out.println("登录失败！");
             session.setAttribute("tip","登录失败！");
-            return JSON.toJSON(username+"登录失败");
+//            return JSON.toJSON(username+"登录失败");
+            return new Json(false,"fail","登录失败！");
 		}
 		
 	}
 
+	
+	/**
+	 * 验证码
+	 * @param request 
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	@RequestMapping(value=CaptchaConstants.VERIFICATIONCODE,method=RequestMethod.GET)
+	@ResponseBody
+	protected static  String service(HttpServletRequest request, HttpServletResponse response)  
+			  throws ServletException, IOException { 
+					// 获得 当前请求 对应的 会话对象  
+//			String paramcode = request.getParameter("code");
+			
+					HttpSession session = request.getSession();
+					String uri = request.getRequestURI();
+//					System.out.println("hello"+uri);
+					final int width = 125;
+					final int height=35;
+					final String imgType="jpg";
+					final ServletOutputStream  output = response.getOutputStream(); // 获得可以向客户端返回图片的输出流 
+					
+					String code = GraphicHelper.create(width, height, imgType, output);
+							System.out.println("验证码内容:"+code);
+//						if(paramcode.toLowerCase().equals(code.toLowerCase())){
+//							request.getRequestDispatcher("succsg").forward(request, response);
+//							 return JSON.toJSONString("验证码输入证确");
+//						}else{
+//							request.getRequestDispatcher("/fail.jsp").forward(request, response);
+//							return JSON.toJSONString("验证码输入错误");
+//						}
+					// 创建验证码图片并返回图片上的字符串  
+				  
+				    // 建立 uri 和 相应的 验证码 的关联 ( 存储到当前会话对象的属性中 )  
+				    session.setAttribute(uri, code);  
+				  
+				    System.out.println(session.getAttribute(uri));  
+				    return JSON.toJSONString(code);
+	}
+	
 	/***
 	 * 密码修改
 	 * @param newpassword 新密码
@@ -307,7 +378,7 @@ public class UserController {
 			 return new Json(true,"success",listuser);
 		 }*/
 		 	
-			return JSON.toJSONString(userservice.getRolePage(startPos));
+			return  JSON.toJSONString(userservice.getRolePage(startPos));
 		/*
 		String id = req.getParameter("1");
 		//每页显示的条数

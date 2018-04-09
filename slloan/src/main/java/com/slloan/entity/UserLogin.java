@@ -9,7 +9,7 @@ import java.util.List;
  *
  */
 		
-public class UserLogin<T> implements Serializable{
+public class UserLogin implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private Integer id;
@@ -20,8 +20,8 @@ public class UserLogin<T> implements Serializable{
 	private String belongs_City;//所属城市
 	private String note;//备注
 	private Integer r_id;//角色ID
-	private String createDate;//创建日期
-	private List<T> userRole;//角色
+	private String create_Date;//创建日期
+	
 	public UserLogin(){
 		
 	}
@@ -34,7 +34,7 @@ public class UserLogin<T> implements Serializable{
 
 	public UserLogin(String userName, String passWord,
 			String employeeis_Name, String distribution_Role,
-			String belongs_City, String note, Integer r_id,String createDate) {
+			String belongs_City, String note, Integer r_id,String create_Date) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
@@ -43,7 +43,7 @@ public class UserLogin<T> implements Serializable{
 		this.belongs_City = belongs_City;
 		this.note = note;
 		this.r_id = r_id;
-		this.createDate = createDate;
+		this.create_Date = create_Date;
 	}
 	public UserLogin(String userName, String passWord,
 			String employeeis_Name, String distribution_Role,
@@ -57,7 +57,7 @@ public class UserLogin<T> implements Serializable{
 		this.note = note;
 	}
 	public UserLogin(Integer id, String userName, String passWord, String employeeis_Name, String distribution_Role,
-			String belongs_City, String note, Integer r_id,String createDate) {
+			String belongs_City, String note, Integer r_id,String create_Date) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -67,8 +67,7 @@ public class UserLogin<T> implements Serializable{
 		this.belongs_City = belongs_City;
 		this.note = note;
 		this.r_id = r_id;
-		this.userRole = userRole;
-		this.createDate = createDate;
+		this.create_Date = create_Date;
 	}
 
 	public Integer getR_id() {
@@ -79,13 +78,7 @@ public class UserLogin<T> implements Serializable{
 		this.r_id = r_id;
 	}
 
-	public List<T> getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(List<T> userRole) {
-		this.userRole = userRole;
-	}
+	
 
 	public String getBelongs_City() {
 		return belongs_City;
@@ -142,19 +135,20 @@ public class UserLogin<T> implements Serializable{
 		return serialVersionUID;
 	}
 
-	public String getCreateDate() {
-		return createDate;
+
+	public String getCreate_Date() {
+		return create_Date;
 	}
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
+	public void setCreate_Date(String create_Date) {
+		this.create_Date = create_Date;
 	}
 
 	@Override
 	public String toString() {
 		return "UserLogin [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", employeeis_Name="
 				+ employeeis_Name + ", distribution_Role=" + distribution_Role + ", belongs_City=" + belongs_City
-				+ ", note=" + note + ", r_id=" + r_id + ", createDate=" + createDate + ", userRole=" + userRole + "]";
+				+ ", note=" + note + ", r_id=" + r_id + ", createDate=" + create_Date+"]";
 	}
 
 }
