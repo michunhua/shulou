@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSON;
 import com.slloan.service.inter.ApplyForLoanInformationService;
 
-@Controller(value="publicCoroller")
+//@Controller(value="publicCoroller")
 @RequestMapping("/loan")
 public class publicCrollor {
 	

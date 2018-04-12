@@ -104,12 +104,15 @@ var collectData = function() {
 }
 
 // 发送 ajax
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
-      success: callback
+      success: function(data) {
+          if(data.msg === 'success')
+              window.location.href = '../role/rolelist'
+          }
     })
 }
 
@@ -121,7 +124,7 @@ var sendForm = function() {
     var data = getData
     var url = '/slloan/role/addpowerlimit'
     var method = 'POST'
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
 }
 

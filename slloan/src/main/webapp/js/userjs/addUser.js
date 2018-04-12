@@ -111,7 +111,6 @@ var obtainCtiy = function(element) {
 
 // 收集数据
 var colect = function() {
-  log('收集数据')
   var data = {}
   data.userName = e('.userName').value
   data.password = e('.password').value

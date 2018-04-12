@@ -85,6 +85,78 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 });
 
 
+//默认加载
+var sendAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        consoel.log(data)
+        var datas = data
+        var len = datas.lists.length
+        var pageElement = document.querySelector('.tab-data')
+        for(var i = 0; i < len; i++) {
+          log(i)
+          var tr = document.createElement('tr')
+          var td0 = document.createElement('td')
+          var td1 = document.createElement('td')
+          var td2 = document.createElement('td')
+          var td3 = document.createElement('td')
+          var td4 = document.createElement('td')
+          var td5 = document.createElement('td')
+          var td6 = document.createElement('td')
+          var td7 = document.createElement('td')
+          var td8 = document.createElement('td')
+          var td9 = document.createElement('td')
+          var td10 = document.createElement('td')
+          var id = "datas.lists[i].id"
+          var userName = "datas.lists[i].userName"
+          var role = "datas.lists[i].distribution_Role"
+          var employeeName = "datas.lists[i].employeeis_Name"
+          var time = "datas.lists[i].createdate"
+          td0.innerText = 0
+          td1.innerText = 1
+          td2.innerText = 2
+          td3.innerText = 3
+          td4.innerText = 4
+          td5.innerText = 5
+          td6.innerText = 6
+          td7.innerText = 7
+          td8.innerText = 8
+          td9.innerText = 9
+          td10.innerText = 10
+          tr.appendChild(td0)
+          tr.appendChild(td1)
+          tr.appendChild(td2)
+          tr.appendChild(td3)
+          tr.appendChild(td4)
+          tr.appendChild(td5)
+          tr.appendChild(td6)
+          tr.appendChild(td7)
+          tr.appendChild(td8)
+          tr.appendChild(td9)
+          tr.appendChild(td10)
+          pageElement.insertAdjacentElement('beforeend', tr)
+        }
+      }
+    })
+}
+
+
+var initData = function() {
+	console.log('初始化加载数据')
+	var method = 'GET'
+	var url = '/slloan/loan/loancreate'
+	var datas = {}
+	datas.a = 'a'
+	datas.b = 'b'
+		console.log('初始化加载数据233')
+	sendAjax(method, url, datas)
+	console.log('执行没有？')
+}
+
 // 收集数据
 var collectData = function() {
     var data = {}
@@ -100,10 +172,6 @@ var collectData = function() {
     return data
 }
 
-// 发送数据
-var sendAjax = function() {
-
-}
 
 // 事件响应
 var envs = function(element) {
@@ -114,8 +182,19 @@ var envs = function(element) {
   })
 }
 
+
+// 创建贷款按钮
+var createBtn = function() {
+	var ens = document.querySelector('#createLoan')
+	ens.addEventListener('click', function() {
+		window.location.href = '../../slloan/loan/loanjoin'
+	})
+}
+
 var __main = function() {
   envs('#save-data')
+  createBtn()
+  initData()
 }
 
 __main()

@@ -2,6 +2,8 @@ package com.slloan.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.slloan.dao.ApplyForLoanInformationDao;
 import com.slloan.entity.ApplyForLoanInformation;
+import com.slloan.entity.Contacts;
 import com.slloan.service.inter.ApplyForLoanInformationService;
+import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
@@ -69,33 +73,93 @@ public class ApplyForLoanInformationController {
 
 	}
 	
+
+
+
+	
+	/***
+	 * 根据ID查所有联系人信息
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value="/loanlinkf",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json UserSelectById(HttpServletRequest req){
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String uid = json.getString("id");
+		int id = Integer.parseInt(uid);
+		ApplyForLoanInformation isResult =applyForLoanInformationservice.SelectById(id);
+		if(isResult !=null){
+			return new Json(true,"success",isResult); 
+		}else
+			return new Json(false,"fail",isResult); 
+	}
+
 	/**
-	 * 修改参数
+	 * 修改用户保存
+	 * @return
 	 */
 	@RequestMapping(value="/modifyuser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String update(ApplyForLoanInformation applyForLoanInformation){
-		boolean isResult = applyForLoanInformationservice.update(applyForLoanInformation);
-		if (isResult == true) {
-			return JSON.toJSONString(isResult);
-		}else{
-			return JSON.toJSONString("fail");
-		}
+	public String updateUser(HttpServletRequest req){
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
 		
+		
+		
+		String amount= json.getString("contacts");
+		String time_Limit= json.getString("contacts");
+		String borrowing_Variety= json.getString("contacts");
+		String repayment= json.getString("contacts");
+		String receiving_Bank_Name= json.getString("contacts");
+		String receiving_Account_Name= json.getString("contacts");
+		String receiving_Account= json.getString("contacts");
+		String repayment_Bank_Name= json.getString("contacts");
+		String repayment_Account_Name= json.getString("contacts");
+		String repayment_Account_Number= json.getString("contacts");
+		String start= json.getString("contacts");
+		String ctime=DateUtils.getInDateTime((new Date()));
+		ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, borrowing_Variety, repayment,
+				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
+				repayment_Account_Name, repayment_Account_Number,start,ctime);
+		boolean isResult =applyForLoanInformationservice.appUpdate(ap);
+		if(isResult == true){
+			return JSON.toJSONString(isResult);
+		}else
+			return JSON.toJSONString("fail");
 	}
 	
-	/**
-	 * 删除数据
-	 */
-	@RequestMapping(value="")
-	@ResponseBody
-	public String delete(@RequestParam("id")Integer id){
-		boolean isResult = applyForLoanInformationservice.delete(id);
-		if (isResult == true) {
-			return JSON.toJSONString(isResult);
-		}else {
-			return JSON.toJSONString(isResult);
-		}
- 	}
 
+	/**
+	 * 申请借款资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanapply")
+	public String loanapply() {
+		System.out.println("--------------------------");
+		return "loan/loanInfo";
+	}
+
+	/**
+	 * 贷款初审借款资料
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanapplys")
+	public String loanapplys() {
+		System.out.println("--------------------------");
+		return "loanfirst/loanInfo";
+	}
+	/**
+	 * 贷款终审贷款申请信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanapplyss")
+	public String loanapplyss() {
+		System.out.println("--------------------------");
+		return "loanfinal/loanInfo";
+	}
 }

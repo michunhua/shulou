@@ -262,7 +262,6 @@ public class PropertyInformation implements Serializable{
 
 
 
-
 	@Override
 	public String toString() {
 		return "PropertyInformation [id=" + id + ", ownership_And_percentage=" + ownership_And_percentage

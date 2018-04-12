@@ -12,7 +12,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">logo 后台布局</div>
+        <div class="layui-logo">赎楼业务系统</div>
     </div>
 
     <div class="container">
@@ -39,17 +39,10 @@
             <br>
             <dl>
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo" onclick="sumitlong()" id = "login-btn">登录</button>
+                    <button class="layui-btn" lay-submit lay-filter="formDemo"  id = "login-btn">登录</button>
+                    <a href="../../slloan/loan/happy">000000000000</a>
                 </div>
             </dl>
-        </div>
-        <div class="">
-          <button type="button" name="button" id = 'admin'>admin</button>
-          <button type="button" name="button" id = 'city'>城市经理</button>
-          <button type="button" name="button" id = 'mortage'>按揭员</button>
-          <button type="button" name="button" id = 'first'>初审</button>
-          <button type="button" name="button" id = 'final'>终审</button>
-          <button type="button" name="button" id = 'finance'>审批财务</button>
         </div>
     </div>
 
@@ -61,26 +54,10 @@
 <script type="text/javascript" src="../public/js/login.js"></script>
     <script type="text/javascript" src="//consumer-res.huawei.com/etc/designs/huawei-cbg-site/statics/jquery-1.11.3.min.js"></script>
 <script>
-// //获取后台生成的验证码
-// function getVerCode() {
-//     var result = "";
-//     $.ajax({
-//         url:'/slloan/verificationcode',
-//         type:"GET",
-//         dataType:"json",
-//         async:false,//关闭异步加载,这样只有加载完成才进行下一步
-//         success:function (data) {
-//         	alert(data)
-//             result = data.code;
-//         }
-//     });
-//     return result;
-// }
-    //JavaScript代码区域
-    layui.use('element', function(){
-        var element = layui.element;
-
-    });
+	layui.use('element', function(){
+	    var element = layui.element;
+	
+	});
 </script>
 
 <script type="text/javascript">

@@ -23,6 +23,38 @@ public class CoborrowerSpouse implements Serializable{
 	
 	
 	
+	public CoborrowerSpouse(Integer id, String name, String id_Type, String id_Number, String uni_Name,
+			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String start,
+			String ctime) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.id_Type = id_Type;
+		this.id_Number = id_Number;
+		this.uni_Name = uni_Name;
+		this.unit_Phone = unit_Phone;
+		this.home_Phone = home_Phone;
+		this.mobile_Phone = mobile_Phone;
+		this.monthly_Income = monthly_Income;
+		this.start = start;
+		this.ctime = ctime;
+	}
+
+	public CoborrowerSpouse(){}
+	
+	public CoborrowerSpouse(String name, String id_Type, String id_Number, String uni_Name, String unit_Phone,
+			String home_Phone, String mobile_Phone, String monthly_Income) {
+		super();
+		this.name = name;
+		this.id_Type = id_Type;
+		this.id_Number = id_Number;
+		this.uni_Name = uni_Name;
+		this.unit_Phone = unit_Phone;
+		this.home_Phone = home_Phone;
+		this.mobile_Phone = mobile_Phone;
+		this.monthly_Income = monthly_Income;
+	}
+
 	public CoborrowerSpouse(String name, String id_Type, String id_Number, String uni_Name, String unit_Phone,
 			String home_Phone, String mobile_Phone, String monthly_Income, String start, String ctime) {
 		super();

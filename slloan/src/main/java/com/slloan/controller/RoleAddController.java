@@ -187,7 +187,7 @@ public class RoleAddController {
 	 */
 	@RequestMapping(value="/addpowerlimit",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String addpowerlimit(HttpServletRequest req ,PermissionEntity permission) throws UnsupportedEncodingException{
+	public Json addpowerlimit(HttpServletRequest req ,PermissionEntity permission) throws UnsupportedEncodingException{
 		req.setCharacterEncoding("utf-8");
 		List<PermissionEntity> rolePermissionId;
 		 Map<String,String>roleParam = new HashMap<String,String>();
@@ -387,7 +387,7 @@ public class RoleAddController {
 			e.printStackTrace();
 		}
 		
-		return JSON.toJSONString("success");
+		return new Json(true,"success");
 	}
 	/**
 	 * 查询角色传值到用户

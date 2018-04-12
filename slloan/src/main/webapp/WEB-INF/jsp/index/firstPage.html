@@ -16,7 +16,6 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
                     admin
                 </a>
                 <dl class="layui-nav-child">
@@ -24,7 +23,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
         </ul>
     </div>
 
@@ -39,65 +38,38 @@
                       <li class="layui-nav-item " id = 'tree-create'>
                           <a href="javascript:;">贷款创建</a>
                           <dl class="layui-nav-child">
-                              <dd><a href="../loanManagement/loanCreate/loanCreateTable.html">贷款创建列表</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/loanerInfo.html">借款申请人个人资料</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/commomLoanerInfo.html">共同申请人个人资料</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/loanerMate.html">借款申请人配偶</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/commomMate.html">共同申请人配偶</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/loanInfo.html">申请借款信息</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/estateInfo.html">房产资料</a></dd>
-                              <dd><a href="../../loanManagement/loanFirst/imageInfo.html">影像资料</a></dd>
-                              <dd><a href="../../loanManagement/loanFirst/estateInfo.html">联系人信息</a></dd>
-                              <dd><a href="../loanManagement/loanCreate/noteInfo.html">备注说明</a></dd>
+                              <dd><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
                           </dl>
                       </li>
                       <li class="layui-nav-item " id = 'tree-trival'>
                           <a href="javascript:;">贷款初审</a>
                           <dl class="layui-nav-child">
-                            <dd><a href="../loanManagement/loanFirst/loanFirstTable.html">贷款初审列表</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/loanerInfo.html">借款申请人个人资料</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/commomLoanerInfo.html">共同申请人个人资料</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/loanerMate.html">借款申请人配偶</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/commomMate.html">共同申请人配偶</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/loanInfo.html">申请借款信息</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/estateInfo.html">房产资料</a></dd>
-                            <dd><a href="../../loanManagement/loanFirst/imageInfo.html">影像资料</a></dd>
-                            <dd><a href="../../loanManagement/loanFirst/estateInfo.html">联系人信息</a></dd>
-                            <dd><a href="../loanManagement/loanFirst/noteInfo.html">初审备注</a></dd>
+                            <dd><a href="../../slloan/loan/loancreas">贷款初审列表</a></dd>
                           </dl>
                       </li>
                       <li class="layui-nav-item " id = 'tree-final'>
                           <a href="javascript:;">贷款终审</a>
                           <dl class="layui-nav-child">
-                            <dd><a href="../loanManagement/loanFinal/loanFinalTable.html">贷款终审列表</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/loanerInfo.html">借款申请人个人资料</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/commomLoanerInfo.html">共同申请人个人资料</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/loanerMate.html">借款申请人配偶</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/commomMate.html">共同申请人配偶</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/loanInfo.html">申请借款信息</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/estateInfo.html">房产资料</a></dd>
-                            <dd><a href="../../loanManagement/loanFirst/imageInfo.html">影像资料</a></dd>
-                            <dd><a href="../../loanManagement/loanFirst/estateInfo.html">联系人信息</a></dd>
-                            <dd><a href="../loanManagement/loanFinal/noteInfo.html">终审备注</a></dd>
+                            <dd><a href="../../slloan/loan/loancreass">贷款终审列表</a></dd>
                           </dl>
                       </li>
                       <li class="layui-nav-item " id = 'tree-read'>
-                          <a href="../loanManagement/loanInfoRead.html">贷款信息查看</a>
+                          <a href="../../slloan/loan/anin">贷款信息查看</a>
                       </li>
                       <li class="layui-nav-item " id = 'tree-confirm'>
-                          <a href="../loanManagement/repayConfirm.html">回款确认</a>
+                          <a href="../../slloan/loan/repa">回款确认</a>
                         </dl>
                       </li>
                       <li class="layui-nav-item " id = 'tree-gain'>
-                          <a href="../loanManagement/gainProof.html">取证凭证</a>
+                          <a href="../../slloan/loan/gain">取证凭证</a>
                           </dl>
                       </li>
                       <li class="layui-nav-item " id = 'tree-relief'>
-                          <a href="../loanManagement/reliefProof.html">解押凭证</a>
+                          <a href="../../slloan/loan/reli">解押凭证</a>
                           </dl>
                       </li>
                       <li class="layui-nav-item " id = 'tree-incare'>
-                          <a href="../loanManagement/incareProof.html">进押凭证</a>
+                          <a href="../../slloan/loan/inca">进押凭证</a>
                       </li>
                   </ul>
                 </div>
@@ -109,15 +81,15 @@
                       <li class="layui-nav-item">
                           <a href="javascript:;">财务审批</a>
                           <dl class="layui-nav-child">
-                               <dd><a href="../../financial/financeapproval">审批列表</a></dd>
-                            <dd><a href="../../financial/financenote">财务备注</a></dd>
+                               <dd><a href="../financial/financeapproval">审批列表</a></dd>
+                            <dd><a href="../financial/financenote">财务备注</a></dd>
                           </dl>
                       </li>
                        <li class="layui-nav-item">
-                        <a href="../../financial/transfervoucher">转账凭证</a>
+                        <a href="../financial/transfervoucher">转账凭证</a>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="../../financial/settlementvoucher">结算凭证</a>
+                        <a href="../financial/settlementvoucher">结算凭证</a>
                     </li>
                   </ul>
                 </div>
@@ -127,10 +99,10 @@
                 <div class="layui-colla-content">
                   <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                       <li class="layui-nav-item">
-                          <a href="../userInfo/updateUserInfo.html">个人信息修改</a>
+                          <a href="../user/userinfo/updateuserInfo">个人信息修改</a>
                       </li>
                       <li class="layui-nav-item">
-                          <a href="../userInfo/updatePassword.html">密码修改</a>
+                          <a href="../user/userinfo/updatepassword">密码修改</a>
                       </li>
                   </ul>
                 </div>
@@ -142,19 +114,13 @@
                       <li class="layui-nav-item">
                           <a href="javascript:;">用户</a>
                           <dl class="layui-nav-child">
-                            <dd class="layui-this"><a href="../ulist">用户列表</a></dd>
-                            <dd><a href="../addu">添加用户</a></dd>
-                            <dd><a href="../allotuser">分配角色</a></dd>
-                            <dd><a href="../delu">删除用户</a></dd>
-                            <dd><a href="../updateuser">修改用户信息</a></dd>
+                            <dd class="layui-this"><a href="../user/ulist">用户列表</a></dd>
                           </dl>
                       </li>
                       <li class="layui-nav-item">
                           <a href="javascript:;">角色</a>
                           <dl class="layui-nav-child">
-                              <dd class="layui-this"><a href="../../role/rolelist">角色列表</a></dd>
-                            <dd><a href="../../role/roleadd">添加角色</a></dd>
-                            <dd><a href="../../role/updaterole">修改角色权限</a></dd>
+                             <dd class="layui-this"><a href="../role/rolelist">角色列表</a></dd>
                           </dl>
                       </li>
                   </ul>

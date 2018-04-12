@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.ApplyForLoanInformation;
+import com.slloan.entity.CoborrowerSpouse;
 
 
 @Repository(value="applyforloaninformation")
@@ -17,7 +18,9 @@ public interface ApplyForLoanInformationDao {
 	
 	boolean delete(int id); 
 	
-	boolean update(ApplyForLoanInformation applyForLoanInformation);  
+	boolean appUpdate(ApplyForLoanInformation applyForLoanInformation);  
+	
+	ApplyForLoanInformation SelectById(int id);
 	
 	List<ApplyForLoanInformation> findAll();  
 }

@@ -44,21 +44,21 @@
 				id = #{id}
 	</delect> -->
 	<update id="update" parameterType="com.slloan.entity.ApplyForLoanInformation">    
-        UPDATE apply_for_loan_information
-		SET amount = #{amount},
-			time_Limit = #{time_Limit},
-			borrowing_Variety = #{borrowing_Variety},
-			repayment = #{repayment},
-			receiving_Bank_Name = #{receiving_Bank_Name},
-			receiving_Account_Name = #{receiving_Account_Name},
-			receiving_Account = #{receiving_Account},
-			repayment_Bank_Name = #{repayment_Bank_Name},
-			repayment_Account_Name = #{repayment_Account_Name},
-			repayment_Account_Number = #{repayment_Account_Number},
-			START = #{start},
-			ctime = #{ctime}
-		WHERE
-			id = #{id}
+			update apply_for_loan_information 
+				<set>
+					<if test="amount !=null and amount !=''">amount = #{amount},</if>
+					<if test="time_Limit !=null and time_Limit !=''">time_Limit = #{time_Limit},</if>
+					<if test="borrowing_Variety  !=null and borrowing_Variety !=''">borrowing_Variety = #{borrowing_Variety},</if>
+					<if test="repayment  !=null and repayment !=''">repayment = #{repayment},</if>
+					<if test="receiving_Bank_Name  !=null and receiving_Bank_Name !=''">receiving_Bank_Name = #{receiving_Bank_Name},</if>
+					<if test="receiving_Account_Name !=null and receiving_Account_Name !=''">receiving_Account_Name = #{receiving_Account_Name},</if>
+					<if test="receiving_Account !=null and receiving_Account !=''">receiving_Account = #{receiving_Account},</if>
+					<if test="repayment_Bank_Name !=null and repayment_Bank_Name !=''">repayment_Bank_Name = #{repayment_Bank_Name},</if>
+					<if test="repayment_Account_Name !=null and repayment_Account_Name !=''">repayment_Account_Name = #{repayment_Account_Name},</if>
+					<if test="repayment_Account_Number !=null and repayment_Account_Number !=''">repayment_Account_Number = #{repayment_Account_Number},</if>
+					<if test="start !=null and start !=''">START = #{start}</if>
+				</set>
+					 WHERE id = #{id}
     </update> 
     <select id="findAll" parameterType="com.slloan.entity.ApplyForLoanInformation">
     	SELECT
@@ -95,4 +95,8 @@ FROM
 	apply_for_loan_information  where id=#{id}
     </select>
     
+    <!-- 根据ID查记录 -->
+		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.ApplyForLoanInformation">
+				select * from apply_for_loan_information where id = #{id}
+		</select>
 </mapper>

@@ -1,3 +1,66 @@
+layui.use('table', function(){
+  var table = layui.table;
+
+  //第一个实例
+  table.render({
+    elem: '#demo'
+    ,height: 315
+    ,url: '/demo/table/user/' //数据接口
+    ,page: true //开启分页
+    ,cols: [[ //表头
+      {field: 'id', title: '编号', width:200,  fixed: 'left'}
+      ,{field: 'username', title: '用户名', width:200}
+      ,{field: 'sex', title: '分配角色', width:200, sort: true}
+      ,{field: 'city', title: '员工姓名', width:200}
+      ,{field: 'city', title: '创建日期', width:200}
+      ,{field: 'city', title: '操作', width:200, fixed: 'last'}
+    ]]
+  });
+});
+
+// layui.use('table', function(){
+//   var table = layui.table;
+//   //监听表格复选框选择
+//   table.on('checkbox(demo)', function(obj){
+//     console.log(obj)
+//   });
+//   //监听工具条
+//   table.on('tool(demo)', function(obj){
+//     var data = obj.data;
+//     if(obj.event === 'detail'){
+//       layer.msg('ID：'+ data.id + ' 的查看操作');
+//     } else if(obj.event === 'del'){
+//       layer.confirm('真的删除行么', function(index){
+//         obj.del();
+//         layer.close(index);
+//       });
+//     } else if(obj.event === 'edit'){
+//       layer.alert('编辑行：<br>'+ JSON.stringify(data))
+//     }
+//   });
+//
+//   var $ = layui.$, active = {
+//     getCheckData: function(){ //获取选中数据
+//       var checkStatus = table.checkStatus('idTest')
+//       ,data = checkStatus.data;
+//       layer.alert(JSON.stringify(data));
+//     }
+//     ,getCheckLength: function(){ //获取选中数目
+//       var checkStatus = table.checkStatus('idTest')
+//       ,data = checkStatus.data;
+//       layer.msg('选中了：'+ data.length + ' 个');
+//     }
+//     ,isAll: function(){ //验证是否全选
+//       var checkStatus = table.checkStatus('idTest');
+//       layer.msg(checkStatus.isAll ? '全选': '未全选')
+//     }
+//   };
+//
+//   $('.demoTable .layui-btn').on('click', function(){
+//     var type = $(this).data('type');
+//     active[type] ? active[type].call(this) : '';
+//   });
+// });
 // 发送 ajax
 var sendAjax = function(method, url, datas) {
     $.ajax({
@@ -10,7 +73,10 @@ var sendAjax = function(method, url, datas) {
         var len = ds.lists.length
         console.log('JSON', ds.lists[0].createDate)
         var Felement = document.querySelector('.tab-data')
+        var totalPage = document.querySelector('.totalPage')
+        totalPage.innerText = ds.totalPage
         console.log(Felement)
+        Felement.innerHTML = null
         for(var i = 0; i < len; i++) {
           console.log('append')
           var flag = '选中'
@@ -40,29 +106,26 @@ var sendAjax = function(method, url, datas) {
     })
 }
 
-
-//  提交表单数据
-var sendForm = function() {
-  var btn = document.querySelector('#send-data')
-  btn.addEventListener('click', function() {
-    console.log('12343')
-    // var getData = collectData()
-    var data = null
-    var url = '/slloan/role/rolemanagement?page=1&limit=10'
-    var method = 'GET'
-    sendAjax(method, url, data)
-  })
+//分页接口 user/userlist
+var init = {
+		pages: 1,
+		limit: 10,
 }
 
-sendForm()
+var currpages = function() {
+	var pages = document.querySelector('.currtPage')
+	pages.innerText = init.pages
+}
 
+currpages()
 
+// 默认加载数据
 var firtLoadlist = function() {
-    console.log('firtLoadlist')
+    console.log('firtLoadlist', init.pages, init.limit)
     // var getData = collectData()
     var data = {}
-    var url = '/slloan/role/rolemanagement?page=1&limit=10'
     var method = 'GET'
+    var url = '/slloan/role/rolemanagement?page='+init.pages+'&limit='+ init.limit
     sendAjax(method, url, data)
   }
 
@@ -91,7 +154,7 @@ var singlesendAjax = function(method, url, datas, callback) {
       var findEl = document.querySelector('.add')
       findEl.addEventListener('click', function() {
         console.log('add')
-        window.location.href = './addRole.html'
+        window.location.href = '../role/roleadd'
       })
   }
 
@@ -108,6 +171,7 @@ var singlesendAjax = function(method, url, datas, callback) {
       })
   }
 
+  
 // 修改时查询
   var updates = function() {
       var findEl = document.querySelector('.update')
@@ -161,3 +225,44 @@ var checkboxEvs = function() {
 }
 
 checkboxEvs()
+
+
+// 下一页
+var nextpage = function() {
+	var envs = document.querySelector('.next')
+	envs.addEventListener('click', function() {
+		var flag = Number(document.querySelector('.totalPage').innerText)
+		if(init.pages >= 1 && init.pages < flag) {
+			init.pages = init.pages + 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有下一页!'
+				});
+		}
+	})
+}
+
+nextpage()
+
+// 上一页
+var previoupage = function() {
+	var envs = document.querySelector('.previous')
+	envs.addEventListener('click', function() {
+		if(init.pages > 1) {
+			init.pages = init.pages - 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有上一页!'
+				});
+		}
+	})
+}
+
+previoupage()
+

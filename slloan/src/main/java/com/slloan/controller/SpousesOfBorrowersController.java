@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.entity.Contacts;
 import com.slloan.entity.SpousesOfBorrowers;
 import com.slloan.service.inter.PropertyInformationService;
 import com.slloan.service.inter.SpousesOfBorrowersService;
@@ -84,4 +86,86 @@ public class SpousesOfBorrowersController {
 //			return JSON.toJSONString(isResult);
 //		}
 //	}
+	
+	/***
+	 * 根据ID查所有联系人信息
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value="/sowwer",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json UserSelectById(HttpServletRequest req){
+		
+		
+		System.out.println("======================================");
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String uid = json.getString("id");
+		int id = Integer.parseInt(uid);
+		SpousesOfBorrowers isResult =spousesofborrowers.SelectById(id);
+		
+		if(isResult !=null){
+			return new Json(true,"success",isResult); 
+		}else
+			return new Json(false,"fail",isResult); 
+	}
+	
+	@RequestMapping(value= "/spoupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateadd(HttpServletRequest req,Contacts contactsparam){
+		String name = req.getParameter("contacts");// 借款人配偶姓名
+		String id_Type =req.getParameter("contacts"); // 身份证件类型
+		String id_Number =req.getParameter("contacts"); // 身份证件号码
+		String uni_Name = req.getParameter("contacts"); // 单位名称
+		String unit_Phone = req.getParameter("contacts"); // 单位电话
+		String home_Phone = req.getParameter("contacts"); // 住宅电话
+		String mobile_Phone = req.getParameter("contacts"); // 手机
+		String monthly_Income = req.getParameter("contacts"); // 月收入
+		String start =req.getParameter("contacts");
+		String ctime = req.getParameter("contacts");
+		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
+				mobile_Phone, monthly_Income,start,ctime);
+
+			boolean isResult=	spousesofborrowers.spoupdate(spouses);
+			if(isResult ==true){
+				return  new Json(true,"success",isResult);
+			}else{
+				return  new Json(false,"fail",isResult);
+			}
+	}
+	
+	/**
+	 * 申请人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanerma")
+	public String loanerma() {
+		System.out.println("--------------------------");
+		return "loan/loanerMate";
+	}
+	
+	/**
+	 * 贷款初审借款人配偶信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanermas")
+	public String loanermas() {
+		System.out.println("--------------------------");
+		return "loanfirst/loanerMate";
+	}
+
+	
+	/**
+	 * 贷款终审申请人配偶
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanermass")
+	public String loanermass() {
+		System.out.println("--------------------------");
+		return "loanfinal/loanerMate";
+	}
+
 }

@@ -17,7 +17,6 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
                     admin
                 </a>
                 <dl class="layui-nav-child">
@@ -25,7 +24,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
         </ul>
     </div>
 
@@ -179,60 +178,46 @@
             <div class="layui-form-item">
               <label class="layui-form-label">用户名</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input username">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">密码</label>
               <div class="layui-input-inline">
-                <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text"  name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input password">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">员工姓名</label>
               <div class="layui-input-inline">
-                <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text"  name="name" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input name">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">分配角色</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required">
-                  <option value=""></option>
-                  <option value="0">按揭员</option>
-                  <option value="1">初审</option>
-                  <option value="2">终审</option>
-                  <option value="3">审批财务</option>
-                  <option value="4">放款财务</option>
+                <select name="city" lay-verify="required" class = 'role'>
                 </select>
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">所属城市</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required">
-                  <option value=""></option>
-                  <option value="0">深圳</option>
-                  <option value="1">广州</option>
-                  <option value="2">北京</option>
-                  <option value="3">上海</option>
-                  <option value="4">南京</option>
+                <select name="city" lay-verify="required" class = 'city'>
                 </select>
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">备注</label>
               <div class="layui-input-inline">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" rows="8" cols="80"></textarea>
-              </div>
-            </div>
-            <div class="layui-form-item">
-              <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">保存修改</button>
-                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea note" rows="8" cols="80"></textarea>
               </div>
             </div>
           </form>
+          <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save'>保存修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id = 'cancel'>取消</button>
+          </div>
         </div>
     </div>
 
@@ -241,8 +226,9 @@
         © 版权所有
     </div>
 </div>
-
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/userjs/updateUser.js"></script>
 </body>
 </html>

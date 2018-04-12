@@ -14,8 +14,8 @@
 	<!-- 列表分页展示 -->
 	<select id="getRolePage" resultType="Map" resultMap="roleaadddao">
 		select id,rolename,createdate 
-			from add_role 
-			<if test="start!=null and limit!=null">
+			from add_role  ORDER BY id desc
+			<if test="page!=null and limit!=null">
 				limit #{page},#{limit} 
 			</if>
 	</select>
@@ -42,13 +42,14 @@
     <!-- 修改查询 -->
     <select id="updateselectId" parameterType="Integer"
 		resultType="com.slloan.entity.AddRole">
-		SELECT * FROM add_role WHERE id = #{id}
+		select id,rolename,descriPtion,belongs_city,note,createDate from add_role  where id=#{id}
 	</select>
 	
 	<!-- 修改 -->
 	<update id="updateRole" parameterType="com.slloan.entity.AddRole">
-		update add_role set rolename = #{roleName},descriPtion=#{descriPtion},
-		note=#{note},belongs_city=#{belongs_City},configuration = #{configuration} WHERE id = #{id}
+		update add_role set roleName = #{roleName},
+		descriPtion=#{descriPtion},belongs_city=#{belongs_City}
+		note=#{note},createDate = #{createDate} WHERE id = #{id}
 	</update>
 	
 	<!-- 根据角色得到所属城市还有角色 -->
@@ -86,5 +87,17 @@
 <!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->
 <!-- 	 		</trim> -->
 	 </select> 
+	 
+	  <!-- 根据ID查询 -->
+	 <select id="selectAddRoleById" parameterType="int" resultType="com.slloan.entity.AddRole">
+	 	select id,rolename,descriPtion,belongs_city,note,createDate from add_role  where id=#{id}
+	 </select>
+	 
+	 <!-- 更新角色保存 -->
+	 <update id="updateaddAddRole" parameterType="com.slloan.entity.AddRole">
+	 	update add_role set roleName = #{roleName},
+		descriPtion=#{descriPtion},belongs_city=#{belongs_City}
+		note=#{note},createDate = #{createDate} WHERE id = #{id}
+	 </update>
 	 
 </mapper>

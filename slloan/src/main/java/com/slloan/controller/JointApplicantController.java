@@ -1,20 +1,32 @@
 package com.slloan.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.CoborrowerSpouse;
+import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
+import com.slloan.entity.NoteExplain;
+import com.slloan.entity.PersonalProfile;
+import com.slloan.service.inter.CircuLationRecordSubmitService;
 import com.slloan.service.inter.CoborrowerSpouseService;
+import com.slloan.service.inter.ContactsService;
 import com.slloan.service.inter.JointApplicantService;
+import com.slloan.service.inter.PersonalProfileService;
+import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
@@ -31,6 +43,12 @@ public class JointApplicantController {
 
 	@Autowired
 	private JointApplicantService jointapplicant;
+
+	@Autowired
+	private PersonalProfileService personalprofileservice;
+
+	@Autowired
+	private CircuLationRecordSubmitService recordSubmitService;
 
 	@ResponseBody
 	@RequestMapping(value = "/commonApplydata")
@@ -103,19 +121,109 @@ public class JointApplicantController {
 
 	}
 
+
+
+	@RequestMapping(value = "/joinupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateadd(HttpServletRequest req, Contacts contactsparam) {
+		String name = req.getParameter("contacts"); // 共同借款人姓名
+		String phoneticize = req.getParameter("contacts");// 拼音、英文姓名
+		String id_type = req.getParameter("contacts");// 身份证件类型
+		String id_number = req.getParameter("contacts");// 身份证件号码
+		String relationship_with_borrower = req.getParameter("contacts");// 与借款人关系
+		String country_and_region = req.getParameter("contacts");// 国家及地区
+		String sex = req.getParameter("contacts"); // 性别: 0男 1女
+		String Local_domicile = req.getParameter("contacts"); // 本地户籍
+		String household_registration = req.getParameter("contacts"); // 户籍所在地
+		String marital_status = req.getParameter("contacts"); // 婚姻情况0已婚，1未婚
+		String housing_condition_now = req.getParameter("contacts"); // 0房改/继承
+																		// 1按揭自置2无按揭自置
+																		// 3与父母同住
+																		// 4租借//
+																		// 5公司提供
+																		// 6其他
+		String birthday = req.getParameter("contacts"); // 出生日期
+		String home_address_now = req.getParameter("contacts");// 现住房地址
+		String home_phone = req.getParameter("contacts");// 住宅电话
+		String mobile_phone = req.getParameter("contacts");// 移动电话
+		String email = req.getParameter("contacts"); // E-mail
+		String present_address_zip_code = req.getParameter("contacts");// 现住址邮编
+		String vocation = req.getParameter("contacts");// 职业
+		String unit_industry = req.getParameter("contacts");// 现单位所处行业
+		String uni_name = req.getParameter("contacts"); // 现单位名称
+		String unit_address = req.getParameter("contacts");// 现单位地址
+		String enterprise_scale = req.getParameter("contacts");// 就职企业规模
+		double Revenue_in_the_previous_year = Double.valueOf(req.getParameter("contacts"));
+		String asset_scale = req.getParameter("contacts");// 资产规模
+		String unit_phone = req.getParameter("contacts");// 单位电话
+		String postCode = req.getParameter("contacts");// 单位邮编
+		String job_category = req.getParameter("contacts");// 职位类别
+		String seniority = req.getParameter("contacts");// 现单位工龄
+		String former_unit_name = req.getParameter("contacts"); // 前单位名称
+		String former_seniority = req.getParameter("contacts");// 前单位工龄
+		String source_of_income = req.getParameter("contacts");// 收入来源
+		double monthly_income = Double.valueOf(req.getParameter("contacts")); // 月收入
+		double Income_from_investment = Double.valueOf(req.getParameter("contacts"));// 投资收益
+		double Rent_income = Double.valueOf(req.getParameter("contacts"));// 租金收入
+		double Other_income = Double.valueOf(req.getParameter("contacts"));// 其他收入
+		String family_number = req.getParameter("contacts");// 供养人数
+		double monthly_expenditure = Double.valueOf(req.getParameter("contacts"));// 月支出
+		String postal_address = req.getParameter("contacts");// 通讯地址
+		String start = req.getParameter("contacts");// 状态
+		// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime = req.getParameter("contacts");// 创建时间
+
+		JointApplicant joints = new JointApplicant(name, phoneticize, id_type, id_number, relationship_with_borrower,
+				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
+				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
+				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
+				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
+				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
+				postal_address, start, ctime);
+		boolean isResult = jointapplicant.update(joints);
+		if (isResult == true) {
+			return new Json(true, "success", isResult);
+		} else {
+			return new Json(false, "fail", isResult);
+		}
+	}
+
+	/***
+	 * 根据ID查所有联系人信息
+	 * 
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value = "/japp", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json UserSelectById(HttpServletRequest req) {
+
+		System.out.println("======================================");
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String uid = json.getString("id");
+		int id = Integer.parseInt(uid);
+		JointApplicant isResult = jointapplicant.SelectById(id);
+
+		if (isResult != null) {
+			return new Json(true, "success", isResult);
+		} else
+			return new Json(false, "fail", isResult);
+	}
+
 	/**
 	 * 删除
 	 */
-//	@RequestMapping(value = "")
-//	@ResponseBody
-//	public String delete(@RequestParam("id") Integer id) {
-//		boolean isReslt = jointapplicant.delete(id);
-//		if (isReslt == true) {
-//			return JSON.toJSONString(isReslt);
-//		} else {
-//			return JSON.toJSONString(isReslt);
-//		}
-//	}
+	// @RequestMapping(value = "")
+	// @ResponseBody
+	// public String delete(@RequestParam("id") Integer id) {
+	// boolean isReslt = jointapplicant.delete(id);
+	// if (isReslt == true) {
+	// return JSON.toJSONString(isReslt);
+	// } else {
+	// return JSON.toJSONString(isReslt);
+	// }
+	// }
 
 	/**
 	 * 贷款创建列表
@@ -126,17 +234,6 @@ public class JointApplicantController {
 	public String loancrea() {
 		System.out.println("--------------------------");
 		return "loan/loanCreateTable";
-	}
-
-	/**
-	 * 申请人资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanjoin")
-	public String loanjoin() {
-		System.out.println("--------------------------");
-		return "loan/loanerInfo";
 	}
 
 	/**
@@ -151,50 +248,6 @@ public class JointApplicantController {
 	}
 
 	/**
-	 * 申请人配偶
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanerma")
-	public String loanerma() {
-		System.out.println("--------------------------");
-		return "loan/loanerMate";
-	}
-
-	/**
-	 * 共同申请人配偶
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loancomm")
-	public String loancomm() {
-		System.out.println("--------------------------");
-		return "loan/commomMate";
-	}
-
-	/**
-	 * 申请借款资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanapply")
-	public String loanapply() {
-		System.out.println("--------------------------");
-		return "loan/loanInfo";
-	}
-
-	/**
-	 * 房产资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanesta")
-	public String loanesta() {
-		System.out.println("--------------------------");
-		return "loan/estateInfo";
-	}
-
-	/**
 	 * 影像资料
 	 * 
 	 * @return
@@ -203,17 +256,6 @@ public class JointApplicantController {
 	public String loanimag() {
 		System.out.println("--------------------------");
 		return "loan/imageInfo";
-	}
-
-	/**
-	 * 联系人信息
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanlink")
-	public String loanlink() {
-		System.out.println("--------------------------");
-		return "loan/linkInfo";
 	}
 
 	/**
@@ -239,14 +281,21 @@ public class JointApplicantController {
 	}
 
 	/**
-	 * 贷款初审借款人资料
+	 * 贷款初审列表
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/loanjoins")
-	public String loanjoins() {
-		System.out.println("--------------------------");
-		return "loanfirst/loanerInfo";
+	@RequestMapping(value = "/loanlist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String loanlist(HttpServletRequest req) {
+		System.out.println("-----------初审列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int startPos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// startPos, int pageSize
+		return JSON.toJSONString(jointapplicant.getRolePage(startPos));
 	}
 
 	/**
@@ -261,50 +310,6 @@ public class JointApplicantController {
 	}
 
 	/**
-	 * 贷款初审借款人配偶信息
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanermas")
-	public String loanermas() {
-		System.out.println("--------------------------");
-		return "loanfirst/loanerMate";
-	}
-
-	/**
-	 * 贷款初审共同借款人配偶
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loancomms")
-	public String loancomms() {
-		System.out.println("--------------------------");
-		return "loanfirst/commomMate";
-	}
-
-	/**
-	 * 贷款初审借款资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanapplys")
-	public String loanapplys() {
-		System.out.println("--------------------------");
-		return "loanfirst/loanInfo";
-	}
-
-	/**
-	 * 贷款初审房产资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanestas")
-	public String loanestas() {
-		System.out.println("--------------------------");
-		return "loanfirst/estateInfo";
-	}
-
-	/**
 	 * 贷款初审影像资料
 	 * 
 	 * @return
@@ -313,17 +318,6 @@ public class JointApplicantController {
 	public String loanimags() {
 		System.out.println("--------------------------");
 		return "loanfirst/imageInfo";
-	}
-
-	/**
-	 * 贷款初审联系人信息
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanlinks")
-	public String loanlinks() {
-		System.out.println("--------------------------");
-		return "loanfirst/linkInfo";
 	}
 
 	/**
@@ -338,6 +332,92 @@ public class JointApplicantController {
 	}
 
 	/**
+	 * 贷款初审备注回退
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannotFallback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String loannotesFallback(HttpServletRequest req, HttpServletResponse response) {
+		// try {
+		// String id = req.getParameter("id");
+		// int reqid = Integer.parseInt(id);
+		// PersonalProfile contacts = personalprofileservice.SelectById(reqid);
+		//
+		// if(contacts !=null){
+		CircuLationRecord circuLationRecord = new CircuLationRecord();
+		circuLationRecord.setState(1);// 退回后状态改为1
+		String createDate = DateUtils.getInDateTime((new Date()));
+		circuLationRecord.setCreateDate(createDate);
+		circuLationRecord.setFallbackname("退回到按揭员------------------>");
+		// CircuLationRecord record = new
+		// CircuLationRecord(circuLationRecord,submit,startid,spare1,createDate);
+		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+		if (isResultInsert == true) {
+			System.out.println("插入流程表成功");
+		} else {
+			System.out.println("失败");
+		}
+		return "loanfirst/loanFirstTable";
+		// }
+
+		// } catch (Exception e) {
+		// System.out.println("");
+		// }
+
+	}
+
+	/**
+	 * 贷款初审备注提交到贷款终审
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET)
+	public String loannotesSubmit(HttpServletRequest req) {
+
+		CircuLationRecord circuLationRecord = new CircuLationRecord();
+		circuLationRecord.setState(2);// 退回后状态改为1
+		String createDate = DateUtils.getInDateTime((new Date()));
+		circuLationRecord.setCreateDate(createDate);
+		circuLationRecord.setFallbackname("提交到贷款终审------------------>");
+		// CircuLationRecord record = new
+		// CircuLationRecord(circuLationRecord,submit,startid,spare1,createDate);
+		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+		if (isResultInsert == true) {
+			System.out.println("插入流程表成功");
+		} else {
+			System.out.println("失败");
+		}
+
+		return "loanfinal/loanFinalTable";// 提交到贷款终审
+	}
+
+//	/**
+//	 * 贷款初审备注说明保存
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannoteadd", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+//	@ResponseBody
+//	public Json loannoteadd(HttpServletRequest req) {
+//
+//		String recordSingleNote = req.getParameter("recordsinglenote");// 录单备注
+//
+//		String firstTrialNote = req.getParameter("firsttrialnote");// 初审备注
+//
+//		NoteExplain note = new NoteExplain(recordSingleNote, firstTrialNote);
+//		boolean isResultInsert = recordSubmitService.firstTrial(note);
+//		if (isResultInsert == true) {
+//			System.out.println("插入流程表成功");
+//			return new Json(true, "success", isResultInsert);
+//		} else {
+//			System.out.println("失败");
+//			return new Json(false, "fail", isResultInsert);
+//		}
+//
+//		// return "loanfinal/loanFinalTable";//提交到贷款终审
+//	}
+
+	/**
 	 * 贷款终审贷款列表
 	 * 
 	 * @return
@@ -346,17 +426,6 @@ public class JointApplicantController {
 	public String loancreass() {
 		System.out.println("--------------------------");
 		return "loanfinal/loanFinalTable";
-	}
-
-	/**
-	 * 贷款终审申请人资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanjoinss")
-	public String loanjoinss() {
-		System.out.println("--------------------------");
-		return "loanfinal/loanerInfo";
 	}
 
 	/**
@@ -371,50 +440,6 @@ public class JointApplicantController {
 	}
 
 	/**
-	 * 贷款终审申请人配偶
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanermass")
-	public String loanermass() {
-		System.out.println("--------------------------");
-		return "loanfinal/loanerMate";
-	}
-
-	/**
-	 * 贷款终审共同申请人配偶
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loancommss")
-	public String loancommss() {
-		System.out.println("--------------------------");
-		return "loanfinal/commomMate";
-	}
-
-	/**
-	 * 贷款终审贷款申请信息
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanapplyss")
-	public String loanapplyss() {
-		System.out.println("--------------------------");
-		return "loanfinal/loanInfo";
-	}
-
-	/**
-	 * 贷款终审房产资料
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanestass")
-	public String loanestass() {
-		System.out.println("--------------------------");
-		return "loanfinal/estateInfo";
-	}
-
-	/**
 	 * 贷款终审影像资料
 	 * 
 	 * @return
@@ -423,17 +448,6 @@ public class JointApplicantController {
 	public String loanimagss() {
 		System.out.println("--------------------------");
 		return "loanfinal/imageInfo";
-	}
-
-	/**
-	 * 贷款终审联系人信息
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loanlinkss")
-	public String loanlinkss() {
-		System.out.println("--------------------------");
-		return "loanfinal/linkInfo";
 	}
 
 	/**
@@ -502,4 +516,14 @@ public class JointApplicantController {
 		return "/incareProof";
 	}
 
+	/**
+	 * 首页登录
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/happy")
+	public String happy() {
+		System.out.println("--------------------------");
+		return "index/firstPage";
+	}
 }

@@ -3,6 +3,7 @@ package com.slloan.util;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -52,14 +53,14 @@ public class interceptordelu implements HandlerInterceptor{
 				if(userlogin == null || code == null){
 //					request.getSession().getRequestDispatcher("signin").forward(request, response);
 //					pageBean.setLists(json);
-					Map<Character,Object> param = new HashMap<Character,Object>();
+					Map<Character,Object> param = new TreeMap<Character,Object>();
 //					param.put(json.getStatus(), "false");
 //					param.put(json.getObj(), "用户名或密码错误");
 //					param.put(json.getMsg(), "fail");
-					param.put('s', "false");
-					param.put('m', "用户名或密码错误");
-					param.put('o', "fail");
-					param.put('v', "usernameorpassworderror");
+					param.put('a', "false");
+					param.put('c', "用户名或密码错误");
+					param.put('d', "fail");
+					param.put('b', "usernameorpassworderror");
 					response.getWriter().write("{");
 					for(Character key :param.keySet()){
 //						System.out.println(key+""+param.get(key));

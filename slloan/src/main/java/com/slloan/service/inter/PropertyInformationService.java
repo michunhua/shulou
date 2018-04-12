@@ -8,11 +8,13 @@ public interface PropertyInformationService {
 	
 	boolean save(PropertyInformation jointApplicant);
 	
-	boolean update(PropertyInformation jointApplicant);
+	boolean proupdate(PropertyInformation jointApplicant);
 	
 	boolean delete(int id); 
 	
 	PropertyInformation findById(int id);
 	
 	List<PropertyInformation> findAll();
+
+	PropertyInformation SelectById(int id);
 }

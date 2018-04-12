@@ -24,7 +24,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
         </ul>
     </div>
 
@@ -82,22 +82,22 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item " id = 'tree-read'>
-                        <a href="../../loanManagement/loanInfoRead.html">贷款信息查看</a>
+                        <a href="../../slloan/loan/anin">贷款信息查看</a>
                     </li>
                     <li class="layui-nav-item " id = 'tree-confirm'>
-                        <a href="../../loanManagement/repayConfirm.html">回款确认</a>
+                        <a href="../../slloan/loan/repa">回款确认</a>
                       </dl>
                     </li>
-                    <li class="layui-nav-item " id = 'tree-gain'>
-                        <a href="../../loanManagement/gainProof.html">取证凭证</a>
+                    <li class="layui-nav-item" id = 'tree-gain'>
+                        <a href="../../slloan/loan/gain">取证凭证</a>
                         </dl>
                     </li>
                     <li class="layui-nav-item " id = 'tree-relief'>
-                        <a href="../../loanManagement/reliefProof.html">解押凭证</a>
+                        <a href="../../slloan/loan/reli">解押凭证</a>
                         </dl>
                     </li>
-                    <li class="layui-nav-item " id = 'tree-incare'>
-                        <a href="../../loanManagement/incareProof.html">进押凭证</a>
+                    <li class="layui-nav-item" id = 'tree-incare'>
+                        <a href="../../slloan/loan/inca">进押凭证</a>
                     </li>
                 </ul>
               </div>
@@ -152,9 +152,9 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;">角色</a>
                         <dl class="layui-nav-child">
-                            <dd class="layui-this"><a href="./rolelist">角色列表</a></dd>
-                            <dd><a href="./roleadd">添加角色</a></dd>
-                            <dd><a href="./updaterole">修改角色权限</a></dd>
+                           <dd class="layui-this"><a href="../role/rolelist">角色列表</a></dd>
+                            <dd><a href="../role/roleadd">添加角色</a></dd>
+                            <dd><a href="../role/updaterole">修改角色权限</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -195,10 +195,12 @@
             <tbody class="tab-data">
             </tbody>
           </table>
-
-          <button class="" id = 'send-data'>
-            123213132
-          </button>
+          <div class = 'pages'>
+          <button class = 'layui-btn previous'>上一页</button>
+          <button class = 'layui-btn next'>下一页</button>
+          <button>目前第<span class = 'layui-btn layui-btn-primary currtPage'></span>页</button>
+          <button>共<span class = 'layui-btn layui-btn-primary totalPage'></span>页</button>
+          </div>
         </div>
     </div>
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.ContactsDao">
+	
+	<resultMap type="com.slloan.entity.Contacts" id="contactsc">
+		<result column="contacts" property="contacts"/>
+		<result column="contacts1" property="contacts1"/>
+		<result column="contacts2" property="contacts2"/>
+		<result column="relationship" property="relationship"/>
+		<result column="relationship1" property="relationship1"/>
+		<result column="relationship2" property="relationship2"/>
+		<result column="c_Telephone" property="c_Telephone"/>
+		<result column="c_Telephone1" property="c_Telephone1"/>
+		<result column="c_Telephone2" property="c_Telephone2"/>
+		<result column="start" property="start"/>
+		<result column="ctime" property="ctime" />
+	</resultMap>
+		
+		<insert id="save" parameterType="com.slloan.entity.Contacts">
+			INSERT INTO contacts_table (
+		contacts,
+		contacts1,
+		contacts2,
+		relationship,
+		relationship1,
+		relationship2,
+		c_Telephone,
+		c_Telephone1,
+		c_Telephone2,
+		start,
+		ctime
+		)
+		VALUES
+		(
+		#{contacts},#{contacts},#{contacts},#{relationship},#{relationship},#{relationship},#{c_Telephone},#{c_Telephone},#{c_Telephone},#{start},#{ctime})
+		</insert>
+		
+		<!-- 根据ID查记录 -->
+		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.Contacts">
+				select * from contacts_table where id = #{id}
+		</select>
+		
+		<update id="updateadd" parameterType="com.slloan.entity.Contacts">
+				update contacts_table 
+				<set>
+					<if test="contacts !=null and contacts !=''">contacts = #{contacts},</if>
+					<if test="contacts1 !=null and contacts1 !=''">contacts1=#{contacts1},</if>
+					<if test="contacts2  !=null and contacts2 !=''">contacts2=#{contacts2},</if>
+					<if test="relationship  !=null and relationship !=''">relationship=#{relationship},</if>
+					<if test="relationship1  !=null and relationship1 !=''">relationship1=#{relationship1},</if>
+					<if test="relationship2 !=null and relationship2 !=''">relationship2=#{relationship2},</if>
+					<if test="c_Telephone !=null and c_Telephone !=''">c_Telephone = #{c_Telephone},</if>
+					<if test="c_Telephone1 !=null and c_Telephone1 !=''">c_Telephone1 = #{c_Telephone1},</if>
+					<if test="c_Telephone2 !=null and c_Telephone2 !=''">c_Telephone2 = #{c_Telephone2},</if>
+				</set>
+					 WHERE id = #{id}
+		</update>
+</mapper>

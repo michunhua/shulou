@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.FinaljudgmentDao">
+	<resultMap type="com.slloan.entity.NoteExplain" id="BeannoteExplain">
+		<result column="recordSingleNote" property="recordSingleNote" />
+		<result column="firstTrialNote" property="firstTrialNote" />
+		<result column="city" property="city" />
+		<result column="parentnode" property="parentnode" />
+		<result column="createdate" property="createdate" />
+	</resultMap>
+
+<!-- 按城市查询备注 -->
+	<select id="selectByCityId" parameterType="int" resultType="com.slloan.entity.NoteExplain">
+			Select * From (Select * from publicnote Where city=#{city})  publicnote
+	</select>
+	<insert id="noteExplainAdd"  parameterType="com.slloan.entity.NoteExplain">
+		insert into publicnote (recordSingleNote,firstTrialNote,city,parentnode,createdate)
+		values(#{recordSingleNote},#{firstTrialNote},#{city},#{parentnode},#{createdate})
+	</insert>
+</mapper>

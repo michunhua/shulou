@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.slloan.entity.ApplyForLoanInformation;
 import com.slloan.entity.SpousesOfBorrowers;
 
 
@@ -16,7 +17,9 @@ public interface spousesOfBorrowersDao {
 	
 	boolean delete(int id); 
 	
-	boolean update(SpousesOfBorrowers spousesOfBorrowers);  
+	boolean spoupdate(SpousesOfBorrowers spousesOfBorrowers);  
 	
 	List<SpousesOfBorrowers> findAll();
+	
+	SpousesOfBorrowers SelectById(int id);
 }

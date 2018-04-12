@@ -50,6 +50,7 @@ public class JointApplicant  implements Serializable{
 	private String postal_address; // '通讯地址',
 	private String start; // '状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清',
 	private String ctime; // '创建时间',
+	
 	public Integer getId() {
 		return id;
 	}

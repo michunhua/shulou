@@ -149,7 +149,7 @@ public class UserController {
 	 * 删除用户
 	 * @return
 	 */
-	@RequestMapping(value="/deluser")
+	@RequestMapping(value="/deluser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String delUser(@RequestParam("id")Integer id){
 		boolean isResult =userservice.deleteById(id);

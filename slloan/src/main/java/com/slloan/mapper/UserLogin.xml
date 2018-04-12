@@ -62,8 +62,8 @@
 	</select> -->
 	<!-- 列表分页展示 -->
 	<select id="getUserByPage"  resultType="map" resultMap="userlogin">
-        select * from User_Login 
-        	<if test="start!=null and limit!=null">
+        select * from User_Login   ORDER BY id desc
+        	<if test="page!=null and limit!=null">
         		limit #{page},#{limit} 
         	</if>
         

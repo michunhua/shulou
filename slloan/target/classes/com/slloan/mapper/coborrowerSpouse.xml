@@ -40,12 +40,28 @@
 		age from t_user </select> -->
 	<!-- <delect id="delete" parameterType="com.slloan.entity.CoborrowerSpouse"> 
 		DELETE FROM co_borrower_spouse WHERE id = #{id} </delect> -->
-	<update id="update" parameterType="com.slloan.entity.CoborrowerSpouse">
-		update
-		apply_for_loan_information set
-		name=#{name},id_Type=#{id_Type},id_Number=#{id_Number},uni_Name=#{uni_Name},unit_Phone=#{unit_Phone},home_Phone=#{home_Phone},mobile_Phone=#{mobile_Phone},monthly_Income=#{monthly_Income},start=#{start},ctime=#{ctime}
-		where id=#{id}
-	</update>
+	<update id="cobupdate" parameterType="com.slloan.entity.CoborrowerSpouse">    
+			update co_borrower_spouse 
+				<set>
+					<if test="NAME !=null and NAME !=''">NAME = #{NAME},</if>
+					<if test="id_Type !=null and id_Type !=''">id_Type = #{id_Type},</if>
+					<if test="id_Number  !=null and id_Number !=''">id_Number = #{id_Number},</if>
+					<if test="uni_Name  !=null and uni_Name !=''">uni_Name = #{uni_Name},</if>
+					<if test="unit_Phone  !=null and unit_Phone !=''">unit_Phone = #{unit_Phone},</if>
+					<if test="home_Phone !=null and home_Phone !=''">home_Phone = #{home_Phone},</if>
+					<if test="mobile_Phone !=null and mobile_Phone !=''">mobile_Phone = #{mobile_Phone},</if>
+					<if test="monthly_Income !=null and monthly_Income !=''">monthly_Income = #{monthly_Income},</if>
+					<if test="START !=null and START !=''">START = #{START},</if>
+					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+			
+				</set>
+					 WHERE id = #{id}
+    </update> 
+	
+	<!-- 根据ID查记录 -->
+		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.CoborrowerSpouse">
+				select * from co_borrower_spouse where id = #{id}
+		</select>
 
 	<select id="findById" parameterType="com.slloan.entity.CoborrowerSpouse">
 		SELECT

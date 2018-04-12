@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.CoborrowerSpouse;
+import com.slloan.entity.Contacts;
 import com.slloan.service.inter.ApplyForLoanInformationService;
 
 
@@ -17,7 +18,11 @@ public interface coborrowerSpouseDao {
 	
 	boolean delete(int id); 
 	
-	boolean update(CoborrowerSpouse coborrowerSpouse);  
+	boolean cobupdate(CoborrowerSpouse coborrowerSpouse);  
 	
-	List<CoborrowerSpouse> findAll();   
+	List<CoborrowerSpouse> findAll(); 
+	//查询ID
+	
+
+	CoborrowerSpouse SelectById(int id);
 }

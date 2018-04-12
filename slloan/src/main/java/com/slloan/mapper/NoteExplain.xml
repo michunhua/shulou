@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.CircuLationRecordSubmitDao">
+	<resultMap type="com.slloan.entity.NoteExplain" id="BeanNoteExplain">
+		<result column="recordSingleNote" property="recordSingleNote" />
+		<result column="firstTrialNote" property="firstTrialNote" />
+	</resultMap>
+
+<insert id="firstTrial" parameterType="com.slloan.entity.NoteExplain">
+	insert into publicNote(recordSingleNote,firstTrialNote) values(#{recordSingleNote},#{firstTrialNote})
+
+<!-- 	insert into public publicNote -->
+<!-- 	<trim prefix="(" suffix=")" suffixOverrides=","> -->
+<!-- 		<if test="recordSingleNote !=null and recordSingleNote !=''"> -->
+<!-- 			recordSingleNote, -->
+<!-- 		</if> -->
+<!-- 		<if test="firstTrialNote !=null and firstTrialNote !=''"> -->
+<!-- 			firstTrialNote, -->
+<!-- 		</if> -->
+<!-- 	</trim> -->
+<!-- 	<trim prefix="(" suffix=")" suffixOverrides=","> -->
+<!-- 		<if test="recordSingleNote !=null and recordSingleNote !=''"> -->
+<!-- 			 #{recordSingleNote,jdbcType=VARCHAR}, -->
+<!-- 		</if> -->
+<!-- 		<if test="firstTrialNote !=null and firstTrialNote !=''"> -->
+<!-- 			 #{firstTrialNote,jdbcType=VARCHAR}, -->
+<!-- 		</if> -->
+<!-- 	</trim> -->
+</insert>
+</mapper>

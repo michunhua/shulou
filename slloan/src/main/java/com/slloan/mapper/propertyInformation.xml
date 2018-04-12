@@ -59,9 +59,40 @@ VALUES
 		#{house_Account},#{transaCtion_Price},#{purchase_Deposit},#{supervision_of_funds},#{new_loan_Bank},#{new_Loan_Approval_Amount},#{new_Loan_Bank_Account_Number},#{note_DescriPtion},#{start},#{ctime})
 
     </insert>  
+    
+    <!-- 根据ID查记录 -->
+		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.PropertyInformation">
+				select * from property_information where id = #{id}
+		</select>
      
-    <update id="update" parameterType="com.slloan.entity.PropertyInformation">    
-        update property_information set user_name=#{userName},user_age=#{age} where user_id=#{id}    
+    <update id="proupdate" parameterType="com.slloan.entity.PropertyInformation">   
+    update property_information  
+       <set>
+					<if test="ownership_And_percentage !=null and ownership_And_percentage !=''">ownership_And_percentage = #{ownership_And_percentage},</if>
+					<if test="property_Address !=null and property_Address !=''">property_Address = #{property_Address},</if>
+					<if test="conStruction_Area  !=null and conStruction_Area !=''">conStruction_Area = #{conStruction_Area},</if>
+					<if test="inner_Area  !=null and inner_Area !=''">inner_Area = #{inner_Area},</if>
+					<if test="sales_Contract_Number  !=null and sales_Contract_Number !=''">sales_Contract_Number = #{sales_Contract_Number},</if>
+					<if test="certificate_of_Title !=null and certificate_of_Title !=''">certificate_of_Title = #{certificate_of_Title},</if>
+					<if test="proPerty_for !=null and proPerty_for !=''">proPerty_for = #{proPerty_for},</if>
+					<if test="the_Assessed_Value !=null and the_Assessed_Value !=''">the_Assessed_Value = #{the_Assessed_Value},</if>
+					<if test="original_Loan_Bank !=null and original_Loan_Bank !=''">original_Loan_Bank = #{original_Loan_Bank},</if>
+					<if test="original_Loan_Amount !=null and original_Loan_Amount !=''">original_Loan_Amount = #{original_Loan_Amount},</if>
+					<if test="loan_Outstanding_Balance  !=null and loan_Outstanding_Balance !=''">loan_Outstanding_Balance = #{loan_Outstanding_Balance},</if>
+					<if test="house_Account  !=null and house_Account !=''">house_Account = #{house_Account},</if>
+					<if test="transaCtion_Price !=null and transaCtion_Price !=''">transaCtion_Price = #{transaCtion_Price},</if>
+					<if test="purchase_Deposit !=null and purchase_Deposit !=''">purchase_Deposit = #{purchase_Deposit},</if>
+					<if test="supervision_of_funds !=null and supervision_of_funds !=''">supervision_of_funds = #{supervision_of_funds},</if>
+					<if test="new_loan_Bank !=null and new_loan_Bank !=''">new_loan_Bank = #{new_loan_Bank},</if>
+					<if test="new_Loan_Approval_Amount !=null and new_Loan_Approval_Amount !=''">new_Loan_Approval_Amount = #{new_Loan_Approval_Amount},</if>
+					<if test="new_Loan_Bank_Account_Number !=null and new_Loan_Bank_Account_Number !=''">new_Loan_Bank_Account_Number = #{new_Loan_Bank_Account_Number},</if>
+					<if test="note_DescriPtion !=null and note_DescriPtion !=''">note_DescriPtion = #{note_DescriPtion},</if>
+					<if test="start !=null and start !=''">start = #{start},</if>
+					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+				</set>
+					 WHERE id = #{id}   
+					 
+
     </update>   
       
     <delete id="delete" parameterType="com.slloan.entity.PropertyInformation">    
@@ -69,8 +100,10 @@ VALUES
     </delete>    
         
    
-    <select id="findById" parameterType="int" resultType="com.slloan.entity.PropertyInformation">    
+    <select id="findById" parameterType="int" resultType="com.slloan.entity.PropertyInformation"> 
+       
         select user_id id,user_name userName,user_age age from t_user where user_id=#{id}    
+      
     </select>    
         
     <select id="findAll" resultType="com.slloan.entity.PropertyInformation">    

@@ -3,6 +3,7 @@ package com.slloan.service.inter;
 import java.util.List;
 
 import com.slloan.entity.CoborrowerSpouse;
+import com.slloan.entity.Contacts;
 
 public interface CoborrowerSpouseService {
 	
@@ -15,4 +16,7 @@ public interface CoborrowerSpouseService {
 	CoborrowerSpouse findById(int id);
 	
 	List<CoborrowerSpouse> findAll();
+	
+	//查询ID
+	CoborrowerSpouse SelectById(int id);
 }

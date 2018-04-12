@@ -71,11 +71,14 @@ var sendAjax = function(method, url, datas, callback) {
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
-      success: function(data) {
-        log(data)
-        var datas = data
+      success: function(d) {
+        log(d)
+        var datas = d
         var len = datas.lists.length
         var pageElement = document.querySelector('.tab-data')
+        var totalPage = document.querySelector('.totalPage')
+        totalPage.innerText = datas.totalPage
+        pageElement.innerHTML = null
         for(var i = 0; i < len; i++) {
           log(i)
           var tr = document.createElement('tr')
@@ -85,16 +88,29 @@ var sendAjax = function(method, url, datas, callback) {
           var td3 = document.createElement('td')
           var td4 = document.createElement('td')
           var td5 = document.createElement('td')
+          var span0 = document.createElement('a')
+          var span1 = document.createElement('a')
+          var span2 = document.createElement('a')
           var id = datas.lists[i].id
           var userName = datas.lists[i].userName
           var role = datas.lists[i].distribution_Role
           var employeeName = datas.lists[i].employeeis_Name
-          var time = datas.lists[i].createDate
+          var time = datas.lists[i].create_Date
           td0.innerText = id
+          td0.classList.add('flag')
           td1.innerText = userName
           td2.innerText = role
           td3.innerText = employeeName
           td4.innerText = time
+          span0.href = '#'
+          span1.href = '#'
+          span2.href = '#'
+          span0.innerText = '  编辑  '
+          span1.innerText = '  删除  '
+          span2.innerText = '  查看  '
+          td5.appendChild(span0)
+          td5.appendChild(span1)
+          td5.appendChild(span2)
           tr.appendChild(td0)
           tr.appendChild(td1)
           tr.appendChild(td2)
@@ -142,12 +158,148 @@ var sendAjax = function(method, url, datas, callback) {
 // }
 
 // 分页接口 user/userlist
+var init = {
+		pages: 1,
+		limit: 10,
+}
+
+var currpages = function() {
+	var pages = document.querySelector('.currtPage')
+	pages.innerText = init.pages
+}
+
+currpages()
+
 // 获取页面数据
 var getPageData = function() {
   var method = 'GET'
-  var url = '/slloan/user/userlist?page=1&limit=10'
+  var url = '/slloan/user/userlist?page=' + init.pages + '&limit=' + init.limit
   var datas = {}
   sendAjax(method, url, datas, null)
 }
 
 getPageData()
+
+// 下一页
+var nextpage = function() {
+	var envs = document.querySelector('.next')
+	envs.addEventListener('click', function() {
+		var flag = Number(document.querySelector('.totalPage').innerText)
+		if(init.pages >= 1 && init.pages < flag) {
+			init.pages = init.pages + 1
+			getPageData()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有下一页!'
+				});
+		}
+	})
+}
+
+nextpage()
+
+// 上一页
+var previoupage = function() {
+	var envs = document.querySelector('.previous')
+	envs.addEventListener('click', function() {
+		if(init.pages > 1) {
+			init.pages = init.pages - 1
+			getPageData()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有上一页!'
+				});
+		}
+	})
+}
+
+previoupage()
+
+
+// 添加用户按钮
+var addUser = function() {
+	var envs = document.querySelector('#addUser')
+	envs.addEventListener('click', function() {
+		window.location.href = '../user/addu'
+	})
+}
+
+addUser()
+
+
+// 删除按钮发送数据
+    var deleteAjax = function(method, url, datas) {
+	log(' send data deleteajax')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {datas:JSON.stringify(datas)},
+		success : function(data) {
+			console.log(data)
+		}
+	})
+}
+// 查看按钮发送数据
+    var readAjax = function(method, url, datas) {
+	log(' send data readajax')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {datas:JSON.stringify(datas)},
+		success : function(data) {
+			console.log(data)
+			layer.open({
+				  title: '用户信息'
+				  ,content: '用户名: '  + data.userName + '<br>' + 
+				  			'密码: ' + data.passWord + '<br>' + 
+				  			'员工姓名: '  + data.employeeis_Name + '<br>' +
+				  			'分配角色: ' + data.distribution_Role + '<br>' +
+				  			'所属城市: '  + data.belongs_City + '<br>' +
+				  			'备注: ' + data.note,
+				});
+		}
+	})
+}
+// 编辑 删除 查看
+
+var groupBtn = function() {
+	var envs = document.querySelector('.tab-data')
+	envs.addEventListener('click',
+			function(e) {
+				var mark = e.target.innerText.trim()
+				console.log(mark)
+				if (mark == '编辑') {
+					localStorage.editorUserName = null
+					localStorage.editorUserName = e.target.parentNode.parentNode.querySelector('.flag').innerText
+					window.location.href = '../user/updateuser'
+				} else if (mark == '删除') {
+					layer.confirm('确定删除?', {icon: 3, title:'注意'}, function(index){
+						console.log('测试一下')
+						var method = 'POST'
+						var url = '/slloan/user/deluser'
+						var data = {}
+						data.id = e.target.parentNode.parentNode
+								.querySelector('.flag').innerText
+						console.log(data)
+						deleteAjax(method, url, data)
+						getPageData()
+						  layer.close(index);
+						});
+				} else if (mark == '查看') {
+					var method = 'GET'
+					var url = '/slloan/user/modifselect'
+					var data = {}
+					data.id = e.target.parentNode.parentNode
+							.querySelector('.flag').innerText
+					console.log(data)
+					readAjax(method, url, data)
+				}
+			})
+}
+
+groupBtn()
+

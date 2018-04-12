@@ -3,6 +3,7 @@ package com.slloan.service.inter;
 import java.util.List;
 
 import com.slloan.entity.ApplyForLoanInformation;
+import com.slloan.entity.Contacts;
 
 
 public interface ApplyForLoanInformationService {
@@ -13,10 +14,12 @@ public interface ApplyForLoanInformationService {
 	
 	boolean delete(int id); 
 	
-	boolean update(ApplyForLoanInformation applyForLoanInformation);  
+	boolean appUpdate(ApplyForLoanInformation applyForLoanInformation);  
 	
 	List<ApplyForLoanInformation> findAll();
 
 	boolean select(ApplyForLoanInformation ap);
+	//查询ID
+	ApplyForLoanInformation SelectById(int id);
 	
 }

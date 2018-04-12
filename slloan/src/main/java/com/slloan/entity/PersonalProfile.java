@@ -298,6 +298,9 @@ public class PersonalProfile implements Serializable {
 	public void setCtime(String ctime) {
 		this.ctime = ctime;
 	}
+	
+	
+	public PersonalProfile(){}
 	@Override
 	public String toString() {
 		return "PersonalProfile [id=" + id + ", name=" + name + ", phoneticize=" + phoneticize + ", id_type=" + id_type
