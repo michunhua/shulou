@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author xue
  *
  */
-public class PersonalProfile implements Serializable {
+public class PersonalProfile implements Serializable{
 	private Integer id;
 	private String name; // '共同借款人姓名',
 	private String phoneticize; // '拼音、英文姓名',

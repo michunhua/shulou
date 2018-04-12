@@ -29,10 +29,25 @@
 	</select>
 	
 	<update id="updateUser" parameterType="com.slloan.entity.UserLogin">
-		update User_Login set username = #{userName},password=#{passWord},
-		employeeis_name=#{employeeis_Name},distribution_role=#{distribution_Role}
-		,belongs_city=#{belongs_City},
-		note=#{note} WHERE id = #{id}
+		update User_Login 
+<!-- 		set -->
+<!-- 		username = #{userName}, -->
+<!-- 		password = #{passWord}, -->
+<!-- 		employeeis_name=#{employeeis_Name}, -->
+<!-- 		distribution_role=#{distribution_Role} -->
+<!-- 		,belongs_city=#{belongs_City}, -->
+<!-- 		note=#{note}, -->
+<!-- 		create_Date = #{create_Date}  -->
+			<set>
+				<if test="username !=null and username !=''">username = #{userName},</if>
+					<if test="password !=null and password !=''">password= #{passWord},</if>
+					<if test=" employeeis_name !=null and  employeeis_name !=''"> employeeis_name=#{employeeis_Name},</if>
+					<if test="distribution_role  !=null and distribution_role !=''">distribution_role=#{distribution_Role},</if>
+					<if test="belongs_city  !=null and belongs_city !=''">belongs_city=#{belongs_city},</if>
+					<if test="note !=null and note !=''">note=#{note},</if>
+					<if test="create_Date !=null and create_Date !=''">create_Date=#{create_Date},</if>
+			</set>
+		WHERE id = #{id}
 	</update>
 	<select id="selectById" parameterType="String">
 		select * from User_Login where id= #{id}
@@ -61,10 +76,11 @@
 		select * from userlogin 
 	</select> -->
 	<!-- 列表分页展示 -->
-	<select id="getUserByPage"  resultType="map" resultMap="userlogin">
-        select * from User_Login   ORDER BY id desc
-        	<if test="page!=null and limit!=null">
-        		limit #{page},#{limit} 
+	<select id="getUserByPage"  resultType="Map" resultMap="userlogin">
+        select id,username,employeeis_name,distribution_role,create_date 
+        from User_Login  ORDER BY id desc
+        	<if test="page !=null and limit !=null">
+        		limit #{page}, #{limit} 
         	</if>
         
      </select>
@@ -90,15 +106,19 @@
 <!-- 		values(#{roleName},#{descriPtion},#{note},#{belongs_City},#{configuration},#{loan_management},#{repayment_confirmation},#{loan_Final_review},#{loan_Create},#{loan_First_trial},#{loan_information},#{qz_certificate},#{Incarceration_certificate},#{jy_certificate},#{finance_Management},#{finance_sp},#{loan_Sp},#{Settlement_pz},#{Transfer_accounts_pz},#{personal_information_sz}, -->
 <!-- 		#{personal_information_xg},#{password_Modify},#{role_Setup},#{add_Role},#{modify_Role},#{del_Role},#{qx__Setup},#{fp_Jurisdiction},#{del_Jurisdiction},#{user_Administration},#{add_User},#{fp_Role},#{del_User},#{modify_user},#{method},#{city},#{county}) -->
 <!-- 	</insert> -->
-	<select id="getRolePage" resultType="Map" resultMap="userlogin">
-		select id,rolename,create_date 
-			from User_Login 
-			<if test="start!=null and limit!=null">
-				limit #{page},#{limit} 
-			</if>
-	</select>
+<!-- 	<select id="getRolePage" resultType="Map" resultMap="userlogin"> -->
+<!-- 		select id,rolename,create_date  -->
+<!-- 			from User_Login  -->
+<!-- 			<if test="start!=null and limit!=null"> -->
+<!-- 				limit #{page},#{limit}  -->
+<!-- 			</if> -->
+<!-- 	</select> -->
 	<!-- 查询用户总记录数 -->
-	<select id="getRoleCount"  resultType="Integer">
-     	 SELECT COUNT(*) FROM User_Login 
+<!-- 	<select id="getRoleCount"  resultType="Integer"> -->
+<!--      	 SELECT COUNT(*) FROM User_Login  -->
+<!--      </select> -->
+     <!-- 根据ID查所有 -->
+     <select id="selectUserById" parameterType="int" resultType="com.slloan.entity.UserLogin">
+     	select id,username,employeeis_name,distribution_role,belongs_city,note,create_date from User_Login where id=#{id}
      </select>
 </mapper>

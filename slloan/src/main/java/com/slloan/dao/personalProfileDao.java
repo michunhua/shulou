@@ -13,7 +13,7 @@ import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.UserLogin;
 
 @Repository(value="personalprofiledao")
-public interface personalProfileDao {
+public interface personalProfileDao{
 
 	
 	boolean save(PersonalProfile personalProfile);
@@ -27,19 +27,11 @@ public interface personalProfileDao {
 		List<PersonalProfile> findAll();
 
 		boolean perupdate(PersonalProfile personalProfile);
-		//分页
-		Page<PersonalProfile> getRolePage(int currentPage);
+	
 		//查询ID
 		PersonalProfile SelectById(int id);
 
-		/**
-	     * 分页操作，调用findByPage limit分页方法
-	     * @param map
-	     * @return
-	     */
-	 	public List<PersonalProfile> getRolePage(Map<String,Object> map);
-
-		Page<PersonalProfile> list();
+	
 		
 
 }

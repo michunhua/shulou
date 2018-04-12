@@ -1,5 +1,6 @@
 package com.slloan.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.slloan.entity.AddRole;
 import com.slloan.entity.Page;
 import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.UserService;
+import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 @Service(value="userServiceimpl")
@@ -62,14 +64,15 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean updateaddUser(UserLogin user) {
+		int id = user.getId();
 		 String userName = user.getUserName();//用户名
 		 String passWord = user.getPassWord();//密码
 		 String employeeis_Name = user.getEmployeeis_Name();//员工姓名
 		 String distribution_Role = user.getDistribution_Role();//分配角色
 		 String belongs_City =user.getBelongs_City();//所属城市
 		 String note = user.getNote();//备注
-		 Integer rid = user.getR_id();
-		 UserLogin u = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note);
+		String createDate = DateUtils.getInDateTime((new Date()));//日期
+		 UserLogin u = new UserLogin(id,userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,createDate);
 		boolean isResult = userdao.updateUser(u);
 		if(isResult == true){
 			return true;
@@ -134,7 +137,7 @@ public class UserServiceImpl implements UserService{
 		pageBean.setCurrPage(currentPage);
 		//每页显示的数据
 		int pageSize = 10;
-		pageBean.setCurrPage(pageSize);
+		pageBean.setPageSize(pageSize);
 		//封装总记录数
 		int totalCount = userdao.getCount();
 		pageBean.setTotalCount(totalCount);
@@ -150,29 +153,34 @@ public class UserServiceImpl implements UserService{
 		return pageBean;
 	}
 
-	@Override
-	public Page<UserLogin> getRolePage(int currentPage) {
+//	@Override
+//	public Page<UserLogin> getRolePage(int currentPage) {
+//
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		Page<UserLogin> pageBean = new Page<UserLogin>();
+//		//封装当前页数
+//		pageBean.setCurrPage(currentPage);
+//		//每页显示的数据
+//		int pageSize = 10;
+//		pageBean.setPageSize(pageSize);
+//		//封装总记录数
+//		int totalCount = userdao.getRoleCount();
+//		pageBean.setTotalCount(totalCount);
+//		//封装总页数
+//		double tc = totalCount;
+//		Double num = Math.ceil(tc/pageSize);//向上取整
+//		pageBean.setTotalPage(num.intValue());
+//		map.put("page", (currentPage-1)*pageSize);
+//		map.put("limit", pageBean.getPageSize());
+//		//封装每页显示的数据
+//		List<UserLogin> lists = userdao.getRolePage(map);
+//		pageBean.setLists(lists);
+//			return pageBean;
+//	
+//	}
 
-		Map<String,Object> map = new HashMap<String,Object>();
-		Page<UserLogin> pageBean = new Page<UserLogin>();
-		//封装当前页数
-		pageBean.setCurrPage(currentPage);
-		//每页显示的数据
-		int pageSize = 10;
-		pageBean.setPageSize(pageSize);
-		//封装总记录数
-		int totalCount = userdao.getRoleCount();
-		pageBean.setTotalCount(totalCount);
-		//封装总页数
-		double tc = totalCount;
-		Double num = Math.ceil(tc/pageSize);//向上取整
-		pageBean.setTotalPage(num.intValue());
-		map.put("page", (currentPage-1)*pageSize);
-		map.put("limit", pageBean.getPageSize());
-		//封装每页显示的数据
-		List<UserLogin> lists = userdao.getRolePage(map);
-		pageBean.setLists(lists);
-			return pageBean;
-	
+	@Override
+	public UserLogin selectUserById(int id) {
+		return userdao.selectUserById(id);
 	}
 }

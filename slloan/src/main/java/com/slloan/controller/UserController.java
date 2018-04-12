@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,7 @@ import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 /**
  * 用户列表
  * @author Administrator
@@ -145,13 +147,37 @@ public class UserController {
 	}
 	 */
 	
+	/***
+	 * 根据ID查所有
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value="/selectuserbyid",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json UserSelectById(HttpServletRequest req){
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String uid = json.getString("id");
+		int id = Integer.parseInt(uid);
+		UserLogin isResult =userservice.selectUserById(id);
+		if(isResult !=null){
+			return new Json(true,"success",isResult); 
+		}else
+			return new Json(false,"fail",isResult); 
+	}
+	
+	
 	/**
 	 * 删除用户
 	 * @return
 	 */
-	@RequestMapping(value="/deluser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/deluser",method=RequestMethod.POST)
 	@ResponseBody
-	public String delUser(@RequestParam("id")Integer id){
+	public String delUser(HttpServletRequest req){
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String deid = json.getString("id");
+		int id = Integer.parseInt(deid);
 		boolean isResult =userservice.deleteById(id);
 		if(isResult == true){
 			return JSON.toJSONString(isResult); 
@@ -159,12 +185,24 @@ public class UserController {
 			return JSON.toJSONString(isResult); 
 	}
 	/**
-	 * 修改用户
+	 * 修改用户保存
 	 * @return
 	 */
 	@RequestMapping(value="/modifyuser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updateUser(UserLogin userlogin){
+	public String updateUser(HttpServletRequest req){
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String username = json.getString("username");//用户名
+		String password = json.getString("password");
+		String employeeis_Name = json.getString("employee");//员工姓名
+		String distribution_Role = json.getString("role");//分配角色
+		String belongs_City = json.getString("city");//所属城市
+		String createDate = DateUtils.getInDateTime((new Date()));//日期
+		String note =json.getString("note");
+		Integer id = json.getInt("id");
+		
+		UserLogin userlogin = new UserLogin(id,username,password,employeeis_Name,distribution_Role,belongs_City,note,createDate);
 		boolean isResult =userservice.updateaddUser(userlogin);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);
@@ -179,8 +217,15 @@ public class UserController {
 	 */
 	@RequestMapping(value="/modifselect",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updateselectId(@RequestParam("id") Integer id){
-		UserLogin isResult = userservice.updateselectId(id);
+	public String updateselectId(HttpServletRequest req){
+		String ddd = req.getParameter("datas");
+		System.out.println(ddd);
+//		System.out.println(username);
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String strid = json.getString("id");
+		int modifid = Integer.parseInt(strid);
+		UserLogin isResult = userservice.updateselectId(modifid);
 			if(isResult != null){
 				return JSON.toJSONString(isResult);
 			}else
@@ -231,7 +276,9 @@ public class UserController {
 		//		li.add(addrole);
 		li.add(userlogin);
 		
-
+//		List<AddRole> r = neW ARRAYLIST<ADDROLE>();
+//		LIST<USERLOGIN> DD = new ArrayList<UserLogin>();
+//		userlogin.setUserRole(r);
 		if(userlogin !=null){
 			 if(paramcode.toLowerCase().equals(code.toLowerCase())){
 			 ServletContext application=session.getServletContext();
@@ -256,15 +303,24 @@ public class UserController {
 			 loginMap.put(userlogin.getUserName(),session.getId());
 			 application.setAttribute("loginMap", loginMap);
 			 session.setAttribute("username",user.getUserName());
-
+//			 for(Object obj : li){
+//				 System.out.println(obj.toString());
 				 pageBean.setLists(li);
-
+//			 }
+			
+			
+//				   response.encodeRedirectURL("ulist");
+//					return  JSON.toJSONString("验证码输入证确登录成功:"+li);
+//			 		return new Json(true,"success","验证码输入证确登录成功:"+pageBean,"loginsuccess");
 				 return new Json(true,"success",pageBean,"loginsuccess");
 				}else{
-
+//					 response.encodeRedirectURL("signin");
+//					req.getRequestDispatcher("signin").forward(req, response);
+					
+//					return JSON.toJSONString("","验证码输入错误");
 					return new Json(false,"fail","验证码输入错误");
 				}
-
+//				 return  "fff";
 			
 		}else{
 			//登录失败
@@ -345,7 +401,7 @@ public class UserController {
 	 * 用户列表分页
 	 * @param page
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value="/pagefy",method = RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String pagefy(HttpServletRequest req){
@@ -355,13 +411,55 @@ public class UserController {
 		 int totalCount = (int) userservice.getCount();  
 		 int startPos= Integer.parseInt(page);
 			int pageSize = Integer.parseInt(limit);
-		
+		 if(pageNow !=null){
+			 page = new PageBean(totalCount,Integer.parseInt(pageNow));
+			 userservice.getUserByPage(page.getStartPos(), page.getPageSize());
+			 return new Json(true,"success",page);
+		 }else if(pageNow ==null){
+			 page = new Page(totalCount, 1);
+			 userservice.getUserByPage(page.getStartPos(), page.getPageSize());
+			 return new Json(true,"success",page);
+		 }else{
+			 return new Json(true,"success",listuser);
+		 }
+		 	
 			return  JSON.toJSONString(userservice.getRolePage(startPos));
-	
+		
+		String id = req.getParameter("1");
+		//每页显示的条数
+		int pagesize =page.getPageSize();
+		int pageTimes;
+		int startRow =(Integer.parseInt(id)-1)*pagesize;
+		List<UserLogin>users=userservice.list();
+		users = userservice.getUserByPage(startRow, pagesize);
+		if(users.size()% pagesize  ==0){
+			pageTimes = users.size()/pagesize;
+		}else{
+			pageTimes = users.size()/pagesize +1;
 		}
+		if(users.size()>0){
+			return new Json(true,"success",users.size());
+		}else if(pageTimes >=0){
+			return new Json(true,"success",pageTimes);
+		}else if(users !=null){
+			return new Json(true,"success",users);//每页开始的第几条记录   
+		}else
+			return new Json(false,"fail",false);
+	
+		
+		}*/
 	
 	
-
+//	/**
+//	 * 登出 方法一
+//	 * @param session
+//	 * @return
+//	 */
+//	@RequestMapping(value="/exit")
+//	public String exit(HttpSession session){
+//		 session.invalidate();  
+//		return "index/index";
+//	}
 	
 	/**
 	 * 登出 方法二

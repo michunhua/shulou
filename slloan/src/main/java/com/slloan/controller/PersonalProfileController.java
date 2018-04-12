@@ -1,5 +1,8 @@
 package com.slloan.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.PersonalProfile;
+import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.JointApplicantService;
 import com.slloan.service.inter.PersonalProfileService;
 import com.slloan.util.Json;
@@ -220,6 +224,8 @@ public class PersonalProfileController {
 			}
 	}
 	
+	
+
 	/**
 	 * 申请人资料
 	 * 

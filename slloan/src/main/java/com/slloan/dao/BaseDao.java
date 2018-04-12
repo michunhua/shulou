@@ -60,6 +60,9 @@ public interface BaseDao<T> {
      * @return
      */
     public List<T> find(Map<String, Object> map);
+    
+    
+    
 
 	
 }

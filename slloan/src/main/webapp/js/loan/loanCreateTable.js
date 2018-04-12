@@ -148,11 +148,11 @@ var sendAjax = function(method, url, datas) {
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/loan/loanlist'
+	var url = '/slloan/user/perpor'
 	var datas = {}
-	datas.a = 'a'
+	datas.id = 'a'
 	datas.b = 'b'
-		console.log('初始化加载数据233')
+	console.log('初始化加载数据233')
 	sendAjax(method, url, datas)
 	console.log('执行没有？')
 }

@@ -82,4 +82,12 @@ public interface UserDao extends BaseDao<UserLogin>{
 	     * @return
 	     */
 	 	int getRoleCount();
+	 	
+	 	/**
+	     * 根据Id查询一条记录
+	     *
+	     * @param id
+	     * @return
+	     */
+	    public UserLogin selectUserById(int id);
 }

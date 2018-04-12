@@ -18,8 +18,5 @@ public interface PersonalProfileService {
 	// 查询ID
 	PersonalProfile SelectById(int id);
 
-	// 分页
-
-	Page<PersonalProfile> getRolesPage(int currentPage);
 
 }

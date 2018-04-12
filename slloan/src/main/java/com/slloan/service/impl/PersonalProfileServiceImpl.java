@@ -1,6 +1,8 @@
 package com.slloan.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,11 +94,8 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		return personalProfiledao.SelectById(id);
 	}
 
-	@Override
-	public Page<PersonalProfile> getRolesPage(int currentPage) {
-		// TODO Auto-generated method stub
-		return personalProfiledao.list();
-	}
+
+
 
 
 

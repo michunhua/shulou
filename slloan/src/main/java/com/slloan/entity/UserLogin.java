@@ -25,6 +25,30 @@ public class UserLogin implements Serializable{
 	public UserLogin(){
 		
 	}
+
+	public UserLogin(Integer id,String userName, String employeeis_Name, String distribution_Role, String belongs_City,
+			String note, String create_Date) {
+		super();
+		this.userName = userName;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.create_Date = create_Date;
+	}
+	
+	public UserLogin(Integer id,String userName, String passWord,
+			String employeeis_Name, String distribution_Role,
+			String belongs_City, String note, String create_Date) {
+		super();
+		this.userName = userName;
+		this.passWord = passWord;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.id = id;
+	}
 	
 	public UserLogin(String userName, String passWord) {
 		super();
@@ -45,17 +69,7 @@ public class UserLogin implements Serializable{
 		this.r_id = r_id;
 		this.create_Date = create_Date;
 	}
-	public UserLogin(String userName, String passWord,
-			String employeeis_Name, String distribution_Role,
-			String belongs_City, String note) {
-		super();
-		this.userName = userName;
-		this.passWord = passWord;
-		this.employeeis_Name = employeeis_Name;
-		this.distribution_Role = distribution_Role;
-		this.belongs_City = belongs_City;
-		this.note = note;
-	}
+	
 	public UserLogin(Integer id, String userName, String passWord, String employeeis_Name, String distribution_Role,
 			String belongs_City, String note, Integer r_id,String create_Date) {
 		super();

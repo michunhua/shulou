@@ -206,12 +206,5 @@ VALUES
 		</update>
 		
 		
-		<!-- 列表分页展示 -->
-	<select id="getUserByPage"  resultType="map" resultMap="userlogin">
-        select * from borrow_information   ORDER BY id desc
-        	<if test="page!=null and limit!=null">
-        		limit #{page},#{limit} 
-        	</if>
-        
-     </select>
+	
 </mapper>

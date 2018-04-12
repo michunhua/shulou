@@ -93,5 +93,14 @@ public interface UserService {
      * @param map
      * @return
      */
-	Page<UserLogin> getRolePage(int currentPage);
+//	Page<UserLogin> getRolePage(int currentPage);
+	
+	/**
+     * 根据Id查询一条记录
+     *
+     * @param id
+     * @return
+     */
+    public UserLogin selectUserById(int id);
+	
 }
