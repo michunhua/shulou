@@ -12,18 +12,14 @@ import com.slloan.entity.UserLogin;
 public interface PersonalProfileService {
 
 	boolean save(PersonalProfile personalProfile);
-	
+
 	boolean perupdate(PersonalProfile personalProfile);
-	
-	boolean delete(int id); 
-	
-	
-	
-	//查询ID
+
+	// 查询ID
 	PersonalProfile SelectById(int id);
-	
-	//分页
-	
+
+	// 分页
+
 	Page<PersonalProfile> getRolesPage(int currentPage);
-		
+
 }

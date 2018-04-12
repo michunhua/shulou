@@ -147,9 +147,12 @@ public class RoleAddController {
 	 */
 	@RequestMapping(value="/selectbyid",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String selectById(@RequestParam("data") String id,HttpServletResponse response){
-		int tzid = Integer.parseInt(id);
-		AddRole selectid = roleAddService.updateselectId(tzid);
+	public String selectById(HttpServletRequest req,HttpServletResponse response){
+		String data = req.getParameter("datas");
+		JSONObject jsonobj = new JSONObject().fromObject(data);
+		String rid = jsonobj.getString("id");
+		int id = Integer.parseInt(rid);
+		AddRole selectid = roleAddService.updateselectId(id);
 			if(selectid.getId() >0 || selectid.getId()!=null){
 				logger.debug("成功从数据库找到数据"+selectid);
 //				return new Json(true,"success",selectid);
@@ -163,9 +166,17 @@ public class RoleAddController {
 	/**
 	 * 修改角色保存
 	 */
-	@RequestMapping(value="/updateadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/updateroleadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updateId(HttpServletRequest req,AddRole addrole){
+	public String updateId(HttpServletRequest req){
+		String dataid = req.getParameter("datas");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String username = json.getString("roleName");//用户名
+		String belongs_City = json.getString("belongs_City");//员工姓名
+		String descriPtion = json.getString("descriPtion");//分配角色
+		String note = json.getString("note");//所属城市
+		String createDate = DateUtils.getInDateTime((new Date()));//日期
+		AddRole addrole = new AddRole(username,belongs_City,descriPtion,note,createDate);
 		 boolean isResult = roleAddService.updateRole(addrole);
 		 if(isResult == true){
 			 

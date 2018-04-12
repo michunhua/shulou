@@ -56,6 +56,16 @@ public class AddRole{
 //	private String orderline;//排序值
  * */
 	public AddRole(){}
+	
+	public AddRole(String roleName, String descriPtion, String belongs_City, String note, String createDate) {
+		super();
+		this.roleName = roleName;
+		this.descriPtion = descriPtion;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.createDate = createDate;
+	}
+
 	public AddRole(Integer id, String roleName, String descriPtion, String belongs_City, String note,
 			String configuration, String createDate) {
 		super();

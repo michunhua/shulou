@@ -231,9 +231,7 @@ public class UserController {
 		//		li.add(addrole);
 		li.add(userlogin);
 		
-//		List<AddRole> r = neW ARRAYLIST<ADDROLE>();
-//		LIST<USERLOGIN> DD = new ArrayList<UserLogin>();
-//		userlogin.setUserRole(r);
+
 		if(userlogin !=null){
 			 if(paramcode.toLowerCase().equals(code.toLowerCase())){
 			 ServletContext application=session.getServletContext();
@@ -258,24 +256,15 @@ public class UserController {
 			 loginMap.put(userlogin.getUserName(),session.getId());
 			 application.setAttribute("loginMap", loginMap);
 			 session.setAttribute("username",user.getUserName());
-//			 for(Object obj : li){
-//				 System.out.println(obj.toString());
+
 				 pageBean.setLists(li);
-//			 }
-			
-			
-//				   response.encodeRedirectURL("ulist");
-//					return  JSON.toJSONString("验证码输入证确登录成功:"+li);
-//			 		return new Json(true,"success","验证码输入证确登录成功:"+pageBean,"loginsuccess");
+
 				 return new Json(true,"success",pageBean,"loginsuccess");
 				}else{
-//					 response.encodeRedirectURL("signin");
-//					req.getRequestDispatcher("signin").forward(req, response);
-					
-//					return JSON.toJSONString("","验证码输入错误");
+
 					return new Json(false,"fail","验证码输入错误");
 				}
-//				 return  "fff";
+
 			
 		}else{
 			//登录失败
@@ -366,55 +355,13 @@ public class UserController {
 		 int totalCount = (int) userservice.getCount();  
 		 int startPos= Integer.parseInt(page);
 			int pageSize = Integer.parseInt(limit);
-		/* if(pageNow !=null){
-			 page = new PageBean(totalCount,Integer.parseInt(pageNow));
-			 userservice.getUserByPage(page.getStartPos(), page.getPageSize());
-			 return new Json(true,"success",page);
-		 }else if(pageNow ==null){
-			 page = new Page(totalCount, 1);
-			 userservice.getUserByPage(page.getStartPos(), page.getPageSize());
-			 return new Json(true,"success",page);
-		 }else{
-			 return new Json(true,"success",listuser);
-		 }*/
-		 	
-			return  JSON.toJSONString(userservice.getRolePage(startPos));
-		/*
-		String id = req.getParameter("1");
-		//每页显示的条数
-		int pagesize =page.getPageSize();
-		int pageTimes;
-		int startRow =(Integer.parseInt(id)-1)*pagesize;
-		List<UserLogin>users=userservice.list();
-		users = userservice.getUserByPage(startRow, pagesize);
-		if(users.size()% pagesize  ==0){
-			pageTimes = users.size()/pagesize;
-		}else{
-			pageTimes = users.size()/pagesize +1;
-		}
-		if(users.size()>0){
-			return new Json(true,"success",users.size());
-		}else if(pageTimes >=0){
-			return new Json(true,"success",pageTimes);
-		}else if(users !=null){
-			return new Json(true,"success",users);//每页开始的第几条记录   
-		}else
-			return new Json(false,"fail",false);
-	*/
 		
+			return  JSON.toJSONString(userservice.getRolePage(startPos));
+	
 		}
 	
 	
-//	/**
-//	 * 登出 方法一
-//	 * @param session
-//	 * @return
-//	 */
-//	@RequestMapping(value="/exit")
-//	public String exit(HttpSession session){
-//		 session.invalidate();  
-//		return "index/index";
-//	}
+
 	
 	/**
 	 * 登出 方法二
