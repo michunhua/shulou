@@ -17,7 +17,6 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
                     admin
                 </a>
                 <dl class="layui-nav-child">
@@ -25,7 +24,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
         </ul>
     </div>
 
@@ -40,22 +39,13 @@
                     <li class="layui-nav-item layui-nav-itemed" id = 'tree-create'>
                         <a href="javascript:;">贷款创建</a>
                         <dl class="layui-nav-child">
-                             <dd class="layui-this"><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
-                            <dd><a href="../../slloan/loan/loanjoin">借款申请人个人资料</a></dd>
-                            <dd><a href="../../slloan/loan/loancom">共同申请人个人资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanerma">借款申请人配偶</a></dd>
-                            <dd><a href="../../slloan/loan/loancomm">共同申请人配偶</a></dd>
-                            <dd><a href="../../slloan/loan/loanapply">申请借款信息</a></dd>
-                            <dd><a href="../../slloan/loan/loanesta">房产资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanimag">影像资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanlink">联系人信息</a></dd>
-                            <dd><a href="../../slloan/loan/loannote">备注说明</a></dd>
+                            <dd class="layui-this"><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item " id = 'tree-trival'>
                         <a href="javascript:;">贷款初审</a>
                         <dl class="layui-nav-child">
-                         <dd><a href="../../slloan/loan/loancreas">贷款创建列表</a></dd>
+                         	<dd><a href="../../slloan/loan/loancreas">贷款创建列表</a></dd>
                             <dd><a href="../../slloan/loan/loanjoins">借款申请人个人资料</a></dd>
                             <dd><a href="../../slloan/loan/loancoms">共同申请人个人资料</a></dd>
                             <dd><a href="../../slloan/loan/loanermas">借款申请人配偶</a></dd>
@@ -167,19 +157,6 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <!-- 顶部导航 -->
-        <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item layui-this"><a href="">贷款创建列表</a></li>
-          <li class="layui-nav-item"><a href="">借款申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="javascript:;">借款申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">申请借款信息</a></li>
-          <li class="layui-nav-item"><a href="">房产资料</a></li>
-          <li class="layui-nav-item"><a href="">影像资料</a></li>
-          <li class="layui-nav-item"><a href="">联系人信息</a></li>
-          <li class="layui-nav-item"><a href="">备注说明</a></li>
-        </ul>
         <div class="container">
           <!-- 头部导航 -->
           <span class="layui-breadcrumb nav-title">
@@ -263,8 +240,7 @@
           <div class="layui-form-block">
             <div class="layui-input-inline">
               <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>查询</button>
-              <button class="layui-btn" lay-submit lay-filter="formDemo">
-              	<a href="../../slloan/loan/loanjoin">创建贷款</a></button>
+              <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'createLoan'>创建贷款</button>
             </div>
           </div>
           <div class="layui-form-inline" id = "people">
@@ -272,7 +248,30 @@
               <label class="layui-form-label">总人数: **人</label>
             </div>
           </div>
-          <table id="demo" lay-filter="test"></table>
+          <table class="layui-table">
+            <colgroup>
+              <col width="150">
+              <col width="200">
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>全选</th>
+                <th>申请编号</th>
+                <th>姓名</th>
+                <th>申请金额</th>
+                <th>手机号码</th>
+                <th>证件号码</th>
+                <th>贷款期限</th>
+                <th>状态</th>
+                <th>住房地址</th>
+                <th>创建时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody class="tab-data">
+            </tbody>
+          </table>
         </div>
     </div>
 

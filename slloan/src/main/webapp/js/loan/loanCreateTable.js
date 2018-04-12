@@ -93,7 +93,7 @@ var sendAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        consoel.log(data)
+//        consoel.log(data)
         var datas = data
         var len = datas.lists.length
         var pageElement = document.querySelector('.tab-data')
@@ -148,7 +148,7 @@ var sendAjax = function(method, url, datas) {
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/loan/loancreate'
+	var url = '/slloan/loan/loanlist'
 	var datas = {}
 	datas.a = 'a'
 	datas.b = 'b'
