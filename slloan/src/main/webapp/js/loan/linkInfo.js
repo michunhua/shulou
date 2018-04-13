@@ -30,6 +30,8 @@ var collectData = function() {
   data.linktName = e('.linkt-name').value
   data.linktRelationship = e('.linkt-relationship').value
   data.linktPhone = e('.linkt-phone').value
+  data.start = 'a'
+	  data.ctime = 'b'
   return data
 }
 
@@ -40,7 +42,16 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loannote'
+  			});
+    	}
+    }
   })
 }
 
@@ -52,10 +63,10 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/contactinformation'
     log(data)
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
 }
 

@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +29,8 @@ import net.sf.json.JSONObject;
 @Controller(value="applyforLoanInformationcontroll")
 @RequestMapping("/loan")
 public class ApplyForLoanInformationController {
+	
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private ApplyForLoanInformationService applyForLoanInformationservice;
@@ -43,7 +47,7 @@ public class ApplyForLoanInformationController {
 	 */
 	@RequestMapping(value="/ApplyLoaninformation")
 	@ResponseBody
-	public String save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req) {
  
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -65,12 +69,14 @@ public class ApplyForLoanInformationController {
 				repayment_Account_Name, repayment_Account_Number,start,ctime);
 		boolean rt = applyForLoanInformationservice.save(ap);// 鎻掑叆瑙掕壊
 
-		if (rt == true) {
-			return JSON.toJSONString("success");
-		} else {
-			return JSON.toJSONString("fail");
-		}
 
+		if (rt == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",rt ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",rt); 
+		}
 	}
 	
 
@@ -105,9 +111,7 @@ public class ApplyForLoanInformationController {
 	public String updateUser(HttpServletRequest req){
 		String dataid = req.getParameter("datas");
 		JSONObject json = new JSONObject().fromObject(dataid);
-		
-		
-		
+		Integer id = json.getInt("id");
 		String amount= json.getString("contacts");
 		String time_Limit= json.getString("contacts");
 		String borrowing_Variety= json.getString("contacts");
@@ -120,7 +124,7 @@ public class ApplyForLoanInformationController {
 		String repayment_Account_Number= json.getString("contacts");
 		String start= json.getString("contacts");
 		String ctime=DateUtils.getInDateTime((new Date()));
-		ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, borrowing_Variety, repayment,
+		ApplyForLoanInformation ap = new ApplyForLoanInformation(id,amount, time_Limit, borrowing_Variety, repayment,
 				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
 				repayment_Account_Name, repayment_Account_Number,start,ctime);
 		boolean isResult =applyForLoanInformationservice.appUpdate(ap);

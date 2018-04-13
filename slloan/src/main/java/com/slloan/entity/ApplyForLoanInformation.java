@@ -27,6 +27,26 @@ public class ApplyForLoanInformation implements Serializable{
 		
 	}
 	
+	public ApplyForLoanInformation(Integer id, String amount, String time_Limit, String borrowing_Variety,
+			String repayment, String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
+			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String start,
+			String ctime) {
+		super();
+		this.id = id;
+		this.amount = amount;
+		this.time_Limit = time_Limit;
+		this.borrowing_Variety = borrowing_Variety;
+		this.repayment = repayment;
+		this.receiving_Bank_Name = receiving_Bank_Name;
+		this.receiving_Account_Name = receiving_Account_Name;
+		this.receiving_Account = receiving_Account;
+		this.repayment_Bank_Name = repayment_Bank_Name;
+		this.repayment_Account_Name = repayment_Account_Name;
+		this.repayment_Account_Number = repayment_Account_Number;
+		this.start = start;
+		this.ctime = ctime;
+	}
+
 	public ApplyForLoanInformation(String amount, String time_Limit, String borrowing_Variety,
 			String repayment, String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
 			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String start,

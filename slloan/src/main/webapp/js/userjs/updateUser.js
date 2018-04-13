@@ -65,6 +65,7 @@ var collectData = function() {
 	  data.role = document.querySelector('.role').value
 	  data.city = document.querySelector('.city').value
 	  data.note = document.querySelector('.note').value
+	  data.id = localStorage.editorUserName
 	  return data
 }
 
@@ -72,11 +73,11 @@ var collectData = function() {
 var saveData = function() {
 	var envs = document.querySelector('#save')
 	envs.addEventListener('click', function() {
-		localStorage.editorUserName = null
 		var method = 'POST'
 		var url = '/slloan/user/modifyuser'
 		var data = collectData()
 		saveAjax(method, url, data)
+		localStorage.editorUserName = null
 	})
 }
 

@@ -23,6 +23,7 @@ public class CoborrowerSpouseServiceImpl implements CoborrowerSpouseService {
 	public boolean save(CoborrowerSpouse coborrowerSpouse) {
 		 String name =coborrowerSpouse.getName();						//金额
 		 String id_Type=coborrowerSpouse.getId_Type();					//期限
+		 String id_Other = coborrowerSpouse.getId_Other();
 		 String id_Number=coborrowerSpouse.getId_Number();    		//借款品种
 		 String uni_Name=coborrowerSpouse.getUni_Name();					//还款方式
 		 String unit_Phone=coborrowerSpouse.getUnit_Phone();  		//收款银行名称
@@ -32,7 +33,7 @@ public class CoborrowerSpouseServiceImpl implements CoborrowerSpouseService {
 		 String start = coborrowerSpouse.getStart();
 		 String ctime = coborrowerSpouse.getCtime();
 		
-		 CoborrowerSpouse coborrow = new CoborrowerSpouse(name,id_Type,id_Number,uni_Name,unit_Phone,home_Phone,mobile_Phone,monthly_Income,start,ctime);
+		 CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type, id_Other, id_Number, uni_Name, unit_Phone, home_Phone, mobile_Phone, monthly_Income, start, ctime);
 		return coborrowerSpouseDao.save(coborrow);
 			
 		

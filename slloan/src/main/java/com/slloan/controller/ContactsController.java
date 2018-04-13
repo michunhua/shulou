@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +31,14 @@ import net.sf.json.JSONObject;
 @RequestMapping("/loan")
 public class ContactsController {
 	
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
 	private ContactsService contactsservice;
 	
 	@ResponseBody
 	@RequestMapping("/contactinformation")
-	public String save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req) {
 		
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -54,9 +58,11 @@ public class ContactsController {
 		boolean coan = contactsservice.save(coa);// 鎻掑叆瑙掕壊
 		
 		if (coan == true) {
-			return JSON.toJSONString("success");
+			logger.info("数据插入成功!");
+			return new Json(true,"success",coan ); 
 		} else {
-			return JSON.toJSONString("fail");
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",coan); 
 		}
 		
 	}
@@ -122,10 +128,9 @@ public class ContactsController {
 	@ResponseBody
 	public String updateUser(HttpServletRequest req){
 		
-		System.out.println("+++++++++++++++++++++++++++++++++++");
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
-		
+		Integer id = json.getInt("id");
 		String contacts = json.getString("linkfName"); //联系人姓名
 		String contacts1=json.getString("linkfName");//联系人姓名
 		String contacts2=json.getString("linkfName");//联系人姓名
@@ -137,7 +142,7 @@ public class ContactsController {
 		String c_Telephone2=json.getString("linkfPhone");//联系人电话
 		String start=json.getString("start");
 		String ctime=DateUtils.getInDateTime((new Date()));
-		Contacts contact = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, start, ctime);
+		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, start, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);

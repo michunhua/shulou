@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +33,16 @@ import net.sf.json.JSONObject;
  *
  */
 @Controller(value="coborrowers")
-@RequestMapping("loan")
+@RequestMapping("/loan")
 public class CoborrowerSpouseController {
+	
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private CoborrowerSpouseService coborrowerSpouseService;
 	@ResponseBody
 	@RequestMapping("/commonApplyspouse")
-	public String save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req) {
 		
 
 	String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
@@ -46,6 +50,7 @@ public class CoborrowerSpouseController {
 	
 		String name = obj.getString("cname"); // 共同借款人配偶姓名戦
 		String id_Type = obj.getString("paperwork"); //身份证件类型
+		String id_Other = obj.getString("other");
 		String id_Number =obj.getString("paperNumb"); // 身份证件号码
 		String uni_Name = obj.getString("mobilePhone"); // 工作单位名称
 		String unit_Phone =obj.getString("unitName");// 单位电话
@@ -53,16 +58,19 @@ public class CoborrowerSpouseController {
 		String mobile_Phone = obj.getString("housePhone"); // 移动电话
 		String monthly_Income =obj.getString("salary");// 月薪（人民币）
 		String start = obj.getString("start");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = obj.getString("ctime"); //更新时间
-		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type, id_Number, uni_Name,
+		String ctime = obj.getString("catime"); //更新时间
+		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type,id_Other,id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,start,ctime);
 		boolean co = coborrowerSpouseService.save(coborrow);// 鎻掑叆瑙掕壊
 
 		if (co == true) {
-			return JSON.toJSONString("success");
+			logger.info("数据插入成功!");
+			return new Json(true,"success",co ); 
 		} else {
-			return JSON.toJSONString("fail");
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",co); 
 		}
+
 
 	}
 
@@ -72,7 +80,7 @@ public class CoborrowerSpouseController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="/loanlinkd",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/coborrowers",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req){
 		System.out.println("+++++++++++++++++++++++++++++");

@@ -8,7 +8,8 @@
 	</resultMap>
 
 <insert id="firstTrial" parameterType="com.slloan.entity.NoteExplain">
-	insert into publicNote(recordSingleNote,firstTrialNote) values(#{recordSingleNote},#{firstTrialNote})
+	insert into publicNote(recordSingleNote,firstTrialNote,city,parentnode,createdate)
+	 values(#{recordSingleNote},#{firstTrialNote},#{city},#{parentnode},#{createdate})
 
 <!-- 	insert into public publicNote -->
 <!-- 	<trim prefix="(" suffix=")" suffixOverrides=","> -->
@@ -28,4 +29,10 @@
 <!-- 		</if> -->
 <!-- 	</trim> -->
 </insert>
+
+
+<select id="SelectBynote" parameterType="Map" resultType="com.slloan.entity.NoteExplain">
+	select * from publicNote where id=#{id} and city = #{city}
+</select>
+
 </mapper>

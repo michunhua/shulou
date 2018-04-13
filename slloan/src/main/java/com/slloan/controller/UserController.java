@@ -190,7 +190,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/modifyuser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updateUser(HttpServletRequest req){
+	public Json updateUser(HttpServletRequest req){
 		String dataid = req.getParameter("datas");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String username = json.getString("username");//用户名
@@ -205,9 +205,9 @@ public class UserController {
 		UserLogin userlogin = new UserLogin(id,username,password,employeeis_Name,distribution_Role,belongs_City,note,createDate);
 		boolean isResult =userservice.updateaddUser(userlogin);
 		if(isResult == true){
-			return JSON.toJSONString(isResult);
+			return new Json(true,"success",isResult,"");
 		}else
-			return JSON.toJSONString("fail");
+			return new Json(false,"fail",isResult,"");
 	}
 	
 	/**

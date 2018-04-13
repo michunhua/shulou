@@ -17,13 +17,22 @@ var collectData = function() {
 }
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loanapplys'
+  			});
+    	}
+    }
   })
 }
 
@@ -38,14 +47,39 @@ var sendData = function(element) {
     var method = ''
     var url = ''
     log(data)
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
+}
+
+//查询
+//发送数据方法
+var searchAjax = function(method, url, datas) {
+log('send data method')
+$.ajax({
+type: method,
+url: url,
+data: {data:JSON.stringify(datas)},
+success: function(data) {
+	console.log('返回数据', data)
+	if(data.msg == 'success') {
+	}
+}
+})
+}
+
+var searchData = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/coborrowers'
+	var data = {}
+	data.id = 14
+	searchAjax(method, url, data)
 }
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  searchData()
 }
 
 __main()

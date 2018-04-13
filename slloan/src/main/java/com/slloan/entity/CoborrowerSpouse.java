@@ -12,6 +12,7 @@ public class CoborrowerSpouse implements Serializable{
 	private Integer id;
 	private String name;						//共同借款人配偶姓名
 	private String id_Type;          			//身份证件类型
+	private String id_Other;                     //其他
 	private String id_Number;					//身份证件号码
 	private String uni_Name;					//单位名称
 	private String unit_Phone;					//单位电话
@@ -23,13 +24,37 @@ public class CoborrowerSpouse implements Serializable{
 	
 	
 	
-	public CoborrowerSpouse(Integer id, String name, String id_Type, String id_Number, String uni_Name,
+	public String getId_Other() {
+		return id_Other;
+	}
+
+	public void setId_Other(String id_Other) {
+		this.id_Other = id_Other;
+	}
+
+
+
+	public CoborrowerSpouse(String name, String id_Type, String id_Other, String id_Number, String uni_Name,
+			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income) {
+		super();
+		this.name = name;
+		this.id_Type = id_Type;
+		this.id_Other = id_Other;
+		this.id_Number = id_Number;
+		this.uni_Name = uni_Name;
+		this.unit_Phone = unit_Phone;
+		this.home_Phone = home_Phone;
+		this.mobile_Phone = mobile_Phone;
+		this.monthly_Income = monthly_Income;
+	}
+
+	public CoborrowerSpouse(String name, String id_Type, String id_Other, String id_Number, String uni_Name,
 			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String start,
 			String ctime) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.id_Type = id_Type;
+		this.id_Other = id_Other;
 		this.id_Number = id_Number;
 		this.uni_Name = uni_Name;
 		this.unit_Phone = unit_Phone;
@@ -138,13 +163,13 @@ public class CoborrowerSpouse implements Serializable{
 	public void setCtime(String ctime) {
 		this.ctime = ctime;
 	}
+
 	@Override
 	public String toString() {
-		return "CoborrowerSpouse [id=" + id + ", name=" + name + ", id_Type=" + id_Type + ", id_Number=" + id_Number
-				+ ", uni_Name=" + uni_Name + ", unit_Phone=" + unit_Phone + ", home_Phone=" + home_Phone
-				+ ", mobile_Phone=" + mobile_Phone + ", monthly_Income=" + monthly_Income + ", start=" + start
-				+ ", ctime=" + ctime + "]";
+		return "CoborrowerSpouse [id=" + id + ", name=" + name + ", id_Type=" + id_Type + ", id_Other=" + id_Other
+				+ ", id_Number=" + id_Number + ", uni_Name=" + uni_Name + ", unit_Phone=" + unit_Phone + ", home_Phone="
+				+ home_Phone + ", mobile_Phone=" + mobile_Phone + ", monthly_Income=" + monthly_Income + ", start="
+				+ start + ", ctime=" + ctime + "]";
 	}
-	
 	
 }

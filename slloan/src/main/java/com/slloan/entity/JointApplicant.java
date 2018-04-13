@@ -317,6 +317,62 @@ public class JointApplicant  implements Serializable{
 				+ monthly_expenditure + ", postal_address=" + postal_address + ", start=" + start + ", ctime=" + ctime
 				+ "]";
 	}
+	public JointApplicant() {
+		// TODO Auto-generated constructor stub
+	}
+	public JointApplicant(Integer id, String name, String phoneticize, String idtype, String id_number,
+			String relationship_with_borrower, String country_and_region, String sex, String local_domicile,
+			String household_registration, String marital_status, String housing_condition_now, String birthday,
+			String home_address_now, String home_phone, String mobile_phone, String email,
+			String present_address_zip_code, String vocation, String unit_industry, String uni_name,
+			String unit_address, String enterprise_scale, double revenue_in_the_previous_year, String asset_scale,
+			String unit_phone, String postCode, String job_category, String seniority, String former_unit_name,
+			String former_seniority, String source_of_income, double monthly_income, double income_from_investment,
+			double rent_income, double other_income, String family_number, double monthly_expenditure,
+			String postal_address, String start, String ctime) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phoneticize = phoneticize;
+		this.id_type = idtype;
+		this.id_number = id_number;
+		this.relationship_with_borrower = relationship_with_borrower;
+		this.country_and_region = country_and_region;
+		this.sex = sex;
+		Local_domicile = local_domicile;
+		this.household_registration = household_registration;
+		this.marital_status = marital_status;
+		this.housing_condition_now = housing_condition_now;
+		this.birthday = birthday;
+		this.home_address_now = home_address_now;
+		this.home_phone = home_phone;
+		this.mobile_phone = mobile_phone;
+		this.email = email;
+		this.present_address_zip_code = present_address_zip_code;
+		this.vocation = vocation;
+		this.unit_industry = unit_industry;
+		this.uni_name = uni_name;
+		this.unit_address = unit_address;
+		this.enterprise_scale = enterprise_scale;
+		Revenue_in_the_previous_year = revenue_in_the_previous_year;
+		this.asset_scale = asset_scale;
+		this.unit_phone = unit_phone;
+		this.postCode = postCode;
+		this.job_category = job_category;
+		this.seniority = seniority;
+		this.former_unit_name = former_unit_name;
+		this.former_seniority = former_seniority;
+		this.source_of_income = source_of_income;
+		this.monthly_income = monthly_income;
+		Income_from_investment = income_from_investment;
+		Rent_income = rent_income;
+		Other_income = other_income;
+		this.family_number = family_number;
+		this.monthly_expenditure = monthly_expenditure;
+		this.postal_address = postal_address;
+		this.start = start;
+		this.ctime = ctime;
+	}
 	public JointApplicant(String name, String phoneticize, String id_type, String id_number,
 			String relationship_with_borrower, String country_and_region, String sex, String local_domicile,
 			String household_registration, String marital_status, String housing_condition_now, String birthday,
@@ -368,9 +424,6 @@ public class JointApplicant  implements Serializable{
 		this.postal_address = postal_address;
 		this.start = start;
 		this.ctime = ctime;
-	}
-	public JointApplicant() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	

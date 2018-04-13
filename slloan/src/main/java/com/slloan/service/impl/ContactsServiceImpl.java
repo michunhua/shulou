@@ -1,13 +1,17 @@
 package com.slloan.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.slloan.dao.ApplyForLoanInformationDao;
+import com.slloan.dao.CircuLationRecordSubmitDao;
 import com.slloan.dao.ContactsDao;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.NoteExplain;
 import com.slloan.service.inter.ContactsService;
 
 @Service(value = "ContactsServiceImpl")
@@ -15,6 +19,9 @@ public class ContactsServiceImpl implements ContactsService {
 	
 	@Autowired
 	public ContactsDao cntactsdao;
+	
+	@Autowired
+	CircuLationRecordSubmitDao circuLationRecordSubmitDao;//备注说明插入共用
 
 	@Override
 	public boolean save(Contacts con) {
@@ -69,6 +76,25 @@ public class ContactsServiceImpl implements ContactsService {
 	public boolean updateadd(Contacts contacts) {
 		
 		return cntactsdao.updateadd(contacts);
+	}
+
+	@Override
+	public NoteExplain SelectBynote(NoteExplain param) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", param.getId());
+		map.put("city", param.getCity());
+		return cntactsdao.SelectBynote(map);
+	}
+
+	@Override
+	public boolean noteInsert(NoteExplain note) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean firstTrial(NoteExplain noteExplain) {
+		return circuLationRecordSubmitDao.firstTrial(noteExplain);
 	}
 
 }

@@ -4,6 +4,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +32,13 @@ import net.sf.json.JSONObject;
 @RequestMapping("/loan")
 public class SpousesOfBorrowersController {
 
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
 	private SpousesOfBorrowersService spousesofborrowers;
 	@ResponseBody
 	@RequestMapping("/loanApplyspouse")
-	public String save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -56,9 +60,11 @@ public class SpousesOfBorrowersController {
 
 		boolean sp = spousesofborrowers.save(spouses);// 插入角色
 		if (sp == true) {
-			return JSON.toJSONString("success");
+			logger.info("数据插入成功!");
+			return new Json(true,"success",sp ); 
 		} else {
-			return JSON.toJSONString("fail");
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",sp); 
 		}
 	}
 	
@@ -92,7 +98,7 @@ public class SpousesOfBorrowersController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="/sowwer",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/spouses",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req){
 		

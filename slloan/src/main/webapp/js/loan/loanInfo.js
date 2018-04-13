@@ -44,7 +44,16 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loanesta'
+  			});
+    	}
+    }
   })
 }
 
@@ -59,7 +68,7 @@ var sendData = function(element) {
     var method = 'POST'
     var url = '/slloan/loan/ApplyLoaninformation'
     log(data)	
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
 }
 

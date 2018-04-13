@@ -39,6 +39,40 @@ public class PropertyInformation implements Serializable{
 	
 	
 
+	public PropertyInformation(Integer id, String ownership_And_percentage, String property_Address,
+			String conStruction_Area, String inner_Area, String sales_Contract_Number, String certificate_of_Title,
+			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
+			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
+			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
+			String new_Loan_Bank_Account_Number, String note_DescriPtion, String start, String ctime) {
+		super();
+		this.id = id;
+		this.ownership_And_percentage = ownership_And_percentage;
+		this.property_Address = property_Address;
+		this.conStruction_Area = conStruction_Area;
+		this.inner_Area = inner_Area;
+		this.sales_Contract_Number = sales_Contract_Number;
+		this.certificate_of_Title = certificate_of_Title;
+		this.proPerty_for = proPerty_for;
+		this.the_Assessed_Value = the_Assessed_Value;
+		this.original_Loan_Bank = original_Loan_Bank;
+		this.original_Loan_Amount = original_Loan_Amount;
+		this.loan_Outstanding_Balance = loan_Outstanding_Balance;
+		this.house_Account = house_Account;
+		this.transaCtion_Price = transaCtion_Price;
+		this.purchase_Deposit = purchase_Deposit;
+		this.supervision_of_funds = supervision_of_funds;
+		this.new_loan_Bank = new_loan_Bank;
+		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
+		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
+		this.note_DescriPtion = note_DescriPtion;
+		this.start = start;
+		this.ctime = ctime;
+	}
+
+
+
+
 	public PropertyInformation(String ownership_And_percentage, String property_Address, String conStruction_Area,
 			String inner_Area, String sales_Contract_Number, String certificate_of_Title, String proPerty_for,
 			String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,

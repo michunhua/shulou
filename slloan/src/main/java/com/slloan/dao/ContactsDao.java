@@ -1,8 +1,10 @@
 package com.slloan.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.slloan.entity.Contacts;
+import com.slloan.entity.NoteExplain;
 
 
 public interface ContactsDao {
@@ -23,4 +25,9 @@ public interface ContactsDao {
 	
 	//修改保存
 	boolean updateadd (Contacts contacts);
+	
+	/*
+	 * 查询按揭员&初审的备注
+	 */
+	NoteExplain SelectBynote(Map<String,Object> param);
 }	

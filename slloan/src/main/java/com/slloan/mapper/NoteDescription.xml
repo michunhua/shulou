@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.NoteDescriptionDao">
+	<resultMap type="com.slloan.entity.NoteDescription" id="notedes">
+		<result column="note_Description1" property="note_Description1" />
+		<result column="note_Description2" property="note_Description2" />
+		<result column="note_Description3" property="note_Description3" />
+		<result column="start" property="start" />
+		<result column="ctime" property="ctime" />
+	</resultMap>
+	
+<!-- 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
+		INSERT INTO note_Description (
+		note_Description1,
+		START,
+		ctime
+		)
+		VALUES
+		(
+		#{note_Description1},#{start},#{ctime})
+	</insert>
+	
+	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
+		INSERT INTO note_Description (
+		note_Description1,
+		note_Description2,
+		START,
+		ctime
+		)
+		VALUES
+		(
+		#{note_Description1},#{note_Description2},#{start},#{ctime})
+	</insert> -->
+	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
+		INSERT INTO note_Description (
+		note_Description1,
+		note_Description2,
+		note_Description3,
+		START,
+		ctime
+		)
+		VALUES
+		(
+		#{note_Description1},#{note_Description2},#{note_Description3},#{start},#{ctime})
+	</insert>
+</mapper>

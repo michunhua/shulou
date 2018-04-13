@@ -25,6 +25,26 @@ public class Contacts implements Serializable{
 	
 	public Contacts(){}
 	
+	
+	public Contacts(Integer id, String contacts, String contacts1, String contacts2, String relationship,
+			String relationship1, String relationship2, String c_Telephone, String c_Telephone1, String c_Telephone2,
+			String start, String ctime) {
+		super();
+		this.id = id;
+		this.contacts = contacts;
+		this.contacts1 = contacts1;
+		this.contacts2 = contacts2;
+		this.relationship = relationship;
+		this.relationship1 = relationship1;
+		this.relationship2 = relationship2;
+		this.c_Telephone = c_Telephone;
+		this.c_Telephone1 = c_Telephone1;
+		this.c_Telephone2 = c_Telephone2;
+		this.start = start;
+		this.ctime = ctime;
+	}
+
+
 	public Contacts(String contacts, String contacts1, String contacts2, String relationship, String relationship1,
 			String relationship2, String c_Telephone, String c_Telephone1, String c_Telephone2) {
 		super();

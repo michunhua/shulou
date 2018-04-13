@@ -17,14 +17,14 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    admin
+                    <span id="username">admin</span>
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
         </ul>
     </div>
 
@@ -189,13 +189,45 @@
             </ul>
             <div class="layui-tab-content">
               <div class="layui-tab-item layui-show">
-                数量多少。
+                <div class = 'images'>
+                	<img src="" alt="第一张申请表">
+                	<button>查看</button>
+                	<button>删除</button>
+                </div>
+                <div class = 'images'>
+                	<img src="" alt="第一张申请表">
+                	<button>查看</button>
+                	<button>删除</button>
+                </div>
+                <button type="button" class="layui-btn" id="test1">
+  					<i class="layui-icon">&#xe67c;</i>上传图片
+				</button>
               </div>
-              <div class="layui-tab-item">内容2</div>
-              <div class="layui-tab-item">内容3</div>
-              <div class="layui-tab-item">内容4</div>
-              <div class="layui-tab-item">内容5</div>
-              <div class="layui-tab-item">内容6</div>
+              <div class="layui-tab-item">
+              	<img src="" alt="第一张身份证明 ">
+              	<img src="" alt="第一张身份证明 ">
+              	<input type="file">
+              </div>
+              <div class="layui-tab-item">
+              	<img src="" alt="第一张房产证明">
+              	<img src="" alt="第一张房产证明">
+              	<input type="file">
+              </div>
+              <div class="layui-tab-item">
+              	<img src="" alt="第一张批示">
+              	<img src="" alt="第一张批示">
+              	<input type="file">
+              </div>
+              <div class="layui-tab-item">
+              	<img src="" alt="第一张其他类">
+              	<img src="" alt="第一张其他类">
+              	<input type="file">
+              </div>
+              <div class="layui-tab-item">
+              	<img src="" alt="第一张凭证类">
+              	<img src="" alt="第一张凭证类">
+              	<input type="file">
+              </div>
             </div>
           </div>
         </div>
@@ -210,5 +242,6 @@
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
 <script type="text/javascript" src="../public/js/utils.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/loan/imageInfo.js"></script>
 </body>
 </html>

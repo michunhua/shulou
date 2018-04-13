@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Delete;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +42,8 @@ import net.sf.json.JSONObject;
 @Controller(value = "jointapplicantcontroll")
 @RequestMapping("loan")
 public class JointApplicantController {
+	
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private JointApplicantService jointapplicant;
@@ -52,7 +56,7 @@ public class JointApplicantController {
 
 	@ResponseBody
 	@RequestMapping(value = "/commonApplydata")
-	public String save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -114,9 +118,11 @@ public class JointApplicantController {
 		boolean jo = jointapplicant.save(joint);// 插入角色
 
 		if (jo == true) {
-			return JSON.toJSONString("success");
+			logger.info("数据插入成功!");
+			return new Json(true,"success",jo ); 
 		} else {
-			return JSON.toJSONString("fail");
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",jo); 
 		}
 
 	}
@@ -194,7 +200,7 @@ public class JointApplicantController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/japp", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "/jointappli", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req) {
 

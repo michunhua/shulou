@@ -68,45 +68,47 @@ var sendAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
-        var ds = data
-        var len = ds.lists.length
-        console.log('JSON', ds.lists[0].createDate)
-        var Felement = document.querySelector('.tab-data')
-        var totalPage = document.querySelector('.totalPage')
-        totalPage.innerText = ds.totalPage
-        console.log(Felement)
-        Felement.innerHTML = null
-        for(var i = 0; i < len; i++) {
-          console.log('append')
-          var flag = '选中'
-          var id = ds.lists[i].id
-          var role = ds.lists[i].roleName
-          var createT = ds.lists[i].createDate
-          console.log('id', id)
-          var tr = document.createElement('tr')
-          var td0 = document.createElement('td')
-          var input = document.createElement('input')
-          input.type = 'checkbox'
-          var td1 = document.createElement('td')
-          td1.classList.add('roleId')
-          var td2 = document.createElement('td')
-          var td3 = document.createElement('td')
-          td0.appendChild(input)
-          td1.innerText = id
-          td2.innerText = role
-          td3.innerText = createT
-          tr.appendChild(td0)
-          tr.appendChild(td1)
-          tr.appendChild(td2)
-          tr.appendChild(td3)
-          Felement.insertAdjacentElement('beforeend', tr)
-        }
+    	  if(data.lists.length !== undefined) {
+    		  	console.log(data)
+				var ds = data
+				var len = ds.lists.length
+				console.log('JSON', ds.lists[0].createDate)
+				var Felement = document.querySelector('.tab-data')
+				var totalPage = document.querySelector('.totalPage')
+				totalPage.innerText = ds.totalPage
+				console.log(Felement)
+				Felement.innerHTML = null
+				for (var i = 0; i < len; i++) {
+					console.log('append')
+					var flag = '选中'
+					var id = ds.lists[i].id
+					var role = ds.lists[i].roleName
+					var createT = ds.lists[i].createDate
+					console.log('id', id)
+					var tr = document.createElement('tr')
+					var td0 = document.createElement('td')
+					var input = document.createElement('input')
+					input.type = 'checkbox'
+					var td1 = document.createElement('td')
+					td1.classList.add('roleId')
+					var td2 = document.createElement('td')
+					var td3 = document.createElement('td')
+					td0.appendChild(input)
+					td1.innerText = id
+					td2.innerText = role
+					td3.innerText = createT
+					tr.appendChild(td0)
+					tr.appendChild(td1)
+					tr.appendChild(td2)
+					tr.appendChild(td3)
+					Felement.insertAdjacentElement('beforeend', tr)
+				}
+			}
       }
     })
 }
 
-//分页接口 user/userlist
+// 分页接口 user/userlist
 var init = {
 		pages: 1,
 		limit: 10,

@@ -28,6 +28,14 @@ public class NoteExplain implements Serializable{
 
 
 
+	public NoteExplain(int id, String city) {
+		super();
+		this.id = id;
+		this.city = city;
+	}
+
+
+
 	public NoteExplain(String recordSingleNote, String firstTrialNote, String city, String parentnode,
 			String createdate) {
 		super();
@@ -38,7 +46,16 @@ public class NoteExplain implements Serializable{
 		this.createdate = createdate;
 	}
 
-
+	public NoteExplain(int id, String recordSingleNote, String firstTrialNote, String city, String parentnode,
+			String createdate) {
+		super();
+		this.id = id;
+		this.recordSingleNote = recordSingleNote;
+		this.firstTrialNote = firstTrialNote;
+		this.city = city;
+		this.parentnode = parentnode;
+		this.createdate = createdate;
+	}
 
 
 

@@ -72,53 +72,55 @@ var sendAjax = function(method, url, datas, callback) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(d) {
-        log(d)
-        var datas = d
-        var len = datas.lists.length
-        var pageElement = document.querySelector('.tab-data')
-        var totalPage = document.querySelector('.totalPage')
-        totalPage.innerText = datas.totalPage
-        pageElement.innerHTML = null
-        for(var i = 0; i < len; i++) {
-          log(i)
-          var tr = document.createElement('tr')
-          var td0 = document.createElement('td')
-          var td1 = document.createElement('td')
-          var td2 = document.createElement('td')
-          var td3 = document.createElement('td')
-          var td4 = document.createElement('td')
-          var td5 = document.createElement('td')
-          var span0 = document.createElement('a')
-          var span1 = document.createElement('a')
-          var span2 = document.createElement('a')
-          var id = datas.lists[i].id
-          var userName = datas.lists[i].userName
-          var role = datas.lists[i].distribution_Role
-          var employeeName = datas.lists[i].employeeis_Name
-          var time = datas.lists[i].create_Date
-          td0.innerText = id
-          td0.classList.add('flag')
-          td1.innerText = userName
-          td2.innerText = role
-          td3.innerText = employeeName
-          td4.innerText = time
-          span0.href = '#'
-          span1.href = '#'
-          span2.href = '#'
-          span0.innerText = '  编辑  '
-          span1.innerText = '  删除  '
-          span2.innerText = '  查看  '
-          td5.appendChild(span0)
-          td5.appendChild(span1)
-          td5.appendChild(span2)
-          tr.appendChild(td0)
-          tr.appendChild(td1)
-          tr.appendChild(td2)
-          tr.appendChild(td3)
-          tr.appendChild(td4)
-          tr.appendChild(td5)
-          pageElement.insertAdjacentElement('beforeend', tr)
-        }
+    	  if(d.lists.length !== undefined) {
+    	        log(d)
+    	        var datas = d
+    	        var len = datas.lists.length
+    	        var pageElement = document.querySelector('.tab-data')
+    	        var totalPage = document.querySelector('.totalPage')
+    	        totalPage.innerText = datas.totalPage
+    	        pageElement.innerHTML = null
+    	        for(var i = 0; i < len; i++) {
+    	          log(i)
+    	          var tr = document.createElement('tr')
+    	          var td0 = document.createElement('td')
+    	          var td1 = document.createElement('td')
+    	          var td2 = document.createElement('td')
+    	          var td3 = document.createElement('td')
+    	          var td4 = document.createElement('td')
+    	          var td5 = document.createElement('td')
+    	          var span0 = document.createElement('a')
+    	          var span1 = document.createElement('a')
+    	          var span2 = document.createElement('a')
+    	          var id = datas.lists[i].id
+    	          var userName = datas.lists[i].userName
+    	          var role = datas.lists[i].distribution_Role
+    	          var employeeName = datas.lists[i].employeeis_Name
+    	          var time = datas.lists[i].create_Date
+    	          td0.innerText = id
+    	          td0.classList.add('flag')
+    	          td1.innerText = userName
+    	          td2.innerText = role
+    	          td3.innerText = employeeName
+    	          td4.innerText = time
+    	          span0.href = '#'
+    	          span1.href = '#'
+    	          span2.href = '#'
+    	          span0.innerText = '  编辑  '
+    	          span1.innerText = '  删除  '
+    	          span2.innerText = '  查看  '
+    	          td5.appendChild(span0)
+    	          td5.appendChild(span1)
+    	          td5.appendChild(span2)
+    	          tr.appendChild(td0)
+    	          tr.appendChild(td1)
+    	          tr.appendChild(td2)
+    	          tr.appendChild(td3)
+    	          tr.appendChild(td4)
+    	          tr.appendChild(td5)
+    	          pageElement.insertAdjacentElement('beforeend', tr)
+    	        }
+    	  }
       }
     })
 }

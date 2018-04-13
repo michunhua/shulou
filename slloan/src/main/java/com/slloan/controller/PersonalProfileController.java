@@ -1,10 +1,9 @@
 package com.slloan.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.PersonalProfile;
-import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.JointApplicantService;
 import com.slloan.service.inter.PersonalProfileService;
 import com.slloan.util.Json;
@@ -31,16 +29,18 @@ import net.sf.json.JSONObject;
  * @author Administrator
  *
  */
-//@Controller(value = "personalprofilecontroller")
-@RequestMapping("loan")
+@Controller(value = "personalprofilecontroller")
+@RequestMapping("/loan")
 public class PersonalProfileController {
+	
+	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private PersonalProfileService personalprofileservice;
 
 	@ResponseBody
 	@RequestMapping("/loanApplypersonaldata")
-	public String save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -99,9 +99,11 @@ public class PersonalProfileController {
 		boolean pe = personalprofileservice.save(person);// 插入角色
 
 		if (pe == true) {
-			return JSON.toJSONString("success");
+			logger.info("数据插入成功!");
+			return new Json(true,"success",pe ); 
 		} else {
-			return JSON.toJSONString("fail");
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",pe); 
 		}
 
 	}
@@ -158,58 +160,67 @@ public class PersonalProfileController {
 			return new Json(false,"fail",isResult); 
 	}
 
-	
+	/**
+	 * 借款申请人个人资料
+	 * @param req
+	 * @param contactsparam
+	 * @return
+	 */
 	@RequestMapping(value= "/perupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public Json updateadd(HttpServletRequest req,Contacts contactsparam){
-		String name =req.getParameter("contacts"); // 共同借款人姓名
-		String phoneticize = req.getParameter("contacts");// 拼音、英文姓名
-		String id_type =  req.getParameter("contacts");// 身份证件类型
-		String id_number = req.getParameter("contacts");// 身份证件号码
-		String relationship_with_borrower = req.getParameter("contacts");// 与借款人关系
-		String country_and_region = req.getParameter("contacts");// 国家及地区
-		String sex =req.getParameter("contacts"); // 性别: 0男 1女
-		String Local_domicile = req.getParameter("contacts"); // 本地户籍
-		String household_registration = req.getParameter("contacts"); // 户籍所在地
-		String marital_status = req.getParameter("contacts"); // 婚姻情况0已婚，1未婚
-		String housing_condition_now =req.getParameter("contacts"); // 0房改/继承
+	public Json updateadd(HttpServletRequest request,Contacts contactsparam){
+		
+		String dataid = request.getParameter("data");
+		JSONObject req = new JSONObject().fromObject(dataid);
+		Integer id = req.getInt("id");
+		String name =req.getString("contacts"); // 共同借款人姓名
+		String phoneticize = req.getString("contacts");// 拼音、英文姓名
+		String id_type =  req.getString("contacts");// 身份证件类型
+		String id_number = req.getString("contacts");// 身份证件号码
+		String relationship_with_borrower = req.getString("contacts");// 与借款人关系
+		String country_and_region = req.getString("contacts");// 国家及地区
+		String sex =req.getString("contacts"); // 性别: 0男 1女
+		String Local_domicile = req.getString("contacts"); // 本地户籍
+		String household_registration = req.getString("contacts"); // 户籍所在地
+		String marital_status = req.getString("contacts"); // 婚姻情况0已婚，1未婚
+		String housing_condition_now =req.getString("contacts"); // 0房改/继承
 																		// 1按揭自置2无按揭自置
 																		// 3与父母同住
 																		// 4租借//
 																		// 5公司提供
 																		// 6其他
-		String birthday = req.getParameter("contacts"); // 出生日期
-		String home_address_now = req.getParameter("contacts");// 现住房地址
-		String home_phone = req.getParameter("contacts");// 住宅电话
-		String mobile_phone = req.getParameter("contacts");// 移动电话
-		String email = req.getParameter("contacts"); // E-mail
-		String present_address_zip_code =  req.getParameter("contacts");// 现住址邮编
-		String vocation =  req.getParameter("contacts");// 职业
-		String unit_industry =  req.getParameter("contacts");// 现单位所处行业
-		String uni_name = req.getParameter("contacts"); // 现单位名称
-		String unit_address =  req.getParameter("contacts");// 现单位地址
-		String enterprise_scale = req.getParameter("contacts");// 就职企业规模
-		double Revenue_in_the_previous_year = Double.valueOf(req.getParameter("contacts"));
-		String asset_scale = req.getParameter("contacts");// 资产规模
-		String unit_phone = req.getParameter("contacts");// 单位电话
-		String postCode = req.getParameter("contacts");// 单位邮编
-		String job_category =  req.getParameter("contacts");// 职位类别
-		String seniority = req.getParameter("contacts");// 现单位工龄
-		String former_unit_name = req.getParameter("contacts"); // 前单位名称
-		String former_seniority =  req.getParameter("contacts");// 前单位工龄
-		String source_of_income =  req.getParameter("contacts");// 收入来源
-		double monthly_income = Double.valueOf(req.getParameter("contacts")); // 月收入
-		double Income_from_investment = Double.valueOf(req.getParameter("contacts"));// 投资收益
-		double Rent_income = Double.valueOf(req.getParameter("contacts"));// 租金收入
-		double Other_income = Double.valueOf(req.getParameter("contacts"));// 其他收入
-		String family_number = req.getParameter("contacts");// 供养人数
-		double monthly_expenditure = Double.valueOf(req.getParameter("contacts"));// 月支出
-		String postal_address = req.getParameter("contacts");// 通讯地址
-		String start =  req.getParameter("contacts");// 状态
+		String birthday = req.getString("contacts"); // 出生日期
+		String home_address_now = req.getString("contacts");// 现住房地址
+		String home_phone = req.getString("contacts");// 住宅电话
+		String mobile_phone = req.getString("contacts");// 移动电话
+		String email = req.getString("contacts"); // E-mail
+		String present_address_zip_code =  req.getString("contacts");// 现住址邮编
+		String vocation =  req.getString("contacts");// 职业
+		String unit_industry =  req.getString("contacts");// 现单位所处行业
+		String uni_name = req.getString("contacts"); // 现单位名称
+		String unit_address =  req.getString("contacts");// 现单位地址
+		String enterprise_scale = req.getString("contacts");// 就职企业规模
+		double Revenue_in_the_previous_year = Double.valueOf(req.getString("contacts"));
+		String asset_scale = req.getString("contacts");// 资产规模
+		String unit_phone = req.getString("contacts");// 单位电话
+		String postCode = req.getString("contacts");// 单位邮编
+		String job_category =  req.getString("contacts");// 职位类别
+		String seniority = req.getString("contacts");// 现单位工龄
+		String former_unit_name = req.getString("contacts"); // 前单位名称
+		String former_seniority =  req.getString("contacts");// 前单位工龄
+		String source_of_income =  req.getString("contacts");// 收入来源
+		double monthly_income = Double.valueOf(req.getString("contacts")); // 月收入
+		double Income_from_investment = Double.valueOf(req.getString("contacts"));// 投资收益
+		double Rent_income = Double.valueOf(req.getString("contacts"));// 租金收入
+		double Other_income = Double.valueOf(req.getString("contacts"));// 其他收入
+		String family_number = req.getString("contacts");// 供养人数
+		double monthly_expenditure = Double.valueOf(req.getString("contacts"));// 月支出
+		String postal_address = req.getString("contacts");// 通讯地址
+		String start =  req.getString("contacts");// 状态
 												// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime =  req.getParameter("contacts");// 创建时间
+		String ctime =  req.getString("contacts");// 创建时间
 
-		PersonalProfile jointss = new PersonalProfile(name, phoneticize, id_type, id_number, relationship_with_borrower,
+		PersonalProfile jointss = new PersonalProfile(id,name, phoneticize, id_type, id_number, relationship_with_borrower,
 				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
 				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
@@ -224,8 +235,6 @@ public class PersonalProfileController {
 			}
 	}
 	
-	
-
 	/**
 	 * 申请人资料
 	 * 

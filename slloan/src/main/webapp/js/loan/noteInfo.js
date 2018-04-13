@@ -21,6 +21,8 @@ layui.use('laydate', function(){
 var collectData = function() {
   var data = {}
   data.note = e('.note').value
+  data.start = '2'
+  data.ctime = 'c'
   return data
 }
 
@@ -30,7 +32,16 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loancrea'
+  			});
+    	}
+    }
   })
 }
 
@@ -40,8 +51,8 @@ var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/notedescription'
     log(data)
     sendAjax(method, url, data, null)
   })
