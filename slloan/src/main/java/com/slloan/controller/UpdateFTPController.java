@@ -42,7 +42,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.slloan.entity.ImageDataUpdate;
-
 import com.slloan.service.inter.ImagedataService;
 import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
@@ -155,7 +154,7 @@ public class UpdateFTPController{
          	 			 if(upload_type.equals("申请表") && requestsize >0 ){
          	 				if (!ftp.changeWorkingDirectory("shenqingbiao_image")) {
              	                ftp.makeDirectory("shenqingbiao_image");//创建目录
-             	                ftp.changeWorkingDirectory("loan/shenqingbiao_image");//跳转目录(可根据项目需求选择创建目录的多少)
+             	                ftp.changeWorkingDirectory("shenqingbiao_image");//跳转目录(可根据项目需求选择创建目录的多少)
              	            }
                      		System.out.println("申请表");
                      		imagedata.setNote(note);//备注
@@ -168,7 +167,8 @@ public class UpdateFTPController{
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setParentnode(city);
                          	imagedata.setSubnode("");
-                         	 
+                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+                         	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);//添加一条记录
                          	
                      	}
@@ -189,6 +189,8 @@ public class UpdateFTPController{
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setParentnode(city);
                          	imagedata.setSubnode("");
+                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+                         	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
                      	}
                      	if(upload_type.equals("房产证明")&& requestsize >0){
@@ -207,6 +209,8 @@ public class UpdateFTPController{
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setParentnode(city);
                          	imagedata.setSubnode("");
+                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+                         	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
 //                         	 ZipUtil1.unZip(fangchanzheng_image+"/"+targetFileName);
                      	}
@@ -227,6 +231,8 @@ public class UpdateFTPController{
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setParentnode(city);
                          	imagedata.setSubnode("");
+                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+                         	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
 //                         	 ZipUtil1.unZip(pishi_image+"/"+targetFileName);
                      	}
@@ -266,6 +272,8 @@ public class UpdateFTPController{
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setParentnode(city);
                          	imagedata.setSubnode("");
+                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+                         	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
                      	}
                      	
@@ -293,8 +301,8 @@ public class UpdateFTPController{
           	        	  return new Json(true,"success",isResult,"上传成功");
           	        	  
           	          }else{
-          	        	  System.err.println("上传失败！");  
-          	        	  return new Json(false,"fail",isResult,"上传文件大小超过了5M上传失败");
+          	        	  System.err.println("上传失败！"); 
+          	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
           	          }
          	 		}
 //	     	         getPhont(origFileName);
@@ -371,7 +379,7 @@ public class UpdateFTPController{
     @ResponseBody
 	  	public Json imagedatadel(HttpServletRequest req) throws IOException{
     	String sid = req.getParameter("id");
-    	 filenameimage = req.getParameter("image");//图片
+//    	 filenameimage = req.getParameter("image");//图片
     		int imageid = Integer.valueOf(sid);
     		boolean isResult = imagedataservice.imagedatedel(imageid);
     		filename2 ="D:/FTP";
@@ -407,7 +415,7 @@ public class UpdateFTPController{
           //这里将列出所有的文件  
            System.out.println("file==>" + f.getAbsolutePath());  
            
-           if(f.getName().endsWith("1804152019036555_bj_10112.jpg")){
+           if(f.getName().endsWith("1804161622041314_bj_123.jpg")){
     			if(f.delete()){
     				System.out.println("图片文件已经删除: "+f.getName());
     			}else{

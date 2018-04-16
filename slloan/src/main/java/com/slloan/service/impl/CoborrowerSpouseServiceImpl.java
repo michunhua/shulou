@@ -30,10 +30,10 @@ public class CoborrowerSpouseServiceImpl implements CoborrowerSpouseService {
 		 String home_Phone=coborrowerSpouse.getHome_Phone();	    //收款账户名
 		 String mobile_Phone=coborrowerSpouse.getMobile_Phone();    		//收款账号
 		 String monthly_Income=coborrowerSpouse.getMonthly_Income();  		//还款银行名称
-		 String start = coborrowerSpouse.getStart();
+		 String state = coborrowerSpouse.getstate();
 		 String ctime = coborrowerSpouse.getCtime();
 		
-		 CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type, id_Other, id_Number, uni_Name, unit_Phone, home_Phone, mobile_Phone, monthly_Income, start, ctime);
+		 CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type, id_Other, id_Number, uni_Name, unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
 		return coborrowerSpouseDao.save(coborrow);
 			
 		

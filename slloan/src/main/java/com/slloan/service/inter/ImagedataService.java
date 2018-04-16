@@ -33,4 +33,26 @@ public interface ImagedataService {
 	 * @return
 	 */
 	public List<ImageDataUpdate> selectUploadsUpdateType(ImageDataUpdate param);
+	
+	/**
+	 * 转账凭证&结算凭证上传文件上传改为已传 
+	 * @param param
+	 * @return
+	 */
+	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param);
+	
+	/**
+	 * 财务批量修改审核通过
+	 * @param delList
+	 * @return
+	 */
+	 boolean batchUpdateStudent(List updatelList);
+	 
+	 /**
+		 * 财务批量批量审核拒绝
+		 * @param delList
+		 * @return
+		 */
+		 boolean batchUpdateadopt(List updatelList);
+	
 }

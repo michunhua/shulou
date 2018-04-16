@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 public class PersonalProfile implements Serializable {
 	private Integer id;
+	private String product_Number; //产品编号
 	private String name; // '共同借款人姓名',
 	private String phoneticize; // '拼音、英文姓名',
 	private String id_type; // '身份证件类型',
@@ -48,10 +49,22 @@ public class PersonalProfile implements Serializable {
 	private String family_number; // '供养人数',
 	private double monthly_expenditure; // '月支出',
 	private String postal_address; // '通讯地址',
-	private String start; // '状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清',
+	private String state; // '状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清',
 	private String ctime; // '创建时间',
 	
 	
+	public String getProduct_Number() {
+		return product_Number;
+	}
+	public void setProduct_Number(String product_Number) {
+		this.product_Number = product_Number;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -286,12 +299,7 @@ public class PersonalProfile implements Serializable {
 	public void setPostal_address(String postal_address) {
 		this.postal_address = postal_address;
 	}
-	public String getstart() {
-		return start;
-	}
-	public void setstart(String start) {
-		this.start = start;
-	}
+	
 	public String getCtime() {
 		return ctime;
 	}
@@ -301,27 +309,28 @@ public class PersonalProfile implements Serializable {
 	
 	
 	public PersonalProfile(){}
+	
 	@Override
 	public String toString() {
-		return "PersonalProfile [id=" + id + ", name=" + name + ", phoneticize=" + phoneticize + ", id_type=" + id_type
-				+ ", id_number=" + id_number + ", relationship_with_borrower=" + relationship_with_borrower
-				+ ", country_and_region=" + country_and_region + ", sex=" + sex + ", Local_domicile=" + Local_domicile
-				+ ", household_registration=" + household_registration + ", marital_status=" + marital_status
-				+ ", housing_condition_now=" + housing_condition_now + ", birthday=" + birthday + ", home_address_now="
-				+ home_address_now + ", home_phone=" + home_phone + ", mobile_phone=" + mobile_phone + ", email="
-				+ email + ", present_address_zip_code=" + present_address_zip_code + ", vocation=" + vocation
-				+ ", unit_industry=" + unit_industry + ", uni_name=" + uni_name + ", unit_address=" + unit_address
-				+ ", enterprise_scale=" + enterprise_scale + ", Revenue_in_the_previous_year="
-				+ Revenue_in_the_previous_year + ", Asset_scale=" + asset_scale + ", unit_phone=" + unit_phone
-				+ ", postCode=" + postCode + ", job_category=" + job_category + ", seniority=" + seniority
-				+ ", former_unit_name=" + former_unit_name + ", former_seniority=" + former_seniority
-				+ ", source_of_income=" + source_of_income + ", monthly_income=" + monthly_income
+		return "PersonalProfile [id=" + id + ", product_Number=" + product_Number + ", name=" + name + ", phoneticize="
+				+ phoneticize + ", id_type=" + id_type + ", id_number=" + id_number + ", relationship_with_borrower="
+				+ relationship_with_borrower + ", country_and_region=" + country_and_region + ", sex=" + sex
+				+ ", Local_domicile=" + Local_domicile + ", household_registration=" + household_registration
+				+ ", marital_status=" + marital_status + ", housing_condition_now=" + housing_condition_now
+				+ ", birthday=" + birthday + ", home_address_now=" + home_address_now + ", home_phone=" + home_phone
+				+ ", mobile_phone=" + mobile_phone + ", email=" + email + ", present_address_zip_code="
+				+ present_address_zip_code + ", vocation=" + vocation + ", unit_industry=" + unit_industry
+				+ ", uni_name=" + uni_name + ", unit_address=" + unit_address + ", enterprise_scale=" + enterprise_scale
+				+ ", Revenue_in_the_previous_year=" + Revenue_in_the_previous_year + ", asset_scale=" + asset_scale
+				+ ", unit_phone=" + unit_phone + ", postCode=" + postCode + ", job_category=" + job_category
+				+ ", seniority=" + seniority + ", former_unit_name=" + former_unit_name + ", former_seniority="
+				+ former_seniority + ", source_of_income=" + source_of_income + ", monthly_income=" + monthly_income
 				+ ", Income_from_investment=" + Income_from_investment + ", Rent_income=" + Rent_income
 				+ ", Other_income=" + Other_income + ", family_number=" + family_number + ", monthly_expenditure="
-				+ monthly_expenditure + ", postal_address=" + postal_address + ", start=" + start + ", ctime=" + ctime
+				+ monthly_expenditure + ", postal_address=" + postal_address + ", state=" + state + ", ctime=" + ctime
 				+ "]";
 	}
-	public PersonalProfile(String name, String phoneticize, String id_type, String id_number,
+	public PersonalProfile(String product_Number, String name, String phoneticize, String id_type, String id_number,
 			String relationship_with_borrower, String country_and_region, String sex, String local_domicile,
 			String household_registration, String marital_status, String housing_condition_now, String birthday,
 			String home_address_now, String home_phone, String mobile_phone, String email,
@@ -330,8 +339,9 @@ public class PersonalProfile implements Serializable {
 			String unit_phone, String postCode, String job_category, String seniority, String former_unit_name,
 			String former_seniority, String source_of_income, double monthly_income, double income_from_investment,
 			double rent_income, double other_income, String family_number, double monthly_expenditure,
-			String postal_address, String start, String ctime) {
+			String postal_address, String state, String ctime) {
 		super();
+		this.product_Number = product_Number;
 		this.name = name;
 		this.phoneticize = phoneticize;
 		this.id_type = id_type;
@@ -370,21 +380,22 @@ public class PersonalProfile implements Serializable {
 		this.family_number = family_number;
 		this.monthly_expenditure = monthly_expenditure;
 		this.postal_address = postal_address;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
-	public PersonalProfile(Integer id, String name, String phoneticize, String id_type, String id_number,
-			String relationship_with_borrower, String country_and_region, String sex, String local_domicile,
-			String household_registration, String marital_status, String housing_condition_now, String birthday,
-			String home_address_now, String home_phone, String mobile_phone, String email,
+	public PersonalProfile(Integer id, String product_Number, String name, String phoneticize, String id_type,
+			String id_number, String relationship_with_borrower, String country_and_region, String sex,
+			String local_domicile, String household_registration, String marital_status, String housing_condition_now,
+			String birthday, String home_address_now, String home_phone, String mobile_phone, String email,
 			String present_address_zip_code, String vocation, String unit_industry, String uni_name,
 			String unit_address, String enterprise_scale, double revenue_in_the_previous_year, String asset_scale,
 			String unit_phone, String postCode, String job_category, String seniority, String former_unit_name,
 			String former_seniority, String source_of_income, double monthly_income, double income_from_investment,
 			double rent_income, double other_income, String family_number, double monthly_expenditure,
-			String postal_address, String start, String ctime) {
+			String postal_address, String state, String ctime) {
 		super();
 		this.id = id;
+		this.product_Number = product_Number;
 		this.name = name;
 		this.phoneticize = phoneticize;
 		this.id_type = id_type;
@@ -423,12 +434,8 @@ public class PersonalProfile implements Serializable {
 		this.family_number = family_number;
 		this.monthly_expenditure = monthly_expenditure;
 		this.postal_address = postal_address;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
-	
-	
-	
-	
 }

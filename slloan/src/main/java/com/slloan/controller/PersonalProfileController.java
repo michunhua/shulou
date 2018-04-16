@@ -47,7 +47,7 @@ public class PersonalProfileController {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
-
+		String product_Number = obj.getString("aac");
 		 String name=obj.getString("cname");  // 共同借款人姓名
 		 String phoneticize=obj.getString("ename");  // 拼音、英文姓名
 		 String id_type=obj.getString("paperwork");  // 身份证件类型
@@ -87,7 +87,7 @@ public class PersonalProfileController {
 //		 double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
 		 String mon = obj.getString("expenses");// 月支出
 		 String postal_address=obj.getString("communication");  // 通讯地址
-		 String start=obj.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String state=obj.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		 String ctime=obj.getString("ctime");//日期
 
 		 Double Revenue_in_the_previous_year = 0.0;
@@ -115,13 +115,13 @@ public class PersonalProfileController {
 			monthly_income = Double.parseDouble(mon);
 		} 
 
-		PersonalProfile person = new PersonalProfile(name, phoneticize, id_type, id_number, relationship_with_borrower,
+		PersonalProfile person = new PersonalProfile(product_Number,name, phoneticize, id_type, id_number, relationship_with_borrower,
 				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
 				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		boolean pe = personalprofileservice.save(person);// 插入角色
 
 		if (pe == true) {
@@ -162,6 +162,7 @@ public class PersonalProfileController {
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
+		String product_Number = json.getString("aac");
 		 String name=json.getString("cname");  // 共同借款人姓名
 		 String phoneticize=json.getString("ename");  // 拼音、英文姓名
 		 String id_type=json.getString("paperwork");  // 身份证件类型
@@ -201,7 +202,7 @@ public class PersonalProfileController {
 //		 double monthly_expenditure = Double.valueOf(json.getString("a"));// 月支出
 		 String mon = json.getString("expenses");// 月支出
 		 String postal_address=json.getString("communication");  // 通讯地址
-		 String start=json.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String state=json.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		 String ctime=json.getString("ctime");//日期
 	    
 		Double Revenue_in_the_previous_year = 0.0;
@@ -229,13 +230,13 @@ public class PersonalProfileController {
 			monthly_income = Double.parseDouble(mon);
 		}
 
-		PersonalProfile jointss = new PersonalProfile(id, name, phoneticize, id_type, id_number,
-				relationship_with_borrower, country_and_region, sex, Local_domicile, household_registration,
-				marital_status, housing_condition_now, birthday, home_address_now, home_phone, mobile_phone, email,
-				present_address_zip_code, vocation, unit_industry, uni_name, unit_address, enterprise_scale,
-				Revenue_in_the_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
-				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				Rent_income, Other_income, family_number, monthly_expenditure, postal_address, start, ctime);
+		PersonalProfile jointss = new PersonalProfile(product_Number,name, phoneticize, id_type, id_number, relationship_with_borrower,
+				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
+				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
+				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
+				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
+				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
+				postal_address, state, ctime);
 		boolean isResult = personalprofileservice.perupdate(jointss);
 		if (isResult == true) {
 			return new Json(true, "success", isResult);

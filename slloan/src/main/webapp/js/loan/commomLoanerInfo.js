@@ -59,7 +59,7 @@ var collectData = function() {
   data.communication = e('.communication').value
   data.a = '12.3'
   data.b = 'b'
-  data.start = 'c'
+  data.state = 'c'
   data.ctime = 'd'
   return data
 }

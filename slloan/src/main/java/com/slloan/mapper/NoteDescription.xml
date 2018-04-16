@@ -6,42 +6,42 @@
 		<result column="note_Description1" property="note_Description1" />
 		<result column="note_Description2" property="note_Description2" />
 		<result column="note_Description3" property="note_Description3" />
-		<result column="start" property="start" />
+		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
 	</resultMap>
 	
 <!-- 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
 		INSERT INTO note_Description (
 		note_Description1,
-		START,
+		state,
 		ctime
 		)
 		VALUES
 		(
-		#{note_Description1},#{start},#{ctime})
+		#{note_Description1},#{state},#{ctime})
 	</insert>
 	
 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
 		INSERT INTO note_Description (
 		note_Description1,
 		note_Description2,
-		START,
+		state,
 		ctime
 		)
 		VALUES
 		(
-		#{note_Description1},#{note_Description2},#{start},#{ctime})
+		#{note_Description1},#{note_Description2},#{state},#{ctime})
 	</insert> -->
 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
 		INSERT INTO note_Description (
 		note_Description1,
 		note_Description2,
 		note_Description3,
-		START,
+		state,
 		ctime
 		)
 		VALUES
 		(
-		#{note_Description1},#{note_Description2},#{note_Description3},#{start},#{ctime})
+		#{note_Description1},#{note_Description2},#{note_Description3},#{state},#{ctime})
 	</insert>
 </mapper>

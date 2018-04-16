@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.CircuLationRecordSubmitDao">
+	<resultMap type="com.slloan.entity.Firstfilla" id="beanRecords">
+		<result column="firstnamese" property="firstnamese" />
+		<result column="submit" property="submit" />
+			<result column="state" property="state" />
+		<result column="spare1" property="spare1" />
+		<result column="createDate" property="createDate" />
+	</resultMap>
+
+	<!-- 回退保存一条流转记录 -->
+	<insert id="firstfilla" parameterType="com.slloan.entity.Firstfilla">
+<!-- 		insert into recordsubmit_table(fallbackname,submit,state,spare1,createDate)  -->
+<!-- 		values(#{fallbackname},#{submit},#{state},#{spare1},#{createDate}) -->
+
+	insert into recordsubmit_table
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+	<if test='firstnamese != null and firstnamese != "" '>
+             firstnamese,
+          </if>
+          <if test='submit != null and submit != "" '>
+             submit,
+          </if>
+         <if test='state != null and state != "" '>
+             state,
+         </if>
+           <if test='spare1 != null and spare1 != "" '>
+             spare1,
+         </if>
+          <if test='createDate != null and createDate != "" '>
+             createDate,
+         </if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+          <if test='firstnamese != null and firstnamese != "" '>
+            #{firstnamese,jdbcType=VARCHAR},
+          </if>
+          <if test='submit != null and submit != "" '>
+            #{submit,jdbcType=VARCHAR},
+          </if>
+          <if test='state != null and state != "" '>
+            #{state,jdbcType=INTEGER},
+          </if>
+          <if test='spare1 != null and spare1 != "" '>
+            #{spare1,jdbcType=VARCHAR},
+          </if>
+            <if test='createDate != null and createDate != "" '>
+            #{createDate,jdbcType=VARCHAR},
+          </if>
+        </trim>  
+	</insert>
+
+</mapper>

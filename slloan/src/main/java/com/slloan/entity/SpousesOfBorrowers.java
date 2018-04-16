@@ -17,7 +17,7 @@ public class SpousesOfBorrowers implements Serializable{
 	private String home_Phone;					//住宅电话
 	private String mobile_Phone;					//手机
 	private String monthly_Income;				//月收入
-	private String start;
+	private String state;
 	private String ctime;
 	
 	public SpousesOfBorrowers(){}
@@ -28,7 +28,7 @@ public class SpousesOfBorrowers implements Serializable{
 
 
 	public SpousesOfBorrowers(String name, String id_Type, String id_Number, String uni_Name, String unit_Phone,
-			String home_Phone, String mobile_Phone, String monthly_Income, String start, String ctime) {
+			String home_Phone, String mobile_Phone, String monthly_Income, String state, String ctime) {
 		super();
 		this.name = name;
 		this.id_Type = id_Type;
@@ -38,7 +38,7 @@ public class SpousesOfBorrowers implements Serializable{
 		this.home_Phone = home_Phone;
 		this.mobile_Phone = mobile_Phone;
 		this.monthly_Income = monthly_Income;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
@@ -61,7 +61,7 @@ public class SpousesOfBorrowers implements Serializable{
 
 
 	public SpousesOfBorrowers(Integer id, String name, String id_Type, String id_Number, String uni_Name,
-			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String start,
+			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String state,
 			String ctime) {
 		super();
 		this.id = id;
@@ -73,7 +73,7 @@ public class SpousesOfBorrowers implements Serializable{
 		this.home_Phone = home_Phone;
 		this.mobile_Phone = mobile_Phone;
 		this.monthly_Income = monthly_Income;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
@@ -172,13 +172,13 @@ public class SpousesOfBorrowers implements Serializable{
 	}
 
 
-	public String getStart() {
-		return start;
+	public String getstate() {
+		return state;
 	}
 
 
-	public void setStart(String start) {
-		this.start = start;
+	public void setstate(String state) {
+		this.state = state;
 	}
 
 
@@ -196,7 +196,7 @@ public class SpousesOfBorrowers implements Serializable{
 	public String toString() {
 		return "SpousesOfBorrowers [id=" + id + ", name=" + name + ", id_Type=" + id_Type + ", id_Number=" + id_Number
 				+ ", uni_Name=" + uni_Name + ", unit_Phone=" + unit_Phone + ", home_Phone=" + home_Phone
-				+ ", mobile_Phone=" + mobile_Phone + ", monthly_Income=" + monthly_Income + ", start=" + start
+				+ ", mobile_Phone=" + mobile_Phone + ", monthly_Income=" + monthly_Income + ", state=" + state
 				+ ", ctime=" + ctime + "]";
 	}
 

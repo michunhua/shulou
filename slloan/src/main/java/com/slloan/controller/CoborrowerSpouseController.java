@@ -57,11 +57,11 @@ public class CoborrowerSpouseController {
 		String home_Phone =obj.getString("unitPhone"); // 住宅电话
 		String mobile_Phone = obj.getString("housePhone"); // 移动电话
 		String monthly_Income =obj.getString("salary");// 月薪（人民币）
-		String start = obj.getString("start");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String state = obj.getString("state");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
 
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type,id_Other,id_Number, uni_Name,
-				unit_Phone, home_Phone, mobile_Phone, monthly_Income,start,ctime);
+				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime);
 		boolean co = coborrowerSpouseService.save(coborrow);// 鎻掑叆瑙掕壊
 
 		if (co == true) {
@@ -114,10 +114,10 @@ public class CoborrowerSpouseController {
 		String home_Phone =req.getParameter("unitPhone"); // 住宅电话
 		String mobile_Phone = req.getParameter("housePhone"); // 移动电话
 		String monthly_Income =req.getParameter("salary"); // 月薪（人民币）
-		String start =req.getParameter("start"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String state =req.getParameter("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime=DateUtils.getInDateTime((new Date()));
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type, id_Number, uni_Name,
-				unit_Phone, home_Phone, mobile_Phone, monthly_Income,start,ctime );
+				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
 		boolean isResult =coborrowerSpouseService.update(coborrow);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);

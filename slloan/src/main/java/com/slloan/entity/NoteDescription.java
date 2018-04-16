@@ -6,7 +6,7 @@ public class NoteDescription {
 	private String note_Description1;
 	private String note_Description2;
 	private String note_Description3;
-	private String start;
+	private String state;
 	private String ctime;
 	public Integer getId() {
 		return id;
@@ -32,11 +32,11 @@ public class NoteDescription {
 	public void setNote_Description3(String note_Description3) {
 		this.note_Description3 = note_Description3;
 	}
-	public String getStart() {
-		return start;
+	public String getstate() {
+		return state;
 	}
-	public void setStart(String start) {
-		this.start = start;
+	public void setstate(String state) {
+		this.state = state;
 	}
 	public String getCtime() {
 		return ctime;
@@ -47,33 +47,33 @@ public class NoteDescription {
 	@Override
 	public String toString() {
 		return "NoteDescription [id=" + id + ", note_Description1=" + note_Description1 + ", note_Description2="
-				+ note_Description2 + ", note_Description3=" + note_Description3 + ", start=" + start + ", ctime="
+				+ note_Description2 + ", note_Description3=" + note_Description3 + ", state=" + state + ", ctime="
 				+ ctime + "]";
 	}
-	public NoteDescription(String note_Description1,String start,
+	public NoteDescription(String note_Description1,String state,
 			String ctime) {
 		super();
 		this.note_Description1 = note_Description1;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 	
-	public NoteDescription(String note_Description1, String note_Description2, String start,
+	public NoteDescription(String note_Description1, String note_Description2, String state,
 			String ctime) {
 		super();
 		this.note_Description1 = note_Description1;
 		this.note_Description2 = note_Description2;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 	
-	public NoteDescription(String note_Description1, String note_Description2,String note_Description3, String start,
+	public NoteDescription(String note_Description1, String note_Description2,String note_Description3, String state,
 			String ctime) {
 		super();
 		this.note_Description1 = note_Description1;
 		this.note_Description2 = note_Description2;
 		this.note_Description2 = note_Description3;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 }

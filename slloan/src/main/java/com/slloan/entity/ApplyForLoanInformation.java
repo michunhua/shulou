@@ -20,7 +20,7 @@ public class ApplyForLoanInformation implements Serializable{
 	private String repayment_Bank_Name;  		//还款银行名称
 	private String repayment_Account_Name; 		//还款账户名
 	private String repayment_Account_Number;		//还款账号
-	private String start;
+	private String state;
 	private String ctime;
 	
 	public ApplyForLoanInformation(){
@@ -29,7 +29,7 @@ public class ApplyForLoanInformation implements Serializable{
 	
 	public ApplyForLoanInformation(Integer id, String amount, String time_Limit, String borrowing_Variety,
 			String repayment, String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
-			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String start,
+			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String state,
 			String ctime) {
 		super();
 		this.id = id;
@@ -43,13 +43,13 @@ public class ApplyForLoanInformation implements Serializable{
 		this.repayment_Bank_Name = repayment_Bank_Name;
 		this.repayment_Account_Name = repayment_Account_Name;
 		this.repayment_Account_Number = repayment_Account_Number;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
 	public ApplyForLoanInformation(String amount, String time_Limit, String borrowing_Variety,
 			String repayment, String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
-			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String start,
+			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String state,
 			String ctime) {
 		super();
 	
@@ -63,19 +63,19 @@ public class ApplyForLoanInformation implements Serializable{
 		this.repayment_Bank_Name = repayment_Bank_Name;
 		this.repayment_Account_Name = repayment_Account_Name;
 		this.repayment_Account_Number = repayment_Account_Number;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
 	
 	
 
-	public String getStart() {
-		return start;
+	public String getstate() {
+		return state;
 	} 
 
-	public void setStart(String start) {
-		this.start = start;
+	public void setstate(String state) {
+		this.state = state;
 	}
 
 	public String getCtime() {
@@ -159,7 +159,7 @@ public class ApplyForLoanInformation implements Serializable{
 				+ ", borrowing_Variety=" + borrowing_Variety + ", repayment=" + repayment + ", receiving_Bank_Name="
 				+ receiving_Bank_Name + ", receiving_Account_Name=" + receiving_Account_Name + ", receiving_Account="
 				+ receiving_Account + ", repayment_Bank_Name=" + repayment_Bank_Name + ", repayment_Account_Name="
-				+ repayment_Account_Name + ", repayment_Account_Number=" + repayment_Account_Number + ", start=" + start
+				+ repayment_Account_Name + ", repayment_Account_Number=" + repayment_Account_Number + ", state=" + state
 				+ ", ctime=" + ctime + "]";
 	}
 	

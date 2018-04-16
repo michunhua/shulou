@@ -21,7 +21,7 @@ layui.use('laydate', function(){
 var collectData = function() {
   var data = {}
   data.note = e('.note').value
-  data.start = '2'
+  data.state = '2'
   data.ctime = 'c'
   return data
 }
@@ -51,8 +51,8 @@ var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/notedescription'
+    var method = 'GET'
+    var url = '/slloan/loan/loannotfirst'
     log(data)
     sendAjax(method, url, data, null)
   })

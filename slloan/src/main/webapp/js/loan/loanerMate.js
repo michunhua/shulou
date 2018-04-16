@@ -29,7 +29,7 @@ var collectData = function() {
   data.unitPhone = e('.unit-phone').value
   data.mobiePhone = e('.mobie-phone').value
   data.salary = e('.salary').value
-  data.start = 'a'
+  data.state = 'a'
   data.ctime = 'b'
   return data
 }

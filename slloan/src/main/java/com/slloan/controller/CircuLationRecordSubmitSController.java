@@ -29,10 +29,10 @@ public class CircuLationRecordSubmitSController {
 		String fallbackname = req.getParameter("fallbackname");
 		String submit = req.getParameter("submit");
 		String state = req.getParameter("state");
-		int startid = Integer.parseInt(state);
+		int stateid = Integer.parseInt(state);
 		String spare1 = req.getParameter("spare1");
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,startid,spare1,createDate);
+		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,spare1,createDate);
 		
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if(isResultInsert == true){

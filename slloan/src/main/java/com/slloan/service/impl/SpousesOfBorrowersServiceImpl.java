@@ -28,11 +28,11 @@ public class SpousesOfBorrowersServiceImpl implements SpousesOfBorrowersService 
 		String home_Phone = spousesOfBorrowers.getHome_Phone(); // 住宅电话
 		String mobile_Phone = spousesOfBorrowers.getMobile_Phone(); // 手机
 		String monthly_Income = spousesOfBorrowers.getMonthly_Income(); // 月收入
-		String start = spousesOfBorrowers.getStart();
+		String state = spousesOfBorrowers.getstate();
 		String ctime = spousesOfBorrowers.getCtime();
 
 		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
-				mobile_Phone, monthly_Income,start,ctime);
+				mobile_Phone, monthly_Income,state,ctime);
 		return spousesOfBorrowersDao.save(spouses);
 		// TODO Auto-generated method stub
 
@@ -49,11 +49,11 @@ public class SpousesOfBorrowersServiceImpl implements SpousesOfBorrowersService 
 		String home_Phone = spousesOfBorrowers.getHome_Phone(); // 住宅电话
 		String mobile_Phone = spousesOfBorrowers.getMobile_Phone(); // 手机
 		String monthly_Income = spousesOfBorrowers.getMonthly_Income(); // 月收入
-		String start = spousesOfBorrowers.getStart();
+		String state = spousesOfBorrowers.getstate();
 		String ctime = spousesOfBorrowers.getCtime();
 
 		SpousesOfBorrowers spouses = new SpousesOfBorrowers(id,name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
-				mobile_Phone, monthly_Income,start,ctime);
+				mobile_Phone, monthly_Income,state,ctime);
 		return spousesOfBorrowersDao.spoupdate(spouses);
 	}
 

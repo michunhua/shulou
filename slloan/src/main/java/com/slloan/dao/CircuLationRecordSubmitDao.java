@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.Firstfilla;
 import com.slloan.entity.NoteExplain;
 import com.slloan.entity.PropertyInformation;
 
@@ -27,14 +28,25 @@ public interface CircuLationRecordSubmitDao {
 	 * @return
 	 */
 	public boolean fallbackinsert(CircuLationRecord circuLationRecord);
+
+	public boolean firstTrial(NoteExplain noteExplain);
 	
 	
-	/**
-	 * 贷款初审备注
-	 * @param noteexplain
-	 * @return
-	 */
-	public boolean firstTrial(NoteExplain noteexplain);
+//	/**
+//	 * 贷款初审备注
+//	 * @param noteexplain
+//	 * @return
+//	 */
+//	
+//
+//	public boolean firstTrial(NoteExplain note);
+
+	
+
+
+	
+	
+	
 
 	
 }

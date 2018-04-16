@@ -3,6 +3,7 @@ package com.slloan.service.inter;
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.CircuLationRecord;
+import com.slloan.entity.Firstfilla;
 import com.slloan.entity.NoteExplain;
 
 /**
@@ -32,6 +33,21 @@ public interface CircuLationRecordSubmitService {
 	 * @return
 	 */
 	public boolean firstTrial(NoteExplain noteexplain);
+	
+	
+	/**
+	 * 贷款创建到贷款初审
+	 * @param firstfilla
+	 * @return
+	 */
+
+
+
+	public boolean firstName(Firstfilla firstfilla);
+
+	boolean firstname(Firstfilla firstfilla);
+
+
 	
 	
 }

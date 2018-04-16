@@ -66,7 +66,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 		String family_number = jointApplicant.getFamily_number(); // 供养人数
 		double monthly_expenditure = jointApplicant.getMonthly_expenditure(); // 月支出
 		String postal_address = jointApplicant.getPostal_address(); // 通讯地址
-		String start = jointApplicant.getstart(); // 状态
+		String state = jointApplicant.getstate(); // 状态
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = jointApplicant.getCtime(); // 创建时间
 
@@ -76,7 +76,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		return jointApplicantdao.save(joint);
 
 	}
@@ -127,7 +127,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 		String family_number = jointApplicant.getFamily_number(); // 供养人数
 		double monthly_expenditure = jointApplicant.getMonthly_expenditure(); // 月支出
 		String postal_address = jointApplicant.getPostal_address(); // 通讯地址
-		String start = jointApplicant.getstart(); // 状态
+		String state = jointApplicant.getstate(); // 状态
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = jointApplicant.getCtime(); // 创建时间
 
@@ -137,7 +137,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		return jointApplicantdao.update(joint);
 		
 	}

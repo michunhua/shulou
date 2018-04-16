@@ -50,13 +50,13 @@
 	new_Loan_Approval_Amount,
 	new_Loan_Bank_Account_Number,
 	note_DescriPtion,
-	start,
+	state,
 	ctime
 )
 VALUES
 	(
 		#{ownership_And_percentage},#{property_Address},#{conStruction_Area},#{inner_Area},#{sales_Contract_Number},#{certificate_of_Title},#{proPerty_for},#{the_Assessed_Value},#{original_Loan_Bank},#{original_Loan_Amount},#{loan_Outstanding_Balance},				
-		#{house_Account},#{transaCtion_Price},#{purchase_Deposit},#{supervision_of_funds},#{new_loan_Bank},#{new_Loan_Approval_Amount},#{new_Loan_Bank_Account_Number},#{note_DescriPtion},#{start},#{ctime})
+		#{house_Account},#{transaCtion_Price},#{purchase_Deposit},#{supervision_of_funds},#{new_loan_Bank},#{new_Loan_Approval_Amount},#{new_Loan_Bank_Account_Number},#{note_DescriPtion},#{state},#{ctime})
 
     </insert>  
     
@@ -87,7 +87,7 @@ VALUES
 					<if test="new_Loan_Approval_Amount !=null and new_Loan_Approval_Amount !=''">new_Loan_Approval_Amount = #{new_Loan_Approval_Amount},</if>
 					<if test="new_Loan_Bank_Account_Number !=null and new_Loan_Bank_Account_Number !=''">new_Loan_Bank_Account_Number = #{new_Loan_Bank_Account_Number},</if>
 					<if test="note_DescriPtion !=null and note_DescriPtion !=''">note_DescriPtion = #{note_DescriPtion},</if>
-					<if test="start !=null and start !=''">start = #{start},</if>
+					<if test="state !=null and state !=''">state = #{state},</if>
 					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
 				</set>
 					 WHERE id = #{id}   

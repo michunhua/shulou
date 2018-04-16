@@ -30,7 +30,7 @@ var collectData = function() {
 	data.unitPhone = e('.unit-phone').value
 	data.housePhone = e('.house-phone').value
 	data.salary = e('.salary').value
-	data.start = 'a'
+	data.state = 'a'
 	data.catime = 'b'
 	data.other = 'c'
 	return data

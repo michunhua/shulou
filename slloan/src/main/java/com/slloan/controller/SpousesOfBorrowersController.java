@@ -51,12 +51,12 @@ public class SpousesOfBorrowersController {
 		String home_Phone = obj.getString("unitPhone"); // 住宅电话
 		String mobile_Phone = obj.getString("mobiePhone"); // 手机
 		String monthly_Income = obj.getString("salary"); // 月收入
-		String start =obj.getString("start");
+		String state =obj.getString("state");
 		String ctime = obj.getString("ctime");
 		
 
 		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
-				mobile_Phone, monthly_Income,start,ctime);
+				mobile_Phone, monthly_Income,state,ctime);
 
 		boolean sp = spousesofborrowers.save(spouses);// 插入角色
 		if (sp == true) {
@@ -127,10 +127,10 @@ public class SpousesOfBorrowersController {
 		String home_Phone = req.getParameter("contacts"); // 住宅电话
 		String mobile_Phone = req.getParameter("contacts"); // 手机
 		String monthly_Income = req.getParameter("contacts"); // 月收入
-		String start =req.getParameter("contacts");
+		String state =req.getParameter("contacts");
 		String ctime = req.getParameter("contacts");
 		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
-				mobile_Phone, monthly_Income,start,ctime);
+				mobile_Phone, monthly_Income,state,ctime);
 
 			boolean isResult=	spousesofborrowers.spoupdate(spouses);
 			if(isResult ==true){

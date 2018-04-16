@@ -24,6 +24,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 
 	@Override
 	public boolean save(PersonalProfile personalProfile) {
+		String product_Number = personalProfile.getProduct_Number();
 		String name = personalProfile.getName(); // 共同借款人姓名
 		String phoneticize = personalProfile.getPhoneticize(); // 拼音、英文姓名
 		String id_type = personalProfile.getId_type(); // 身份证件类型
@@ -67,17 +68,17 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		String family_number = personalProfile.getFamily_number(); // 供养人数
 		double monthly_expenditure = personalProfile.getMonthly_expenditure(); // 月支出
 		String postal_address = personalProfile.getPostal_address(); // 通讯地址
-		String start = personalProfile.getstart(); // 状态
+		String state = personalProfile.getState(); // 状态
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = personalProfile.getCtime(); // 创建时间
 
-		PersonalProfile joint = new PersonalProfile(name, phoneticize, id_type, id_number, relationship_with_borrower,
+		PersonalProfile joint = new PersonalProfile(product_Number,name, phoneticize, id_type, id_number, relationship_with_borrower,
 				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
 				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		return personalProfiledao.save(personalProfile);
 	}
 

@@ -29,7 +29,7 @@ public class PropertyInformation implements Serializable{
 	private String new_Loan_Approval_Amount;				//新贷款批复金额
 	private String new_Loan_Bank_Account_Number;			//新贷款行账号
 	private String note_DescriPtion;						//备注
-	private String start;
+	private String state;
 	private String ctime;
 	
 	public PropertyInformation(){
@@ -44,7 +44,7 @@ public class PropertyInformation implements Serializable{
 			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
 			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
 			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
-			String new_Loan_Bank_Account_Number, String note_DescriPtion, String start, String ctime) {
+			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
 		super();
 		this.id = id;
 		this.ownership_And_percentage = ownership_And_percentage;
@@ -66,7 +66,7 @@ public class PropertyInformation implements Serializable{
 		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
 		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
 		this.note_DescriPtion = note_DescriPtion;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
@@ -78,7 +78,7 @@ public class PropertyInformation implements Serializable{
 			String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
 			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
 			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
-			String new_Loan_Bank_Account_Number, String note_DescriPtion, String start, String ctime) {
+			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
 		super();
 		this.ownership_And_percentage = ownership_And_percentage;
 		this.property_Address = property_Address;
@@ -99,22 +99,22 @@ public class PropertyInformation implements Serializable{
 		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
 		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
 		this.note_DescriPtion = note_DescriPtion;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
 
 
 
-	public String getStart() {
-		return start;
+	public String getstate() {
+		return state;
 	}
 
 
 
 
-	public void setStart(String start) {
-		this.start = start;
+	public void setstate(String state) {
+		this.state = state;
 	}
 
 
@@ -308,7 +308,7 @@ public class PropertyInformation implements Serializable{
 				+ transaCtion_Price + ", purchase_Deposit=" + purchase_Deposit + ", supervision_of_funds="
 				+ supervision_of_funds + ", new_loan_Bank=" + new_loan_Bank + ", new_Loan_Approval_Amount="
 				+ new_Loan_Approval_Amount + ", new_Loan_Bank_Account_Number=" + new_Loan_Bank_Account_Number
-				+ ", note_DescriPtion=" + note_DescriPtion + ", start=" + start + ", ctime=" + ctime + "]";
+				+ ", note_DescriPtion=" + note_DescriPtion + ", state=" + state + ", ctime=" + ctime + "]";
 	}
 
 

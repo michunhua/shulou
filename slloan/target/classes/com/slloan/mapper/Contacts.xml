@@ -13,7 +13,7 @@
 		<result column="c_Telephone" property="c_Telephone"/>
 		<result column="c_Telephone1" property="c_Telephone1"/>
 		<result column="c_Telephone2" property="c_Telephone2"/>
-		<result column="start" property="start"/>
+		<result column="state" property="state"/>
 		<result column="ctime" property="ctime" />
 	</resultMap>
 		
@@ -28,12 +28,12 @@
 		c_Telephone,
 		c_Telephone1,
 		c_Telephone2,
-		start,
+		state,
 		ctime
 		)
 		VALUES
 		(
-		#{contacts},#{contacts},#{contacts},#{relationship},#{relationship},#{relationship},#{c_Telephone},#{c_Telephone},#{c_Telephone},#{start},#{ctime})
+		#{contacts},#{contacts},#{contacts},#{relationship},#{relationship},#{relationship},#{c_Telephone},#{c_Telephone},#{c_Telephone},#{state},#{ctime})
 		</insert>
 		
 		<!-- 根据ID查记录 -->

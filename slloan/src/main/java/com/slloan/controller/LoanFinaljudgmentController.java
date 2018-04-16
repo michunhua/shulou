@@ -133,7 +133,7 @@ public class LoanFinaljudgmentController {
 //		 double monthly_expenditure = Double.valueOf(json.getString("a"));// 月支出
 		 String mon = json.getString("expenses");// 月支出
 		 String postal_address=json.getString("communication");  // 通讯地址
-		 String start=json.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String state=json.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		 String ctime=json.getString("ctime");//日期
 	    
 		Double Revenue_in_the_previous_year = 0.0;
@@ -168,7 +168,7 @@ public class LoanFinaljudgmentController {
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		boolean isResult = applicantDao.update(joints);
 		if (isResult == true) {
 			return new Json(true, "success", isResult);
@@ -219,10 +219,10 @@ public class LoanFinaljudgmentController {
 	String home_Phone = req.getParameter("contacts"); // 住宅电话
 	String mobile_Phone = req.getParameter("contacts"); // 手机
 	String monthly_Income = req.getParameter("contacts"); // 月收入
-	String start =req.getParameter("contacts");
+	String state =req.getParameter("contacts");
 	String ctime = req.getParameter("contacts");
 	SpousesOfBorrowers spouses = new SpousesOfBorrowers(id,name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
-			mobile_Phone, monthly_Income,start,ctime);
+			mobile_Phone, monthly_Income,state,ctime);
 
 		boolean isResult=	spousesOfBorrowersService.spoupdate(spouses);
 			if(isResult ==true){
@@ -263,6 +263,7 @@ public class LoanFinaljudgmentController {
 		String dataid = request.getParameter("data");
 		JSONObject req = new JSONObject().fromObject(dataid);
 		Integer id = req.getInt("id");
+		String product_Number = req.getString("");
 		String name =req.getString("contacts"); // 共同借款人姓名
 		String phoneticize = req.getString("contacts");// 拼音、英文姓名
 		String id_type =  req.getString("contacts");// 身份证件类型
@@ -306,17 +307,17 @@ public class LoanFinaljudgmentController {
 		String family_number = req.getString("contacts");// 供养人数
 		double monthly_expenditure = Double.valueOf(req.getString("contacts"));// 月支出
 		String postal_address = req.getString("contacts");// 通讯地址
-		String start =  req.getString("contacts");// 状态
+		String state =  req.getString("contacts");// 状态
 												// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime =  req.getString("contacts");// 创建时间
 
-		PersonalProfile jointss = new PersonalProfile(id,name, phoneticize, id_type, id_number, relationship_with_borrower,
+		PersonalProfile jointss = new PersonalProfile(id,product_Number,name, phoneticize, id_type, id_number, relationship_with_borrower,
 				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
 				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 			boolean isResult=	personalprofileservice.perupdate(jointss);
 			if(isResult ==true){
 				return  new Json(true,"success",isResult);
@@ -366,11 +367,11 @@ public class LoanFinaljudgmentController {
 		String repayment_Bank_Name= json.getString("contacts");
 		String repayment_Account_Name= json.getString("contacts");
 		String repayment_Account_Number= json.getString("contacts");
-		String start= json.getString("contacts");
+		String state= json.getString("contacts");
 		String ctime=DateUtils.getInDateTime((new Date()));
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(id,amount, time_Limit, borrowing_Variety, repayment,
 				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-				repayment_Account_Name, repayment_Account_Number,start,ctime);
+				repayment_Account_Name, repayment_Account_Number,state,ctime);
 		boolean isResult =applyForLoanInformationService.appUpdate(ap);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);
@@ -432,13 +433,13 @@ public class LoanFinaljudgmentController {
 		String new_Loan_Approval_Amount =req.getString("contacts"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = req.getString("contacts"); // 新贷款行账号
 		String note_DescriPtion = req.getString("contacts"); // 备注
-		String start=req.getString("contacts"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String state=req.getString("contacts"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = req.getString("contacts");//更新时间
 		PropertyInformation preperty = new PropertyInformation(id,ownership_And_percentage, property_Address,
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
 				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
 				transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
-				new_Loan_Bank_Account_Number, note_DescriPtion,start,ctime);
+				new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
 			boolean isResult=	propertyinformationservice.proupdate(preperty);
 			if(isResult ==true){
 				return  new Json(true,"success",isResult);
@@ -494,9 +495,9 @@ public class LoanFinaljudgmentController {
 		String c_Telephone=json.getString("linkfPhone");//联系人电话
 		String c_Telephone1=json.getString("linkfPhone");//联系人电话
 		String c_Telephone2=json.getString("linkfPhone");//联系人电话
-		String start=json.getString("start");
+		String state=json.getString("state");
 		String ctime=DateUtils.getInDateTime((new Date()));
-		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, start, ctime);
+		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);

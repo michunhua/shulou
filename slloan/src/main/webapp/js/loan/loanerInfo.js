@@ -21,6 +21,7 @@ layui.use('laydate', function(){
 var collectData = function() {
   log('收集数据')
   var data = {}
+  data.aac = 1
   data.cname = e('.ch-name').value
   data.ename = e('.en-name').value
   data.paperwork = e('.paperwork-type').value
@@ -59,7 +60,7 @@ var collectData = function() {
   data.communication = e('.communication').value
   data.a =  12.5
   data.b='b'
-  data.start = 'c'
+  data.state = 'c'
   data.ctime ='d'
   return data
 }

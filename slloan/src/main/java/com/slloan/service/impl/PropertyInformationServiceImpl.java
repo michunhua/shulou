@@ -39,7 +39,7 @@ public class PropertyInformationServiceImpl implements PropertyInformationServic
 		String new_Loan_Approval_Amount = propertyInformation.getNew_Loan_Approval_Amount(); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = propertyInformation.getNew_Loan_Bank_Account_Number(); // 新贷款行账号
 		String note_DescriPtion = propertyInformation.getNote_DescriPtion(); // 备注
-		String start = propertyInformation.getStart();
+		String state = propertyInformation.getstate();
 		String ctime = propertyInformation.getCtime();
 		
 		
@@ -47,7 +47,7 @@ public class PropertyInformationServiceImpl implements PropertyInformationServic
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
 				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
 				transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
-				new_Loan_Bank_Account_Number, note_DescriPtion,start,ctime);
+				new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
 		return propertyInformationdao.save(preperty); 
 		// TODO Auto-generated method stub
 

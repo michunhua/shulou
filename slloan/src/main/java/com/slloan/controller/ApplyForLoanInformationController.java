@@ -61,13 +61,13 @@ public class ApplyForLoanInformationController {
 		String repayment_Bank_Name = obj.getString("account"); // 还款银行名称
 		String repayment_Account_Name = obj.getString("repayBank"); // 还款账户名
 		String repayment_Account_Number = obj.getString("repayCcount"); //还款账号
-		String start = obj.getString("start");//状态0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String state = obj.getString("state");//状态0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
 
 		
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, borrowing_Variety, repayment,
 				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-				repayment_Account_Name, repayment_Account_Number,start,ctime);
+				repayment_Account_Name, repayment_Account_Number,state,ctime);
 		boolean rt = applyForLoanInformationservice.save(ap);// 鎻掑叆瑙掕壊
 
 
@@ -123,11 +123,11 @@ public class ApplyForLoanInformationController {
 		String repayment_Bank_Name= json.getString("contacts");
 		String repayment_Account_Name= json.getString("contacts");
 		String repayment_Account_Number= json.getString("contacts");
-		String start= json.getString("contacts");
+		String state= json.getString("contacts");
 		String ctime=DateUtils.getInDateTime((new Date()));
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(id,amount, time_Limit, borrowing_Variety, repayment,
 				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-				repayment_Account_Name, repayment_Account_Number,start,ctime);
+				repayment_Account_Name, repayment_Account_Number,state,ctime);
 		boolean isResult =applyForLoanInformationservice.appUpdate(ap);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);

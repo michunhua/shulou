@@ -22,9 +22,9 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 		 String note_Description1 =notedescription.getNote_Description1();						//金额
 		 String note_Description2=notedescription.getNote_Description2();					//期限
 		 String note_Description3=notedescription.getNote_Description3();    		//借款品种
-		 String start = notedescription.getStart();
+		 String state = notedescription.getstate();
 		 String ctime = notedescription.getCtime();
-		 NoteDescription note = new NoteDescription(note_Description1, note_Description2, note_Description3, start, ctime);
+		 NoteDescription note = new NoteDescription(note_Description1, note_Description2, note_Description3, state, ctime);
 		return notedescriptionDao.save(note);
 
 }

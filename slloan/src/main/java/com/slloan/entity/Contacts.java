@@ -20,7 +20,7 @@ public class Contacts implements Serializable{
 	private String c_Telephone;//1联系人电话
 	private String c_Telephone1;//2联系人电话
 	private String c_Telephone2;//3联系人电话
-	private String start;
+	private String state;
 	private String ctime;
 	
 	public Contacts(){}
@@ -28,7 +28,7 @@ public class Contacts implements Serializable{
 	
 	public Contacts(Integer id, String contacts, String contacts1, String contacts2, String relationship,
 			String relationship1, String relationship2, String c_Telephone, String c_Telephone1, String c_Telephone2,
-			String start, String ctime) {
+			String state, String ctime) {
 		super();
 		this.id = id;
 		this.contacts = contacts;
@@ -40,7 +40,7 @@ public class Contacts implements Serializable{
 		this.c_Telephone = c_Telephone;
 		this.c_Telephone1 = c_Telephone1;
 		this.c_Telephone2 = c_Telephone2;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 
@@ -59,7 +59,7 @@ public class Contacts implements Serializable{
 		this.c_Telephone2 = c_Telephone2;
 	}
 	public Contacts(String contacts, String contacts1, String contacts2, String relationship, String relationship1,
-			String relationship2, String c_Telephone, String c_Telephone1, String c_Telephone2, String start,
+			String relationship2, String c_Telephone, String c_Telephone1, String c_Telephone2, String state,
 			String ctime) {
 		super();
 		this.contacts = contacts;
@@ -71,14 +71,14 @@ public class Contacts implements Serializable{
 		this.c_Telephone = c_Telephone;
 		this.c_Telephone1 = c_Telephone1;
 		this.c_Telephone2 = c_Telephone2;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
-	public String getStart() {
-		return start;
+	public String getstate() {
+		return state;
 	}
-	public void setStart(String start) {
-		this.start = start;
+	public void setstate(String state) {
+		this.state = state;
 	}
 	public String getCtime() {
 		return ctime;
@@ -151,7 +151,7 @@ public class Contacts implements Serializable{
 		return "Contacts [id=" + id + ", contacts=" + contacts + ", contacts1=" + contacts1 + ", contacts2=" + contacts2
 				+ ", relationship=" + relationship + ", relationship1=" + relationship1 + ", relationship2="
 				+ relationship2 + ", c_Telephone=" + c_Telephone + ", c_Telephone1=" + c_Telephone1 + ", c_Telephone2="
-				+ c_Telephone2 + ", start=" + start + ", ctime=" + ctime + "]";
+				+ c_Telephone2 + ", state=" + state + ", ctime=" + ctime + "]";
 	}
 	
 	

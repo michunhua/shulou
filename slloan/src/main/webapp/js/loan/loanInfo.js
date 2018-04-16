@@ -32,7 +32,7 @@ var collectData = function() {
   data.repayBank = e('.repay-bank').value
   data.repayCcount = e('.repay-ccount').value
   data.reapyAccountbank = e('.reapy-accountbank').value
-  data.start = 'a'
+  data.state = 'a'
   data.ctime = 'b'
   return data
 }

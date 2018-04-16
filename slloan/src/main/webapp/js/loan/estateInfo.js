@@ -39,7 +39,7 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
-  data.start='a'
+  data.state='a'
   data.ctiam='b'
   return data
 }

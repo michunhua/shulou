@@ -11,7 +11,7 @@
 		<result column="home_Phone" property="home_Phone" />
 		<result column="mobile_Phone" property="mobile_Phone" />
 		<result column="monthly_Income" property="monthly_Income" />
-		<result column="start" property="start" />
+		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
 	</resultMap>
 
@@ -25,7 +25,7 @@
 	 home_Phone,			
 	 mobile_Phone,					
 	 monthly_Income,			
-	 start,
+	 state,
 	 ctime) values(#{name},							
 	 #{id_Type},          			
 	 #{id_Number},					
@@ -34,7 +34,7 @@
 	 #{home_Phone},					
 	 #{mobile_Phone},					
 	 #{monthly_Income},			
-	 #{start},
+	 #{state},
 	 #{ctime})
     </insert>  
       <!-- 
@@ -72,7 +72,7 @@
 					<if test="home_Phone !=null and home_Phone !=''">home_Phone=#{home_Phone},</if>
 					<if test="mobile_Phone !=null and mobile_Phone !=''">mobile_Phone = #{mobile_Phone},</if>
 					<if test="monthly_Income !=null and monthly_Income !=''">monthly_Income = #{monthly_Income},</if>
-					<if test="start !=null and start !=''">start = #{start},</if>
+					<if test="state !=null and state !=''">state = #{state},</if>
 					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
 				</set>
 					 WHERE id = #{id}

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.slloan.dao.ImagedataDao;
 import com.slloan.entity.ImageDataUpdate;
-
 import com.slloan.service.inter.ImagedataService;
 
 @Service(value="imagedataService")
@@ -56,10 +55,29 @@ public class ImagedataServiceImpl implements ImagedataService {
 	public List<ImageDataUpdate> selectUploadsUpdateType(ImageDataUpdate param) {
 		Map<String,Object> mapparam = new HashMap<String,Object>();
 			mapparam.put("filepath", param.getOriginalfilename());
-			mapparam.put("Parentnode", param.getNote());
+			mapparam.put("parentnode", param.getNote());
 			mapparam.put("uploadtype",param.getUploadtype());
 		return imagedatadao.selectUploadsUpdateType(mapparam);
 	}
 
+	@Override
+	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param) {
+		Map<String,Object> mapparam = new HashMap<String,Object>();
+		mapparam.put("filepath", param.getOriginalfilename());
+		mapparam.put("parentnode", param.getNote());
+		mapparam.put("uploadtype",param.getUploadtype());
+		return imagedatadao.financevoucherSelectToupload(mapparam);
+	}
+
+
+	@Override
+	public boolean batchUpdateStudent(List updatelList) {
+		return imagedatadao.batchUpdateStudent(updatelList);
+	}
+
+	@Override
+	public boolean batchUpdateadopt(List updatelList) {
+		return imagedatadao.batchUpdateadopt(updatelList);
+	}
 
 }

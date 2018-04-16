@@ -48,7 +48,7 @@ public class JointApplicant  implements Serializable{
 	private String family_number; // '供养人数',
 	private double monthly_expenditure; // '月支出',
 	private String postal_address; // '通讯地址',
-	private String start; // '状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清',
+	private String state; // '状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清',
 	private String ctime; // '创建时间',
 	
 	public Integer getId() {
@@ -285,11 +285,11 @@ public class JointApplicant  implements Serializable{
 	public void setPostal_address(String postal_address) {
 		this.postal_address = postal_address;
 	}
-	public String getstart() {
-		return start;
+	public String getstate() {
+		return state;
 	}
-	public void setstart(String start) {
-		this.start = start;
+	public void setstate(String state) {
+		this.state = state;
 	}
 	public String getCtime() {
 		return ctime;
@@ -314,7 +314,7 @@ public class JointApplicant  implements Serializable{
 				+ ", source_of_income=" + source_of_income + ", monthly_income=" + monthly_income
 				+ ", Income_from_investment=" + Income_from_investment + ", Rent_income=" + Rent_income
 				+ ", Other_income=" + Other_income + ", family_number=" + family_number + ", monthly_expenditure="
-				+ monthly_expenditure + ", postal_address=" + postal_address + ", start=" + start + ", ctime=" + ctime
+				+ monthly_expenditure + ", postal_address=" + postal_address + ", state=" + state + ", ctime=" + ctime
 				+ "]";
 	}
 	public JointApplicant() {
@@ -329,7 +329,7 @@ public class JointApplicant  implements Serializable{
 			String unit_phone, String postCode, String job_category, String seniority, String former_unit_name,
 			String former_seniority, String source_of_income, double monthly_income, double income_from_investment,
 			double rent_income, double other_income, String family_number, double monthly_expenditure,
-			String postal_address, String start, String ctime) {
+			String postal_address, String state, String ctime) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -370,7 +370,7 @@ public class JointApplicant  implements Serializable{
 		this.family_number = family_number;
 		this.monthly_expenditure = monthly_expenditure;
 		this.postal_address = postal_address;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 	public JointApplicant(String name, String phoneticize, String id_type, String id_number,
@@ -382,7 +382,7 @@ public class JointApplicant  implements Serializable{
 			String unit_phone, String postCode, String job_category, String seniority, String former_unit_name,
 			String former_seniority, String source_of_income, double monthly_income, double income_from_investment,
 			double rent_income, double other_income, String family_number, double monthly_expenditure,
-			String postal_address, String start, String ctime) {
+			String postal_address, String state, String ctime) {
 		super();
 		this.name = name;
 		this.phoneticize = phoneticize;
@@ -422,7 +422,7 @@ public class JointApplicant  implements Serializable{
 		this.family_number = family_number;
 		this.monthly_expenditure = monthly_expenditure;
 		this.postal_address = postal_address;
-		this.start = start;
+		this.state = state;
 		this.ctime = ctime;
 	}
 	

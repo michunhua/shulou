@@ -3,6 +3,7 @@
 
 <mapper namespace="com.slloan.dao.personalProfileDao">
 	<resultMap type="com.slloan.entity.PersonalProfile" id="personalpr">
+	<result column="product_Number" property="product_Number" />
 		<result column="name" property="name" />
 <result column="phoneticize" property="phoneticize" />
 <result column="id_type" property="id_type" />
@@ -39,13 +40,13 @@
 <result column="family_number" property="family_number" />
 <result column="monthly_expenditure" property="monthly_expenditure" />
 <result column="postal_address" property="postal_address" />
-<result column="start" property="start" />
+<result column="state" property="state" />
 <result column="ctime" property="ctime" />
 	</resultMap>
 
 	<insert id="save" parameterType="com.slloan.entity.PersonalProfile">
 		INSERT INTO borrow_information (
-		name,phoneticize,id_type,
+		product_Number,name,phoneticize,id_type,
 				id_number,
 				relationship_with_borrower,
 				sex,
@@ -80,11 +81,12 @@
 				family_number,
 				monthly_expenditure,
 				postal_address,
-				start,
+				state,
 				ctime
 )
 VALUES
 	(
+	#{product_Number},
 		#{name},
 #{phoneticize},
 #{id_type},
@@ -122,7 +124,7 @@ VALUES
 #{family_number},
 #{monthly_expenditure},
 #{postal_address},
-#{start},
+#{state},
 #{ctime})
 
 	</insert>
@@ -157,6 +159,7 @@ VALUES
 		<update id="perupdate" parameterType="com.slloan.entity.JointApplicant">
 				update borrow_information 
 				<set>
+				<if test="product_Number !=null and name !=''">name = #{product_Number},</if>
 					<if test="name !=null and name !=''">name = #{name},</if>
 					<if test="phoneticize !=null and phoneticize !=''">phoneticize=#{phoneticize},</if>
 					<if test="id_type  !=null and id_type !=''">id_type=#{id_type},</if>
@@ -166,7 +169,6 @@ VALUES
 					<if test="Local_domicile !=null and Local_domicile !=''">Local_domicile = #{Local_domicile},</if>
 					<if test="household_registration !=null and household_registration !=''">household_registration = #{household_registration},</if>
 					<if test="marital_status !=null and marital_status !=''">marital_status = #{marital_status},</if>
-					
 					<if test="housing_condition_now !=null and housing_condition_now !=''">housing_condition_now = #{housing_condition_now},</if>
 					<if test="birthday !=null and birthday !=''">birthday=#{birthday},</if>
 					<if test="home_address_now  !=null and home_address_now !=''">home_address_now=#{home_address_now},</if>
@@ -176,7 +178,6 @@ VALUES
 					<if test="present_address_zip_code !=null and present_address_zip_code !=''">present_address_zip_code = #{present_address_zip_code},</if>
 					<if test="vocation !=null and vocation !=''">vocation = #{vocation},</if>
 					<if test="unit_industry !=null and unit_industry !=''">unit_industry = #{unit_industry},</if>
-					
 					<if test="uni_name !=null and uni_name !=''">uni_name = #{uni_name},</if>
 					<if test="unit_address !=null and unit_address !=''">unit_address=#{unit_address},</if>
 					<if test="enterprise_scale  !=null and enterprise_scale !=''">enterprise_scale=#{enterprise_scale},</if>
@@ -186,7 +187,6 @@ VALUES
 					<if test="postCode !=null and postCode !=''">postCode = #{postCode},</if>
 					<if test="job_category !=null and job_category !=''">job_category = #{job_category},</if>
 					<if test="seniority !=null and seniority !=''">seniority = #{seniority},</if>
-					
 					<if test="former_unit_name !=null and former_unit_name !=''">former_unit_name = #{former_unit_name},</if>
 					<if test="former_seniority !=null and former_seniority !=''">former_seniority=#{former_seniority},</if>
 					<if test="source_of_income  !=null and source_of_income !=''">source_of_income=#{source_of_income},</if>
@@ -197,7 +197,7 @@ VALUES
 					<if test="family_number !=null and family_number !=''">family_number = #{family_number},</if>
 					<if test="monthly_expenditure !=null and monthly_expenditure !=''">monthly_expenditure = #{monthly_expenditure},</if>
 					<if test="postal_address !=null and postal_address !=''">postal_address = #{postal_address},</if>
-					<if test="start !=null and start !=''">start = #{start},</if>
+					<if test="state !=null and state !=''">state = #{state},</if>
 					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
 
 

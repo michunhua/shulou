@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.slloan.dao.CircuLationRecordSubmitDao;
 import com.slloan.entity.CircuLationRecord;
+import com.slloan.entity.Firstfilla;
 import com.slloan.entity.NoteExplain;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
 import com.slloan.util.DateUtils;
@@ -23,6 +24,8 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 
 	@Autowired
 	private CircuLationRecordSubmitDao recordSubmitDao;
+	private String firstname;
+	private String firstnamese;
 	
 	@Override
 	public CircuLationRecord fallbackSelectById(int id) {
@@ -50,6 +53,23 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 		NoteExplain note = new NoteExplain(firstTrialNote,recordSingleNote,city,createDate);
 		return recordSubmitDao.firstTrial(note);
 	}
+
+	@Override
+	public boolean firstName(Firstfilla firstfilla) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean firstname(Firstfilla firstfilla) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+
+	
+
 	
 	
 }

@@ -36,9 +36,9 @@ public class ContactsServiceImpl implements ContactsService {
 		String c_Telephone=con.getC_Telephone();
 		String c_Telephone1=con.getContacts1();
 		String c_Telephone2=con.getC_Telephone2();
-		String start =con.getStart();
+		String state =con.getstate();
 		String ctime = con.toString();
-		Contacts co = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, start, ctime);
+		Contacts co = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		return cntactsdao.save(co);
 	}
 

@@ -14,7 +14,7 @@
 		<result column="repayment_Bank_Name" property="repayment_Bank_Name" />
 		<result column="repayment_Account_Name" property="repayment_Account_Name" />
 		<result column="repayment_Account_Number" property="repayment_Account_Number" />
-		<result column="start" property="start" />
+		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
 	</resultMap>
 	<insert id="save" parameterType="com.slloan.entity.ApplyForLoanInformation">
@@ -29,12 +29,12 @@
 			repayment_Bank_Name,
 			repayment_Account_Name,
 			repayment_Account_Number,
-			start,
+			state,
 			ctime
 		)
 		VALUES
 		(
-			#{amount},#{time_Limit},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{start},#{ctime})
+			#{amount},#{time_Limit},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{state},#{ctime})
 	</insert>
 	<!-- <delect id="delete" parameterType="com.slloan.entity.ApplyForLoanInformation">
 		DELETE
@@ -56,7 +56,7 @@
 					<if test="repayment_Bank_Name !=null and repayment_Bank_Name !=''">repayment_Bank_Name = #{repayment_Bank_Name},</if>
 					<if test="repayment_Account_Name !=null and repayment_Account_Name !=''">repayment_Account_Name = #{repayment_Account_Name},</if>
 					<if test="repayment_Account_Number !=null and repayment_Account_Number !=''">repayment_Account_Number = #{repayment_Account_Number},</if>
-					<if test="start !=null and start !=''">START = #{start}</if>
+					<if test="state !=null and state !=''">state = #{state}</if>
 				</set>
 					 WHERE id = #{id}
     </update> 
@@ -72,7 +72,7 @@
 	repayment_Bank_Name repayment_Bank_Name,
 	repayment_Account_Name repayment_Account_Name,
 	repayment_Account_Number repayment_Account_Number,
-	START START,
+	state state,
 	ctime ctime
 FROM
 	apply_for_loan_information
@@ -89,7 +89,7 @@ FROM
 	repayment_Bank_Name repayment_Bank_Name,
 	repayment_Account_Name repayment_Account_Name,
 	repayment_Account_Number repayment_Account_Number,
-	START START,
+	state state,
 	ctime ctime
 FROM
 	apply_for_loan_information  where id=#{id}

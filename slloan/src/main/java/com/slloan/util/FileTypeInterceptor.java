@@ -45,7 +45,7 @@ public class FileTypeInterceptor extends HandlerInterceptorAdapter{
 				 String filename=multipartFile.getOriginalFilename();
 				 String uri = request.getRequestURI();
 				//判断是否为限制文件类型
-				 if((uri.indexOf("updateftpimage")>0)){
+				 if((uri.indexOf("updateftpimage")>0)|| uri.indexOf("financevoucher")>0){
 					 if(! checkFile(filename)){
 							//限制文件类型，请求转发到原始请求页面，并带提示信息
 							request.setAttribute("errormessage", "不支持的文件类型");

@@ -34,9 +34,9 @@ public class NoteDescriptionController {
 		
 		 	String note_Description1 =obj.getString("note");
 		 	
-			String start=obj.getString("start");
+			String state=obj.getString("state");
 			String ctime=obj.getString("ctime");
-			 NoteDescription note = new NoteDescription(note_Description1, start, ctime);
+			 NoteDescription note = new NoteDescription(note_Description1, state, ctime);
 			 boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
 		
 

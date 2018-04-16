@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.Firstfilla;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.NoteExplain;
 import com.slloan.entity.PersonalProfile;
@@ -40,7 +41,7 @@ import net.sf.json.JSONObject;
  *
  */
 @Controller(value = "jointapplicantcontroll")
-@RequestMapping("loan")
+@RequestMapping("/loan")
 public class JointApplicantController {
 	
 	private static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -100,7 +101,7 @@ public class JointApplicantController {
 //		 double monthly_expenditure = Double.valueOf(obj.getString("a"));// 月支出
 		 String mon = obj.getString("expenses");// 月支出
 		 String postal_address=obj.getString("communication");  // 通讯地址
-		 String start=obj.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String state=obj.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		 String ctime=obj.getString("ctime");//日期
 
 		 Double Revenue_in_the_previous_year = 0.0;
@@ -134,7 +135,7 @@ public class JointApplicantController {
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		boolean jo = jointapplicant.save(joint);// 插入角色
 
 		if (jo == true) {
@@ -194,7 +195,7 @@ public class JointApplicantController {
 //		 double monthly_expenditure = Double.valueOf(json.getString("a"));// 月支出
 		 String mon = json.getString("expenses");// 月支出
 		 String postal_address=json.getString("communication");  // 通讯地址
-		 String start=json.getString("start");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String state=json.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		 String ctime=json.getString("ctime");//日期
 	    
 		Double Revenue_in_the_previous_year = 0.0;
@@ -228,7 +229,7 @@ public class JointApplicantController {
 				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
 				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
 				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, start, ctime);
+				postal_address, state, ctime);
 		boolean isResult = jointapplicant.update(joints);
 		if (isResult == true) {
 			return new Json(true, "success", isResult);
@@ -340,11 +341,11 @@ public class JointApplicantController {
 		System.out.println("-----------初审列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		int startPos = Integer.parseInt(page);
+		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
-		System.out.println(limit);// startPos, int pageSize
-		return JSON.toJSONString(jointapplicant.getRolePage(startPos));
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(jointapplicant.getRolePage(statePos));
 	}
 
 	/**
@@ -400,7 +401,7 @@ public class JointApplicantController {
 		circuLationRecord.setCreateDate(createDate);
 		circuLationRecord.setFallbackname("退回到按揭员------------------>");
 		// CircuLationRecord record = new
-		// CircuLationRecord(circuLationRecord,submit,startid,spare1,createDate);
+		// CircuLationRecord(circuLationRecord,submit,stateid,spare1,createDate);
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if (isResultInsert == true) {
 			System.out.println("插入流程表成功");
@@ -421,7 +422,7 @@ public class JointApplicantController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET)
+	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.POST)
 	public String loannotesSubmit(HttpServletRequest req) {
 
 		CircuLationRecord circuLationRecord = new CircuLationRecord();
@@ -430,7 +431,7 @@ public class JointApplicantController {
 		circuLationRecord.setCreateDate(createDate);
 		circuLationRecord.setFallbackname("提交到贷款终审------------------>");
 		// CircuLationRecord record = new
-		// CircuLationRecord(circuLationRecord,submit,startid,spare1,createDate);
+		// CircuLationRecord(circuLationRecord,submit,stateid,spare1,createDate);
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if (isResultInsert == true) {
 			System.out.println("插入流程表成功");
@@ -439,6 +440,30 @@ public class JointApplicantController {
 		}
 
 		return "loanfinal/loanFinalTable";// 提交到贷款终审
+	}
+	
+	
+	/**
+	 * 贷款创建备注提交到贷款初审
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannotfirst", method = RequestMethod.GET)
+	public String loannotesFirst(HttpServletRequest req) {
+
+		Firstfilla firstfilla = new Firstfilla(null, null, 0, null, null);
+		firstfilla.setState(1);// 提交后后状态改为1
+		String createDate = DateUtils.getInDateTime((new Date()));
+		firstfilla.setCreateDate(createDate);
+		firstfilla.setFirstname("提交到贷款初审------------------>");
+		boolean isResultInsert = recordSubmitService.firstName(firstfilla);
+		if (isResultInsert == true) {
+			System.out.println("插入流程表成功");
+		} else {
+			System.out.println("失败");
+		}
+
+		return "loanfirst/loanFirstTable";// 提交到贷款初审
 	}
 
 //	/**

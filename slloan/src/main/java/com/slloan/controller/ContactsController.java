@@ -52,7 +52,7 @@ public class ContactsController {
 		String c_Telephone = obj.getString("linkfPhone"); // 移动电话
 		String c_Telephone1 =obj.getString("linkfPhone");// 月薪（人民币）
 		String c_Telephone2= obj.getString("linkfPhone");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String start = obj.getString("start");
+		String state = obj.getString("state");
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
 
 		Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, ctime, ctime);
@@ -141,9 +141,9 @@ public class ContactsController {
 		String c_Telephone=json.getString("linkfPhone");//联系人电话
 		String c_Telephone1=json.getString("linkfPhone");//联系人电话
 		String c_Telephone2=json.getString("linkfPhone");//联系人电话
-		String start=json.getString("start");
+		String state=json.getString("state");
 		String ctime=DateUtils.getInDateTime((new Date()));
-		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, start, ctime);
+		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
 		if(isResult == true){
 			return JSON.toJSONString(isResult);

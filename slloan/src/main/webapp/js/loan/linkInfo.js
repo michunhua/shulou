@@ -30,7 +30,7 @@ var collectData = function() {
   data.linktName = e('.linkt-name').value
   data.linktRelationship = e('.linkt-relationship').value
   data.linktPhone = e('.linkt-phone').value
-  data.start = 'a'
+  data.state = 'a'
 	  data.ctime = 'b'
   return data
 }
