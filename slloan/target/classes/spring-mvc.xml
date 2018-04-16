@@ -12,8 +12,10 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<!-- 创建一个拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/test"/>
-			<bean class="com.slloan.util.FileTypeInterceptor"></bean>
+			<mvc:mapping path="/updateftpimage/**"/>
+			<bean class="com.slloan.util.FileTypeInterceptor">
+				<property name="maxSize" value="10960"></property>
+			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/**"/>

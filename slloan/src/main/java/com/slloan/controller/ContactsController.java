@@ -53,7 +53,8 @@ public class ContactsController {
 		String c_Telephone1 =obj.getString("linkfPhone");// 月薪（人民币）
 		String c_Telephone2= obj.getString("linkfPhone");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String start = obj.getString("start");
-		String ctime = obj.getString("ctime"); //更新时间
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
+
 		Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, ctime, ctime);
 		boolean coan = contactsservice.save(coa);// 鎻掑叆瑙掕壊
 		

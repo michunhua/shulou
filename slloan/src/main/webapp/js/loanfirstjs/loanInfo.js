@@ -53,6 +53,39 @@ var sendData = function(element) {
   })
 }
 
+//设置页面数据
+var searchExport = function(back) {
+	  amount = e('.amount')
+	  term = e('.term')
+	  unit = e('.unit')
+	  variety = e('.variety')
+	  repayment = e('.repayment')
+	  beneficiarybank = e('.beneficiary-bank')
+	  bankaccount = e('.bank-account')
+	  receivingAccount = e('.receiving-account')
+	  repaymenBtank = e('.repayment-bank')
+	  repaymentAccount = e('.repayment-account')
+	  accountNumber = e('.account-number')
+	  
+	  amount.value = back.id
+	  term.value = back.id
+	  unit.value = back.id
+	  variety.value = back.id
+	  repayment.value = back.id
+	  beneficiarybank.value = back.id
+	  bankaccount.value = back.id
+	  receivingAccount.value = back.id
+	  repaymenBtank.value = back.id
+	  repaymentAccount.value = back.id
+	  accountNumber.value = back.id
+}
+
+var initback = {
+		id: '21'
+}
+
+searchExport(initback)
+
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {

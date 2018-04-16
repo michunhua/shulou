@@ -7,3 +7,13 @@
   margin-left: 12px;
   margin-top: 12px;
 }
+
+.validate {
+	float: right;
+	margin-right: 120px;
+}
+
+.write {
+	color: red !important;	
+}
+

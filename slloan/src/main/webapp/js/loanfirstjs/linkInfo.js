@@ -51,18 +51,43 @@ var sendData = function(element) {
   })
 }
 
-// 查询显示
-var collectDoc = function(data) {
-  linkf = e('.linkf')
-  linkfMate = e('.linkf-mate')
-  linkfPhone = e('.linkf-phone')
-  links = e('.links')
-  linksMate = e('.links-mate')
-  linksPhone = e('.links-phone')
-  linkt = e('.linkt')
-  linktMate = e('.linkt-mate')
-  linktPhone = e('.linkt-phone')
+// 设置页面数据
+var searchExport = function(back) {
+	  linkf = e('.linkf')
+	  linkfMate = e('.linkf-mate')
+	  linkfPhone = e('.linkf-phone')
+	  
+	  links = e('.links')
+	  linksMate = e('.links-mate').
+	  linksencodPhone = e('.links-phones')
+	  
+	  linkt = e('.linkt')
+	  linktMate = e('.linkt-mate')
+	  linktPhone = e('.linkt-phone')
+	  
+	  //设置值
+	  linkf.value = back.id
+	  linkfMate.value = back.id
+	  linkfPhone.value = back.id
+	  
+	  links.value = back.start
+	  linksMate.value = back.start
+//	  linksencodPhone.value = back.start
+	  
+	  linkt.value = back.id
+	  linktMate.value = back.id
+	  linktPhone.value = back.id
+	  
+	  
+//	  console.log('电话号码', linksencodPhone)
 }
+
+var initback = {
+		id: '19',
+		start: '100'
+}
+
+searchExport(initback)
 
 //查询
 //发送数据方法

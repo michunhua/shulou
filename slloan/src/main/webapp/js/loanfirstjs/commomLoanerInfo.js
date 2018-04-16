@@ -78,6 +78,56 @@ var sendData = function(element) {
   })
 }
 
+//设置页面数据
+var searchExport = function(back) {
+	  cname = e('.ch-name')
+	  ename = e('.en-name')
+	  paperwork = e('.paperwork-type')
+	  paperNumb = e('.paperwork-numb')
+	  country = e('.country')
+	  gender = e('.gender')
+	  census = e('.census')
+	  marriage = e('.marriage')
+	  housing = e('.housing')
+	  birthday = e('.birthday')
+	  currentAddress = e('.current-address')
+	  residencePhone = e('.residence-phone')
+	  mobilePhone = e('.mobile-phone')
+	  email = e('.E-mail')
+	  code = e('.zip-code')
+	  career = e('.career')
+	  unit = e('.unit-industry')
+	  unitName = e('.unit-name')
+	  unitAddress = e('.unit-address')
+	  companyNumber = e('.company-number')
+	  lastyearIncome = e('.lastyear-income')
+	  assetSize = e('.asset-size')
+	  unitPhone = e('.unit-phone')
+	  unitCode = e('.unit-code')
+	  jobsType = e('.jobs-type')
+	  unitTime = e('.unit-time')
+	  lastunitName = e('.lastunit-name')
+	  lastunitTime = e('.lastunit-time')
+	  incomeSource = e('.income-source')
+	  salary = e('.salary')
+	  investment = e('.investment')
+	  rent = e('.rent')
+	  added = e('.added')
+	  supportPeople = e('.support-people')
+	  expenses = e('.expenses').value
+	  communication = e('.communication')
+	  
+	  cname.value = back.id
+	  ename.value = back.id
+}
+
+var initback = {
+		id: '25'
+}
+
+searchExport(initback)
+
+
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {

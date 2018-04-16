@@ -32,4 +32,6 @@ public interface CircuLationRecordSubmitService {
 	 * @return
 	 */
 	public boolean firstTrial(NoteExplain noteexplain);
+	
+	
 }

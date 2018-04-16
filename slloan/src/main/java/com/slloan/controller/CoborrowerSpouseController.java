@@ -58,7 +58,8 @@ public class CoborrowerSpouseController {
 		String mobile_Phone = obj.getString("housePhone"); // 移动电话
 		String monthly_Income =obj.getString("salary");// 月薪（人民币）
 		String start = obj.getString("start");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = obj.getString("catime"); //更新时间
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
+
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type,id_Other,id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,start,ctime);
 		boolean co = coborrowerSpouseService.save(coborrow);// 鎻掑叆瑙掕壊

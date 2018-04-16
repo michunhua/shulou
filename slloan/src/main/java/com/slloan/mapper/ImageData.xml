@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.ImagedataDao">
+	<resultMap type="com.slloan.entity.ImageDataUpdate" id="beanimageData">
+		<result column="filepath" property="filepath" />
+		<result column="note" property="note" />
+		<result column="uploads" property="uploads" />
+		<result column="originalfilename" property="originalfilename" />
+		<result column="uploadtype" property="uploadtype" />
+		<result column="Parentnode" property="Parentnode" />
+		<result column="Subnode" property="Subnode" />
+		<result column="createdata" property="createData" />
+	</resultMap>
+
+<!-- 删除影像 -->
+<delete id="imagedatedel" parameterType="int" >
+	delete from imagedata where id=#{id}
+</delete>
+<insert id="imageDataAdd" parameterType="com.slloan.entity.ImageDataUpdate">
+	insert into imagedata(id,filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata)
+	values(nextval('empno'),#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData})
+</insert>
+<!-- 展示所有 -->
+<select id="list" resultType="com.slloan.entity.ImageDataUpdate">
+	select * from imagedata
+</select>
+<!-- 根据 上传类型 原文件名  上传者姓名查所上传的-->
+<select id="selectUploadsUpdateType"  parameterType="Map" resultType="com.slloan.entity.ImageDataUpdate">
+	select filepath,note,uploads,uploadtype from imagedata 
+	<where>
+		<if test="filepath !='' and filepath !=null">filepath LIKE CONCAT('%',#{filepath},'%')</if>
+		<if test="Parentnode !='' and Parentnode !=null">and Parentnode =#{parentnode}</if>
+		<if test="uploadtype !='' and uploadtype !=null">and uploadtype=#{uploadtype}</if>
+	</where>
+</select>
+</mapper>

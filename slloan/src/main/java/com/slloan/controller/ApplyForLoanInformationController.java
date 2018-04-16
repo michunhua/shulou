@@ -62,8 +62,9 @@ public class ApplyForLoanInformationController {
 		String repayment_Account_Name = obj.getString("repayBank"); // 还款账户名
 		String repayment_Account_Number = obj.getString("repayCcount"); //还款账号
 		String start = obj.getString("start");//状态0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = obj.getString("ctime");//更新时间
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
 
+		
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, borrowing_Variety, repayment,
 				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
 				repayment_Account_Name, repayment_Account_Number,start,ctime);

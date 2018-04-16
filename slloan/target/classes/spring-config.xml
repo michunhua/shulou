@@ -22,24 +22,25 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<!-- 默认编码 -->  
         <property name="defaultEncoding" value="utf-8" />    
         <!-- 文件大小最大值 -->  
-        <property name="maxUploadSize" value="10485760000" />    
+        <property name="maxUploadSize" value="10960" />    
         <!-- 内存中的最大值 -->  
-        <property name="maxInMemorySize" value="40960" />
+<!--         <property name="maxInMemorySize" value="40960" /> -->
 </bean>
 <!-- SpringMVC在超出上传文件限制时，会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->  
     <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的，而且此时还没有进入到Controller方法中 -->  
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+   <!--  <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
         <property name="exceptionMappings">  
             <props>  
-                <!-- 遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/error_fileupload.jsp页面 -->  
-                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">WEB-INF/error/filetype</prop>  
-                <!-- 处理其它异常(包括Controller抛出的) -->  
-<!--                 <prop key="java.lang.Throwable">/WEB-INF/jsp/error/404.html</prop>   -->
+                遇到MaxUploadSizeExceededException异常时，自动跳转到/WEB-INF/error_fileupload.jsp页面  
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/filetype</prop>  
+                  <prop key="org.apache.commons.fileupload.FileUploadBase$SizeLimitExceededException">WEB-INF/jsp/error/filetype/error/500</prop>  
+                处理其它异常(包括Controller抛出的)  
+                <prop key="java.lang.Throwable">/WEB-INF/jsp/error/404.html</prop>  
 					<prop key="java.lang.Throwable">/error/500</prop>  
             </props>  
         </property>  
     </bean> 
     
-<bean class="com.slloan.util.ExceptionHandler"></bean>
+<bean class="com.slloan.util.ExceptionHandler"></bean> -->
 </beans>
  

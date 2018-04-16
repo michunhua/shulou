@@ -176,6 +176,7 @@
             <a href="">贷款创建</a>
             <a href="">借款申请人个人资料</a>
           </span>
+          <div class = 'validate'>注: 带有<span class = 'write'> * </span>必填项</div>
           <hr>
           <form class="layui-form layui-form-pane" action="">
             <div class="layui-form-item">
@@ -183,10 +184,12 @@
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="如 张三" autocomplete="off" class="layui-input ch-name">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">拼音或英文名</label>
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="如 zhangsan" autocomplete="off" class="layui-input en-name">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
@@ -201,6 +204,7 @@
                   <option value="5">其他</option>
                 </select>
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
                 <input type="password" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input">
               </div>
@@ -208,6 +212,7 @@
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">国家或地区</label>
@@ -222,6 +227,7 @@
                   <option value="5">其他</option>
                 </select>
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
                 <input type="password" name="password" required lay-verify="required" placeholder="请输入国家或地区" autocomplete="off" class="layui-input">
               </div>
@@ -233,6 +239,7 @@
                   <option value="1">女</option>
                 </select>
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">本地户籍</label>

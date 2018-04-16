@@ -163,4 +163,9 @@ public class DateUtils {
     	String dateTime = DateUtils.getInDateTime((new Date()));
     	System.out.println("dateTime2222222="+dateTime);
 	}
+    
+ // yyyy-MM-dd HH:mm:ss
+  	public static String getToDateTime(Date date) {
+  		return YYYYMMDDHHMMSS.format(date);
+  	}
 }

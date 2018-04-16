@@ -6,12 +6,12 @@
 		<result column="type" property="type" />
 		<result column="parent_id" property="parent_id" />
 		<result column="name" property="name" />
-		<result column="short" property="shortt" />
+		<result column="shortt" property="shortt" />
 	</resultMap>
 
 	<!-- 登录 -->
 	<select id="getProvinces" resultType="utilcity">
-		Select name,id From  city where parent_id = '' 
+		Select name,id,shortt From  city where parent_id = '' 
 	</select>
 	
 	<select id="getCities" resultType="utilcity" parameterType="String">
