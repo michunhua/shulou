@@ -33,7 +33,7 @@
 		#{note_Description1},#{note_Description2},#{state},#{ctime})
 	</insert> -->
 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
-		INSERT INTO note_Description (
+		INSERT INTO note_description (
 		note_Description1,
 		note_Description2,
 		note_Description3,

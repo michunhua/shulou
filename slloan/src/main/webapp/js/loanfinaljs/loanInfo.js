@@ -16,6 +16,7 @@ var collectData = function() {
   return data
 }
 
+
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
   log('send data method')
@@ -41,6 +42,39 @@ var sendData = function(element) {
     sendAjax(method, url, data, null)
   })
 }
+
+//设置页面数据
+var searchExport = function(back) {
+	amount = e('.amount')
+	term = e('.deadline')
+	unit = e('.unit')
+	variety = e('.variety')
+	repayment = e('.manner')
+	beneficiarybank = e('.bank')
+	bankaccount = e('.account-name')
+	receivingAccount = e('.account')
+	repaymenBtank = e('.repay-bank')
+	repaymentAccount = e('.repay-ccount')
+	accountNumber = e('.reapy-accountbank')
+	  
+	  amount.value = back.id
+	  term.value = back.id
+	  unit.value = back.id
+	  variety.value = back.id
+	  repayment.value = back.id
+	  beneficiarybank.value = back.id
+	  bankaccount.value = back.id
+	  receivingAccount.value = back.id
+	  repaymenBtank.value = back.id
+	  repaymentAccount.value = back.id
+	  accountNumber.value = back.id
+}
+
+var initback = {
+		id: '21'
+}
+
+searchExport(initback)
 
 //查询
 //发送数据方法

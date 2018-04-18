@@ -106,10 +106,164 @@ var cancelBtn = function(element) {
   })
 }
 
+//设置页面数据
+var searchExport = function(back) {
+//	  cname = e('.ch-name')
+//	  ename = e('.en-name')
+//	  paperwork = e('.paperwork-type')
+//	  paperNumb = e('.paperwork-numb')
+//	  country = e('.country')
+//	  gender = e('.gender')
+//	  census = e('.census')
+//	  marriage = e('.marriage')
+//	  housing = e('.housing')
+//	  birthday = e('.birthday')
+//	  currentAddress = e('.current-address')
+//	  residencePhone = e('.residence-phone')
+//	  mobilePhone = e('.mobile-phone')
+//	  email = e('.E-mail')
+//	  code = e('.zip-code')
+//	  career = e('.career')
+//	  unit = e('.unit-industry')
+//	  unitName = e('.unit-name')
+//	  unitAddress = e('.unit-address')
+//	  companyNumber = e('.company-number')
+//	  lastyearIncome = e('.lastyear-income')
+//	  assetSize = e('.asset-size')
+//	  unitPhone = e('.unit-phone')
+//	  unitCode = e('.unit-code')
+//	  jobsType = e('.jobs-type')
+//	  unitTime = e('.unit-time')
+//	  lastunitName = e('.lastunit-name')
+//	  lastunitTime = e('.lastunit-time')
+//	  incomeSource = e('.income-source')
+//	  salary = e('.salary')
+//	  investment = e('.investment')
+//	  rent = e('.rent')
+//	  added = e('.added')
+//	  supportPeople = e('.support-people')
+//	  expenses = e('.expenses').value
+//	  communication = e('.communication')
+//	  
+//	  cname.value = back.id
+//	  ename.value = back.id
+	
+	cname = e('.ch-name')
+	ename = e('.en-name')
+	paperwork = e('.paperwork-type')
+	paperNumb = e('.paperwork-numb')
+	country = e('.country')
+	gender = e('.gender')
+	census = e('.census')
+	marriage = e('.marriage')
+	housing = e('.housing')
+	birthday = e('.birthday')
+	currentAddress = e('.current-address')
+	residencePhone = e('.residence-phone')
+	mobilePhone = e('.mobile-phone')
+	email = e('.E-mail')
+	code = e('.zip-code')
+	career = e('.career')
+	unit = e('.unit-industry')
+	unitName = e('.unit-name')
+	unitAddress = e('.unit-address')
+	companyNumber = e('.company-number')
+	lastyearIncome = e('.lastyear-income')
+	assetSize = e('.asset-size')
+	unitPhone = e('.unit-phone')
+	unitCode = e('.unit-code')
+	jobsType = e('.jobs-type')
+	unitTime = e('.unit-time')
+	lastunitName = e('.lastunit-name')
+	lastunitTime = e('.lastunit-time')
+	incomeSource = e('.income-source')
+	salary = e('.salary')
+	investment = e('.investment')
+	rent = e('.rent')
+	added = e('.added')
+	supportPeople = e('.support-people')
+	expenses = e('.expenses').value
+	communication = e('.communication')
+
+	cname.value = back.name
+	ename.value = back.phoneticize
+	paperwork.value = back.id_type
+	paperNumb.value = back.id_number
+	country.value = back.country_and_region
+	gender.value = back.sex
+	census.value = back.Local_domicile
+	marriage.value = back.marital_status
+	housing.value = back.housing_condition_now
+	birthday.value = back.marital_status
+	currentAddress.value = back.housing_condition_now
+	residencePhone.value = back.birthday
+	mobilePhone.value = back.home_address_now
+	email.value = back.home_phone
+	code.value = back.mobile_phone
+	career.value = back.email
+	unit.value = back.present_address_zip_code
+	unitName.value = back.vocation
+	unitAddress.value = back.unit_industry
+	companyNumber.value = back.uni_name
+	lastyearIncome.value = back.unit_address
+	assetSize.value = back.enterprise_scale
+	unitPhone.value = back.revenue_in_the_previous_year
+	unitCode.value = back.postCode
+	jobsType.value = back.unit_phone
+	unitTime.value = back.postCode
+	lastunitName.value = back.job_category
+	lastunitTime.value = back.seniority
+	incomeSource.value = back.former_unit_name
+	salary.value = back.former_seniority
+	investment.value = back.source_of_income
+	rent.value = back.monthly_income
+	added.value = back.income_from_investment
+	supportPeople.value = back.seniority
+	expenses.value = back.other_income
+	communication.value = back.postal_address
+}
+
+var initback = {
+		id: '25'
+}
+
+//searchExport(initback)
+
+
+//查询
+//发送数据方法
+var searchAjax = function(method, url, datas) {
+log('send data method')
+$.ajax({
+  type: method,
+  url: url,
+  data: {data:JSON.stringify(datas)},
+  success: function(data) {
+  	console.log('返回数据', data)
+  	if(data.msg == 'success') {
+  		searchExport(data.obj)
+  	}
+  }
+})
+}
+
+var searchData = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/jointappli'
+	var data = {}
+	data.id = 1
+	if(data.id) {
+		searchAjax(method, url, data)
+	}
+}
+
+
+
 //
 var __main = function() {
   sendData('#save-data')
   cancelBtn('#cancel')
+  searchData()
 }
 
 __main()

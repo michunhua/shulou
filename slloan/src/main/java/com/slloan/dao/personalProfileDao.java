@@ -31,7 +31,24 @@ public interface personalProfileDao{
 		//查询ID
 		PersonalProfile SelectById(int id);
 
+		//查询ID
+		PersonalProfile SelectToById(int id , String id_number);
+
+		/**
+	     * 分页操作，调用findByPage limit分页方法
+	     * @param map
+	     * @return
+	     */
+	 	public List<PersonalProfile> getPersonalProfilePage(Map<String,Object> map);
+	 	
+	 	/**
+	     * 查询用户记录总数
+	     * @return
+	     */
+	 	int getPersonalProfileCount();
+
+	 	
 	
-		
+
 
 }

@@ -168,13 +168,15 @@
         <!-- 内容主体区域 -->
         <!-- 顶部导航 -->
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item"><a href="">借款申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人个人资料</a></li>
-          <li class="layui-nav-item layui-this"><a href="javascript:;">借款申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">申请借款信息</a></li>
-          <li class="layui-nav-item"><a href="">房产资料</a></li>
-          <li class="layui-nav-item"><a href="">备注说明</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
+           <li class="layui-nav-item"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loannotess">备注说明</a></li>
         </ul>
         <div class="container">
           <!-- 具体页面导航 -->
@@ -183,6 +185,7 @@
             <a href="">贷款终审</a>
             <a href="">借款申请人配偶</a>
           </span>
+          <div class = 'validate'>注: 带有<span class = 'write'> * </span>必填项</div>
           <hr>
           <!-- 页面表单 -->
           <form class="layui-form layui-form-pane" action="">
@@ -191,11 +194,12 @@
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="请输入中文名称" autocomplete="off" class="layui-input ch-name">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="paperwork-type">
+                <select name="city" lay-verify="required" class="paperwork-type certificate">
                   <option value=""></option>
                   <option value="0">北京</option>
                   <option value="1">上海</option>
@@ -205,22 +209,26 @@
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input">
+                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input certificate-type">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现单位名称</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="太阳系舰队" autocomplete="off" class="layui-input unit-name">
+                <input type="text" name="title" required  lay-verify="required" placeholder="太阳系舰队" autocomplete="off" class="layui-input until-name">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">单位电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input unit-phone">
+                <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input until-phone">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">住宅电话</label>
@@ -229,22 +237,24 @@
               </div>
               <label class="layui-form-label">移动电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="185 7733 9527" autocomplete="off" class="layui-input mobie-phone">
+                <input type="text" name="title" required  lay-verify="required" placeholder="185 7733 9527" autocomplete="off" class="layui-input mobile-phone">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">月薪</label>
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input salary">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
-            <div class="layui-form-item">
+          </form>
+           <div class="layui-form-item">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">取消</button>
               </div>
             </div>
-          </form>
         </div>
     </div>
 

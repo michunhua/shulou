@@ -5,10 +5,10 @@ var collectData = function() {
   data.cname = e('.ch-name').value
   data.paperwork = e('.paperwork-type').value
   data.paperNumb = e('.paperwork-numb').value
-  data.unitName = e('.unit-name').value
-  data.unitPhone = e('.unit-phone').value
+  data.unitName = e('.until-name').value
+  data.unitPhone = e('.until-phone').value
   data.residencePhone = e('.residence-phone').value
-  data.mobiePhone = e('.mobie-phone').value
+  data.mobiePhone = e('.mobile-phone').value
   data.salary = e('.salary').value
   return data
 }
@@ -38,6 +38,35 @@ var sendData = function(element) {
     sendAjax(method, url, data, null)
   })
 }
+
+//设置页面数据
+var searchExport = function(back) {
+	  cname = e('.ch-name')
+	  certificate = e('.certificate')
+	  certificateType = e('.certificate-type')
+	  document = e('.document-number')
+	  untilName = e('.until-name')
+	  untilPhone = e('.until-phone')
+	  residence = e('.residence-phone')
+	  mobile = e('.mobile-phone')
+	  salary = e('.salary')
+	  
+	  cname.value = back.id
+	  certificate.value = back.id
+	  certificateType.value = back.id
+	  document.value = back.id
+	  untilName.value = back.id
+	  untilPhone.value = back.id
+	  residence.value = back.id
+	  mobile.value = back.id
+	  salary.value = back.id
+}
+
+var initback = {
+		id: '23'
+}
+
+searchExport(initback)
 
 //查询
 //发送数据方法

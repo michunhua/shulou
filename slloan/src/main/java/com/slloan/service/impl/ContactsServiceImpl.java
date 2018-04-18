@@ -34,7 +34,7 @@ public class ContactsServiceImpl implements ContactsService {
 		String relationship1=con.getRelationship1();
 		String relationship2=con.getRelationship2();
 		String c_Telephone=con.getC_Telephone();
-		String c_Telephone1=con.getContacts1();
+		String c_Telephone1=con.getC_Telephone1();
 		String c_Telephone2=con.getC_Telephone2();
 		String state =con.getstate();
 		String ctime = con.toString();

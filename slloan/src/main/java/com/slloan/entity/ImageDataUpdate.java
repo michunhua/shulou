@@ -19,8 +19,9 @@ public class ImageDataUpdate implements Serializable{
  private String createData;//创建日期
  
  
- public ImageDataUpdate(String filepath, String parentnode, String uploadtype) {
+ public ImageDataUpdate(int id,String originalfilename, String parentnode, String uploadtype) {
 	super();
+	this.id = id;
 	this.filepath = filepath;
 	this.uploadtype = uploadtype;
 	Parentnode = parentnode;

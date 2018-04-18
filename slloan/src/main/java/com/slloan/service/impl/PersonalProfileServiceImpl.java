@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.slloan.dao.coborrowerSpouseDao;
 import com.slloan.dao.personalProfileDao;
+import com.slloan.entity.AddRole;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.Page;
@@ -95,9 +96,64 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		return personalProfiledao.SelectById(id);
 	}
 
+	@Override
+	public PersonalProfile SelectToById(int id, String id_number) {
+		// TODO Auto-generated method stub
+		return personalProfiledao.SelectToById(id,id_number);
 
+	}
 
+	@Override
+	public Page<PersonalProfile> getPersonalProfilePage(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		//封装当前页数
+		pageBean.setCurrPage(currentPage);
+		//每页显示的数据
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		//封装总记录数
+		int totalCount = personalProfiledao.getPersonalProfileCount();
+		pageBean.setTotalCount(totalCount);
+		//封装总页数
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		//封装每页显示的数据
+		List<PersonalProfile> lists = personalProfiledao.getPersonalProfilePage(map); 
+		pageBean.setLists(lists);
+		return pageBean;
+}
 
+	@Override
+	public int getPersonalProfileCount() {
+		return personalProfiledao.getPersonalProfileCount();
+	}
 
+//	@Override
+//	public Page<PersonalProfile> getLoanPage(int currentPage) {
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		Page<AddRole> pageBean = new Page<AddRole>();
+//		//封装当前页数
+//		pageBean.setCurrPage(currentPage);
+//		//每页显示的数据
+//		int pageSize = 10;
+//		pageBean.setPageSize(pageSize);
+//		//封装总记录数
+//		int totalCount = roleAddDao.getRoleCount();
+//		pageBean.setTotalCount(totalCount);
+//		//封装总页数
+//		double tc = totalCount;
+//		Double num = Math.ceil(tc/pageSize);//向上取整
+//		pageBean.setTotalPage(num.intValue());
+//		map.put("page", (currentPage-1)*pageSize);
+//		map.put("limit", pageBean.getPageSize());
+//		//封装每页显示的数据
+//		List<AddRole> lists = roleAddDao.getRolePage(map);
+//		pageBean.setLists(lists);
+//			return pageBean;
+//	}
 
 }

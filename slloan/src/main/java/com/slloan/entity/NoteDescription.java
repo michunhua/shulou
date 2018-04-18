@@ -76,4 +76,8 @@ public class NoteDescription {
 		this.state = state;
 		this.ctime = ctime;
 	}
+	
+	public NoteDescription(){
+		
+	}
 }

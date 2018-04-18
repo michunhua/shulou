@@ -22,6 +22,7 @@ import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.Firstfilla;
 import com.slloan.entity.JointApplicant;
+import com.slloan.entity.NoteDescription;
 import com.slloan.entity.NoteExplain;
 import com.slloan.entity.PersonalProfile;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
@@ -54,6 +55,10 @@ public class JointApplicantController {
 
 	@Autowired
 	private CircuLationRecordSubmitService recordSubmitService;
+	
+	
+	@Autowired
+	private CoborrowerSpouseService notedesc;
 
 	@ResponseBody
 	@RequestMapping(value = "/commonApplydata")
@@ -274,6 +279,9 @@ public class JointApplicantController {
 	// return JSON.toJSONString(isReslt);
 	// }
 	// }
+	
+	
+	
 
 	/**
 	 * 贷款创建列表
@@ -389,19 +397,12 @@ public class JointApplicantController {
 	 */
 	@RequestMapping(value = "/loannotFallback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	public String loannotesFallback(HttpServletRequest req, HttpServletResponse response) {
-		// try {
-		// String id = req.getParameter("id");
-		// int reqid = Integer.parseInt(id);
-		// PersonalProfile contacts = personalprofileservice.SelectById(reqid);
-		//
-		// if(contacts !=null){
+		
 		CircuLationRecord circuLationRecord = new CircuLationRecord();
-		circuLationRecord.setState(1);// 退回后状态改为1
+		circuLationRecord.setState(0);// 退回后状态改为1
 		String createDate = DateUtils.getInDateTime((new Date()));
 		circuLationRecord.setCreateDate(createDate);
 		circuLationRecord.setFallbackname("退回到按揭员------------------>");
-		// CircuLationRecord record = new
-		// CircuLationRecord(circuLationRecord,submit,stateid,spare1,createDate);
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if (isResultInsert == true) {
 			System.out.println("插入流程表成功");
@@ -409,11 +410,31 @@ public class JointApplicantController {
 			System.out.println("失败");
 		}
 		return "loanfirst/loanFirstTable";
-		// }
 
-		// } catch (Exception e) {
-		// System.out.println("");
-		// }
+
+	}
+	
+	/**
+	 * 贷款终审备注回退
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loannotllback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	public String FallbackFirst(HttpServletRequest req, HttpServletResponse response) {
+		
+		CircuLationRecord circuLationRecord = new CircuLationRecord();
+		circuLationRecord.setState(1);// 退回后状态改为1
+		String createDate = DateUtils.getInDateTime((new Date()));
+		circuLationRecord.setCreateDate(createDate);
+		circuLationRecord.setFallbackname("退回到初审------------------>");
+		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+		if (isResultInsert == true) {
+			System.out.println("插入流程表成功");
+		} else {
+			System.out.println("失败");
+		}
+		return "loanfirst/loanFirstTable";
+
 
 	}
 
@@ -422,16 +443,14 @@ public class JointApplicantController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.POST)
+	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET)
 	public String loannotesSubmit(HttpServletRequest req) {
 
 		CircuLationRecord circuLationRecord = new CircuLationRecord();
 		circuLationRecord.setState(2);// 退回后状态改为1
 		String createDate = DateUtils.getInDateTime((new Date()));
 		circuLationRecord.setCreateDate(createDate);
-		circuLationRecord.setFallbackname("提交到贷款终审------------------>");
-		// CircuLationRecord record = new
-		// CircuLationRecord(circuLationRecord,submit,stateid,spare1,createDate);
+		circuLationRecord.setFallbackname("提交到贷款初审------------------>");
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if (isResultInsert == true) {
 			System.out.println("插入流程表成功");
@@ -444,28 +463,28 @@ public class JointApplicantController {
 	
 	
 	/**
-	 * 贷款创建备注提交到贷款初审
+	 * 贷款初审备注提交到贷款终审
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/loannotfirst", method = RequestMethod.GET)
-	public String loannotesFirst(HttpServletRequest req) {
+	@RequestMapping(value = "/loannotfile", method = RequestMethod.GET)
+	public String loannotesFile(HttpServletRequest req) {
 
-		Firstfilla firstfilla = new Firstfilla(null, null, 0, null, null);
-		firstfilla.setState(1);// 提交后后状态改为1
+		CircuLationRecord circuLationRecord = new CircuLationRecord();
+		circuLationRecord.setState(3);// 退回后状态改为1
 		String createDate = DateUtils.getInDateTime((new Date()));
-		firstfilla.setCreateDate(createDate);
-		firstfilla.setFirstname("提交到贷款初审------------------>");
-		boolean isResultInsert = recordSubmitService.firstName(firstfilla);
+		circuLationRecord.setCreateDate(createDate);
+		circuLationRecord.setFallbackname("贷款终审跳转财务------------------>");
+		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if (isResultInsert == true) {
 			System.out.println("插入流程表成功");
 		} else {
 			System.out.println("失败");
 		}
 
-		return "loanfirst/loanFirstTable";// 提交到贷款初审
+		return "financeApproval/financeApproval";// 提交到贷款终审
 	}
-
+	
 //	/**
 //	 * 贷款初审备注说明保存
 //	 * 

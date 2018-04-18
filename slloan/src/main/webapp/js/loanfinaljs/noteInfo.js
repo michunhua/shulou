@@ -35,6 +35,23 @@ var sendData = function(element) {
   })
 }
 
+//设置页面数据
+var searchExport = function(back) {
+	recordNote = e('.note')
+	recordFirst = e('.first-trial')
+	
+	recordNote.value = back.id
+	recordFirst.value = back.id
+}
+
+var initback = {
+		id: '17'
+}
+
+searchExport(initback)
+
+
+
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
@@ -66,6 +83,7 @@ var searchData = function() {
 var __main = function() {
   log( "run")
   sendData('#save-note')
+  searchData()
 }
 
 __main()

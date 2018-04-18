@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,10 +43,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.slloan.entity.ImageDataUpdate;
+
+import com.slloan.entity.ResultList;
 import com.slloan.service.inter.ImagedataService;
+
 import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 //import com.slloan.util.ZipUtil1;
+
+import net.sf.json.JSONObject;
 
 /**
  * 文件上传到FTP
@@ -102,12 +108,15 @@ public class UpdateFTPController{
      */
     @RequestMapping(value = "/imagedatafileupload",method=RequestMethod.POST)
     @ResponseBody
+    @ExceptionHandler(value = Exception.class)
 	  	public Json imagedatafile(@RequestParam(value="file",required=false)MultipartFile[] tmpfile,
 	  			final HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException{
     	final String note = req.getParameter("note");//备注
     	final String upload_type = req.getParameter("upload_type");//上传类型
     	final	String filepath = req.getParameter("filepath");
     	final	String city = req.getParameter("city");
+    	ResultList<Object> pageBean = new ResultList<Object>();//返回权限集合
+    	List<Object> li = new ArrayList<Object>();
 //    	final String shenqingbiao_image = "imagedatafile/shenqingbiao_image";
 //   	 	final String shenfenzheng_image = "imagedatafile/shenfenzheng_image";
 //   	 final String fangchanzheng_image = "imagedatafile/fangchanzheng_image";
@@ -238,9 +247,9 @@ public class UpdateFTPController{
                      	}
                      	if(upload_type.equals("其他类")&& requestsize >0){
                      		System.out.println("其他类");
-                     		if (!ftp.changeWorkingDirectory("qita_image"+File.separator+city)) {
-             	                ftp.makeDirectory("qita_image"+File.separator+city);//创建目录
-             	                ftp.changeWorkingDirectory("loan"+File.separator+"qita_image"+File.separator+city);//跳转目录(可根据项目需求选择创建目录的多少)
+                     		if (!ftp.changeWorkingDirectory("qita_image")) {
+             	                ftp.makeDirectory("qita_image");//创建目录
+             	                ftp.changeWorkingDirectory("qita_image");//跳转目录(可根据项目需求选择创建目录的多少)
              	            }
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
@@ -296,13 +305,15 @@ public class UpdateFTPController{
           	          boolean isResult =  ftp.storeFile(targetFileName, input);
           	          if(isResult ==  true){
           	        	 System.err.println("上传成功");
+          	        	li.add(isResult);
+          	        	pageBean.setLists(li);
           	        	  input.close();
           	        	  ftp.logout();
-          	        	  return new Json(true,"success",isResult,"上传成功");
+          	        	  return new Json(true,"success",pageBean,"上传成功");
           	        	  
           	          }else{
           	        	  System.err.println("上传失败！"); 
-          	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
+          	        	  return new Json(false,"fail",pageBean,"请选择上传文件类型jpg,png,jpge,bmp,png");
           	          }
          	 		}
 //	     	         getPhont(origFileName);
@@ -313,7 +324,14 @@ public class UpdateFTPController{
     	            
 //    	            
     	        } catch (IOException e) {
-    	            e.printStackTrace();
+//    	        	 res.encodeRedirectURL("file");
+//    	        	 li.add("连接异常");
+//    	        	 pageBean.setLists(li);
+//    	            e.getStackTrace();
+//    	            return "redirect:/welcome.jsp";
+//    	            throw new BusinessException(10, "该异常代表用户信息不完整");
+    	            return new Json(false,"fail",e.getMessage(),"连接异常");
+    	           
     	        } finally {
     	            if (ftp.isConnected()) {
     	                try {
@@ -329,7 +347,7 @@ public class UpdateFTPController{
 //		return null;
 		return null;
 }
-    //获取上传文件大小
+	//获取上传文件大小
     public void setMaxSize(long maxSize){
 		this.maxSize =maxSize;
 	}
@@ -561,10 +579,14 @@ public class UpdateFTPController{
     @RequestMapping(value="/selectfiletype",method=RequestMethod.GET)
     @ResponseBody
     public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
-    	String originalfilename = req.getParameter("filepath");
-    	String note = req.getParameter("Parentnode");
-    	String uploadtype = req.getParameter("uploadtype");
-    	ImageDataUpdate imagedata = new ImageDataUpdate(originalfilename,note,uploadtype);
+    	String data = req.getParameter("data");
+    	JSONObject jsonobj = new JSONObject().fromObject(data);
+    	String originalfilename = jsonobj.getString("file");//原文件名
+    	String parentnode = jsonobj.getString("city");
+    	String uploadtype = jsonobj.getString("upload_type");
+    	String id = jsonobj.getString("id");
+    	int zid = Integer.parseInt(id);
+    	ImageDataUpdate imagedata = new ImageDataUpdate(zid,originalfilename,parentnode,uploadtype);
     List<ImageDataUpdate> listimg= imagedataservice.selectUploadsUpdateType(imagedata);
     	if(listimg.size()> 0){
     		return new Json(true,"success",listimg);

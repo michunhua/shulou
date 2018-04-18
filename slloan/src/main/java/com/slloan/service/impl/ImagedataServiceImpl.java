@@ -54,9 +54,10 @@ public class ImagedataServiceImpl implements ImagedataService {
 	@Override
 	public List<ImageDataUpdate> selectUploadsUpdateType(ImageDataUpdate param) {
 		Map<String,Object> mapparam = new HashMap<String,Object>();
-			mapparam.put("filepath", param.getOriginalfilename());
-			mapparam.put("parentnode", param.getNote());
-			mapparam.put("uploadtype",param.getUploadtype());
+			mapparam.put("file", param.getOriginalfilename());
+			mapparam.put("city", param.getNote());
+			mapparam.put("upload_type",param.getUploadtype());
+			mapparam.put("id",param.getUploadtype());
 		return imagedatadao.selectUploadsUpdateType(mapparam);
 	}
 

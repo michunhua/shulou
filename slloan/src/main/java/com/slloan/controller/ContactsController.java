@@ -43,19 +43,19 @@ public class ContactsController {
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 		
-		String contacts = obj.getString("linkfName"); // 共同借款人配偶姓名戦
-		String contacts1 = obj.getString("linksName"); //身份证件类型
-		String contacts2 =obj.getString("linksName"); // 身份证件号码
-		String relationship = obj.getString("linkfRelationship"); // 工作单位名称
-		String relationship1 =obj.getString("linksRelationship");// 单位电话
-		String relationship2 =obj.getString("linksRelationship"); // 住宅电话
-		String c_Telephone = obj.getString("linkfPhone"); // 移动电话
-		String c_Telephone1 =obj.getString("linkfPhone");// 月薪（人民币）
-		String c_Telephone2= obj.getString("linkfPhone");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String contacts = obj.getString("contacts"); // 共同借款人配偶姓名戦
+		String contacts1 = obj.getString("contacts1"); //身份证件类型
+		String contacts2 =obj.getString("contacts2"); // 身份证件号码
+		String relationship = obj.getString("relationship"); // 工作单位名称
+		String relationship1 =obj.getString("relationship1");// 单位电话
+		String relationship2 =obj.getString("relationship2"); // 住宅电话
+		String c_Telephone = obj.getString("c_Telephone"); // 移动电话
+		String c_Telephone1 =obj.getString("c_Telephone1");// 月薪（人民币）
+		String c_Telephone2= obj.getString("c_Telephone2");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String state = obj.getString("state");
-		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		String ctime = obj.getString("ctime");//日期
 
-		Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, ctime, ctime);
+		Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean coan = contactsservice.save(coa);// 鎻掑叆瑙掕壊
 		
 		if (coan == true) {
@@ -78,7 +78,7 @@ public class ContactsController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="/sssss",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/contactss",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req){
 		
@@ -142,7 +142,7 @@ public class ContactsController {
 		String c_Telephone1=json.getString("linkfPhone");//联系人电话
 		String c_Telephone2=json.getString("linkfPhone");//联系人电话
 		String state=json.getString("state");
-		String ctime=DateUtils.getInDateTime((new Date()));
+		String ctime=json.getString("ctime");
 		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
 		if(isResult == true){

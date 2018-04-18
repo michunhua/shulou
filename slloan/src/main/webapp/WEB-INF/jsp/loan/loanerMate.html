@@ -17,7 +17,7 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <span>admin</span>
+                    <span id = 'username'>admin</span>
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -176,6 +176,7 @@
             <a href="">贷款创建</a>
             <a href="">借款申请人配偶</a>
           </span>
+          <div class = 'validate'>注: 带有<span class = 'write'> * </span>必填项</div>
           <hr>
           <!-- 表单部分 -->
           <form class="layui-form layui-form-pane" action="">
@@ -184,6 +185,7 @@
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="请输入中文名称" autocomplete="off" class="layui-input ch-name">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
@@ -197,23 +199,27 @@
                   <option value="4">杭州</option>
                 </select>
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input">
+                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input document-number">
               </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现单位名称</label>
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="太阳系舰队" autocomplete="off" class="layui-input unit-name">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">单位电话</label>
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input unit-phone">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">住宅电话</label>
@@ -224,12 +230,14 @@
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="185 7733 9527" autocomplete="off" class="layui-input mobie-phone">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">月薪</label>
               <div class="layui-input-inline">
                 <input type="text" name="title" required  lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input salary">
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
 
           </form>

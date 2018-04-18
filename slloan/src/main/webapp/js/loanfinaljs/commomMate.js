@@ -6,42 +6,13 @@ var collectData = function() {
   data.a = new Date()
   data.b = 'b'
   data.cname = e('.ch-name').value
-  // data.ename = e('.en-name').value
   data.paperwork = e('.paperwork-type').value
   data.paperNumb = e('.paperwork-numb').value
-  // data.country = e('.country').value
-  // data.gender = e('.gender').value
-  // data.census = e('.census').value
-  // data.marriage = e('.marriage').value
-  // data.housing = e('.housing').value
-  // data.birthday = e('.birthday').value
-  // data.currentAddress = e('.current-address').value
-  // data.residencePhone = e('.residence-phone').value
   data.mobilePhone = e('.mobile-phone').value
-  // data.email = e('.E-mail').value
-  // data.code = e('.zip-code').value
-  // data.career = e('.career').value
-  // data.unit = e('.unit-industry').value
   data.unitName = e('.unit-name').value
-  // data.unitAddress = e('.unit-address').value
-  // data.companyNumber = e('.company-number').value
-  // data.lastyearIncome = e('.lastyear-income').value
-  // data.assetSize = e('.asset-size').value
   data.unitPhone = e('.unit-phone').value
   data.housePhone = e('.house-phone').value
-  // data.unitCode = e('.unit-code').value
-  // data.jobsType = e('.jobs-type').value
-  // data.unitTime = e('.unit-time').value
-  // data.lastunitName = e('.lastunit-name').value
-  // data.lastunitTime = e('.lastunit-time').value
-  // data.incomeSource = e('.income-source').value
   data.salary = e('.salary').value
-  // data.investment = e('.investment').value
-  // data.rent = e('.rent').value
-  // data.added = e('.added').value
-  // data.supportPeople = e('.support-people').value
-  // data.expenses = e('.expenses').value
-  // data.communication = e('.communication').value
   return data
 }
 
@@ -65,27 +36,58 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/save.do'
+    var url = '/slloan/loan/save'
     log(data)
     sendAjax(method, url, data, null)
   })
 }
 
-//查询
-//发送数据方法
-var searchAjax = function(method, url, datas) {
-log('send data method')
-$.ajax({
-type: method,
-url: url,
-data: {data:JSON.stringify(datas)},
-success: function(data) {
-	console.log('返回数据', data)
-	if(data.msg == 'success') {
-		
-	}
+//设置页面数据
+var searchExport = function(back) {
+	  cname = e('.ch-name')
+	  certificate = e('.certificate')
+	  certificateType = e('.certificate-type')
+	  document = e('.document-number')
+	  untilName = e('.unit-name')
+	  untilPhone = e('.unit-phone')
+	  residence = e('.house-phone')
+	  mobile = e('.mobile-phone')
+	  salary = e('.salary')
+	  
+	  cname.value = back.id
+	  certificate.value = back.id
+	  certificateType.value = back.id
+	  document.value = back.id
+	  untilName.value = back.id
+	  untilPhone.value = back.id
+	  residence.value = back.id
+	  mobile.value = back.id
+	  salary.value = back.id
 }
-})
+
+var initback = {
+		id: '23'
+}
+
+searchExport(initback)
+
+// 查询
+// 发送数据方法
+var searchAjax = function(method, url, datas) {
+	log('send data method')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+
+			}
+		}
+	})
 }
 
 var searchData = function() {

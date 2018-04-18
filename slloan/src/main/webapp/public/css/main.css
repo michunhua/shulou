@@ -17,3 +17,14 @@
 	color: red !important;	
 }
 
+.mark {
+	color: #009688 !important;
+	text-decoration: underline !important;
+}
+
+label.error {
+	color: red !important;
+}
+input.error { 
+	border: 1px solid red !important; 
+	}

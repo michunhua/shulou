@@ -47,7 +47,7 @@ public class PersonalProfileController {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
-		String product_Number = obj.getString("aac");
+		 String product_Number = obj.getString("abc");
 		 String name=obj.getString("cname");  // 共同借款人姓名
 		 String phoneticize=obj.getString("ename");  // 拼音、英文姓名
 		 String id_type=obj.getString("paperwork");  // 身份证件类型
@@ -133,7 +133,12 @@ public class PersonalProfileController {
 		}
 
 	}
-
+	
+/**
+ * 初审查询Id
+ * @param req
+ * @return
+ */
 	@RequestMapping(value = "/personalp", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req) {
@@ -149,7 +154,7 @@ public class PersonalProfileController {
 	}
 
 	/**
-	 * 借款申请人个人资料
+	 * 初审借款申请人个人资料
 	 * 
 	 * @param req
 	 * @param contactsparam
@@ -244,6 +249,142 @@ public class PersonalProfileController {
 			return new Json(false, "fail", isResult);
 		}
 	}
+
+	/**
+	 * 终审申请人个人资料
+	 * 
+	 * @param req
+	 * @param contactsparam
+	 * @return
+	 */
+	@RequestMapping(value = "/perupdates", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateads(HttpServletRequest req) {
+
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String product_Number = json.getString("aac");
+		 String name=json.getString("cname");  // 共同借款人姓名
+		 String phoneticize=json.getString("ename");  // 拼音、英文姓名
+		 String id_type=json.getString("paperwork");  // 身份证件类型
+		 String id_number=json.getString("paperNumb"); // 身份证件号码
+		 String relationship_with_borrower=json.getString("country"); // 与借款人关系
+		 String country_and_region=json.getString("gender");  // 国家及地区
+		 String sex=json.getString("gender");  // 性别: 0男 1女
+		 String Local_domicile=json.getString("census");  // 本地户籍
+		 String household_registration=json.getString("census");  // 户籍所在地
+		 String marital_status=json.getString("marriage");  // 婚姻情况0已婚，1未婚
+		 String housing_condition_now=json.getString("housing");  // 0房改/继承 1按揭自置2无按揭自置 3与父母同住 4租借// 5公司提供 6其他
+		 String birthday=json.getString("birthday");  // 出生日期
+		 String home_address_now=json.getString("currentAddress");  // 现住房地址
+		 String home_phone=json.getString("residencePhone");  // 住宅电话
+		 String mobile_phone=json.getString("mobilePhone");  // 移动电话
+		 String email=json.getString("email");  // E-mail
+		 String present_address_zip_code=json.getString("code");  // 现住址邮编
+		 String vocation=json.getString("career");  // 职业
+		 String unit_industry=json.getString("unit");  // 现单位所处行业
+		 String uni_name=json.getString("unitName");  // 现单位名称
+		 String unit_address=json.getString("unitAddress");  // 现单位地址
+		 String enterprise_scale=json.getString("assetSize");  // 就职企业规模
+		 String unitPhone=json.getString("lastyearIncome"); //上年营收
+		 String asset_scale=json.getString("unitCode");  // 资产规模
+		 String unit_phone=json.getString("unitPhone");  // 单位电话
+		 String postCode=json.getString("unitCode");  // 单位邮编
+		 String job_category=json.getString("jobsType");  // 职位类别
+		 String seniority=json.getString("unitTime");  // 现单位工龄
+		 String former_unit_name=json.getString("lastunitName");  // 前单位名称
+		 String former_seniority=json.getString("lastunitTime");  // 前单位工龄
+		 String source_of_income=json.getString("incomeSource");  // 收入来源
+		 String rent = json.getString("salary");  // 月收入
+		 String added =json.getString("investment");// 投资收益
+		 String supportPeople =json.getString("rent");// 租金收入
+		 String expenses =json.getString("added");// 其他收入
+		 String family_number=json.getString("supportPeople");  // 供养人数
+//		 double monthly_expenditure = Double.valueOf(json.getString("a"));// 月支出
+		 String mon = json.getString("expenses");// 月支出
+		 String postal_address=json.getString("communication");  // 通讯地址
+		 String state=json.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		 String ctime=json.getString("ctime");//日期
+	    
+		Double Revenue_in_the_previous_year = 0.0;
+		if (unit_phone.length() > 0) {
+			Revenue_in_the_previous_year = Double.parseDouble(unit_phone);
+		}
+		Double monthly_income = 0.0;
+		if (rent.length() > 0) {
+			monthly_income = Double.parseDouble(rent);
+		}
+		Double Income_from_investment = 0.0;
+		if (added.length() > 0) {
+			monthly_income = Double.parseDouble(added);
+		}
+		Double Rent_income = 0.0;
+		if (supportPeople.length() > 0) {
+			monthly_income = Double.parseDouble(supportPeople);
+		}
+		Double Other_income = 0.0;
+		if (expenses.length() > 0) {
+			monthly_income = Double.parseDouble(expenses);
+		}
+		Double monthly_expenditure = 0.0;
+		if (mon.length() > 0) {
+			monthly_income = Double.parseDouble(mon);
+		}
+
+		PersonalProfile jointss = new PersonalProfile(product_Number,name, phoneticize, id_type, id_number, relationship_with_borrower,
+				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
+				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
+				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
+				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
+				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
+				postal_address, state, ctime);
+		boolean isResult = personalprofileservice.perupdate(jointss);
+		if (isResult == true) {
+			return new Json(true, "success", isResult);
+		} else {
+			return new Json(false, "fail", isResult);
+		}
+	}
+
+	
+	/**
+	 * 终审查询Id
+	 * @param req
+	 * @return
+	 */
+		@RequestMapping(value = "/personalps", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+		@ResponseBody
+		public Json UserSelectByIds(HttpServletRequest req) {
+			String dataid = req.getParameter("data");
+			JSONObject json = new JSONObject().fromObject(dataid);
+			String uid = json.getString("id");
+			int id = Integer.parseInt(uid);
+			PersonalProfile isResult = personalprofileservice.SelectById(id);
+			if (isResult != null) {
+				return new Json(true, "success", isResult);
+			} else
+				return new Json(false, "fail", isResult);
+		}
+		
+		
+		/**
+		 *  创建借款人列表
+		 * @return json
+		 */
+		@RequestMapping(value="/rolemanagement",method = RequestMethod.GET,produces="application/json;charset=utf-8")
+		@ResponseBody
+		public String rolemanagement(HttpServletRequest req){
+			String page = req.getParameter("page");
+			String limit = req.getParameter("limit");
+			int startPos= Integer.parseInt(page);
+			int pageSize = Integer.parseInt(limit);
+			System.out.println(page);
+			System.out.println(limit);//startPos, int pageSize
+//			roleAddService.getRolePage(startPos);
+			//JSON.toJSONString(user)
+			return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
+		}
 
 	/**
 	 * 申请人资料

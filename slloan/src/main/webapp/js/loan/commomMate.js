@@ -23,7 +23,6 @@ var collectData = function() {
 	// 固定值
 	data.cname = e('.ch-name').value
 	data.paperwork = e('.paperwork-type').value
-
 	data.paperNumb = e('.paperwork-numb').value
 	data.mobilePhone = e('.mobile-phone').value
 	data.unitName = e('.unit-name').value
@@ -32,7 +31,7 @@ var collectData = function() {
 	data.salary = e('.salary').value
 	data.state = 'a'
 	data.catime = 'b'
-	data.other = 'c'
+	data.other = e('.document-number').value
 	return data
 }
 
@@ -79,10 +78,67 @@ var cancelBtn = function(element) {
 	})
 }
 
+//设置页面数据
+var searchExport = function(back) {
+	  cname = e('.ch-name')
+	  certificate = e('.paperwork-type')
+	  document = e('.document-number')
+	  certificateType = e('.paperwork-numb')
+	  mobile = e('.mobile-phone')
+	  untilName = e('.unit-name')
+	  untilPhone = e('.unit-phone')
+	  residence = e('.house-phone')
+	  salary = e('.salary')
+	  
+	  cname.value = back.name
+	  certificate.value = back.id
+	  document.value = back.id_Number
+	  certificateType.value = back.id_Number
+	  untilName.value = back.unit_Phone
+	  untilPhone.value = back.home_Phone
+	  residence.value = back.mobile_Phone
+	  mobile.value = back.uni_Name
+	  salary.value = back.monthly_Income
+}
+
+var initback = {
+		id: '23'
+}
+
+//searchExport(initback)
+
+//查询
+//发送数据方法
+var searchAjax = function(method, url, datas) {
+log('send data method')
+$.ajax({
+type: method,
+url: url,
+data: {data:JSON.stringify(datas)},
+success: function(data) {
+	console.log('返回数据', data)
+	if(data.msg == 'success') {
+		searchExport(data.obj)
+	}
+}
+})
+}
+
+var searchData = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/coborrowers'
+	var data = {}
+	data.id = 1
+	if(data.id) {
+		searchAjax(method, url, data)
+	}
+}
+
 //
 var __main = function() {
 	sendData('#save-coMate')
 	cancelBtn('#cancel')
+	searchData()
 }
 
 __main()

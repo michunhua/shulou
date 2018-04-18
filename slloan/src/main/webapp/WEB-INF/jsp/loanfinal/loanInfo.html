@@ -167,15 +167,15 @@
         <!-- 内容主体区域 -->
         <!-- 头部导航 -->
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item"><a href="">借款申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="javascript:;">借款申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人配偶</a></li>
-          <li class="layui-nav-item layui-this"><a href="">申请借款信息</a></li>
-          <li class="layui-nav-item"><a href="">房产资料</a></li>
-          <li class="layui-nav-item"><a href="">影像资料</a></li>
-          <li class="layui-nav-item"><a href="">联系人信息</a></li>
-          <li class="layui-nav-item"><a href="">备注说明</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loannotess">备注说明</a></li>
         </ul>
         <div class="container">
           <!-- 具体页面导航 -->
@@ -184,6 +184,7 @@
             <a href="">贷款终审</a>
             <a href="">申请借款信息</a>
           </span>
+          <div class = 'validate'>注: 带有<span class = 'write'> * </span>必填项</div>
           <hr>
           <!-- 页面内容区域 -->
           <form class="layui-form layui-form-pane" action="">
@@ -193,6 +194,7 @@
                 <input type="text" name="password" lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input amount">
               </div>
               <div class="layui-form-mid layui-word-aux">万元</div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">期限</label>
@@ -207,6 +209,7 @@
                     <option value="2">年</option>
                   </select>
               </div>
+              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -216,6 +219,7 @@
                       <option value="0">赎楼</option>
                     </select>
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
                 <div class="layui-inline">
                   <label class="layui-form-label">还款方式</label>
                   <div class="layui-input-inline">
@@ -224,6 +228,7 @@
                       <option value="1" selected="">到期一次性还本付息</option>
                     </select>
                   </div>
+                  <div class="layui-form-mid layui-word-aux write"> * </div>
                 </div>
               </div>
             </div>
@@ -233,18 +238,21 @@
                 <div class="layui-input-inline">
                   <input type="text" name="date" id="dates" autocomplete="off" class="layui-input bank">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">银行账户名</label>
                 <div class="layui-input-inline">
                   <input type="text" name="number" autocomplete="off" class="layui-input account-name">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">收款账号</label>
                 <div class="layui-input-inline">
                   <input type="text" name="number" autocomplete="off" class="layui-input account">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
             <div class="layui-form-item">
@@ -253,27 +261,30 @@
                 <div class="layui-input-inline">
                   <input type="text" name="date" id="date1" autocomplete="off" class="layui-input repay-bank">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">还款账户名</label>
                 <div class="layui-input-inline">
                   <input type="text" name="number" autocomplete="off" class="layui-input repay-ccount">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">还款账号</label>
                 <div class="layui-input-inline">
                   <input type="text" name="number" autocomplete="off" class="layui-input reapy-accountbank">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
-            <div class="layui-form-item">
+          </form>
+          <div class="layui-form-item">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-loaner'>保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary">取消</button>
               </div>
-            </div>
-          </form>
+         </div>
         </div>
     </div>
 

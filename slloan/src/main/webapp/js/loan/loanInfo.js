@@ -81,11 +81,74 @@ var cancelBtn = function(element) {
   })
 }
 
+//设置页面数据
+var searchExport = function(back) {
+	  amount = e('.amount')
+	  deadline = e('.deadline')
+	  unit = e('.unit')
+	  variety = e('.variety')
+	  manner = e('.manner')
+	  bank = e('.bank')
+	  accountName = e('.account-name')
+	  account = e('.account')
+	  repayBank = e('.repay-bank')
+	  repayCcount = e('.repay-ccount')
+	  reapyAccountbank = e('.reapy-accountbank')
+	  
+	  amount.value = back.amount
+	  deadline.value = back.time_Limit
+	  unit.value = back.id
+	  variety.value = back.id
+	  manner.value = back.id
+	  bank.value = back.receiving_Account_Name
+	  accountName.value = back.receiving_Account
+	  account.value = back.repayment_Bank_name
+	  repayBank.value = back.repayment_Account_Name
+	  repayCcount.value = back.repayment_Account_Number
+	  reapyAccountbank.value = back.id
+}
+
+var initback = {
+		id: '21'
+}
+
+//searchExport(initback)
+
+//查询
+//发送数据方法
+var searchAjax = function(method, url, datas) {
+	log('send data method')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+				searchExport(data.obj)
+			}
+		}
+	})
+}
+
+var searchData = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/loanlinkfsss'
+	var data = {}
+	data.id = 1
+	if(data.id) {
+		searchAjax(method, url, data)	
+	}
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-loaner')
   cancelBtn('#cancel')
+  searchData()
 }
 
 __main()

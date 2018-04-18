@@ -33,7 +33,7 @@
 		)
 		VALUES
 		(
-		#{contacts},#{contacts},#{contacts},#{relationship},#{relationship},#{relationship},#{c_Telephone},#{c_Telephone},#{c_Telephone},#{state},#{ctime})
+		#{contacts},#{contacts1},#{contacts2},#{relationship},#{relationship1},#{relationship2},#{c_Telephone},#{c_Telephone1},#{c_Telephone2},#{state},#{ctime})
 		</insert>
 		
 		<!-- 根据ID查记录 -->

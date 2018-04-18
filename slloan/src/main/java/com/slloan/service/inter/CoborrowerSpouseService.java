@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.NoteDescription;
 
 public interface CoborrowerSpouseService {
 	
-	boolean save(CoborrowerSpouse conorowerSpouse);
+	boolean save(CoborrowerSpouse coborrow);
 	
 	boolean update(CoborrowerSpouse coborrowerSpouse);
 	

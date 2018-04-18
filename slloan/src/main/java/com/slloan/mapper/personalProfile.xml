@@ -42,6 +42,30 @@
 <result column="postal_address" property="postal_address" />
 <result column="state" property="state" />
 <result column="ctime" property="ctime" />
+<collection property="notes" javaType="java.util.List" ofType="com.slloan.entity.NoteDescription">
+		 <id column="id" property="id" jdbcType="INTEGER" />  
+		<result column="note_Description1" property="note_Description1" />
+		<result column="note_Description2" property="note_Description2" />
+		<result column="note_Description3" property="note_Description3" />
+		<result column="state" property="state" />
+		<result column="ctime" property="ctime" />
+	</collection>
+<collection property="applyfor" javaType="java.util.List" ofType="com.slloan.entity.ApplyForLoanInformation">
+		<result column="amount" property="amount" />
+		<result column="time_Limit" property="time_Limit" />
+		<result column="borrowing_Variety" property="nborrowing_Varietyame" />
+		<result column="repayment" property="repayment" />
+		<result column="receiving_Bank_Name" property="receiving_Bank_Name" />
+		<result column="receiving_Account_Name" property="receiving_Account_Name" />
+		<result column="receiving_Account" property="receiving_Account" />
+		<result column="repayment_Bank_Name" property="repayment_Bank_Name" />
+		<result column="repayment_Account_Name" property="repayment_Account_Name" />
+		<result column="repayment_Account_Number" property="repayment_Account_Number" />
+		<result column="state" property="state" />
+		<result column="ctime" property="ctime" />
+
+	</collection>
+
 	</resultMap>
 
 	<insert id="save" parameterType="com.slloan.entity.PersonalProfile">
@@ -147,11 +171,31 @@ VALUES
 		
 		-->
 		
+		<!-- 初审回退按揭员状态 -->
+		<select id="getPersonalProfileCount" resultType="Integer">
+			SELECT COUNT(*) FROM recordsubmit_table WHERE state='0'
+		</select>
+		
+		
+		<select id="getPersonalProfilePage" resultType="Map" resultMap="personalpr">
+			SELECT  a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime
+		FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id = b.id) ,recordsubmit_table c  where c.state='0' order by a.id limit 1,10
+		<if test="test =page !=null and limit !=''"></if>
+			limit #{page},#{limit}
+		</select>
+		
+		
+		
 		<!-- 根据ID查记录 -->
 		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.PersonalProfile">
 				select * from borrow_information where id = #{id}
 		</select>
 		
+		
+		<!-- 根据ID查记录 -->
+		<select id="SelectToById" parameterType="int"  resultType="com.slloan.entity.PersonalProfile">
+				select * from borrow_information where id = #{id} AND id_number = #{id_number}
+		</select>
 		
 		
 		<!-- 查询 -->
@@ -205,6 +249,4 @@ VALUES
 					 WHERE id = #{id}
 		</update>
 		
-		
-	
 </mapper>

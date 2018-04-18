@@ -89,7 +89,7 @@ public class ApplyForLoanInformationController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="/loanlinkf",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/loanlinkfsss",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req){
 		String dataid = req.getParameter("datas");
@@ -110,7 +110,7 @@ public class ApplyForLoanInformationController {
 	@RequestMapping(value="/modifyuser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String updateUser(HttpServletRequest req){
-		String dataid = req.getParameter("datas");
+		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
 		String amount= json.getString("contacts");

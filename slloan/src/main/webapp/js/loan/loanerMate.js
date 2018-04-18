@@ -23,6 +23,7 @@ var collectData = function() {
   var data = {}
   data.cname = e('.ch-name').value
   data.paperwork = e('.paperwork-type').value
+  data.paperother = e('.document-number').value
   data.paperNumb = e('.paperwork-numb').value
   data.unitName = e('.unit-name').value
   data.residencePhone = e('.residence-phone').value
@@ -78,11 +79,68 @@ var cancelBtn = function(element) {
   })
 }
 
+//设置页面数据
+var searchExport = function(back) {
+	  cname = e('.ch-name')
+	  certificate = e('.paperwork-type')
+	  certificateType = e('.paperwork-numb')
+	  document = e('.document-number')
+	  untilName = e('.unit-name')
+	  untilPhone = e('.unit-phone')
+	  residence = e('.residence-phone')
+	  mobile = e('.mobie-phone')
+	  salary = e('.salary')
+	  
+	  cname.value = back.name
+	  certificate.value = back.id
+	  certificateType.value = back.id_Number
+	  document.value = back.id_Number
+	  untilName.value = back.uni_Name
+	  untilPhone.value = back.home_Phone
+	  residence.value = back.unit_Phone
+	  mobile.value = back.mobile_Phone
+	  salary.value = back.monthly_Income
+}
+
+var initback = {
+		id: '23'
+}
+
+//searchExport(initback)
+
+//查询
+//发送数据方法
+var searchAjax = function(method, url, datas) {
+log('send data method')
+$.ajax({
+type: method,
+url: url,
+data: {data:JSON.stringify(datas)},
+success: function(data) {
+	console.log('返回数据', data)
+	if(data.msg == 'success') {
+		searchExport(data.obj)
+	}
+}
+})
+}
+
+var searchData = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/spouses'
+	var data = {}
+	data.id = 1
+	if(data.id) {
+		searchAjax(method, url, data)
+	}
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
   cancelBtn('#cancel')
+  searchData()
 }
 
 __main()

@@ -29,9 +29,10 @@
 <select id="selectUploadsUpdateType"  parameterType="Map" resultType="com.slloan.entity.ImageDataUpdate">
 	select filepath,note,uploads,uploadtype from imagedata 
 	<trim prefix="WHERE" prefixOverrides="and|or">
-		<if test="filepath !=null and filepath.length()>0">and filepath LIKE CONCAT('%',#{filepath},'%')</if>
-		<if test="Parentnode !=null and Parentnode.length()>0 ">and Parentnode =#{parentnode}</if>
-		<if test="uploadtype !=null and uploadtype.length()>0">and uploadtype=#{uploadtype}</if>
+		<if test="filepath !=null and filepath.length()>0">and filepath LIKE CONCAT('%',#{file},'%')</if>
+		<if test="Parentnode !=null and Parentnode.length()>0 ">and Parentnode =#{city}</if>
+		<if test="uploadtype !=null and uploadtype.length()>0">and uploadtype=#{upload_type}</if>
+			<if test="id !=null and id.length()>0">and id=#{id}</if>
 	</trim>
 <!-- 	<where> -->
 <!-- 		<if test="filepath !='' and filepath !=null">and filepath LIKE CONCAT('%',#{filepath},'%')</if> -->
@@ -48,6 +49,7 @@
 		<if test="Parentnode !=null and Parentnode.length()>0 ">and Parentnode =#{parentnode}</if>
 		<if test="uploadtype !=null and uploadtype.length()>0">and uploadtype=#{uploadtype}</if>
 	</trim>
+	ORDER BY id desc
 </select>
 <!-- 财务审核通过待放款 -->
 <update id="batchUpdateStudent"  parameterType="java.util.List">

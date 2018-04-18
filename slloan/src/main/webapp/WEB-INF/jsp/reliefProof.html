@@ -16,14 +16,14 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    admin
+                    <span id = "username">admin</span>
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+           <li class="layui-nav-item" id = "logout">退出登录</li>
         </ul>
     </div>
 
@@ -230,9 +230,37 @@
                 <label class="layui-form-label">总人数:*人</label>
               </div>
             </div>
-            <!-- 表格部分 -->
-            <table id="demo" lay-filter="test"></table>
           </form>
+                    <!-- 表格部分 -->
+          <table class="layui-table">
+            <colgroup>
+              <col width="150">
+              <col width="200">
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th>申请编号</th>
+                <th>姓名</th>
+                <th>申请金额</th>
+                <th>手机号码</th>
+                <th>证件号码</th>
+                <th>贷款期限</th>
+                <th>状态</th>
+                <th>住房地址</th>
+                <th>创建时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody class="tab-data">
+            </tbody>
+          </table>
+          <div class = 'pages'>
+          <button class = 'layui-btn previous'>上一页</button>
+          <button class = 'layui-btn next'>下一页</button>
+          <button>目前第<span class = 'layui-btn layui-btn-primary currtPage'></span>页</button>
+          <button>共<span class = 'layui-btn layui-btn-primary totalPage'></span>页</button>
+          </div>
         </div>
     </div>
 
@@ -241,9 +269,10 @@
         © 版权所有
     </div>
 </div>
-
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
-<script type="text/javascript" src="./loanManagementjs/reliefProof.js"></script>
+<script type="text/javascript" src="../js/reliefProof.js"></script>
 </body>
 </html>

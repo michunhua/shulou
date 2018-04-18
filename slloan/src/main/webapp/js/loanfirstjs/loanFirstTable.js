@@ -100,6 +100,71 @@ layui.use('laydate', function(){
   });
 });
 
+//添加表格具体数据格
+var addTable = function(data) {
+	console.log('添加表格儿')
+    var datas = data
+//    var len = 
+    var len = 10
+    var pageElement = document.querySelector('.tab-data')
+    for(var i = 0; i < len; i++) {
+      log(i)
+      var tr = document.createElement('tr')
+      var td = document.createElement('td')
+      var input = document.createElement('input')
+      var td0 = document.createElement('td')
+      var a = document.createElement('a')
+      var td1 = document.createElement('td')
+      var td2 = document.createElement('td')
+      var td3 = document.createElement('td')
+      var td4 = document.createElement('td')
+      var td5 = document.createElement('td')
+      var td6 = document.createElement('td')
+      var td7 = document.createElement('td')
+      var td8 = document.createElement('td')
+      var td9 = document.createElement('td')
+      var td10 = document.createElement('td')
+      var id = "datas.lists[i].userName"
+      var userName = "datas.lists[i].userName"
+      var role = "datas.lists[i].distribution_Role"
+      var employeeName = "datas.lists[i].employeeis_Name"
+      var time = "datas.lists[i].createdate"
+      input.type = 'checkbox'
+      a.classList.add('mark')
+      a.href = '#'
+      a.innerText = 0
+      td1.innerText = 1
+      td2.innerText = 2
+      td3.innerText = 3
+      td4.innerText = 4
+      td5.innerText = 5
+      td6.innerText = 6
+      td7.innerText = 7
+      td8.innerText = 8
+      td9.innerText = 9
+      td.appendChild(input)
+      td0.appendChild(a)
+      tr.appendChild(td)
+      tr.appendChild(td0)
+      tr.appendChild(td1)
+      tr.appendChild(td2)
+      tr.appendChild(td3)
+      tr.appendChild(td4)
+      tr.appendChild(td5)
+      tr.appendChild(td6)
+      tr.appendChild(td7)
+      tr.appendChild(td8)
+      tr.appendChild(td9)
+      pageElement.insertAdjacentElement('beforeend', tr)
+    }
+}
+
+var testData = {
+		test: '233'
+}
+
+addTable(testData)
+
 
 // 收集信息
 var collectData = function() {

@@ -1,6 +1,7 @@
 package com.slloan.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 借款申请人个人资料
@@ -52,7 +53,30 @@ public class PersonalProfile implements Serializable {
 	private String state; // '状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清',
 	private String ctime; // '创建时间',
 	
+	private List<CircuLationRecord> notes;
 	
+	private List<ApplyForLoanInformation> applyfor; 
+	
+	
+	
+	public List<CircuLationRecord> getNotes() {
+		return notes;
+	}
+	public void setNotes(List<CircuLationRecord> notes) {
+		this.notes = notes;
+	}
+	public List<ApplyForLoanInformation> getApplyfor() {
+		return applyfor;
+	}
+	public void setApplyfor(List<ApplyForLoanInformation> applyfor) {
+		this.applyfor = applyfor;
+	}
+	public List<CircuLationRecord> getNote() {
+		return notes;
+	}
+	public void setNote(List<CircuLationRecord> notes) {
+		this.notes = notes;
+	}
 	public String getProduct_Number() {
 		return product_Number;
 	}
@@ -437,5 +461,4 @@ public class PersonalProfile implements Serializable {
 		this.state = state;
 		this.ctime = ctime;
 	}
-
 }

@@ -29,23 +29,9 @@ public interface CircuLationRecordSubmitDao {
 	 */
 	public boolean fallbackinsert(CircuLationRecord circuLationRecord);
 
-	public boolean firstTrial(NoteExplain noteExplain);
-	
-	
-//	/**
-//	 * 贷款初审备注
-//	 * @param noteexplain
-//	 * @return
-//	 */
-//	
-//
-//	public boolean firstTrial(NoteExplain note);
-
+	public boolean firstTrial(NoteExplain note);
 	
 
-
-	
-	
 	
 
 	

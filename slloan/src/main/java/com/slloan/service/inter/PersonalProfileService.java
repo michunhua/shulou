@@ -3,6 +3,7 @@ package com.slloan.service.inter;
 import java.util.List;
 import java.util.Map;
 
+import com.slloan.entity.AddRole;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.Page;
@@ -17,6 +18,13 @@ public interface PersonalProfileService {
 
 	// 查询ID
 	PersonalProfile SelectById(int id);
+	
+	//查询ID 身份证
+			PersonalProfile SelectToById(int id , String id_number);
 
-
+//			Page<PersonalProfile> getLoanPage(int currentPage);	
+			
+		 	public Page<PersonalProfile> getPersonalProfilePage(int currentPage);
+		 	
+		 	int getPersonalProfileCount();
 }

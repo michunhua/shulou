@@ -168,15 +168,15 @@
         <!-- 内容主体区域 -->
         <!-- 头部导航 -->
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item"><a href="">借款申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="javascript:;">借款申请人配偶</a></li>
-          <li class="layui-nav-item layui-this"><a href="">共同申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">申请借款信息</a></li>
-          <li class="layui-nav-item"><a href="">房产资料</a></li>
-          <li class="layui-nav-item"><a href="">影像资料</a></li>
-          <li class="layui-nav-item"><a href="">联系人信息</a></li>
-          <li class="layui-nav-item"><a href="">备注说明</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loannotess">备注说明</a></li>
         </ul>
         <div class="container">
           <!-- 具体页面导航 -->
@@ -197,7 +197,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="paperwork-type">
+                <select name="city" lay-verify="required" class="paperwork-type certificate">
                   <option value=""></option>
                   <option value="0">北京</option>
                   <option value="1">上海</option>
@@ -207,7 +207,7 @@
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input">
+                <input type="text" name="password" placeholder="请输入证件类型" autocomplete="off" class="layui-input certificate-type">
               </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
@@ -240,13 +240,13 @@
                 <input type="text" name="title" required  lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input salary">
               </div>
             </div>
+          </form>
             <div class="layui-form-item">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-coMate'>立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">取消</button>
               </div>
             </div>
-          </form>
         </div>
     </div>
 

@@ -58,8 +58,8 @@ var searchExport = function(back) {
 	  linkfPhone = e('.linkf-phone')
 	  
 	  links = e('.links')
-	  linksMate = e('.links-mate').
-	  linksencodPhone = e('.links-phones')
+	  linksMate = e('.links-mate')
+	  linksencodPhone = e('.links-phone')
 	  
 	  linkt = e('.linkt')
 	  linktMate = e('.linkt-mate')
@@ -72,7 +72,7 @@ var searchExport = function(back) {
 	  
 	  links.value = back.start
 	  linksMate.value = back.start
-//	  linksencodPhone.value = back.start
+	  linksencodPhone.value = back.start
 	  
 	  linkt.value = back.id
 	  linktMate.value = back.id

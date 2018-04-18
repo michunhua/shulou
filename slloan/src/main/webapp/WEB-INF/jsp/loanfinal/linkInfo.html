@@ -168,15 +168,15 @@
         <!-- 内容主体区域 -->
         <!-- 头部导航 -->
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item"><a href="">借款申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="javascript:;">借款申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">共同申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="">申请借款信息</a></li>
-          <li class="layui-nav-item"><a href="">房产资料</a></li>
-          <li class="layui-nav-item"><a href="">影像资料</a></li>
-          <li class="layui-nav-item layui-this"><a href="">联系人信息</a></li>
-          <li class="layui-nav-item"><a href="">终审备注</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loannotess">终审备注</a></li>
         </ul>
         <div class="container">
           <!-- 具体页面导航 -->
@@ -185,6 +185,7 @@
             <a href="">贷款终审</a>
             <a href="">联系人信息</a>
           </span>
+          <div class = 'validate'>注: 带有<span class = 'write'> * </span>必填项</div>
           <hr>
           <!-- 具体内容区域 -->
           <form class="layui-form layui-form-pane" action="">
@@ -194,6 +195,7 @@
                 <div class="layui-input-inline">
                   <input type="text" name="number" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input linkf-name">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">与借款人关系</label>
@@ -207,12 +209,14 @@
                       <option value="4">其他</option>
                     </select>
                   </div>
+                  <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">手机号码</label>
                 <div class="layui-input-inline">
                   <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input linkf-phone">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
             <div class="layui-form-item">
@@ -221,6 +225,7 @@
                 <div class="layui-input-inline">
                   <input type="text" name="number" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input links-name">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">与借款人关系</label>
@@ -234,12 +239,14 @@
                       <option value="4">其他</option>
                     </select>
                   </div>
+                  <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">手机号码</label>
                 <div class="layui-input-inline">
                   <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input links-phone">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
             <div class="layui-form-item">
@@ -248,6 +255,7 @@
                 <div class="layui-input-inline">
                   <input type="text" name="number" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input linkt-name">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">与借款人关系</label>
@@ -261,21 +269,23 @@
                       <option value="4">其他</option>
                     </select>
                   </div>
+                  <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">手机号码</label>
                 <div class="layui-input-inline">
                   <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input linkt-phone">
                 </div>
+                <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
-            <div class="layui-form-item">
+        </form>
+          <div class="layui-form-item">
             <div class="layui-input-block">
               <button class="layui-btn" lay-submit="" lay-filter="demo1" id = 'save-loaner'>立即提交</button>
               <button type="reset" class="layui-btn layui-btn-primary">取消</button>
             </div>
           </div>
-        </form>
         </div>
     </div>
 
