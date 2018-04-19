@@ -94,81 +94,81 @@ public class LoanFinaljudgmentController {
 		JSONObject json = new JSONObject().fromObject(dataid);
 		
 		Integer id = json.getInt("id");
-		 String name=json.getString("cname");  // 共同借款人姓名
-		 String phoneticize=json.getString("ename");  // 拼音、英文姓名
-		 String idtype=json.getString("paperwork");  // 身份证件类型
-		 String id_number=json.getString("paperNumb"); // 身份证件号码
-		 String relationship_with_borrower=json.getString("country"); // 与借款人关系
-		 String country_and_region=json.getString("gender");  // 国家及地区
-		 String sex=json.getString("gender");  // 性别: 0男 1女
-		 String Local_domicile=json.getString("census");  // 本地户籍
-		 String household_registration=json.getString("census");  // 户籍所在地
-		 String marital_status=json.getString("marriage");  // 婚姻情况0已婚，1未婚
-		 String housing_condition_now=json.getString("housing");  // 0房改/继承 1按揭自置2无按揭自置 3与父母同住 4租借// 5公司提供 6其他
-		 String birthday=json.getString("birthday");  // 出生日期
-		 String home_address_now=json.getString("currentAddress");  // 现住房地址
-		 String home_phone=json.getString("residencePhone");  // 住宅电话
-		 String mobile_phone=json.getString("mobilePhone");  // 移动电话
-		 String email=json.getString("email");  // E-mail
-		 String present_address_zip_code=json.getString("code");  // 现住址邮编
-		 String vocation=json.getString("career");  // 职业
-		 String unit_industry=json.getString("unit");  // 现单位所处行业
-		 String uni_name=json.getString("unitName");  // 现单位名称
-		 String unit_address=json.getString("unitAddress");  // 现单位地址
-		 String enterprise_scale=json.getString("assetSize");  // 就职企业规模
-		 String unitPhone=json.getString("lastyearIncome"); //上年营收
-		 String asset_scale=json.getString("unitCode");  // 资产规模
-		 String unit_phone=json.getString("unitPhone");  // 单位电话
-		 String postCode=json.getString("unitCode");  // 单位邮编
-		 String job_category=json.getString("jobsType");  // 职位类别
-		 String seniority=json.getString("unitTime");  // 现单位工龄
-		 String former_unit_name=json.getString("lastunitName");  // 前单位名称
-		 String former_seniority=json.getString("lastunitTime");  // 前单位工龄
-		 String source_of_income=json.getString("incomeSource");  // 收入来源
-		 String rent = json.getString("salary");  // 月收入
-		 String added =json.getString("investment");// 投资收益
-		 String supportPeople =json.getString("rent");// 租金收入
-		 String expenses =json.getString("added");// 其他收入
-		 String family_number=json.getString("supportPeople");  // 供养人数
-//		 double monthly_expenditure = Double.valueOf(json.getString("a"));// 月支出
-		 String mon = json.getString("expenses");// 月支出
-		 String postal_address=json.getString("communication");  // 通讯地址
-		 String state=json.getString("state");  // 状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		 String ctime=json.getString("ctime");//日期
-	    
-		Double Revenue_in_the_previous_year = 0.0;
-		if (unit_phone.length() > 0) {
-			Revenue_in_the_previous_year = Double.parseDouble(unit_phone);
+		String name=json.getString("cname"); // 共同借款人姓名
+		String phoneticize=json.getString("ename"); // 拼音、英文姓名
+		String id_type=json.getString("paperwork"); // 身份证件类型
+		String Other_identity_types=json.getString("otherPaperwork"); // 输入身份证类型
+		String id_number=json.getString("paperNumb"); // 身份证件号码
+		String country_and_region=json.getString("country"); // 国家及地区
+		String other_Countries=json.getString("otherCountry");// 其他国家
+		String sex=json.getString("gender"); // 性别: 0男 1女
+		String Local_domicile=json.getString("census"); // 本地户籍
+		String household_registration=json.getString("otherCensus");// 其他户籍所在地
+		String marital_status=json.getString("marriage");// 婚姻情况0已婚，1未婚
+		String housing_condition_now=json.getString("housing"); // 0房改/继承
+		String otherCensus=json.getString("otherHousing");// 其他
+		String birthday=json.getString("birthday"); // 出生日期
+		String home_address_now=json.getString("currentAddress"); // 现住房地址
+		String home_phone=json.getString("residencePhone"); // 住宅电话
+		String mobile_phone=json.getString("mobilePhone");// 移动电话
+		String email=json.getString("email"); // E-mail
+		String present_address_zip_code=json.getString("code"); // 现住址邮编
+		String vocation=json.getString("career");// 职业
+		String unit_industry=json.getString("unit"); // 现单位所处行业
+		String uni_name=json.getString("unitName"); // 现单位名称
+		String unit_address=json.getString("unitAddress");// 现单位地址
+		String enterprise_scale=json.getString("companyNumber");// 企业人数
+		String lastyearIncome=json.getString("lastyearIncome");// 上年营收
+		String asset_scale=json.getString("assetSize"); // 资产规模
+		String unit_phone=json.getString("unitPhone"); // 单位电话
+		String postCode=json.getString("unitCode"); // 单位邮编
+		String job_category=json.getString("jobsType"); // 职位类别
+		String seniority=json.getString("unitTime"); // 现单位工龄
+		String former_unit_name=json.getString("lastunitName"); // 前单位名称
+		String former_seniority=json.getString("lastunitTime");// 前单位工龄
+		String source_of_income=json.getString("incomeSource");// 收入来源
+		String salary=json.getString("salary");// 月收入
+		String investment=json.getString("investment");// 投资收益
+		String rent=json.getString("rent"); // 租金收入
+		String added=json.getString("added"); // 其他收入
+		String family_number=json.getString("supportPeople"); // 供养人数
+		String expenses=json.getString("expenses");// 月支出
+		String postal_address=json.getString("communication"); // 通讯地址
+		String state=json.getString("state"); // 状态;//
+							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
+		String ctime=json.getString("ctime"); // 日期
+		
+		Double Revenue_previous_year = 0.0;
+		if (lastyearIncome.length() > 0) {
+			Revenue_previous_year = Double.parseDouble(lastyearIncome);
 		}
 		Double monthly_income = 0.0;
-		if (rent.length() > 0) {
-			monthly_income = Double.parseDouble(rent);
+		if (salary.length() > 0) {
+			monthly_income = Double.parseDouble(salary);
 		}
 		Double Income_from_investment = 0.0;
-		if (added.length() > 0) {
-			monthly_income = Double.parseDouble(added);
+		if (investment.length() > 0) {
+			Income_from_investment = Double.parseDouble(investment);
 		}
-		Double Rent_income = 0.0;
-		if (supportPeople.length() > 0) {
-			monthly_income = Double.parseDouble(supportPeople);
+		Double supportPeople = 0.0;
+		if (rent.length() > 0) {
+			supportPeople = Double.parseDouble(rent);
 		}
 		Double Other_income = 0.0;
-		if (expenses.length() > 0) {
-			monthly_income = Double.parseDouble(expenses);
+		if (added.length() > 0) {
+			Other_income = Double.parseDouble(added);
 		}
 		Double monthly_expenditure = 0.0;
-		if (mon.length() > 0) {
-			monthly_income = Double.parseDouble(mon);
+		if (expenses.length() > 0) {
+			monthly_expenditure = Double.parseDouble(expenses);
 		}
-
-
-		JointApplicant joints = new JointApplicant(id,name, phoneticize, idtype, id_number, relationship_with_borrower,
-				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
-				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
-				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
-				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
-				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, state, ctime);
+		JointApplicant joints= new JointApplicant(id,name, phoneticize, id_type, Other_identity_types,
+				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
 		boolean isResult = applicantDao.update(joints);
 		if (isResult == true) {
 			return new Json(true, "success", isResult);
@@ -213,6 +213,7 @@ public class LoanFinaljudgmentController {
 	Integer id = obj.getInt("id");
 	String name = req.getParameter("contacts");// 借款人配偶姓名
 	String id_Type =req.getParameter("contacts"); // 身份证件类型
+	String paperother = req.getParameter("paperother");
 	String id_Number =req.getParameter("contacts"); // 身份证件号码
 	String uni_Name = req.getParameter("contacts"); // 单位名称
 	String unit_Phone = req.getParameter("contacts"); // 单位电话
@@ -221,7 +222,7 @@ public class LoanFinaljudgmentController {
 	String monthly_Income = req.getParameter("contacts"); // 月收入
 	String state =req.getParameter("contacts");
 	String ctime = req.getParameter("contacts");
-	SpousesOfBorrowers spouses = new SpousesOfBorrowers(id,name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
+	SpousesOfBorrowers spouses = new SpousesOfBorrowers(id,name, id_Type,paperother, id_Number, uni_Name, unit_Phone, home_Phone,
 			mobile_Phone, monthly_Income,state,ctime);
 
 		boolean isResult=	spousesOfBorrowersService.spoupdate(spouses);
@@ -262,62 +263,83 @@ public class LoanFinaljudgmentController {
 		
 		String dataid = request.getParameter("data");
 		JSONObject req = new JSONObject().fromObject(dataid);
-		Integer id = req.getInt("id");
-		String product_Number = req.getString("");
-		String name =req.getString("contacts"); // 共同借款人姓名
-		String phoneticize = req.getString("contacts");// 拼音、英文姓名
-		String id_type =  req.getString("contacts");// 身份证件类型
-		String id_number = req.getString("contacts");// 身份证件号码
-		String relationship_with_borrower = req.getString("contacts");// 与借款人关系
-		String country_and_region = req.getString("contacts");// 国家及地区
-		String sex =req.getString("contacts"); // 性别: 0男 1女
-		String Local_domicile = req.getString("contacts"); // 本地户籍
-		String household_registration = req.getString("contacts"); // 户籍所在地
-		String marital_status = req.getString("contacts"); // 婚姻情况0已婚，1未婚
-		String housing_condition_now =req.getString("contacts"); // 0房改/继承
-																		// 1按揭自置2无按揭自置
-																		// 3与父母同住
-																		// 4租借//
-																		// 5公司提供
-																		// 6其他
-		String birthday = req.getString("contacts"); // 出生日期
-		String home_address_now = req.getString("contacts");// 现住房地址
-		String home_phone = req.getString("contacts");// 住宅电话
-		String mobile_phone = req.getString("contacts");// 移动电话
-		String email = req.getString("contacts"); // E-mail
-		String present_address_zip_code =  req.getString("contacts");// 现住址邮编
-		String vocation =  req.getString("contacts");// 职业
-		String unit_industry =  req.getString("contacts");// 现单位所处行业
-		String uni_name = req.getString("contacts"); // 现单位名称
-		String unit_address =  req.getString("contacts");// 现单位地址
-		String enterprise_scale = req.getString("contacts");// 就职企业规模
-		double Revenue_in_the_previous_year = Double.valueOf(req.getString("contacts"));
-		String asset_scale = req.getString("contacts");// 资产规模
-		String unit_phone = req.getString("contacts");// 单位电话
-		String postCode = req.getString("contacts");// 单位邮编
-		String job_category =  req.getString("contacts");// 职位类别
-		String seniority = req.getString("contacts");// 现单位工龄
-		String former_unit_name = req.getString("contacts"); // 前单位名称
-		String former_seniority =  req.getString("contacts");// 前单位工龄
-		String source_of_income =  req.getString("contacts");// 收入来源
-		double monthly_income = Double.valueOf(req.getString("contacts")); // 月收入
-		double Income_from_investment = Double.valueOf(req.getString("contacts"));// 投资收益
-		double Rent_income = Double.valueOf(req.getString("contacts"));// 租金收入
-		double Other_income = Double.valueOf(req.getString("contacts"));// 其他收入
-		String family_number = req.getString("contacts");// 供养人数
-		double monthly_expenditure = Double.valueOf(req.getString("contacts"));// 月支出
-		String postal_address = req.getString("contacts");// 通讯地址
-		String state =  req.getString("contacts");// 状态
-												// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime =  req.getString("contacts");// 创建时间
+		String product_Number=req.getString("hi");// 编号
+		String name=req.getString("cname"); // 共同借款人姓名
+		String phoneticize=req.getString("ename"); // 拼音、英文姓名
+		String id_type=req.getString("paperwork"); // 身份证件类型
+		String Other_identity_types=req.getString("otherPaperwork"); // 输入身份证类型
+		String id_number=req.getString("paperNumb"); // 身份证件号码
+		String country_and_region=req.getString("country"); // 国家及地区
+		String other_Countries=req.getString("otherCountry");// 其他国家
+		String sex=req.getString("gender"); // 性别: 0男 1女
+		String Local_domicile=req.getString("census"); // 本地户籍
+		String household_registration=req.getString("otherCensus");// 其他户籍所在地
+		String marital_status=req.getString("marriage");// 婚姻情况0已婚，1未婚
+		String housing_condition_now=req.getString("housing"); // 0房改/继承
+		String otherCensus=req.getString("otherHousing");// 其他
+		String birthday=req.getString("birthday"); // 出生日期
+		String home_address_now=req.getString("currentAddress"); // 现住房地址
+		String home_phone=req.getString("residencePhone"); // 住宅电话
+		String mobile_phone=req.getString("mobilePhone");// 移动电话
+		String email=req.getString("email"); // E-mail
+		String present_address_zip_code=req.getString("code"); // 现住址邮编
+		String vocation=req.getString("career");// 职业
+		String unit_industry=req.getString("unit"); // 现单位所处行业
+		String uni_name=req.getString("unitName"); // 现单位名称
+		String unit_address=req.getString("unitAddress");// 现单位地址
+		String enterprise_scale=req.getString("companyNumber");// 企业人数
+		String lastyearIncome=req.getString("lastyearIncome");// 上年营收
+		String asset_scale=req.getString("assetSize"); // 资产规模
+		String unit_phone=req.getString("unitPhone"); // 单位电话
+		String postCode=req.getString("unitCode"); // 单位邮编
+		String job_category=req.getString("jobsType"); // 职位类别
+		String seniority=req.getString("unitTime"); // 现单位工龄
+		String former_unit_name=req.getString("lastunitName"); // 前单位名称
+		String former_seniority=req.getString("lastunitTime");// 前单位工龄
+		String source_of_income=req.getString("incomeSource");// 收入来源
+		String salary=req.getString("salary");// 月收入
+		String investment=req.getString("investment");// 投资收益
+		String rent=req.getString("rent"); // 租金收入
+		String added=req.getString("added"); // 其他收入
+		String family_number=req.getString("supportPeople"); // 供养人数
+		String expenses=req.getString("expenses");// 月支出
+		String postal_address=req.getString("communication"); // 通讯地址
+		String state=req.getString("state"); // 状态;//
+							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
+		String ctime=req.getString("ctime"); // 日期
+		
+		Double Revenue_previous_year = 0.0;
+		if (lastyearIncome.length() > 0) {
+			Revenue_previous_year = Double.parseDouble(lastyearIncome);
+		}
+		Double monthly_income = 0.0;
+		if (salary.length() > 0) {
+			monthly_income = Double.parseDouble(salary);
+		}
+		Double Income_from_investment = 0.0;
+		if (investment.length() > 0) {
+			Income_from_investment = Double.parseDouble(investment);
+		}
+		Double supportPeople = 0.0;
+		if (rent.length() > 0) {
+			supportPeople = Double.parseDouble(rent);
+		}
+		Double Other_income = 0.0;
+		if (added.length() > 0) {
+			Other_income = Double.parseDouble(added);
+		}
+		Double monthly_expenditure = 0.0;
+		if (expenses.length() > 0) {
+			monthly_expenditure = Double.parseDouble(expenses);
+		}
 
-		PersonalProfile jointss = new PersonalProfile(id,product_Number,name, phoneticize, id_type, id_number, relationship_with_borrower,
-				country_and_region, sex, Local_domicile, household_registration, marital_status, housing_condition_now,
-				birthday, home_address_now, home_phone, mobile_phone, email, present_address_zip_code, vocation,
-				unit_industry, uni_name, unit_address, enterprise_scale, Revenue_in_the_previous_year, asset_scale,
-				unit_phone, postCode, job_category, seniority, former_unit_name, former_seniority, source_of_income,
-				monthly_income, Income_from_investment, Rent_income, Other_income, family_number, monthly_expenditure,
-				postal_address, state, ctime);
+		PersonalProfile jointss = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
+				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
 			boolean isResult=	personalprofileservice.perupdate(jointss);
 			if(isResult ==true){
 				return  new Json(true,"success",isResult);

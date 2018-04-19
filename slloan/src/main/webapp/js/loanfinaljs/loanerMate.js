@@ -90,7 +90,9 @@ var searchData = function() {
 	var url = '/slloan/loan/personalp'
 	var data = {}
 	data.id = 10
-	searchAjax(method, url, data)
+	if(data.id) {
+		searchAjax(method, url, data)
+	}
 }
 
 

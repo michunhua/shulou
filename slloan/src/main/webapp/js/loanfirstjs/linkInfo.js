@@ -66,20 +66,27 @@ var searchExport = function(back) {
 	  linktPhone = e('.linkt-phone')
 	  
 	  //设置值
-	  linkf.value = back.id
-	  linkfMate.value = back.id
-	  linkfPhone.value = back.id
+	  linkf.value = back.contacts
+	  linkfMate.value = back.relationship
+	  linkfPhone.value = back.c_Telephone
 	  
-	  links.value = back.start
-	  linksMate.value = back.start
-	  linksencodPhone.value = back.start
+	  links.value = back.contacts1
+	  linksMate.value = back.relationship1
+	  linksencodPhone.value = back.c_Telephone1
 	  
-	  linkt.value = back.id
-	  linktMate.value = back.id
-	  linktPhone.value = back.id
+	  linkt.value = back.contacts2
+	  linktMate.value = back.relationship2
+	  linktPhone.value = back.c_Telephone2
 	  
 	  
-//	  console.log('电话号码', linksencodPhone)
+	// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".linkf-mate").val(back.relationship);
+		  $(".links-mate").val(back.relationship1);
+		  $(".linkt-mate").val(back.relationship2);
+		  form.render()
+		});
 }
 
 var initback = {
@@ -87,7 +94,7 @@ var initback = {
 		start: '100'
 }
 
-searchExport(initback)
+//searchExport(initback)
 
 //查询
 //发送数据方法
@@ -100,6 +107,7 @@ var searchAjax = function(method, url, datas) {
     success: function(data) {
     	console.log('返回数据', data)
     	if(data.msg == 'success') {
+    		searchExport(data.obj)
     	}
     }
   })
@@ -110,7 +118,9 @@ var searchData = function() {
 	var url = '/slloan/loan/contactss'
 	var data = {}
 	data.id = 2
-	searchAjax(method, url, data)
+	if(data.id) {
+		searchAjax(method, url, data)
+	}
 }
 
 //

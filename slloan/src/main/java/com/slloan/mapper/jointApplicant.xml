@@ -6,18 +6,20 @@
 		<result column="name" property="name" />
 		<result column="phoneticize" property="phoneticize" />
 		<result column="id_type" property="id_type" />
+		<result column="Other_identity_types" property="Other_identity_types" />
 		<result column="id_number" property="id_number" />
-		<result column="relationship_with_borrower" property="relationship_with_borrower" />
+		<result column="country_and_region" property="country_and_region" />
+		<result column="other_Countries" property="other_Countries" />
 		<result column="sex" property="sex" />
 		<result column="Local_domicile" property="Local_domicile" />
 		<result column="household_registration" property="household_registration" />
 		<result column="marital_status" property="marital_status" />
 		<result column="housing_condition_now" property="housing_condition_now" />
+		<result column="otherCensus" property="otherCensus" />
 		<result column="birthday" property="birthday" />
 		<result column="home_address_now" property="home_address_now" />
 		<result column="home_phone" property="home_phone" />
 		<result column="mobile_phone" property="mobile_phone" />
-		<result column="mobile_Phone" property="mobile_Phone" />
 		<result column="email" property="email" />
 		<result column="present_address_zip_code" property="present_address_zip_code" />
 		<result column="vocation" property="vocation" />
@@ -25,7 +27,7 @@
 		<result column="uni_name" property="uni_name" />
 		<result column="unit_address" property="unit_address" />
 		<result column="enterprise_scale" property="enterprise_scale" />
-		<result column="Revenue_in_the_previous_year" property="Revenue_in_the_previous_year" />
+		<result column="Revenue_previous_year" property="Revenue_previous_year" />
 		<result column="asset_scale" property="asset_scale" />
 		<result column="unit_phone" property="unit_phone" />
 		<result column="postCode" property="postCode" />
@@ -36,7 +38,7 @@
 		<result column="source_of_income" property="source_of_income" />
 		<result column="monthly_income" property="monthly_income" />
 		<result column="Income_from_investment" property="Income_from_investment" />
-		<result column="Rent_income" property="Rent_income" />
+		<result column="supportPeople" property="supportPeople" />
 		<result column="Other_income" property="Other_income" />
 		<result column="family_number" property="family_number" />
 		<result column="monthly_expenditure" property="monthly_expenditure" />
@@ -48,57 +50,63 @@
 	<insert id="save" parameterType="com.slloan.entity.JointApplicant">
 		INSERT INTO borrows_informations
 		(
-		name,
-		phoneticize,
-		id_type,
-		id_number,
-		relationship_with_borrower,
-		sex,
-		Local_domicile,
+			name ,
+		phoneticize ,
+		id_type ,
+		Other_identity_types,
+		id_number ,
+		country_and_region ,
+		other_Countries,
+		sex ,
+		Local_domicile ,
 		household_registration,
 		marital_status,
-		housing_condition_now,
-		birthday,
-		home_address_now,
-		home_phone,
+		housing_condition_now ,
+		otherCensus,
+		birthday ,
+		home_address_now ,
+		home_phone ,
 		mobile_phone,
-		email,
-		present_address_zip_code,
+		email ,
+		present_address_zip_code ,
 		vocation,
-		unit_industry,
-		uni_name,
+		unit_industry ,
+		uni_name ,
 		unit_address,
 		enterprise_scale,
-		Revenue_in_the_previous_year,
-		asset_scale,
-		unit_phone,
-		postCode,
-		job_category,
-		seniority,
-		former_unit_name,
+		Revenue_previous_year,
+		asset_scale ,
+		unit_phone ,
+		postCode ,
+		job_category ,
+		seniority ,
+		former_unit_name ,
 		former_seniority,
 		source_of_income,
 		monthly_income,
 		Income_from_investment,
-		Rent_income,
-		Other_income,
-		family_number,
+		supportPeople ,
+		Other_income ,
+		family_number ,
 		monthly_expenditure,
-		postal_address,
-		state,
+		postal_address ,
+		state ,
 		ctime
 		)
 		VALUES
 		(#{name},
 		#{phoneticize},
 		#{id_type},
+		#{Other_identity_types},
 		#{id_number},
-		#{relationship_with_borrower},
+		#{country_and_region},
+		#{other_Countries},
 		#{sex},
 		#{Local_domicile},
 		#{household_registration},
 		#{marital_status},
 		#{housing_condition_now},
+		#{otherCensus},
 		#{birthday},
 		#{home_address_now},
 		#{home_phone},
@@ -110,7 +118,7 @@
 		#{uni_name},
 		#{unit_address},
 		#{enterprise_scale},
-		#{Revenue_in_the_previous_year},
+		#{Revenue_previous_year},
 		#{asset_scale},
 		#{unit_phone},
 		#{postCode},
@@ -121,7 +129,7 @@
 		#{source_of_income},
 		#{monthly_income},
 		#{Income_from_investment},
-		#{Rent_income},
+		#{supportPeople},
 		#{Other_income},
 		#{family_number},
 		#{monthly_expenditure},
@@ -149,49 +157,49 @@
 				update borrows_informations 
 				<set>
 					<if test="name !=null and name !=''">name = #{name},</if>
-					<if test="phoneticize !=null and phoneticize !=''">phoneticize=#{phoneticize},</if>
-					<if test="id_type  !=null and id_type !=''">id_type=#{id_type},</if>
-					<if test="id_number  !=null and id_number !=''">id_number=#{id_number},</if>
-					<if test="relationship_with_borrower  !=null and relationship_with_borrower !=''">relationship_with_borrower=#{relationship_with_borrower},</if>
-					<if test="sex !=null and sex !=''">sex=#{sex},</if>
-					<if test="Local_domicile !=null and Local_domicile !=''">Local_domicile = #{Local_domicile},</if>
-					<if test="household_registration !=null and household_registration !=''">household_registration = #{household_registration},</if>
-					<if test="marital_status !=null and marital_status !=''">marital_status = #{marital_status},</if>
-					
-					<if test="housing_condition_now !=null and housing_condition_now !=''">housing_condition_now = #{housing_condition_now},</if>
-					<if test="birthday !=null and birthday !=''">birthday=#{birthday},</if>
-					<if test="home_address_now  !=null and home_address_now !=''">home_address_now=#{home_address_now},</if>
-					<if test="home_phone  !=null and home_phone !=''">home_phone=#{home_phone},</if>
-					<if test="mobile_phone  !=null and mobile_phone !=''">mobile_phone=#{mobile_phone},</if>
-					<if test="email !=null and email !=''">email=#{email},</if>
-					<if test="present_address_zip_code !=null and present_address_zip_code !=''">present_address_zip_code = #{present_address_zip_code},</if>
-					<if test="vocation !=null and vocation !=''">vocation = #{vocation},</if>
-					<if test="unit_industry !=null and unit_industry !=''">unit_industry = #{unit_industry},</if>
-					
-					<if test="uni_name !=null and uni_name !=''">uni_name = #{uni_name},</if>
-					<if test="unit_address !=null and unit_address !=''">unit_address=#{unit_address},</if>
-					<if test="enterprise_scale  !=null and enterprise_scale !=''">enterprise_scale=#{enterprise_scale},</if>
-					<if test="Revenue_in_the_previous_year  !=null and Revenue_in_the_previous_year !=''">Revenue_in_the_previous_year=#{Revenue_in_the_previous_year},</if>
-					<if test="asset_scale  !=null and asset_scale !=''">asset_scale=#{asset_scale},</if>
-					<if test="unit_phone !=null and unit_phone !=''">unit_phone=#{unit_phone},</if>
-					<if test="postCode !=null and postCode !=''">postCode = #{postCode},</if>
-					<if test="job_category !=null and job_category !=''">job_category = #{job_category},</if>
-					<if test="seniority !=null and seniority !=''">seniority = #{seniority},</if>
-					
-					<if test="former_unit_name !=null and former_unit_name !=''">former_unit_name = #{former_unit_name},</if>
-					<if test="former_seniority !=null and former_seniority !=''">former_seniority=#{former_seniority},</if>
-					<if test="source_of_income  !=null and source_of_income !=''">source_of_income=#{source_of_income},</if>
-					<if test="monthly_income  !=null and monthly_income !=''">monthly_income=#{monthly_income},</if>
-					<if test="Income_from_investment  !=null and Income_from_investment !=''">Income_from_investment=#{Income_from_investment},</if>
-					<if test="Rent_income !=null and Rent_income !=''">Rent_income=#{Rent_income},</if>
-					<if test="Other_income !=null and Other_income !=''">Other_income = #{Other_income},</if>
-					<if test="family_number !=null and family_number !=''">family_number = #{family_number},</if>
-					<if test="monthly_expenditure !=null and monthly_expenditure !=''">monthly_expenditure = #{monthly_expenditure},</if>
-					<if test="postal_address !=null and postal_address !=''">postal_address = #{postal_address},</if>
-					<if test="state !=null and state !=''">state = #{state},</if>
-					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
-
-
+          <if test="phoneticize !=null and phoneticize !=''">phoneticize=#{phoneticize},</if>
+          <if test="id_type  !=null and id_type !=''">id_type=#{id_type},</if>
+          <if test="Other_identity_types  !=null and Other_identity_types !=''">Other_identity_types=#{Other_identity_types},</if>
+          <if test="id_number  !=null and id_number !=''">id_number=#{id_number},</if>
+          <if test="country_and_region !=null and country_and_region !=''">country_and_region=#{country_and_region},</if>
+          <if test="other_Countries !=null and other_Countries !=''">other_Countries = #{other_Countries},</if>
+          <if test="sex !=null and sex !=''">sex = #{sex},</if>
+          <if test="Local_domicile !=null and Local_domicile !=''">Local_domicile = #{Local_domicile},</if>
+          
+          <if test="household_registration !=null and household_registration !=''">household_registration = #{household_registration},</if>
+          <if test="marital_status !=null and marital_status !=''">marital_status=#{marital_status},</if>
+          <if test="housing_condition_now  !=null and housing_condition_now !=''">housing_condition_now=#{housing_condition_now},</if>
+          <if test="otherCensus  !=null and otherCensus !=''">otherCensus=#{otherCensus},</if>
+          <if test="birthday  !=null and birthday !=''">birthday=#{birthday},</if>
+          <if test="home_address_now !=null and home_address_now !=''">home_address_now=#{home_address_now},</if>
+          <if test="home_phone !=null and home_phone !=''">home_phone = #{home_phone},</if>
+          <if test="mobile_phone !=null and mobile_phone !=''">mobile_phone = #{mobile_phone},</if>
+          <if test="email !=null and email !=''">email = #{email},</if>
+          
+          <if test="present_address_zip_code !=null and present_address_zip_code !=''">present_address_zip_code = #{present_address_zip_code},</if>
+          <if test="vocation !=null and vocation !=''">vocation=#{vocation},</if>
+          <if test="unit_industry  !=null and unit_industry !=''">unit_industry=#{unit_industry},</if>
+          <if test="uni_name  !=null and uni_name !=''">uni_name=#{uni_name},</if>
+          <if test="unit_address  !=null and unit_address !=''">unit_address=#{unit_address},</if>
+          <if test="enterprise_scale !=null and enterprise_scale !=''">enterprise_scale=#{enterprise_scale},</if>
+          <if test="Revenue_previous_year !=null and Revenue_previous_year !=''">Revenue_previous_year = #{Revenue_previous_year},</if>
+          <if test="asset_scale !=null and asset_scale !=''">asset_scale = #{asset_scale},</if>
+          <if test="unit_phone !=null and unit_phone !=''">unit_phone = #{unit_phone},</if>
+          
+          <if test="postCode !=null and postCode !=''">postCode = #{postCode},</if>
+          <if test="job_category !=null and job_category !=''">job_category=#{job_category},</if>
+          <if test="former_unit_name  !=null and former_unit_name !=''">former_unit_name=#{former_unit_name},</if>
+          <if test="former_seniority  !=null and former_seniority !=''">former_seniority=#{former_seniority},</if>
+          <if test="source_of_income  !=null and source_of_income !=''">source_of_income=#{source_of_income},</if>
+          <if test="monthly_income !=null and monthly_income !=''">monthly_income=#{monthly_income},</if>
+          <if test="Income_from_investment !=null and Income_from_investment !=''">Income_from_investment = #{Income_from_investment},</if>
+          <if test="supportPeople !=null and supportPeople !=''">supportPeople = #{supportPeople},</if>
+          <if test="Other_income !=null and Other_income !=''">Other_income = #{Other_income},</if>
+          <if test="family_number !=null and family_number !=''">family_number = #{family_number},</if>
+          <if test="monthly_expenditure !=null and monthly_expenditure !=''">monthly_expenditure = #{monthly_expenditure},</if>
+          <if test="postal_address !=null and postal_address !=''">postal_address = #{postal_address},</if>
+            <if test="state !=null and state !=''">state = #{state},</if>
+              <if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
 				</set>
 					 WHERE id = #{id}
 		</update>

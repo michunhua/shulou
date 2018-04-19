@@ -137,7 +137,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanlinkfsss'
 	var data = {}
-	data.id = 1
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

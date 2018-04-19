@@ -43,7 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.slloan.entity.ImageDataUpdate;
-
+import com.slloan.entity.ObjectSeq;
 import com.slloan.entity.ResultList;
 import com.slloan.service.inter.ImagedataService;
 
@@ -83,6 +83,7 @@ public class UpdateFTPController{
 	static Long sum = 0l;//文件总大小
 	static StringBuffer sb ;
 	Iterator it ;//定义一个迭代器
+//	List<String>seqselect;
 	static String filenameimage;
 	 FTPClient ftp = new FTPClient();
 	 File target;
@@ -117,6 +118,11 @@ public class UpdateFTPController{
     	final	String city = req.getParameter("city");
     	ResultList<Object> pageBean = new ResultList<Object>();//返回权限集合
     	List<Object> li = new ArrayList<Object>();
+    	System.out.println("获取web项目的根路径"+req.getLocalPort());
+    	System.out.println("获取请求的IP地址"+req.getServerPort());
+    	System.out.println("网页所在目录的上一层目录"+req.getServerName());
+    	
+    	
 //    	final String shenqingbiao_image = "imagedatafile/shenqingbiao_image";
 //   	 	final String shenfenzheng_image = "imagedatafile/shenfenzheng_image";
 //   	 final String fangchanzheng_image = "imagedatafile/fangchanzheng_image";
@@ -125,7 +131,7 @@ public class UpdateFTPController{
 //   	final String pingzheng_image ="imagedatafile/pingzheng_image";
 //   	String pic_addr = "d://upload//a.jpg";
 //   	String response = pic_addr.substring(pic_addr.lastIndexOf("/")+1);
-   	System.out.println(ftpRemotePath);
+//   	System.out.println(ftpRemotePath);
    	String targetFileName = "";
     	for(final MultipartFile f:tmpfile){
     	        FTPClient ftp = new FTPClient();
@@ -169,7 +175,7 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("/ftp/shenqingbiao_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
@@ -191,7 +197,7 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("/ftp/shenfenzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
@@ -211,7 +217,7 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("/ftp/fangchanzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
@@ -232,7 +238,7 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("/ftp/pishi_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+tdf+"/"+"pishi_image/"+str.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
@@ -254,7 +260,7 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("/ftp/loan/qita_image/"+city+"/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/loan/qita_image/"+city+"/"+targetFileName.trim());
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
@@ -274,7 +280,7 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("/ftp/pingzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
                          	readerZipFile(tmpFileName.trim());
 //                         	imagedata.setFilepath("");
                          	imagedata.setUploads(note);//上传者
@@ -302,6 +308,11 @@ public class UpdateFTPController{
           	            InputStream input = f.getInputStream();
           	            System.out.println(input);
 //          	            readStream(input);
+          	          ObjectSeq seq = imagedataservice.listSeq();
+                    	int idseq= seq.getStart_value();
+                    	String seqid = String.valueOf(idseq-1);
+                    	System.out.println(seqid);
+//           	 			seqselect.add(seqid);
           	          boolean isResult =  ftp.storeFile(targetFileName, input);
           	          if(isResult ==  true){
           	        	 System.err.println("上传成功");
@@ -309,7 +320,7 @@ public class UpdateFTPController{
           	        	pageBean.setLists(li);
           	        	  input.close();
           	        	  ftp.logout();
-          	        	  return new Json(true,"success",pageBean,"上传成功");
+          	        	  return new Json(true,"success",seqid,"上传成功");
           	        	  
           	          }else{
           	        	  System.err.println("上传失败！"); 
@@ -396,8 +407,13 @@ public class UpdateFTPController{
     @RequestMapping(value = "/imagedatadel",method=RequestMethod.POST,produces="application/json;charset=utf-8")
     @ResponseBody
 	  	public Json imagedatadel(HttpServletRequest req) throws IOException{
-    	String sid = req.getParameter("id");
-//    	 filenameimage = req.getParameter("image");//图片
+    	String data = req.getParameter("data");
+    	JSONObject obj = new JSONObject().fromObject(data);
+    		
+    	String sid = obj.getString("id");
+    	String image = obj.getString("image");
+    	System.out.println(sid+ ""+ image);
+    	 filenameimage = image;//图片
     		int imageid = Integer.valueOf(sid);
     		boolean isResult = imagedataservice.imagedatedel(imageid);
     		filename2 ="D:/FTP";
@@ -421,6 +437,7 @@ public class UpdateFTPController{
   //递归遍历  
     private static void getDirectory(File file) {  
     	String filename =filenameimage;
+    	System.out.println(filename);
     File flist[] = file.listFiles();  
     if (flist == null || flist.length == 0) {  
     }  
@@ -433,11 +450,11 @@ public class UpdateFTPController{
           //这里将列出所有的文件  
            System.out.println("file==>" + f.getAbsolutePath());  
            
-           if(f.getName().endsWith("1804161622041314_bj_123.jpg")){
+           if(f.getName().endsWith(filename)){
     			if(f.delete()){
-    				System.out.println("图片文件已经删除: "+f.getName());
+    				System.err.println("图片文件已经删除: "+f.getName());
     			}else{
-    				System.out.println("图片文件删除失败");
+    				System.err.println("图片文件删除失败");
     			}
     		}
            
@@ -576,17 +593,24 @@ public class UpdateFTPController{
      * @param res
      * @return 对象
      */
-    @RequestMapping(value="/selectfiletype",method=RequestMethod.GET)
+    @RequestMapping(value="/selectfiletype",method=RequestMethod.GET,produces="application/json;charset=utf-8")
     @ResponseBody
     public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
-    	String data = req.getParameter("data");
-    	JSONObject jsonobj = new JSONObject().fromObject(data);
-    	String originalfilename = jsonobj.getString("file");//原文件名
-    	String parentnode = jsonobj.getString("city");
-    	String uploadtype = jsonobj.getString("upload_type");
-    	String id = jsonobj.getString("id");
-    	int zid = Integer.parseInt(id);
-    	ImageDataUpdate imagedata = new ImageDataUpdate(zid,originalfilename,parentnode,uploadtype);
+//    	String data = req.getParameter("data");
+//    	JSONObject jsonobj = new JSONObject().fromObject(data);
+//    	String originalfilename = jsonobj.getString("file");//原文件名
+//    	String parentnode = jsonobj.getString("city");
+//    	String uploadtype = jsonobj.getString("upload_type");
+//    	String id = jsonobj.getString("id");
+//    	int zid = Integer.parseInt(id);
+//    	String sid = req.getParameter("id");
+//    	int zid = Integer.parseInt(sid);
+    	String originalfilename = req.getParameter("file");
+    	String parentnode= req.getParameter("city");
+    	String uploadtype =  req.getParameter("uploadtype");
+    	
+//    	System.out.println(zid+" "+ originalfilename+" "+ parentnode+" "+ uploadtype);
+    	ImageDataUpdate imagedata = new ImageDataUpdate(originalfilename,parentnode,uploadtype);
     List<ImageDataUpdate> listimg= imagedataservice.selectUploadsUpdateType(imagedata);
     	if(listimg.size()> 0){
     		return new Json(true,"success",listimg);

@@ -413,9 +413,9 @@ public class FinanceTransferAccountsvoucherController {
 	    	String originalfilename = jsonobj.getString("file");//原文件名
 	    	String parentnode = jsonobj.getString("city");
 	    	String uploadtype = jsonobj.getString("upload_type");
-	    	String id = jsonobj.getString("id");
-	    	int zid = Integer.parseInt(id);
-	    	ImageDataUpdate imagedata = new ImageDataUpdate(zid,originalfilename,parentnode,uploadtype);
+//	    	String id = jsonobj.getString("id");
+//	    	int zid = Integer.parseInt(id);
+	    	ImageDataUpdate imagedata = new ImageDataUpdate(originalfilename,parentnode,uploadtype);
 	    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
 	    	if(listimg.size()> 0){
 	    		return new Json(true,"success",listimg);

@@ -22,16 +22,17 @@ public class SpousesOfBorrowersServiceImpl implements SpousesOfBorrowersService 
 
 		String name = spousesOfBorrowers.getName(); // 借款人配偶姓名
 		String id_Type = spousesOfBorrowers.getId_Type(); // 身份证件类型
+		String paperother = spousesOfBorrowers.getPaperother();
 		String id_Number = spousesOfBorrowers.getId_Number(); // 身份证件号码
 		String uni_Name = spousesOfBorrowers.getUni_Name(); // 单位名称
 		String unit_Phone = spousesOfBorrowers.getUnit_Phone(); // 单位电话
 		String home_Phone = spousesOfBorrowers.getHome_Phone(); // 住宅电话
 		String mobile_Phone = spousesOfBorrowers.getMobile_Phone(); // 手机
 		String monthly_Income = spousesOfBorrowers.getMonthly_Income(); // 月收入
-		String state = spousesOfBorrowers.getstate();
+		String state = spousesOfBorrowers.getState();
 		String ctime = spousesOfBorrowers.getCtime();
 
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
+		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type,paperother, id_Number, uni_Name, unit_Phone, home_Phone,
 				mobile_Phone, monthly_Income,state,ctime);
 		return spousesOfBorrowersDao.save(spouses);
 		// TODO Auto-generated method stub
@@ -43,16 +44,17 @@ public class SpousesOfBorrowersServiceImpl implements SpousesOfBorrowersService 
 		Integer id = spousesOfBorrowers.getId();
 		String name = spousesOfBorrowers.getName(); // 借款人配偶姓名
 		String id_Type = spousesOfBorrowers.getId_Type(); // 身份证件类型
+		String paperother = spousesOfBorrowers.getPaperother();
 		String id_Number = spousesOfBorrowers.getId_Number(); // 身份证件号码
 		String uni_Name = spousesOfBorrowers.getUni_Name(); // 单位名称
 		String unit_Phone = spousesOfBorrowers.getUnit_Phone(); // 单位电话
 		String home_Phone = spousesOfBorrowers.getHome_Phone(); // 住宅电话
 		String mobile_Phone = spousesOfBorrowers.getMobile_Phone(); // 手机
 		String monthly_Income = spousesOfBorrowers.getMonthly_Income(); // 月收入
-		String state = spousesOfBorrowers.getstate();
+		String state = spousesOfBorrowers.getState();
 		String ctime = spousesOfBorrowers.getCtime();
 
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(id,name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
+		SpousesOfBorrowers spouses = new SpousesOfBorrowers(id,name, id_Type, paperother,id_Number, uni_Name, unit_Phone, home_Phone,
 				mobile_Phone, monthly_Income,state,ctime);
 		return spousesOfBorrowersDao.spoupdate(spouses);
 	}

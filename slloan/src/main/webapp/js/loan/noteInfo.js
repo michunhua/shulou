@@ -80,13 +80,13 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/jointappliss'
 	var data = {}
-	data.id = 2
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
 }
 
-// 保存按钮点击事件&发送数据
+// 提交按钮点击事件&发送数据
 var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
@@ -97,18 +97,6 @@ var sendData = function(element) {
     sendAjax(method, url, data, null)
   })
 }
-
-//提交按钮点击事件&发送数据
-var submitData = function(element) {
-	var evs = e(element)
-	  evs.addEventListener('click', function() {
-	    var data = collectData()
-	    var method = 'POST'
-	    var url = '/slloan/loan/loannotfirsts'
-	    log(data)
-	    sendAjax(method, url, data, null)
-	  })
-} 
 
 // 取消按钮事件
 var cancelBtn = function(element) {
@@ -123,7 +111,6 @@ var cancelBtn = function(element) {
 var __main = function() {
   log( "run")
   sendData('#save-note')
-  submitData('#submit')
   cancelBtn('#cancel')
   searchData()
 }

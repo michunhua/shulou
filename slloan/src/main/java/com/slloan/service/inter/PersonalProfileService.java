@@ -8,6 +8,7 @@ import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.Page;
 import com.slloan.entity.PersonalProfile;
+import com.slloan.entity.ResultList;
 import com.slloan.entity.UserLogin;
 
 public interface PersonalProfileService {
@@ -27,4 +28,21 @@ public interface PersonalProfileService {
 		 	public Page<PersonalProfile> getPersonalProfilePage(int currentPage);
 		 	
 		 	int getPersonalProfileCount();
+		 	
+		 	
+		 	/**
+		 	 * 按揭员模糊查询
+		 	 * @param param
+		 	 * @return
+		 	 */
+		 	List<PersonalProfile> vaguelikeSelectCreateone(Map<String,String> param);
+		 	
+		 	/**
+		 	 * 初审模糊查询
+		 	 * @param param
+		 	 * @return
+		 	 */
+		 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<String,String> param);
+		 	
+		 	
 }

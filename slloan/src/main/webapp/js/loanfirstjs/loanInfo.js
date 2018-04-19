@@ -67,47 +67,62 @@ var searchExport = function(back) {
 	  repaymentAccount = e('.repayment-account')
 	  accountNumber = e('.account-number')
 	  
-	  amount.value = back.id
-	  term.value = back.id
-	  unit.value = back.id
-	  variety.value = back.id
-	  repayment.value = back.id
-	  beneficiarybank.value = back.id
-	  bankaccount.value = back.id
-	  receivingAccount.value = back.id
-	  repaymenBtank.value = back.id
+	  amount.value = back.amount
+	  term.value = back.time_Limit
+	  unit.value = back.repayment
+	  variety.value = back.borrowing_Variety
+	  repayment.value = back.receiving_Bank_Name
+	  beneficiarybank.value = back.receiving_Account
+	  bankaccount.value = back.repayment_Bank_name
+	  receivingAccount.value = back.repayment_Account_Name
+	  repaymenBtank.value = back.repayment_Account_Number
 	  repaymentAccount.value = back.id
 	  accountNumber.value = back.id
+	  
+
+		// 下拉选项
+		  layui.use('form', function(){
+			  var form = layui.form;
+			  $(".unit").val(back.repayment);
+			  $(".variety").val(back.borrowing_Variety);
+			  $(".repayment").val(back.receiving_Bank_Name);
+			  form.render()
+			});
 }
 
 var initback = {
 		id: '21'
 }
 
-searchExport(initback)
+//searchExport(initback)
 
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
-$.ajax({
-type: method,
-url: url,
-data: {data:JSON.stringify(datas)},
-success: function(data) {
-	console.log('返回数据', data)
-	if(data.msg == 'success') {
-	}
-}
-})
+	log('send data method')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+				searchExport(data.obj)
+			}
+		}
+	})
 }
 
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/applyforts'
+	var url = '/slloan/loan/loanlinkfsss'
 	var data = {}
-	data.id = 4
-	searchAjax(method, url, data)
+	data.id = 2
+	if(data.id) {
+		searchAjax(method, url, data)
+	}
 }
 
 

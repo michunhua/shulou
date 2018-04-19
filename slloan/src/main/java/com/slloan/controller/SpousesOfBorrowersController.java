@@ -45,6 +45,7 @@ public class SpousesOfBorrowersController {
 
 		String name = obj.getString("cname"); // 借款人配偶姓名
 		String id_Type = obj.getString("paperwork"); // 身份证件类型
+		String paperother = obj.getString("paperother"); // 身份证件类型
 		String id_Number = obj.getString("paperNumb"); // 身份证件号码
 		String uni_Name = obj.getString("unitName"); // 单位名称
 		String unit_Phone = obj.getString("residencePhone"); // 单位电话
@@ -55,7 +56,7 @@ public class SpousesOfBorrowersController {
 		String ctime = obj.getString("ctime");
 		
 
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
+		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, paperother,id_Number, uni_Name, unit_Phone, home_Phone,
 				mobile_Phone, monthly_Income,state,ctime);
 
 		boolean sp = spousesofborrowers.save(spouses);// 插入角色
@@ -121,6 +122,7 @@ public class SpousesOfBorrowersController {
 	public Json updateadd(HttpServletRequest req,Contacts contactsparam){
 		String name = req.getParameter("contacts");// 借款人配偶姓名
 		String id_Type =req.getParameter("contacts"); // 身份证件类型
+		String paperother = req.getParameter("paperother");
 		String id_Number =req.getParameter("contacts"); // 身份证件号码
 		String uni_Name = req.getParameter("contacts"); // 单位名称
 		String unit_Phone = req.getParameter("contacts"); // 单位电话
@@ -129,7 +131,7 @@ public class SpousesOfBorrowersController {
 		String monthly_Income = req.getParameter("contacts"); // 月收入
 		String state =req.getParameter("contacts");
 		String ctime = req.getParameter("contacts");
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Number, uni_Name, unit_Phone, home_Phone,
+		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, paperother,id_Number, uni_Name, unit_Phone, home_Phone,
 				mobile_Phone, monthly_Income,state,ctime);
 
 			boolean isResult=	spousesofborrowers.spoupdate(spouses);

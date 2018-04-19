@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.ImageDataUpdate;
+import com.slloan.entity.ObjectSeq;
 
 
 /**
@@ -26,7 +27,7 @@ public interface ImagedataDao {
 	 */
 	public List<ImageDataUpdate> selectById(Map<String,Object> param);
 
-	
+		public ObjectSeq listSeq();
 //	//自增ID
 //	public boolean addSeq(ObjectSeq addseq);
 	

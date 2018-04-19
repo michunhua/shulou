@@ -73,7 +73,7 @@ var searchExport = function(back) {
 	  evaluation = e('.evaluation')
 	  property = e('.property')
 	  originalBank = e('.original-bank')
-	  originalBank = e('.original-amount')
+	  originalAmount = e('.original-amount')
 	  houseAccount = e('.house-account')
 	  originalOwed = e('.original-owed')
 	  bidPrice = e('.bid-price')
@@ -83,54 +83,68 @@ var searchExport = function(back) {
 	  newAccount = e('.new-account')
 	  newApproved = e('.new-approved')
 	  
-	  owner.value = back.id
-	  accounting.value = back.id
-	  propertyAddress.value = back.id
-	  building.value = back.id
-	  innerArea.value = back.id
-	  contract.value = back.id
-	  certificate.value = back.id
-	  evaluation.value = back.id
+	  owner.value = back.ownership_And_percentage
+	  accounting.value = back.property_Address
+	  propertyAddress.value = back.conStruction_Area
+	  building.value = back.inner_Area
+	  innerArea.value = back.sales_Contract_Number
+	  contract.value = back.certificate_of_Title
+	  certificate.value = back.proPerty_for
+	  evaluation.value = back.the_Assessed_Value
 	  property.value = back.id
 	  originalBank.value = back.id
+	  originalAmount.value = back.original_Loan_Amount
 	  houseAccount.value = back.id
-	  originalOwed.value = back.id
-	  bidPrice.value = back.id
-	  deposit.value = back.id
+	  originalOwed.value = back.transaCtion_Price
+	  bidPrice.value = back.purchase_Deposit
+	  deposit.value = back.supervision_of_funds
 	  newBank.value = back.id
-	  funds.value = back.id
-	  newAccount.value = back.id
-	  newApproved.value = back.id
+	  funds.value = back.new_Loan_Approval_Amount
+	  newAccount.value = back.new_Loan_Bank_Account_Number
+	  newApproved.value = back.note_DescriPtion
+	  
+
+		// 下拉选项
+		  layui.use('form', function(){
+			  var form = layui.form;
+			  $(".property").val(back.original_Loan_Bank);
+			  form.render()
+			});
 }
 
 var initback = {
 		id: '20'
 }
 
-searchExport(initback)
+//searchExport(initback)
 
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
-$.ajax({
-type: method,
-url: url,
-data: {data:JSON.stringify(datas)},
-success: function(data) {
-	console.log('返回数据', data)
-	if(data.msg == 'success') {
-	}
-}
-})
+	log('send data method')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+				searchExport(data.obj)
+			}
+		}
+	})
 }
 
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/pererty'
 	var data = {}
-	data.id = 4
-	searchAjax(method, url, data)
+	data.id = 2
+	if(data.id) {
+		searchAjax(method, url, data)	
+	}
 }
 
 //

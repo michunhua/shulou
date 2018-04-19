@@ -19,10 +19,10 @@ public class ImageDataUpdate implements Serializable{
  private String createData;//创建日期
  
  
- public ImageDataUpdate(int id,String originalfilename, String parentnode, String uploadtype) {
+ public ImageDataUpdate(String originalfilename, String parentnode, String uploadtype) {
 	super();
-	this.id = id;
-	this.filepath = filepath;
+//	this.id = id;
+	this.originalfilename = originalfilename;
 	this.uploadtype = uploadtype;
 	Parentnode = parentnode;
 }
@@ -121,13 +121,11 @@ public String getNote() {
 public void setNote(String note) {
 	this.note = note;
 }
-
 @Override
 public String toString() {
 	return "ImageDataUpdate [id=" + id + ", filepath=" + filepath + ", note=" + note + ", uploads=" + uploads
 			+ ", originalfilename=" + originalfilename + ", uploadtype=" + uploadtype + ", Parentnode=" + Parentnode
 			+ ", Subnode=" + Subnode + ", createData=" + createData + "]";
 }
-
 
 }

@@ -105,8 +105,9 @@ var addTable = function(data) {
 	console.log('添加表格儿')
     var datas = data
 //    var len = 
-    var len = 10
+    var len = (data.lists).length
     var pageElement = document.querySelector('.tab-data')
+    pageElement.innnerHTML = null
     for(var i = 0; i < len; i++) {
       log(i)
       var tr = document.createElement('tr')
@@ -124,23 +125,27 @@ var addTable = function(data) {
       var td8 = document.createElement('td')
       var td9 = document.createElement('td')
       var td10 = document.createElement('td')
-      var id = "datas.lists[i].userName"
-      var userName = "datas.lists[i].userName"
-      var role = "datas.lists[i].distribution_Role"
-      var employeeName = "datas.lists[i].employeeis_Name"
-      var time = "datas.lists[i].createdate"
+      var id = datas.lists[i].name
+      var userName = datas.lists[i].amount
+      var phone = datas.lists[i].mobile_phone
+      var number = datas.lists[i].id_number
+      var limit = datas.lists[i].time_Limit
+      var state = datas.lists[i].state
+      var address = datas.lists[i].home_address_now
+      var time = datas.lists[i].ctime
+      
       input.type = 'checkbox'
       a.classList.add('mark')
       a.href = '#'
       a.innerText = 0
-      td1.innerText = 1
-      td2.innerText = 2
-      td3.innerText = 3
-      td4.innerText = 4
-      td5.innerText = 5
-      td6.innerText = 6
-      td7.innerText = 7
-      td8.innerText = 8
+      td1.innerText = id
+      td2.innerText = userName
+      td3.innerText = phone
+      td4.innerText = number
+      td5.innerText = limit
+      td6.innerText = state
+      td7.innerText = address
+      td8.innerText = time
       td9.innerText = 9
       td.appendChild(input)
       td0.appendChild(a)
@@ -163,7 +168,33 @@ var testData = {
 		test: '233'
 }
 
-addTable(testData)
+//addTable(testData)
+
+//发送数据方法
+var initAjax = function(method, url, datas, callback) {
+  log('send data method')
+  $.ajax({
+    type: method,
+    url: url,
+    data: {data:JSON.stringify(datas)},
+    success: function(data) {
+    	addTable(data)
+    }
+  })
+}
+
+var initData = function() {
+	console.log('初始化加载数据')
+	var method = 'GET'
+	var url = '/slloan/loan/rolemanagement?page=1&limit=10'
+	var datas = {}
+	datas.a = 'a'
+	datas.b = 'b'
+	datas.id = '1'
+	console.log('初始化加载数据233')
+	initAjax(method, url, datas, addTable)
+	console.log('执行没有？')
+}
 
 
 // 收集信息
@@ -211,17 +242,19 @@ var sendData = function(element) {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
-$.ajax({
-type: method,
-url: url,
-data: {data:JSON.stringify(datas)},
-success: function(data) {
-	console.log('返回数据', data)
-	if(data.msg == 'success') {
-	}
-}
-})
+	log('send data method')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+			}
+		}
+	})
 }
 
 var searchData = function() {
@@ -235,6 +268,7 @@ var searchData = function() {
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  initData()
 }
 
 __main()

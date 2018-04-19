@@ -50,7 +50,7 @@ public class CoborrowerSpouseController {
 	
 		String name = obj.getString("cname"); // 共同借款人配偶姓名戦
 		String id_Type = obj.getString("paperwork"); //身份证件类型
-		String id_Other = obj.getString("other");
+		String id_Other = obj.getString("other"); //其他
 		String id_Number =obj.getString("paperNumb"); // 身份证件号码
 		String uni_Name = obj.getString("mobilePhone"); // 工作单位名称
 		String unit_Phone =obj.getString("unitName");// 单位电话

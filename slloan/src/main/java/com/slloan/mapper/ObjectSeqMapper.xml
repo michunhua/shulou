@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slloan.dao.ImagedataDao">
+<resultMap type="com.slloan.entity.ObjectSeq" id="beanObjectSeq">
+<result column="name" property="name" />
+<result column="start_value" property="start_value" />
+<result column="increment_value" property="increment_value" />
+</resultMap>
+
+<select id="listSeq" resultType="com.slloan.entity.ObjectSeq">
+<!-- 	select nextval('empno') from dual; -->
+select start_value from emp_seq
+<!-- select nextval('empno') from dual -->
+</select>
+
+<!-- <insert id="addSeq" parameterType="com.slloan.entity.ObjectSeq"> -->
+<!-- 	select nextval('empno') from dual -->
+<!-- </insert> -->
+</mapper>

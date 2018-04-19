@@ -84,12 +84,22 @@
 //
 //});
 
+//name
+//amount
+//mobile_phone
+//id_number
+//time_Limit	
+//state
+//home_address_now
+//ctime
+
 // 添加表格具体数据格
 var addTable = function(data) {
     var datas = data
 //    var len = 
-    var len = 10
+    var len = (data.lists).length
     var pageElement = document.querySelector('.tab-data')
+    pageElement.innerHTML = null
     for(var i = 0; i < len; i++) {
       log(i)
       var tr = document.createElement('tr')
@@ -105,22 +115,26 @@ var addTable = function(data) {
       var td8 = document.createElement('td')
       var td9 = document.createElement('td')
       var td10 = document.createElement('td')
-      var id = "datas.lists[i].userName"
-      var userName = "datas.lists[i].userName"
-      var role = "datas.lists[i].distribution_Role"
-      var employeeName = "datas.lists[i].employeeis_Name"
-      var time = "datas.lists[i].createdate"
+      var id = datas.lists[i].name
+      var userName = datas.lists[i].amount
+      var phone = datas.lists[i].mobile_phone
+      var number = datas.lists[i].id_number
+      var limit = datas.lists[i].time_Limit
+      var state = datas.lists[i].state
+      var address = datas.lists[i].home_address_now
+      var time = datas.lists[i].ctime
+      
       a.classList.add('mark')
       a.href = '#'
       a.innerText = 0
-      td1.innerText = 1
-      td2.innerText = 2
-      td3.innerText = 3
-      td4.innerText = 4
-      td5.innerText = 5
-      td6.innerText = 6
-      td7.innerText = 7
-      td8.innerText = 8
+      td1.innerText = id
+      td2.innerText = userName
+      td3.innerText = phone
+      td4.innerText = number
+      td5.innerText = limit
+      td6.innerText = state
+      td7.innerText = address
+      td8.innerText = time
       td9.innerText = 9
       td0.appendChild(a)
       tr.appendChild(td0)
@@ -145,15 +159,16 @@ var testData = {
 
 
 //默认加载
-var sendAjax = function(method, url, datas, callback) {
+var initAjax = function(method, url, datas, callback) {
   console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        consoel.log(data)
+        console.log(data)
         callback(data)
+        addTable(data)
       }
     })
 }
@@ -162,12 +177,13 @@ var sendAjax = function(method, url, datas, callback) {
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/loan/loancreate'
+	var url = '/slloan/loan/rolemanagement?page=1&limit=10'
 	var datas = {}
 	datas.a = 'a'
 	datas.b = 'b'
-		console.log('初始化加载数据233')
-	sendAjax(method, url, datas, addTable)
+	datas.id = '1'
+	console.log('初始化加载数据233')
+	initAjax(method, url, datas, addTable)
 	console.log('执行没有？')
 }
 
@@ -186,13 +202,28 @@ var collectData = function() {
     return data
 }
 
+//查询方法
+var sendAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+      }
+    })
+}
 
-// 事件响应
+// 查询按钮事件响应
 var envs = function(element) {
   var ens = e(element)
   ens.addEventListener('click', function() {
-    var datas = collectData()
     console.log('running', datas)
+    var method = 'GET'
+    var url = '/slloan/loan/vaguelikeselectcreate'
+    var datas = collectData()
+    sendAjax(method, url, datas)
   })
 }
 

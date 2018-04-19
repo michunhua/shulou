@@ -24,12 +24,16 @@ var collectData = function() {
   data.cname = e('.ch-name').value
   data.ename = e('.en-name').value
   data.paperwork = e('.paperwork-type').value
+  data.otherPaperwork = e('.other-paperwork').value
   data.paperNumb = e('.paperwork-numb').value
   data.country = e('.country').value
+  data.otherCountry = e('.other-country').value
   data.gender = e('.gender').value
   data.census = e('.census').value
+  data.otherCensus = e('.other-census').value
   data.marriage = e('.marriage').value
   data.housing = e('.housing').value
+  data.otherHousing = e('.other-housing').value
   data.birthday = e('.birthday').value
   data.currentAddress = e('.current-address').value
   data.residencePhone = e('.residence-phone').value
@@ -57,11 +61,9 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
-  data.a =  12.5
-  data.b='b'
   data.state = 'c'
   data.ctime ='d'
-	  data.abc = 'qwe'
+  data.hi = 'hi'
   return data
 }
 
@@ -89,16 +91,16 @@ var sendAjax = function(method, url, datas) {
 
 
 // 提交按钮&发送数据
-var sendData = function() {
+var sendData = function(element) {
   log('send data to server')
-  var evs = e('#save-loaner')
+  var evs = e(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/loanApplypersonaldata'
     log(data)
-    sendAjax(method, url, data)
+    sendAjax(method, url, data)	
   })
 }
 
@@ -113,15 +115,20 @@ var cancelBtn = function(element) {
 
 // 设置页面数据
 var searchExport = function(back) {
+    // 获取页面元素
 	cname = e('.ch-name')
 	ename = e('.en-name')
 	paperwork = e('.paperwork-type')
+	otherPaperwork = e('.other-paperwork')
 	paperNumb = e('.paperwork-numb')
 	country = e('.country')
+	otherCountry = e('.other-country')
 	gender = e('.gender')
 	census = e('.census')
+	otherCensus = e('.other-census')
 	marriage = e('.marriage')
 	housing = e('.housing')
+	otherHousing = e('.other-housing')
 	birthday = e('.birthday')
 	currentAddress = e('.current-address')
 	residencePhone = e('.residence-phone')
@@ -149,50 +156,49 @@ var searchExport = function(back) {
 	supportPeople = e('.support-people')
 	expenses = e('.expenses').value
 	communication = e('.communication')
-
+	
+    //设置具体值
 	cname.value = back.name
 	ename.value = back.phoneticize
 	paperwork.value = back.id_type
+	otherPaperwork.value = back.other_identity_types
 	paperNumb.value = back.id_number
 	country.value = back.country_and_region
+	otherCountry.value = back.other_Countries
 	gender.value = back.sex
 	census.value = back.Local_domicile
+	otherCensus.value = back.household_registration
 	marriage.value = back.marital_status
 	housing.value = back.housing_condition_now
-	birthday.value = back.marital_status
-	currentAddress.value = back.housing_condition_now
-	residencePhone.value = back.birthday
-	mobilePhone.value = back.home_address_now
-	email.value = back.home_phone
-	code.value = back.mobile_phone
-	career.value = back.email
-	unit.value = back.present_address_zip_code
-	unitName.value = back.vocation
-	unitAddress.value = back.unit_industry
-	companyNumber.value = back.uni_name
-	lastyearIncome.value = back.unit_address
-	assetSize.value = back.enterprise_scale
-	unitPhone.value = back.revenue_in_the_previous_year
+	otherHousing.value = back.otherCensus
+	birthday.value = back.birthday
+	currentAddress.value = back.home_address_now
+	residencePhone.value = back.home_phone
+	mobilePhone.value = back.mobile_phone
+	email.value = back.email
+	code.value = back.present_address_zip_code
+	career.value = back.vocation
+	unit.value = back.unit_industry
+	unitName.value = back.uni_name
+	unitAddress.value = back.unit_address
+	companyNumber.value = back.enterprise_scale
+	lastyearIncome.value = back.revenue_previous_year
+	assetSize.value = back.asset_scale
+	unitPhone.value = back.unit_phone
 	unitCode.value = back.postCode
-	jobsType.value = back.unit_phone
-	unitTime.value = back.postCode
-	lastunitName.value = back.job_category
-	lastunitTime.value = back.seniority
-	incomeSource.value = back.former_unit_name
-	salary.value = back.former_seniority
-	investment.value = back.source_of_income
-	rent.value = back.monthly_income
-	added.value = back.income_from_investment
-	supportPeople.value = back.seniority
-	expenses.value = back.other_income
-	communication.value = back.postal_address
+	jobsType.value = back.job_category
+	unitTime.value = back.seniority
+	lastunitName.value = back.former_unit_name
+	lastunitTime.value = back.former_seniority
+	incomeSource.value = back.source_of_income
+	salary.value = back.monthly_income
+	investment.value = back.income_from_investment
+	rent.value = back.supportPeople
+	added.value = back.other_income
+	supportPeople.value = back.family_number
+	expenses.value =  back.monthly_expenditure
+	communication.value = back.monthly_expenditure
 }
-
-var initback = {
-	id : '25'
-}
-
-//searchExport(initback)
 
 // 查询
 // 发送数据方法
@@ -213,11 +219,12 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+//查询
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/personalp'
 	var data = {}
-	data.id = 1
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}
@@ -225,7 +232,7 @@ var searchData = function() {
 
 // 提交表单
 var sendFormData = function() {
-  log('send data to server')
+    log('send data to server')
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
@@ -284,10 +291,30 @@ $().ready(function() {
     });
 });
 
+// 自定义验证
+var validator = function(element, message) {
+	  var potion = document.querySelector(element)
+	  var flag = (potion.value).length
+	  var result = true
+	  if(!flag) {
+		 var lable = document.createElement('lable')
+		 lable.classList.add('error')
+		 lable.innerText = message
+		 potion.parentNode.appendChild(lable)
+		 result = false
+	  }
+	  return result
+}
+
+
+
+
+
 //
 var __main = function() {
   log( "run")
   cancelBtn('#cancel')
+  sendData('#save-data')
   searchData()
 }
 

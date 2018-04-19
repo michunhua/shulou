@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.ImageDataUpdate;
+import com.slloan.entity.ObjectSeq;
 
 
 /**
@@ -54,5 +55,6 @@ public interface ImagedataService {
 		 * @return
 		 */
 		 boolean batchUpdateadopt(List updatelList);
-	
+		 
+		 public ObjectSeq listSeq();
 }

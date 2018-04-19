@@ -86,15 +86,15 @@
 	<select id="findAll" parameterType="com.slloan.entity.CoborrowerSpouse">
 		SELECT
 		id id,
-		name name, //共同借款人配偶姓名
-		id_Type in_Type, //身份证件类型
+		name name,  //共同借款人配偶姓名
+		id_Type in_Type,  //身份证件类型
 		id_Other id_Other,
-		id_Number id_Number, //身份证件号码
-		uni_Name uni_Name, //单位名称
-		unit_Phone unit_Phone, //单位电话
-		home_Phone home_Phone, //住宅电话
-		mobile_Phone mobile_Phone, //手机
-		monthly_Income monthly_Income, //月收入
+		id_Number id_Number,  //身份证件号码
+		uni_Name uni_Name,  //单位名称
+		unit_Phone unit_Phone,  //单位电话
+		home_Phone home_Phone,  //住宅电话
+		mobile_Phone mobile_Phone,  //手机
+		monthly_Income monthly_Income,  //月收入
 		state state,
 		ctime ctime
 		FROM

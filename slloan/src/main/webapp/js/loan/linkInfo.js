@@ -35,6 +35,7 @@ var collectData = function() {
   return data
 }
 
+
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
   log('send data method')
@@ -135,7 +136,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/contactss'
 	var data = {}
-	data.id = 1
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

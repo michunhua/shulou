@@ -5,12 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-import com.slloan.entity.ApplyForLoanInformation;
-import com.slloan.entity.Contacts;
-import com.slloan.entity.JointApplicant;
-import com.slloan.entity.Page;
 import com.slloan.entity.PersonalProfile;
-import com.slloan.entity.UserLogin;
+import com.slloan.entity.ResultList;
 
 @Repository(value="personalprofiledao")
 public interface personalProfileDao{
@@ -46,9 +42,21 @@ public interface personalProfileDao{
 	     * @return
 	     */
 	 	int getPersonalProfileCount();
-
 	 	
-	
+	 	/**
+	 	 * 按揭员列表查询
+	 	 * @param param
+	 	 * @return
+	 	 */
+	 	List<PersonalProfile> vaguelikeSelectCreateone(Map<String,String> param);
 
+	 	/**
+	 	 * 初审列表查询
+	 	 * @param param
+	 	 * @return
+	 	 */
+	 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<String,String> param);
+	 	
+	 	
 
 }

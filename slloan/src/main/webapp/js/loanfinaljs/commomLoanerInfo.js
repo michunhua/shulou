@@ -5,12 +5,16 @@ var collectData = function() {
   data.cname = e('.ch-name').value
   data.ename = e('.en-name').value
   data.paperwork = e('.paperwork-type').value
+  data.otherPaperwork = e('.other-paperwork').value
   data.paperNumb = e('.paperwork-numb').value
   data.country = e('.country').value
+  data.otherCountry = e('.other-country').value
   data.gender = e('.gender').value
   data.census = e('.census').value
+  data.otherCensus = e('.other-census').value
   data.marriage = e('.marriage').value
   data.housing = e('.housing').value
+  data.otherHousing = e('.other-housing').value
   data.birthday = e('.birthday').value
   data.currentAddress = e('.current-address').value
   data.residencePhone = e('.residence-phone').value
@@ -38,6 +42,9 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
+  data.state = 'c'
+  data.ctime ='d'
+  data.hi = 'hi'
   return data
 }
 
@@ -140,7 +147,9 @@ var searchData = function() {
 	var url = '/slloan/loan/personalp'
 	var data = {}
 	data.id = 10
-	searchAjax(method, url, data)
+	if(data.id) {
+		searchAjax(method, url, data)	
+	}
 }
 
 
