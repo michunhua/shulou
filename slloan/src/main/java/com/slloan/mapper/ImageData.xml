@@ -57,25 +57,22 @@
 </select>
 <!-- 财务审核通过待放款 -->
 <update id="batchUpdateStudent"  parameterType="java.util.List">
-	update 表名   set start = '待出账确认'
-	where id in
-	<if test="id !=null">
-		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+	update recordsubmit_table  set fallbackname = '待出账确认' , state = '6'
+	where id in					   
+<!-- 	<if test="id !=null"> -->
+		<foreach collection="list"  item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
-	</if>
-	where id in
+<!-- 	</if> -->
+<!-- 	where id in -->
 </update>
 
 <!-- 财务批量审核拒绝退回到终审 -->
 <update id="batchUpdateadopt"  parameterType="java.util.List">
-	update 表名   set start = '待终审审批中'
+	update recordsubmit_table   set fallbackname='待终审审批中' ,state = '5'
 	where id in
-	<if test="id !=null">
-		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")">
 			#{item}
 		</foreach>
-	</if>
-	where id in
 </update>
 </mapper>

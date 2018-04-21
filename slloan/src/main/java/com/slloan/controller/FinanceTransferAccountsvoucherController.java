@@ -188,7 +188,8 @@ public class FinanceTransferAccountsvoucherController {
 	          	            InputStream input = f.getInputStream();
 	          	            System.out.println(input);
 //	          	            readStream(input);
-	          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+//	          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+	          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
 	          	          if(isResult ==  true){
 	          	        	 System.err.println("上传成功");
 	          	        	 list.add(isResult);
@@ -355,36 +356,38 @@ public class FinanceTransferAccountsvoucherController {
 							}
 							
 						}
-						if(req !=null && ServletFileUpload.isMultipartContent(req)){
-	         	 			//判断是否文件上传
-	         	 			ServletRequestContext ctx = new ServletRequestContext(req);
-	         	 			//获取上传文件尺寸大小
-//	         	 			System.out.println(maxSize);
-	         	 			long requestsize = ctx.contentLength();
-	         	 			System.out.println(requestsize);
-	         	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
-//	          	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
-	          	            InputStream input = f.getInputStream();
-	          	            System.out.println(input);
-//	          	            readStream(input);
-	          	          boolean isResult =  ftp.storeFile(targetFileName, input);
-	          	          if(isResult ==  true){
-	          	        	 System.err.println("上传成功");
-	          	        	  input.close();
-	          	        	  ftp.logout();
-	          	        	  return new Json(true,"success",isResult,"上传成功");
-	          	        	  
-	          	          }else{
-	          	        	  System.err.println("上传失败！"); 
-	          	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
-	          	          }
-	         	 		}
-					}else{
-						System.out.println("FTP连接失败");
 					}
+					if(req !=null && ServletFileUpload.isMultipartContent(req)){
+         	 			//判断是否文件上传
+         	 			ServletRequestContext ctx = new ServletRequestContext(req);
+         	 			//获取上传文件尺寸大小
+//         	 			System.out.println(maxSize);
+         	 			long requestsize = ctx.contentLength();
+         	 			System.out.println(requestsize);
+         	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//          	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+          	            InputStream input = f.getInputStream();
+          	            System.out.println(input);
+//          	            readStream(input);
+//          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
+          	          if(isResult ==  true){
+          	        	 System.err.println("上传成功");
+          	        	  input.close();
+          	        	  ftp.logout();
+          	        	  return new Json(true,"success",isResult,"上传成功");
+          	        	  
+          	          }else{
+          	        	  System.err.println("上传失败！"); 
+          	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
+          	          }
+         	 		}else{
+    					System.out.println("FTP连接失败");
+    				}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+//				e.printStackTrace();
+				return new Json(false,"fail",e.getMessage(),"连接异常");
 			}finally {
 	            if (ftp.isConnected()) {
 	                try {
@@ -435,18 +438,26 @@ public class FinanceTransferAccountsvoucherController {
 		public Json batchUpdateStudent(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
 	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	System.out.println(obj);
 	    	String id = obj.getString("id");
-	    	String dt = id.replace("[\"", "").replace("\"]", "").replace("\"", "");
-	    	String [] split = dt.split(",");
+	    	
+//	    	String id = request.getParameter("id");
+//	    	String dt = id.replace("[[\"", " ").replace("\"]]", " ").replace("\"", "");
+//	    	System.out.println(dt);
+	    	String [] split = id.split(",");
+//	    	String  split = id;
 	    	List<String> updatelist = new ArrayList<String>();
 	    	for(String s:split){
-	    		updatelist.add(s);
+	    		String dt = s.replace("[", " ").replace("]", " ").trim();
+//	    		System.out.println(dt);
+	    		updatelist.add(dt);
 	    	}
+	    	
 	    	boolean isResult = imagedataservice.batchUpdateStudent(updatelist);
 	    	if(isResult == true){
-	    		return new Json(true,"success",isResult,"");
+	    		return new Json(true,"success",isResult,"修改成功");
 	    	}else{
-	    		return new Json(false,"fail",isResult,"");
+	    		return new Json(false,"fail",isResult,"修改失败");
 	    	}
 	    }
 	    
@@ -460,20 +471,29 @@ public class FinanceTransferAccountsvoucherController {
 	    @RequestMapping(value="batchupdateadopt")
 	    @ResponseBody
 	    public Json batchUpdateadopt(HttpServletRequest request,HttpServletResponse response){
+//	    	String items = request.getParameter("data");
+//	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	String id = obj.getString("id");
+//	    	String dt = id.replace("[\"","").replace("\"]","").replace("\"", "");
+//	    	List<String> adoptlist = new ArrayList<String>();
+//	    	String[] splist = dt.split(",");
+//	    	for(String s :splist){
+//	    		adoptlist.add(s);
+//	    	}
 	    	String items = request.getParameter("data");
 	    	JSONObject obj = new JSONObject().fromObject(items);
 	    	String id = obj.getString("id");
-	    	String dt = id.replace("[\"","").replace("\"]","").replace("\"", "");
-	    	List<String> adoptlist = new ArrayList<String>();
-	    	String[] splist = dt.split(",");
+	    	List<String> updatelist = new ArrayList<String>();
+	    	String[] splist = id.split(",");
 	    	for(String s :splist){
-	    		adoptlist.add(s);
+	    		String dt = s.replace("["," ").replace("]"," ").trim();
+	    		updatelist.add(dt);
 	    	}
-	    	boolean isResult = imagedataservice.batchUpdateadopt(adoptlist);
+	    	boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
 	    	if(isResult == true){
-	    		return new Json(true,"success",isResult,"");
+	    		return new Json(true,"success",isResult,"修改成功");
 	    	}else{
-	    		return new Json(false,"fail",isResult,"");
+	    		return new Json(false,"fail",isResult,"修改失败");
 	    	}
 	    }
 	    

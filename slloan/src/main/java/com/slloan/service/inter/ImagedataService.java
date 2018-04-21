@@ -47,14 +47,14 @@ public interface ImagedataService {
 	 * @param delList
 	 * @return
 	 */
-	 boolean batchUpdateStudent(List updatelList);
+	 boolean batchUpdateStudent(List updatelist);
 	 
 	 /**
 		 * 财务批量批量审核拒绝
 		 * @param delList
 		 * @return
 		 */
-		 boolean batchUpdateadopt(List updatelList);
+		 boolean batchUpdateadopt(List adoptlist);
 		 
 		 public ObjectSeq listSeq();
 }

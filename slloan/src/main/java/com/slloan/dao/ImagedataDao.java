@@ -57,5 +57,5 @@ public interface ImagedataDao {
 		 * @param delList
 		 * @return
 		 */
-		 boolean batchUpdateadopt(List updatelList);
+		 boolean batchUpdateadopt(List updatelist);
 }

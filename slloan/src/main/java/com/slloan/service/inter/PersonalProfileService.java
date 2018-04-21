@@ -42,7 +42,7 @@ public interface PersonalProfileService {
 		 	 * @param param
 		 	 * @return
 		 	 */
-		 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<String,String> param);
+		 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param);
 		 	
 		 	
 }

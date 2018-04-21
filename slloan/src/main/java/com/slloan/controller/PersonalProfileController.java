@@ -387,23 +387,23 @@ public class PersonalProfileController {
 	@ResponseBody
 	public String vaguelikeselectcreate(HttpServletRequest req) {
 		 ResultList  resultlist = new  ResultList ();
-		String name = req.getParameter("a");
-		String idnumber = req.getParameter("b");
-		String mobilephone = req.getParameter("c");
-		String ctim1 = req.getParameter("d");
-		String ctim2 = req.getParameter("e");
-		String amount = req.getParameter("f");
-		String amount2 = req.getParameter("g");
+		String name = req.getParameter("name");
+		String idnumber = req.getParameter("idnumber");
+		String mobilephone = req.getParameter("mobilephone");
+		String ctim1 = req.getParameter("ctime");
+		String ctim2 = req.getParameter("ctime2");
+		String amount = req.getParameter("amount");
+		String amount2 = req.getParameter("amount2");
 //		String state = req.getParameter("state");
-		Map<String,String> map = new HashMap<String,String>();
-		map.put("a", name);//姓名
-		map.put("b", mobilephone);//手机号码
-		map.put("c", idnumber);//证件号码
-//		map.put("", "");//申请编号
-		map.put("d", ctim1);//申请时间1
-		map.put("e", ctim2);//申请时间2
-		map.put("f", amount);//金额
-		map.put("g", amount2);//金额2
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("id_number", idnumber);//手机号码
+		map.put("mobile_phone", mobilephone);//证件号码
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
 //		map.put("state", state);//状态
 //		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
 //		resultlist.setLists(result);

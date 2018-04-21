@@ -170,7 +170,7 @@ public class UserController {
 		if(isResult !=null){
 			return new Json(true,"success",isResult); 
 		}else
-			return new Json(false,"fail",isResult); 
+			return new Json(false,"fail",isResult,""); 
 	}
 	
 	
@@ -397,7 +397,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/updatepwd",method=(RequestMethod.POST),produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updatepwd(HttpServletRequest req){
+	public Json updatepwd(HttpServletRequest req){
 		
 		String data = req.getParameter("data");
 		JSONObject obj = new JSONObject().fromObject(data);
@@ -407,9 +407,9 @@ public class UserController {
 //		UserLoginUpdate updateupdate = new UserLoginUpdate();
 		boolean isResult = userservice.updatePassWord(username, newpassword, passWord);
 			if(isResult == true){
-				return JSON.toJSONString(isResult);
+				return new Json(true,"success",isResult,"修改成功");//JSON.toJSONString(isResult);
 			}else
-				return JSON.toJSONString("旧密码或用户名不正确");
+				return new Json(false,"fail",isResult,"输入的密码错误或不正确");//JSON.toJSONString("旧密码或用户名不正确");
 	}
 	
 	/**

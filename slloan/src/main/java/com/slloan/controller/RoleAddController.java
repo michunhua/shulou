@@ -147,7 +147,7 @@ public class RoleAddController {
 	 */
 	@RequestMapping(value="/selectbyid",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String selectById(HttpServletRequest req,HttpServletResponse response){
+	public Json selectById(HttpServletRequest req,HttpServletResponse response){
 		String data = req.getParameter("data");
 		JSONObject jsonobj = new JSONObject().fromObject(data);
 		String rid = jsonobj.getString("id");
@@ -157,10 +157,10 @@ public class RoleAddController {
 				logger.debug("成功从数据库找到数据"+selectid);
 //				return new Json(true,"success",selectid);
 				response.setCharacterEncoding("utf-8");
-				return JSON.toJSONString(selectid);
+				return new Json(true,"success",selectid,"获取数据成功");
 			}else{
 				logger.debug("失败ID为null"+selectid);
-				return JSON.toJSONString("fail");
+				return new Json(false,"fail",selectid,"获取数据失败");
 			}
 	}
 	/**

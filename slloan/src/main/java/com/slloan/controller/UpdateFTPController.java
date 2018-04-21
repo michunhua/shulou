@@ -313,7 +313,8 @@ public class UpdateFTPController{
                     	String seqid = String.valueOf(idseq-1);
                     	System.out.println(seqid);
 //           	 			seqselect.add(seqid);
-          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+//          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
           	          if(isResult ==  true){
           	        	 System.err.println("上传成功");
           	        	li.add(isResult);
