@@ -148,12 +148,12 @@ public class RoleAddController {
 	@RequestMapping(value="/selectbyid",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String selectById(HttpServletRequest req,HttpServletResponse response){
-		String data = req.getParameter("datas");
+		String data = req.getParameter("data");
 		JSONObject jsonobj = new JSONObject().fromObject(data);
 		String rid = jsonobj.getString("id");
 		int id = Integer.parseInt(rid);
 		AddRole selectid = roleAddService.updateselectId(id);
-			if(selectid.getId() >0 || selectid.getId()!=null){
+			if(selectid !=null){
 				logger.debug("成功从数据库找到数据"+selectid);
 //				return new Json(true,"success",selectid);
 				response.setCharacterEncoding("utf-8");
@@ -169,21 +169,33 @@ public class RoleAddController {
 	@RequestMapping(value="/updateroleadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String updateId(HttpServletRequest req){
-		String dataid = req.getParameter("datas");
+		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String username = json.getString("roleName");//用户名
 		String belongs_City = json.getString("belongs_City");//员工姓名
 		String descriPtion = json.getString("descriPtion");//分配角色
 		String note = json.getString("note");//所属城市
-		String createDate = DateUtils.getInDateTime((new Date()));//日期
-		AddRole addrole = new AddRole(username,belongs_City,descriPtion,note,createDate);
-		 boolean isResult = roleAddService.updateRole(addrole);
-		 if(isResult == true){
-			 
-			 return  JSON.toJSONString("success");
-		 }else{
-			 return  JSON.toJSONString("fail");
-		 }
+		String id = json.getString("id");//id
+		int idint = Integer.parseInt(id);
+		String configuration = json.getString("configuration");//权限配置
+		String updatedate = DateUtils.getInDateTime((new Date()));//日期
+		AddRole addrole = new AddRole(username,descriPtion,belongs_City,note,configuration,updatedate,idint);
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("rolename", username);
+		AddRole role= roleAddService.selectroleRoleName(map);
+			if(role !=null){
+				return JSON.toJSONString("修改保存角色名已存在插入失败");//new Json(false,"fail",role,"角色名已存在插入失败");
+			}else{
+				 boolean isResult = roleAddService.updateRole(addrole);
+				 if(isResult == true){
+					 
+					 return  JSON.toJSONString("success");
+				 }else{
+					 return  JSON.toJSONString("fail");
+				 }
+			}
+		
 	}
 	
 	@RequestMapping(value="/abcdef")
@@ -214,191 +226,86 @@ public class RoleAddController {
 		System.out.println("权限配置: "+configuration);
 		List<String> ll = new ArrayList<String>();
 		
-		AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate);
-		boolean rt = roleAddService.addRoleUser(addrole);//插入角色
-		AddRole add = new AddRole();
-		add.setRoleName(roleName);//角色
-		add.setBelongs_City(belongs_City);//城市
-		AddRole rid= roleAddService.selectByRId(add);
-//		initrolecs(rid.getRoleName(),rid.getBelongs_City());
-//		initrolecs(rid);
-		ll.add(configuration);
-		AddRole selectid ;
-		List<String> l = new ArrayList<String>();
-		try {
-			String rolename = roleName;
-			selectid= roleAddService.selectRoleId(rolename);
-			Integer r_id =selectid.getId();
-			String sr_id = r_id.toString();
-			String url = req.getRequestURI();
-			boolean isResult;
-			if(selectid.getId() == 0 && selectid.getRoleName() == ""
-		||selectid.getRoleName() == null && selectid.getId() <0){
-				
-			}else if(selectid.getId()>0 && selectid.getRoleName()!=null ||selectid.getRoleName()==""){
-				/*String f0 = "power1";String f1 = "power2";
-				String f2 = "power3";String f3 ="power4";
-				String f4 ="power5";String f5 ="power6";
-				String f6 ="power7";String f7 ="power8";
-				String f8 ="power9";String f9 ="power10";
-				String f10 ="power11";String f11 ="power12";
-				String f12 ="power13";String f13 ="power14";
-				String f14 ="power15";String f15 ="power16";
-				String f16 ="power17";String f17 ="power18";
-				String f18 ="power19";String f19 ="power20";
-				String f20 ="power21";String f21 ="power22";
-				String f22 ="power23";*/
-				for (int i = 0; i < ll.size(); i++) {
-					System.out.println(configuration);
-					 com.alibaba.fastjson.JSONObject j = JSON.parseObject(configuration); 
-					 //将JSON转换为KEY = value&key-value&...的形式
-					 StringBuilder sb = new StringBuilder();
-					 String sbString ="";
-					 try {
-						JSONObject jsonObject = new JSONObject().fromObject(configuration);
-						Iterator iterator = jsonObject.keys();
-						while(iterator.hasNext()){
-							String key= (String)iterator.next();
-//							sb.append(jsonObject.getString(key));
+		//先查询roleName权限表是否有同名否则插入失败
+		
+//		String rolenamee = req.getParameter("name");//查询角色名
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("rolename", roleName);
+		AddRole role= roleAddService.selectroleRoleName(map);
+			if(role !=null){
+				return new Json(false,"fail",role,"角色名已存在插入失败");
+			}else{
+				AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate);
+				boolean rt = roleAddService.addRoleUser(addrole);//插入角色
+				AddRole add = new AddRole();
+				add.setRoleName(roleName);//角色
+				add.setBelongs_City(belongs_City);//城市
+				AddRole rid= roleAddService.selectByRId(add);
+//				initrolecs(rid.getRoleName(),rid.getBelongs_City());
+//				initrolecs(rid);
+				ll.add(configuration);
+				AddRole selectid ;
+				List<String> l = new ArrayList<String>();
+				try {
+					String rolename = roleName;
+					selectid= roleAddService.selectRoleId(rolename);
+					Integer r_id =selectid.getId();
+					String sr_id = r_id.toString();
+					String url = req.getRequestURI();
+					boolean isResult;
+					if(selectid.getId() == 0 && selectid.getRoleName() == ""
+				||selectid.getRoleName() == null && selectid.getId() <0){
+						
+					}else if(selectid.getId()>0 && selectid.getRoleName()!=null ||selectid.getRoleName()==""){
+						for (int i = 0; i < ll.size(); i++) {
+							System.out.println(configuration);
+							 com.alibaba.fastjson.JSONObject j = JSON.parseObject(configuration); 
+							 //将JSON转换为KEY = value&key-value&...的形式
+							 StringBuilder sb = new StringBuilder();
+							 String sbString ="";
+							 try {
+								JSONObject jsonObject = new JSONObject().fromObject(configuration);
+								Iterator iterator = jsonObject.keys();
+								while(iterator.hasNext()){
+									String key= (String)iterator.next();
+//									sb.append(jsonObject.getString(key));
+									
+									PermissionEntity permissionEntity = new PermissionEntity(jsonObject.getString(key),sr_id,url);
+									 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
+									 System.out.println(sb.toString());
+								}
+								System.out.println(sb.toString());
+//								sbString = sb.substring(1);  
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 							
-							PermissionEntity permissionEntity = new PermissionEntity(jsonObject.getString(key),sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-							 System.out.println(sb.toString());
+						}	
+						logger.info("插入角色成功");
+					}else{
+						String idrole = req.getParameter("id");
+						Integer Convertid = Integer.getInteger(idrole);
+						Map<String,Integer> param = new HashMap<String,Integer>();
+							param.put("rid", Convertid);
+							//判断权限ID是否存在
+						selectid =	roleAddService.updateselectId(Convertid);
+						if(selectid.getId()== null && selectid.getId() <0){
+							String itemss = req.getParameter("权限表中的角色ID");
+							List<String> delList = new ArrayList<String>();
+							String[] strs = itemss.split(",");
+							for(String str1:strs){
+								delList.add(str1);
+							}
+							addpermissionservice.batchDeletes(delList);
 						}
-						System.out.println(sb.toString());
-//						sbString = sb.substring(1);  
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
 					
-				}	
-				
-				
-				
-				/*String f1 = configuration.substring(11,12);
-				String f2 = configuration.substring(24,25);
-				String f3 = configuration.substring(37,38);
-				String f4 = configuration.substring(50,51);
-				String f5 = configuration.substring(63,64);
-				String f6 = configuration.substring(76,77);
-				String f7 = configuration.substring(89,90);
-				String f8 = configuration.substring(102,103);
-				String f9 = configuration.substring(115,116);
-				String f10 = configuration.substring(128,130);
-				String f11 = configuration.substring(142,144);
-				String f12 = configuration.substring(156,158);
-				String f13 = configuration.substring(170,172);
-				String f14 = configuration.substring(184,186); 	   
-				String f15 = configuration.substring(198,200);
-				String f16 = configuration.substring(212,214); 
-				String f17 = configuration.substring(226,228); 
-				String f18 = configuration.substring(240,242); 
-				String f19 = configuration.substring(254,256); 	   
-				String f20 = configuration.substring(268,270);
-				String f21 = configuration.substring(282,284); 
-				String f22 = configuration.substring(296,298); 
-				String f23 = configuration.substring(310,312);
-				l.add(f12);l.add(f13);l.add(f14);l.add(f15);l.add(f16);
-				l.add(f17);l.add(f18);l.add(f19);l.add(f20);l.add(f21);
-				l.add(f22);l.add(f23);l.add(f1);l.add(f2);l.add(f3);
-				l.add(f4);l.add(f5);l.add(f6);l.add(f7);
-				l.add(f8);l.add(f9);l.add(f10);l.add(f11);*/
-				logger.info("插入角色成功");
-				
-						
-						/*if(l.contains(f3)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f3,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f4)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f4,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f5)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f5,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f6)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f6,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f7)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f7,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f8)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f8,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f9)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f9,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}
-						if(l.contains(f10)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f10,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f11)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f11,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f12)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f12,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f13)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f13,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}
-						if(l.contains(f14)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f14,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f15)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f15,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f16)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f16,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}
-						if(l.contains(f17)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f17,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f18)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f18,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f19)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f19,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}
-						if(l.contains(f20)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f20,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f21)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f21,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f22)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f22,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}if(l.contains(f23)==true){
-							PermissionEntity permissionEntity = new PermissionEntity(f23,sr_id,url);
-							 isResult = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
-						}*/
-						
-			}else{
-				String idrole = req.getParameter("id");
-				Integer Convertid = Integer.getInteger(idrole);
-				Map<String,Integer> param = new HashMap<String,Integer>();
-					param.put("rid", Convertid);
-					//判断权限ID是否存在
-				selectid =	roleAddService.updateselectId(Convertid);
-				if(selectid.getId()== null && selectid.getId() <0){
-					String itemss = req.getParameter("权限表中的角色ID");
-					List<String> delList = new ArrayList<String>();
-					String[] strs = itemss.split(",");
-					for(String str1:strs){
-						delList.add(str1);
-					}
-					addpermissionservice.batchDeletes(delList);
+				} catch (Exception e) {
+					logger.debug("插入失败"+e);
+					e.printStackTrace();
 				}
 			}
-			
-		} catch (Exception e) {
-			logger.debug("插入失败"+e);
-			e.printStackTrace();
-		}
-		
-		return new Json(true,"success");
+			return new Json(true,"success");
 	}
 	/**
 	 * 查询角色传值到用户
@@ -498,6 +405,15 @@ public class RoleAddController {
 	public String roleadd(){
 		//		return "redirect:/userManagement/addRole";
 		return "roleadd/addRole";
+	}
+	
+	@RequestMapping(value = "/rolenameselect",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String rolename(HttpServletRequest req){
+		String rolename = req.getParameter("rolename");
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("rolename", rolename);
+		return  JSON.toJSONString(roleAddService.selectroleRoleName(map));
 	}
 }
 

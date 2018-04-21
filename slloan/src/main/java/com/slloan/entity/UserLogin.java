@@ -21,10 +21,50 @@ public class UserLogin implements Serializable{
 	private String note;//备注
 	private Integer r_id;//角色ID
 	private String create_Date;//创建日期
+	private String updateDate;//修改日期
 	
 	public UserLogin(){
 		
 	}
+
+	public UserLogin(String userName, String passWord, String employeeis_Name, String distribution_Role,
+			String belongs_City, String note,String updateDate, Integer id) {
+		super();
+		this.userName = userName;
+		this.passWord = passWord;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.id = id;
+		this.updateDate = updateDate;
+	}
+	
+
+	public UserLogin(String userName, String passWord,String employeeis_Name, String distribution_Role,
+			String belongs_City, String note, Integer r_id,String create_Date) {
+		super();
+		this.userName = userName;
+		this.passWord = passWord;
+		this.employeeis_Name = employeeis_Name;
+		this.distribution_Role = distribution_Role;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.r_id = r_id;
+		this.create_Date = create_Date;
+	}
+	
+	public UserLogin(String userName, String passWord, String employeeis_Name, String distribution_Role,
+		String belongs_City, String note, String updateDate) {
+	super();
+	this.userName = userName;
+	this.passWord = passWord;
+	this.employeeis_Name = employeeis_Name;
+	this.distribution_Role = distribution_Role;
+	this.belongs_City = belongs_City;
+	this.note = note;
+	this.updateDate = updateDate;
+}
 
 	public UserLogin(Integer id,String userName, String employeeis_Name, String distribution_Role, String belongs_City,
 			String note, String create_Date) {
@@ -56,19 +96,7 @@ public class UserLogin implements Serializable{
 		this.passWord = passWord;
 	}
 
-	public UserLogin(String userName, String passWord,
-			String employeeis_Name, String distribution_Role,
-			String belongs_City, String note, Integer r_id,String create_Date) {
-		super();
-		this.userName = userName;
-		this.passWord = passWord;
-		this.employeeis_Name = employeeis_Name;
-		this.distribution_Role = distribution_Role;
-		this.belongs_City = belongs_City;
-		this.note = note;
-		this.r_id = r_id;
-		this.create_Date = create_Date;
-	}
+	
 	
 	public UserLogin(Integer id, String userName, String passWord, String employeeis_Name, String distribution_Role,
 			String belongs_City, String note, Integer r_id,String create_Date) {
@@ -82,6 +110,16 @@ public class UserLogin implements Serializable{
 		this.note = note;
 		this.r_id = r_id;
 		this.create_Date = create_Date;
+	}
+
+	
+	
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public Integer getR_id() {
@@ -157,12 +195,23 @@ public class UserLogin implements Serializable{
 	public void setCreate_Date(String create_Date) {
 		this.create_Date = create_Date;
 	}
+	
+
+	public String getUpdatedate() {
+		return updateDate;
+	}
+
+	public void setUpdatedate(String updateDate) {
+		this.updateDate = updateDate;
+	}
 
 	@Override
 	public String toString() {
 		return "UserLogin [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", employeeis_Name="
 				+ employeeis_Name + ", distribution_Role=" + distribution_Role + ", belongs_City=" + belongs_City
-				+ ", note=" + note + ", r_id=" + r_id + ", createDate=" + create_Date+"]";
+				+ ", note=" + note + ", r_id=" + r_id + ", create_Date=" + create_Date + ", updateDate=" + updateDate
+				+ "]";
 	}
+
 
 }

@@ -11,6 +11,7 @@
 		<result column="note" property="note" />
 		<result column="r_id" property="r_id" />
 		<result column="create_date" property="create_Date" />
+		<result column="updatedate" property="updateDate" />
 	</resultMap>
 
 	<insert id="addUser" parameterType="com.slloan.entity.UserLogin">
@@ -37,7 +38,7 @@
 		distribution_role=#{distribution_Role}
 		,belongs_city=#{belongs_City},
 		note=#{note},
-		create_Date = #{create_Date} 
+		updateDate = #{updateDate} 
 <!-- 			<set> -->
 <!-- 				<if test="username !=null and username !=''">userName = #{userName},</if> -->
 <!-- 					<if test="password !=null and password !=''">passWord= #{passWord},</if> -->
@@ -120,5 +121,9 @@
      <!-- 根据ID查所有 -->
      <select id="selectUserById" parameterType="int" resultType="com.slloan.entity.UserLogin">
      	select id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from User_Login where id=#{id}
+     </select>
+     
+     <select id="selectroleUserName" resultType="Map" resultMap="userlogin">
+     	SELECT USERNAME FROM User_Login WHERE USERNAME = #{username}
      </select>
 </mapper>

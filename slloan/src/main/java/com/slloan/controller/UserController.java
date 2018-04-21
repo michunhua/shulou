@@ -110,7 +110,14 @@ public class UserController {
 			AddRole rid= roleAddService.selectByRId(add);
 //			initrolecs(rid);
 			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note,rid.getId(),createDate);
-			 isResult=	userservice.addUser(u);
+			Map<Object,Object> selectUserName = new HashMap<Object,Object>();
+			selectUserName.put("username", username);
+			UserLogin selectuserName2 = userservice.selectroleUserName(selectUserName);
+				if(selectuserName2 !=null){
+					return JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
+				}else{
+					isResult=	userservice.addUser(u);
+				}
 			
 		} catch (Exception e) {
 			logger.error("连接异常"+e);
@@ -193,21 +200,29 @@ public class UserController {
 	public Json updateUser(HttpServletRequest req){
 		String dataid = req.getParameter("datas");
 		JSONObject json = new JSONObject().fromObject(dataid);
-		String username = json.getString("username");//用户名
-		String password = json.getString("password");
+		String userName = json.getString("username");//用户名
+		String passWord = json.getString("password");
 		String employeeis_Name = json.getString("employee");//员工姓名
 		String distribution_Role = json.getString("role");//分配角色
 		String belongs_City = json.getString("city");//所属城市
-		String createDate = DateUtils.getInDateTime((new Date()));//日期
+		String updateDate = DateUtils.getInDateTime((new Date()));//日期
 		String note =json.getString("note");
-		Integer id = json.getInt("id");
+		String sid = json.getString("id");
+		int id = Integer.parseInt(sid);
+		UserLogin userlogin = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,updateDate,id);
+		Map<Object,Object> param = new HashMap<Object,Object>();
+		param.put("username",userName);
+		UserLogin userUpdateAdd = userservice.selectroleUserName(param);
+		if(userUpdateAdd !=null){
+			return new Json(false,"fail",userUpdateAdd,"修改保存用户名存在修改失败");
+		}else{
+			boolean isResult =userservice.updateaddUser(userlogin);
+			if(isResult == true){
+				return new Json(true,"success",isResult,"");
+			}else
+				return new Json(false,"fail",isResult,"");
+		}
 		
-		UserLogin userlogin = new UserLogin(id,username,password,employeeis_Name,distribution_Role,belongs_City,note,createDate);
-		boolean isResult =userservice.updateaddUser(userlogin);
-		if(isResult == true){
-			return new Json(true,"success",isResult,"");
-		}else
-			return new Json(false,"fail",isResult,"");
 	}
 	
 	/**

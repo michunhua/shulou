@@ -10,6 +10,7 @@
 		<result column="createdate" property="createDate" />
 		<result column="belongs_city" property="belongs_City" />
 		<result column="configuration" property="configuration"/>
+		<result column="updatedate" property="updatedate"/>
 	</resultMap>
 	<!-- 列表分页展示 -->
 	<select id="getRolePage" resultType="Map" resultMap="roleaadddao">
@@ -49,7 +50,7 @@
 	<update id="updateRole" parameterType="com.slloan.entity.AddRole">
 		update add_role set roleName = #{roleName},
 		descriPtion=#{descriPtion},belongs_city=#{belongs_City}
-		note=#{note},createDate = #{createDate} WHERE id = #{id}
+		note=#{note},configuration=#{configuration},updatedate = #{updatedate} WHERE id = #{id}
 	</update>
 	
 	<!-- 根据角色得到所属城市还有角色 -->
@@ -100,4 +101,7 @@
 		note=#{note},createDate = #{createDate} WHERE id = #{id}
 	 </update>
 	 
+	 <select id="selectroleRoleName" resultType="Map" resultMap="roleaadddao">
+	 	SELECT rolename FROM add_role WHERE rolename=#{rolename}
+	 </select>
 </mapper>

@@ -179,7 +179,7 @@ var singlesendAjax = function(method, url, datas, callback) {
       var findEl = document.querySelector('.update')
       findEl.addEventListener('click', function() {
         var method = 'GET'
-        var url = '/role/selectbyid'
+        var url = '/slloan/role/selectbyid'
         var data = {'id':'150'}
         console.log('update')
         singlesendAjax(method, url, data, null)

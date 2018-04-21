@@ -90,4 +90,11 @@ public interface UserDao extends BaseDao<UserLogin>{
 	     * @return
 	     */
 	    public UserLogin selectUserById(int id);
+	    
+	    /**
+	     * 查询角色名在不在
+	     * @param map
+	     * @return
+	     */
+	    public UserLogin selectroleUserName(Map<Object,Object>map);
 }

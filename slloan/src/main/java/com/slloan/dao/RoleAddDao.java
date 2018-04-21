@@ -54,4 +54,11 @@ public interface RoleAddDao extends BaseDao<AddRole>{
 	     * @return
 	     */
 	    public AddRole selectByRId(Map<String,Object>map);
+	    
+	    /**
+	     * 查询角色名在不在
+	     * @param map
+	     * @return
+	     */
+	    public AddRole selectroleRoleName(Map<Object,Object>map);
 }

@@ -65,4 +65,11 @@ public interface RoleAddService extends BaseDao<AddRole>{
 	//查询所有的角色
 	public List<AddRole> list();
 	
+	 /**
+     * 查询角色名在不在
+     * @param map
+     * @return
+     */
+    public AddRole selectroleRoleName(Map<Object,Object>map);
+	
 }

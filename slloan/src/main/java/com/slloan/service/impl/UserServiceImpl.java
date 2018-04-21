@@ -2,6 +2,7 @@ package com.slloan.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -71,8 +72,9 @@ public class UserServiceImpl implements UserService{
 		 String distribution_Role = user.getDistribution_Role();//分配角色
 		 String belongs_City =user.getBelongs_City();//所属城市
 		 String note = user.getNote();//备注
-		String createDate = DateUtils.getInDateTime((new Date()));//日期
-		 UserLogin u = new UserLogin(id,userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,createDate);
+		String updateDate = DateUtils.getInDateTime((new Date()));//日期
+		 UserLogin u = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,updateDate,id);
+
 		boolean isResult = userdao.updateUser(u);
 		if(isResult == true){
 			return true;
@@ -182,5 +184,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserLogin selectUserById(int id) {
 		return userdao.selectUserById(id);
+	}
+
+	@Override
+	public UserLogin selectroleUserName(Map<Object, Object> map) {
+		Map<Object,Object> param = new HashMap<Object,Object>();
+		Iterator it = map.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry)it.next();
+			Object key = entry.getKey();
+			Object value= entry.getValue();
+			param.put(key, value);
+		}
+		return userdao.selectroleUserName(param);
 	}
 }

@@ -17,6 +17,7 @@ public class AddRole{
 	private String note;//备注
 	private String configuration;//权限配置
 	private String createDate;//创建日期
+	private String updatedate;//修改日期
 	
 	/*private String loan_management;//贷款管理
 	private String repayment_confirmation;//回款确认
@@ -86,6 +87,7 @@ public class AddRole{
 		this.belongs_City = belongs_City;
 		this.configuration = configuration;
 	}
+	
 	/*public AddRole(Integer id, String roleName, String descriPtion, String note, Date createDate, String belongs_City,
 			String configuration, String loan_management, String repayment_confirmation, String loan_Final_review,
 			String loan_First_trial, String loan_information, String loan_Create, String qz_certificate,
@@ -137,9 +139,30 @@ public class AddRole{
 		this.city = city;
 		this.county = county;
 	}*/
+	
+	public AddRole(String roleName, String descriPtion, String belongs_City, String note, String configuration,
+			String updatedate, Integer id) {
+		super();
+		this.roleName = roleName;
+		this.descriPtion = descriPtion;
+		this.belongs_City = belongs_City;
+		this.note = note;
+		this.configuration = configuration;
+		this.updatedate = updatedate;
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}
+	public String getUpdatedate() {
+		return updatedate;
+	}
+
+	public void setUpdatedate(String updatedate) {
+		this.updatedate = updatedate;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -395,11 +418,12 @@ public class AddRole{
 				+ ", add_User=" + add_User + ", fp_Role=" + fp_Role + ", del_User=" + del_User + ", modify_user="
 				+ modify_user + ", url=" + url + ", method=" + method + ", city=" + city + ", county=" + county + "]";
 	}*/
+
 	@Override
 	public String toString() {
-		return "AddRole [roleName=" + roleName + ", descriPtion=" + descriPtion + ", note=" + note
-				+ ", createDate=" + createDate + ", belongs_City=" + belongs_City + ", configuration=" + configuration
-				+ "]";
+		return "AddRole [id=" + id + ", roleName=" + roleName + ", descriPtion=" + descriPtion + ", belongs_City="
+				+ belongs_City + ", note=" + note + ", configuration=" + configuration + ", createDate=" + createDate
+				+ ", updatedate=" + updatedate + "]";
 	}
 
 }

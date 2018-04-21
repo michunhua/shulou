@@ -3,6 +3,7 @@ package com.slloan.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ import com.slloan.entity.PermissionEntity;
 import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.RoleAddService;
 import com.slloan.util.DateUtils;
+
+import groovy.xml.Entity;
 
 
 @Service(value="roleaddservice")
@@ -173,6 +176,19 @@ public class RoleAddServiceImpl implements RoleAddService{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", param.getId());
 		return roleAddDao.accordingtoroleCity(map);
+	}
+
+	@Override
+	public AddRole selectroleRoleName(Map<Object, Object> map) {
+		Map<Object, Object> param = new HashMap<Object,Object>();
+		Iterator it = map.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry)it.next();
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+			param.put(key, value);
+		}
+		return roleAddDao.selectroleRoleName(param);
 	}
 
 }

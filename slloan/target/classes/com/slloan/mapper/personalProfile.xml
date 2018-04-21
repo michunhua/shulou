@@ -198,20 +198,36 @@
 			limit #{page},#{limit}
 			</if>
 	</select>
-	
 
-	
-<!-- 初审列表查询 -->
 	<select id="vaguelikeSelectCreate" resultType="Map" resultMap="personalpr">
-			SELECT a.name,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime
+			SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime
 				FROM borrow_information a LEFT JOIN apply_for_loan_information b
 				on(a.id = b.id) RIGHT JOIN recordsubmit_table c on (a.id = c.id)
-				  where a.name like  CONCAT('%', #{name}, '%')
-				or  a.id_number like  CONCAT('%', #{idnumber}, '%')
-				or  a.mobile_phone like  CONCAT('%', #{mobilephone}, '%')
-				or  a.ctime BETWEEN #{ctim1} and #{ctim2}
-				or  b.amount  BETWEEN #{amount} and #{amount2} and c.state ='1' 
+<!-- 				  where a.name like  CONCAT('%', #{name}, '%') -->
+<!-- 				or  a.id_number like  CONCAT('%', #{idnumber}, '%') -->
+<!-- 				or  a.mobile_phone like  CONCAT('%', #{mobilephone}, '%') -->
+<!-- 				or  a.ctime BETWEEN #{ctim1} and #{ctim2} -->
+<!-- 				or  b.amount  BETWEEN #{amount} and #{amount2} and c.state ='1' -->
+
+				 where 1=1
+				<if test="name!=null and name!=''">and a.name like  CONCAT('%', #{name}, '%')</if>
+				<if test="id_number!=null and id_number!=''">and a.id_number like  CONCAT('%', #{id_number}, '%')</if>
+				<if test="mobile_phone!=null and mobile_phone!=''">and a.mobile_phone like  CONCAT('%', #{mobile_phone}, '%')</if>
+				<if test="ctime !=null and ctime !=''">and a.ctime BETWEEN #{ctime} and #{ctime2}</if>
+				<if test="amount !=null and amount !=''">and b.amount  BETWEEN #{amount} and #{amount2}</if>
+				
+<!-- 		<where> -->
+<!-- 			<if test="name!=null">or a.name like  CONCAT('%', #{name}, '%')</if> -->
+<!-- 			<if test="id_number!=null">or a.id_number like  CONCAT('%', #{idnumber}, '%')</if> -->
+<!-- 			<if test="mobile_phone!=null">or a.mobile_phone like  CONCAT('%', #{mobilephone}, '%')</if> -->
+<!-- 			<if test="ctime!=null">or a.ctime BETWEEN #{ctim0} and #{ctim2}</if> -->
+<!-- 			<if test="amount !=null">or b.amount  BETWEEN #{amount} and #{amount2}</if> -->
+<!-- 			and c.state ='1'  -->
+<!-- 		</where>  -->
+		and c.state ='1'
+		GROUP BY a.`id`  order by a.name   
 		</select> 
+
 
 
 
