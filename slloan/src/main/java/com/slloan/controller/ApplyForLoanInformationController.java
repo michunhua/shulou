@@ -63,11 +63,17 @@ public class ApplyForLoanInformationController {
 		String repayment_Account_Number = obj.getString("repayCcount"); //还款账号
 		String state = obj.getString("state");//状态0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-
-		
+		String username = obj.getString("username");
+		 String parentnodeId = obj.getString("parentnodeId");
+		 String city = obj.getString("city");
+		 String rolename = obj.getString("rolename");
+//		String username ="张三";
+//		 String parentnodeId = "27";
+//		 String city ="北京";
+//		String rolename = "按揭员";
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, borrowing_Variety, repayment,
 				receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-				repayment_Account_Name, repayment_Account_Number,state,ctime);
+				repayment_Account_Name, repayment_Account_Number,state,ctime,username,parentnodeId,city,rolename);
 		boolean rt = applyForLoanInformationservice.save(ap);// 鎻掑叆瑙掕壊
 
 

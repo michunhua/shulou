@@ -1,3 +1,13 @@
+// 依赖库方法
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
+});
+
 // 收集信息
 var collectData = function() {
   log('收集数据')
@@ -45,6 +55,7 @@ var collectData = function() {
   data.state = 'c'
   data.ctime ='d'
   data.hi = 'hi'
+  data.id = 2	  
   return data
 }
 
@@ -67,8 +78,8 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/perupdates'
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -76,7 +87,7 @@ var sendData = function() {
 
 
 //设置页面数据
-var searchExport = function(data) {
+var searchExport = function(back) {
     // 获取页面元素
 	cname = e('.ch-name')
 	ename = e('.en-name')
@@ -116,86 +127,113 @@ var searchExport = function(data) {
 	rent = e('.rent')
 	added = e('.added')
 	supportPeople = e('.support-people')
-	expenses = e('.expenses').value
+	expenses = e('.expenses')
 	communication = e('.communication')
 	
     //设置具体值
-	cname.value = data.cname
-	ename.value = data.ename
-	paperwork.value = data.paperwork
-	otherPaperwork.value = data.otherPaperwork
-	paperNumb.value = data.paperNumb
-	country.value = data.country
-	otherCountry.value = data.otherCountry
-	gender.value = data.gender
-	census.value = data.census
-	otherCensus.value = data.otherCensus
-	marriage.value = data.marriage
-	housing.value = data.housing
-	otherHousing.value = data.otherHousing
-	birthday.value = data.birthday
-	currentAddress.value = data.currentAddress
-	residencePhone.value = data.residencePhone
-	mobilePhone.value = data.mobilePhone
-	email.value = data.email
-	code.value = data.code
-	career.value = data.career
-	unit.value = data.unit
-	unitName.value = data.unitName
-	unitAddress.value = data.unitAddress
-	companyNumber.value = data.companyNumber
-	lastyearIncome.value = data.lastyearIncome
-	assetSize.value = data.assetSize
-	unitPhone.value = data.unitPhone
-	unitCode.value = data.unitCode
-	jobsType.value = data.jobsType
-	unitTime.value = data.unitTime
-	lastunitName.value = data.lastunitName
-	lastunitTime.value = data.lastunitTime
-	incomeSource.value = data.incomeSource
-	salary.value = data.salary
-	investment.value = data.investment
-	rent.value = data.rent
-	added.value = data.added
-	supportPeople.value = data.supportPeople
-	expenses.value =  data.expenses 
-	communication.value = data.communication 
+	cname.value = back.name
+	ename.value = back.phoneticize
+	paperwork.value = back.id_type
+	otherPaperwork.value = back.other_identity_types
+	paperNumb.value = back.id_number
+	country.value = back.country_and_region
+	otherCountry.value = back.other_Countries
+	gender.value = back.sex
+	census.value = back.Local_domicile
+	otherCensus.value = back.household_registration
+	marriage.value = back.marital_status
+	housing.value = back.housing_condition_now
+	otherHousing.value = back.otherCensus
+	birthday.value = back.birthday
+	currentAddress.value = back.home_address_now
+	residencePhone.value = back.home_phone
+	mobilePhone.value = back.mobile_phone
+	email.value = back.email
+	code.value = back.present_address_zip_code
+	career.value = back.vocation
+	unit.value = back.unit_industry
+	unitName.value = back.uni_name
+	unitAddress.value = back.unit_address
+	companyNumber.value = back.enterprise_scale
+	lastyearIncome.value = back.revenue_previous_year
+	assetSize.value = back.asset_scale
+	unitPhone.value = back.unit_phone
+	unitCode.value = back.postCode
+	jobsType.value = back.job_category
+	unitTime.value = back.seniority
+	lastunitName.value = back.former_unit_name
+	lastunitTime.value = back.former_seniority
+	incomeSource.value = back.source_of_income
+	salary.value = back.monthly_income
+	investment.value = back.income_from_investment
+	rent.value = back.supportPeople
+	added.value = back.other_income
+	supportPeople.value = back.family_number
+	expenses.value =  back.monthly_expenditure
+	communication.value = back.monthly_expenditure
+	
+	// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".paperwork-type").val(back.id_type);
+		  $(".country").val(back.country_and_region);
+		  $(".gender").val(back.sex);
+		  $(".census").val(back.local_domicile);
+		  $(".marriage").val(back.marital_status);
+		  $(".housing").val(back.housing_condition_now);
+		  $(".communication").val(back.postal_address);
+		  form.render()
+		});
 }
+
 
 
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
-$.ajax({
-type: method,
-url: url,
-data: {data:JSON.stringify(datas)},
-success: function(data) {
-	console.log('返回数据', data)
-	if(data.msg == 'success') {
-		
-	}
-}
-})
+	log('send data method')
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+				searchExport(data.obj)
+			}
+		}
+	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/personalp'
+	var url = '/slloan/loan/personalpss'
 	var data = {}
-	data.id = 10
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
 }
 
-
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
 
 //
 var __main = function() {
   log( "run")
+  searchData()
   sendData()
+  cancelBtn('#cancel')
 }
 
 __main()

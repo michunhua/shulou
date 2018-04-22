@@ -186,7 +186,7 @@
             <a href="">共同申请人配偶</a>
           </span>
           <hr>
-          <!-- 页面内容区域 -->
+          <!-- 具体内容区 -->
           <form class="layui-form layui-form-pane" action="">
             <div class="layui-form-item">
               <label class="layui-form-label">中文名称</label>
@@ -197,37 +197,38 @@
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="paperwork-type certificate">
-                  <option value=""></option>
-                  <option value="0">北京</option>
-                  <option value="1">上海</option>
-                  <option value="2">广州</option>
-                  <option value="3">深圳</option>
-                  <option value="4">杭州</option>
+                <select name="city" lay-verify="required" class="certificate">
+                  <option value="0">居民身份证</option>
+                  <option value="1">护照</option>
+                  <option value="2">户口薄</option>
+                  <option value="3">军官证</option>
+                  <option value="4">港澳居民身份证</option>
+                  <option value="5">台湾同胞来往内地通行证</option>
+                  <option value="6">其他</option>
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="请输入证件类型" autocomplete="off" class="layui-input certificate-type">
+                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input certificate-type">
               </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
+                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input document-number">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现单位名称</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="太阳系舰队" autocomplete="off" class="layui-input unit-name">
+                <input type="text" name="title" required  lay-verify="required" placeholder="太阳系舰队" autocomplete="off" class="layui-input until-name">
               </div>
               <label class="layui-form-label">单位电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input unit-phone">
+                <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input until-phone">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">住宅电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input house-phone">
+                <input type="text" name="title" required  lay-verify="required" placeholder="0755-xxxx" autocomplete="off" class="layui-input residence-phone">
               </div>
               <label class="layui-form-label">移动电话</label>
               <div class="layui-input-inline">
@@ -244,7 +245,7 @@
             <div class="layui-form-item">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-coMate'>立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id = "cancel">取消</button>
               </div>
             </div>
         </div>

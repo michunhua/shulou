@@ -77,6 +77,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
+    window.history.back()
   })
 }
 
@@ -134,7 +135,7 @@ var searchAjax = function(method, url, datas) {
 
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactss'
+	var url = '/slloan/loan/contactoc'
 	var data = {}
 	data.id = localStorage.createID
 	if(data.id) {

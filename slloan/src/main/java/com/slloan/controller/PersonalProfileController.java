@@ -93,7 +93,18 @@ public class PersonalProfileController {
 		String state=obj.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
 		String ctime=obj.getString("ctime"); // 日期
-
+		String username = obj.getString("username");
+		 String parentnodeId = obj.getString("parentnodeId");
+		 String city = obj.getString("city");
+		String rolename = obj.getString("rolename");
+//		 PersonalProfile p = new PersonalProfile();
+//		 	p.setUsername("张三");
+//		 	p.setParentnodeId("27");
+//		 	p.setCity("北京");
+//		 	String username ="张三";
+//			 String parentnodeId = "27";
+//			 String city ="北京";
+//			 String rolename ="按揭员";
 		Double Revenue_previous_year = 0.0;
 		if (lastyearIncome.length() > 0) {
 			Revenue_previous_year = Double.parseDouble(lastyearIncome);
@@ -125,9 +136,13 @@ public class PersonalProfileController {
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
 				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
 				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,username,parentnodeId,city,rolename);
 		boolean pe = personalprofileservice.save(person);// 插入角色
 
+		
+//	 	p.setParentnodeId("27");
+//	 	p.setCity("北京");
+		
 		if (pe == true) {
 			logger.info("数据插入成功!");
 			return new Json(true, "success", pe);

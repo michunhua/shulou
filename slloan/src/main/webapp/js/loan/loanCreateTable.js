@@ -1,97 +1,99 @@
-//layui.use('table', function(){
-//  var table = layui.table;
-//
-//  //第一个实例
-//  table.render({
-//    elem: '#demo'
-//    ,height: 315
-//    ,url: '/demo/table/user/' //数据接口
-//    ,page: true //开启分页
-//    ,cols: [[ //表头
-//      {field: 'id', title: '全选', width:80, sort: true, fixed: 'left'}
-//      ,{field: 'user', title: '申请编号', width:200}
-//      ,{field: 'username', title: '姓名', width:80}
-//      ,{field: 'sex', title: '申请金额', width:200, sort: true}
-//      ,{field: 'city', title: '手机号码', width:200}
-//      ,{field: 'sign', title: '证件号码', width: 200}
-//      ,{field: 'experience', title: '贷款期限', width: 200, sort: true}
-//      ,{field: 'score', title: '状态', width: 80, sort: true}
-//      ,{field: 'classify', title: '住房风地址', width: 200}
-//      ,{field: 'wealth', title: '创建时间', width: 200, sort: true}
-//      ,{field: 'wealth', title: '操作', width: 135, sort: true}
-//    ]]
-//  });
-//
-//});
-//
-//// 引入验证
-//
-//layui.use(['form', 'layedit', 'laydate'], function(){
-//  var form = layui.form
-//  ,layer = layui.layer
-//  ,layedit = layui.layedit
-//  ,laydate = layui.laydate;
-//
-//  //日期 起始
-//  laydate.render({
-//    elem: '#date'
-//  });
-//  laydate.render({
-//    elem: '#date1'
-//  });end
-//
-//  // 日期 终止
-//  laydate.render({
-//    elem: '#end'
-//  });
-//  laydate.render({
-//    elem: '#date1'
-//  });
-//
-//
-//  //创建一个编辑器
-//  var editIndex = layedit.build('LAY_demo_editor');
-//
-//  //自定义验证规则
-//  form.verify({
-//    title: function(value){
-//      if(value.length < 5){
-//        return '标题至少得5个字符啊';
-//      }
-//    }
-//    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-//    ,content: function(value){
-//      layedit.sync(editIndex);
-//    }
-//  });
-//
-//  //监听指定开关
-//  form.on('switch(switchTest)', function(data){
-//    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-//      offset: '6px'
-//    });
-//    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-//  });
-//
-//  //监听提交
-//  form.on('submit(demo1)', function(data){
-//    layer.alert(JSON.stringify(data.field), {
-//      title: '最终的提交信息'
-//    })
-//    return false;
-//  });
-//
-//
-//});
+layui.use('table', function(){
+  var table = layui.table;
 
-//name
-//amount
-//mobile_phone
-//id_number
-//time_Limit	
-//state
-//home_address_now
-//ctime
+  //第一个实例
+  table.render({
+    elem: '#demo'
+    ,height: 315
+    ,url: '/demo/table/user/' //数据接口
+    ,page: true //开启分页
+    ,cols: [[ //表头
+      {field: 'id', title: '全选', width:80, sort: true, fixed: 'left'}
+      ,{field: 'user', title: '申请编号', width:200}
+      ,{field: 'username', title: '姓名', width:80}
+      ,{field: 'sex', title: '申请金额', width:200, sort: true}
+      ,{field: 'city', title: '手机号码', width:200}
+      ,{field: 'sign', title: '证件号码', width: 200}
+      ,{field: 'experience', title: '贷款期限', width: 200, sort: true}
+      ,{field: 'score', title: '状态', width: 80, sort: true}
+      ,{field: 'classify', title: '住房风地址', width: 200}
+      ,{field: 'wealth', title: '创建时间', width: 200, sort: true}
+      ,{field: 'wealth', title: '操作', width: 135, sort: true}
+    ]]
+  });
+
+});
+
+// 引入验证
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+
+  //日期 起始
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });end
+
+  // 日期 终止
+  laydate.render({
+    elem: '#end'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+
+
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+
+  //自定义验证规则
+  form.verify({
+    title: function(value){
+      if(value.length < 5){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
+    return false;
+  });
+
+
+});
+
+
+//依赖库方法
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
+});
 
 // 添加表格具体数据格
 var addTable = function(data) {
@@ -237,20 +239,75 @@ var createBtn = function() {
 }
 
 // 具体查询
-var numberSearch = function() {
-	var envs = es('.mark')
-	for(var i = 0; i < envs.length; i++) {
-		envs[i].addEventListener('click', function(event) {
-			console.log(event.target.innerText)
+//var numberSearch = function() {
+//	var envs = es('.mark')
+//	for(var i = 0; i < envs.length; i++) {
+//		envs[i].addEventListener('click', function(event) {
+//			console.log(event.target.innerText)
+//		})
+//	}
+//}
+
+var numberSearch = function(element) {
+	var envs = e(element)
+		envs.addEventListener('click', function(event) {
+			var indicate = event.target.classList
+			if(indicate == 'mark') {
+				console.log(event.target.innerText)
+			}
 		})
-	}
 }
+
+//分页接口 user/userlist
+var init = {
+		pages: 1,
+		limit: 10,
+}
+
+//下一页
+var nextpage = function() {
+	var envs = document.querySelector('.next')
+	envs.addEventListener('click', function() {
+		var flag = Number(document.querySelector('.totalPage').innerText)
+		if(init.pages >= 1 && init.pages < flag) {
+			init.pages = init.pages + 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有下一页!'
+				});
+		}
+	})
+}
+
+nextpage()
+
+// 上一页
+var previoupage = function() {
+	var envs = document.querySelector('.previous')
+	envs.addEventListener('click', function() {
+		if(init.pages > 1) {
+			init.pages = init.pages - 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有上一页!'
+				});
+		}
+	})
+}
+
+previoupage()
 
 var __main = function() {
   envs('#save-data')
   createBtn()
   initData()
-  numberSearch()
+  numberSearch('.tab-data')
 }
 
 __main()

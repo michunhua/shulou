@@ -3,9 +3,14 @@
 var collectData = function() {
   log('收集数据')
   var data = {}
-  data.note = e('.note').value
-  data.firstTrial = e('.first-trial').value
-  data.finalTrial = e('.final-trial').value
+  recordNote = e('.note')
+  recordFirst = e('.first-trial')
+  data.recorFinal = e('.final-trial').value
+  data.id = 1
+ data.username ='a'
+ data.parentnodeId ='b'
+ data.city ='c'
+ data.rolename ='d' 
   return data
 }
 
@@ -71,20 +76,32 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/personalp'
+	var url = '/slloan/loan/notedescid'
 	var data = {}
-	data.id = 10
+	data.id = 1
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
+}
+
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
 }
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-note')
+  cancelBtn('#cancel')
   searchData()
 }
 

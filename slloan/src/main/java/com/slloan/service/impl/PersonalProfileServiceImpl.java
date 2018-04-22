@@ -71,14 +71,17 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		String state = personalProfile.getState();// 状态 //
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = personalProfile.getCtime();// 日期
-
+		String username = personalProfile.getUsername();
+		String ParentnodeId = personalProfile.getParentnodeId();
+		String city = personalProfile.getCity();
+		String rolename = personalProfile.getRolename();
 		PersonalProfile joint = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
 				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
 				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,username,ParentnodeId,city,rolename);
 		return personalProfiledao.save(personalProfile);
 	}
 

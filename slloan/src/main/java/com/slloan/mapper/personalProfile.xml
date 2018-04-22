@@ -46,6 +46,10 @@
 		<result column="postal_address" property="postal_address" />
 		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
+		<result column="username" property="username" />
+		<result column="parentnodeId" property="ParentnodeId" />
+		<result column="city" property="city" />
+		<result column="rolename" property="rolename" />
 		<collection property="notes" javaType="java.util.List"
 			ofType="com.slloan.entity.NoteDescription">
 			<id column="id" property="id" jdbcType="INTEGER" />
@@ -54,6 +58,10 @@
 			<result column="note_Description3" property="note_Description3" />
 			<result column="state" property="state" />
 			<result column="ctime" property="ctime" />
+			<result column="username" property="username" />
+			<result column="parentnodeId" property="ParentnodeId" />
+			<result column="city" property="city" />
+			<result column="rolename" property="rolename" />
 		</collection>
 		<collection property="applyfor" javaType="java.util.List"
 			ofType="com.slloan.entity.ApplyForLoanInformation">
@@ -69,7 +77,10 @@
 			<result column="repayment_Account_Number" property="repayment_Account_Number" />
 			<result column="state" property="state" />
 			<result column="ctime" property="ctime" />
-
+			<result column="username" property="username" />
+			<result column="parentnodeId" property="ParentnodeId" />
+			<result column="city" property="city" />
+			<result column="rolename" property="rolename" />
 		</collection>
 
 	</resultMap>
@@ -118,7 +129,10 @@
 		monthly_expenditure,
 		postal_address ,
 		state ,
-		ctime
+		ctime,
+		username,
+		parentnodeId,
+		city,rolename
 		)
 		VALUES
 		(
@@ -164,7 +178,9 @@
 		#{monthly_expenditure},
 		#{postal_address},
 		#{state},
-		#{ctime})
+		#{ctime},#{username},
+		#{ParentnodeId},
+		#{city},#{rolename})
 
 	</insert>
 	<!-- <update id="update" parameterType="personalpr"> update t_user set user_name=#{userName},user_age=#{age} 
@@ -202,7 +218,7 @@
 	<select id="vaguelikeSelectCreate" resultType="Map" resultMap="personalpr">
 			SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime
 				FROM borrow_information a LEFT JOIN apply_for_loan_information b
-				on(a.id = b.id) RIGHT JOIN recordsubmit_table c on (a.id = c.id)
+				on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)
 <!-- 				  where a.name like  CONCAT('%', #{name}, '%') -->
 <!-- 				or  a.id_number like  CONCAT('%', #{idnumber}, '%') -->
 <!-- 				or  a.mobile_phone like  CONCAT('%', #{mobilephone}, '%') -->

@@ -36,7 +36,11 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 		 String repayment_Account_Number=applyForLoanInformation.getRepayment_Account_Number();		//还款账号
 		 String state = applyForLoanInformation.getstate();
 		 String ctime = applyForLoanInformation.getCtime();
-		 ApplyForLoanInformation ap = new ApplyForLoanInformation(amount,time_Limit,borrowing_Variety,repayment,receiving_Bank_Name,receiving_Account_Name,receiving_Account,repayment_Bank_name,repayment_Account_Name,repayment_Account_Number,state,ctime);
+		 String username = applyForLoanInformation.getUsername();
+			String ParentnodeId = applyForLoanInformation.getParentnodeId();
+			String city = applyForLoanInformation.getCity();
+			String rolename = applyForLoanInformation.getRolename();
+		 ApplyForLoanInformation ap = new ApplyForLoanInformation(amount,time_Limit,borrowing_Variety,repayment,receiving_Bank_Name,receiving_Account_Name,receiving_Account,repayment_Bank_name,repayment_Account_Name,repayment_Account_Number,state,ctime,username,ParentnodeId,city,rolename);
 		return app.save(ap);
 			
 		

@@ -178,60 +178,81 @@
               <div class="layui-form-inline">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                  <input type="password" name="password" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                  <input type="text" name="username" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input username">
                 </div>
               </div>
               <div class="layui-form-inline">
-                <label class="layui-form-label">手机号码</label>
+                <label class="layui-form-label">手机</label>
                 <div class="layui-input-inline">
-                  <input type="password" name="password" required lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
+                  <input type="text" name="iphone" required lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input iphone">
                 </div>
               </div>
               <div class="layui-form-inline">
                 <label class="layui-form-label">证件号码</label>
                 <div class="layui-input-inline">
-                  <input type="password" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input">
+                  <input type="text" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input Idcard">
                 </div>
               </div>
               <div class="layui-form-inline">
                 <label class="layui-form-label">申请编号</label>
                 <div class="layui-input-inline">
-                  <input type="password" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input">
+                  <input type="text" name="password" required lay-verify="required" placeholder="请输入申请编号" autocomplete="off" class="layui-input application">
                 </div>
               </div>
               <div class="layui-form-inline">
-                <label class="layui-form-label">申请日期</label>
-                <div class="layui-input-inline" style="width: 100px;">
-                   <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid">-</div>
-                <div class="layui-input-inline" style="width: 100px;">
-                   <input type="text" name="date" id="dates" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                  <div class="layui-inline">
+                    <label class="layui-form-label">申请时间</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                       <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input start">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                       <input type="text" name="date" id="dates" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input end">
+                    </div>
+                  </div>
+              </div>
+               <div class="layui-form-inline">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                  <select name="city" lay-verify="required" class="state">
+                    <option value="0">全部</option>
+                    <option value="1">待初审审批中</option>
+                    <option value="2">待终审审批中</option>
+                    <option value="3">待出账确认</option>
+                    <option value="4">待放款</option>
+                    <option value="5">待确认</option>
+                    <option value="6">待取证</option>
+                    <option value="7">待解押</option>
+                    <option value="8">待进押</option>
+                    <option value="9">待确认回款</option>
+                    <option value="10">待结算</option>
+                    <option value="11">待清算</option>
+                  </select>
                 </div>
               </div>
               <div class="layui-form-inline">
-                <label class="layui-form-label">贷款金额</label>
-                <div class="layui-input-inline" style="width: 100px;">
-                  <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid">-</div>
-                <div class="layui-input-inline" style="width: 100px;">
-                  <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                </div>
-              </div>
-              <div class="layui-form-inline">
-                <div class="layui-input-block">
-                  <button class="layui-btn" lay-submit lay-filter="formDemo">查询</button>
-                </div>
-              </div>
-            </div>
-            <div class="layui-form-inline">
-              <div class="layui-inline">
-                <label class="layui-form-label">总人数:*人</label>
+                  <div class="layui-inline">
+                    <label class="layui-form-label">金额范围</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input min">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                      <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input max">
+                    </div>
+                  </div>
               </div>
             </div>
           </form>
-                    <!-- 表格部分 -->
+          <div class="layui-form-item">
+            <div class="layui-input-inline">
+              <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>查询</button>
+            </div>
+          </div>
+          <div class="layui-inline">
+                <label class="layui-form-label ">总人数:*人</label>
+           </div>
+          <!-- 表格部分 -->
           <table class="layui-table">
             <colgroup>
               <col width="150">

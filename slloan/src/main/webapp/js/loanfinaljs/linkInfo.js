@@ -2,15 +2,21 @@
 var collectData = function() {
   log('收集数据')
   var data = {}
-  data.linkfName = e('.linkf-name').value
-  data.linkfRelationship = e('.linkf-relationship').value
+  data.linkf = e('.linkf').value
+  data.linkfMate = e('.linkf-mate').value
   data.linkfPhone = e('.linkf-phone').value
-  data.linksName = e('.links-name').value
-  data.linksRelationship = e('.links-relationship').value
+  
+  data.links = e('.links').value
+  data.linksMate = e('.links-mate').value
   data.linksPhone = e('.links-phone').value
-  data.linktName = e('.linkt-name').value
-  data.linktRelationship = e('.linkt-relationship').value
+  
+  data.linkt = e('.linkt').value
+  data.linktMate = e('.linkt-mate').value
   data.linktPhone = e('.linkt-phone').value
+	  data.state = 'b'
+	  data.ctime = 'c'
+	
+  data.id = 2
   return data
 }
 
@@ -33,8 +39,8 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/modifyuserod'
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -43,41 +49,41 @@ var sendData = function() {
 
 //设置页面数据
 var searchExport = function(back) {
-	  linkf = e('.linkf-name')
-	  linkfMate = e('.linkf-relationship')
+	  linkf = e('.linkf')
+	  linkfMate = e('.linkf-mate')
 	  linkfPhone = e('.linkf-phone')
 	  
-	  links = e('.links-name')
-	  linksMate = e('.links-relationship')
-	  linksPhone = e('.links-phone')
+	  links = e('.links')
+	  linksMate = e('.links-mate')
+	  linksencodPhone = e('.links-phone')
 	  
-	  linkt = e('.linkt-name')
-	  linktMate = e('.linkt-relationship')
+	  linkt = e('.linkt')
+	  linktMate = e('.linkt-mate')
 	  linktPhone = e('.linkt-phone')
 	  
 	  //设置值
-	  linkf.value = back.id
-	  linkfMate.value = back.id
-	  linkfPhone.value = back.id
+	  linkf.value = back.contacts
+	  linkfMate.value = back.relationship
+	  linkfPhone.value = back.c_Telephone
 	  
-	  links.value = back.start
-	  linksMate.value = back.start
-	  linksPhone.value = back.start
+	  links.value = back.contacts1
+	  linksMate.value = back.relationship1
+	  linksencodPhone.value = back.c_Telephone1
 	  
-	  linkt.value = back.id
-	  linktMate.value = back.id
-	  linktPhone.value = back.id
+	  linkt.value = back.contacts2
+	  linktMate.value = back.relationship2
+	  linktPhone.value = back.c_Telephone2
 	  
 	  
-//	  console.log('电话号码', linksencodPhone)
+	// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".linkf-mate").val(back.relationship);
+		  $(".links-mate").val(back.relationship1);
+		  $(".linkt-mate").val(back.relationship2);
+		  form.render()
+		});
 }
-
-var initback = {
-		id: '19',
-		start: '100'
-}
-
-searchExport(initback)
 
 //查询
 //发送数据方法
@@ -92,26 +98,39 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
-
+				searchExport(data.obj)
 			}
 		}
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/personalp'
+	var url = '/slloan/loan/contactoa'
 	var data = {}
-	data.id = 10
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
+
 //
 var __main = function() {
   log( "run")
+  searchData()
   sendData()
+  cancelBtn('#cancel')
 }
 
 __main()

@@ -168,7 +168,7 @@ public class RoleAddController {
 	 */
 	@RequestMapping(value="/updateroleadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updateId(HttpServletRequest req){
+	public Json updateId(HttpServletRequest req){
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String username = json.getString("roleName");//用户名
@@ -181,20 +181,20 @@ public class RoleAddController {
 		String updatedate = DateUtils.getInDateTime((new Date()));//日期
 		AddRole addrole = new AddRole(username,descriPtion,belongs_City,note,configuration,updatedate,idint);
 		
-		Map<Object,Object> map = new HashMap<Object,Object>();
-		map.put("rolename", username);
-		AddRole role= roleAddService.selectroleRoleName(map);
-			if(role !=null){
-				return JSON.toJSONString("修改保存角色名已存在插入失败");//new Json(false,"fail",role,"角色名已存在插入失败");
-			}else{
+//		Map<Object,Object> map = new HashMap<Object,Object>();
+//		map.put("rolename", username);
+//		AddRole role= roleAddService.selectroleRoleName(map);
+//			if(role !=null){
+//				return JSON.toJSONString("修改保存角色名已存在插入失败");//new Json(false,"fail",role,"角色名已存在插入失败");
+//			}else{
 				 boolean isResult = roleAddService.updateRole(addrole);
 				 if(isResult == true){
 					 
-					 return  JSON.toJSONString("success");
+					 return  new Json(true,"success",isResult,"修改角色保存成功");//JSON.toJSONString("success");
 				 }else{
-					 return  JSON.toJSONString("fail");
+					 return new Json(true,"success",isResult,"修改角色保存失败");
 				 }
-			}
+//			}
 		
 	}
 	
@@ -229,12 +229,12 @@ public class RoleAddController {
 		//先查询roleName权限表是否有同名否则插入失败
 		
 //		String rolenamee = req.getParameter("name");//查询角色名
-		Map<Object,Object> map = new HashMap<Object,Object>();
-		map.put("rolename", roleName);
-		AddRole role= roleAddService.selectroleRoleName(map);
-			if(role !=null){
-				return new Json(false,"fail",role,"角色名已存在插入失败");
-			}else{
+//		Map<Object,Object> map = new HashMap<Object,Object>();
+//		map.put("rolename", roleName);
+//		AddRole role= roleAddService.selectroleRoleName(map);
+//			if(role !=null){
+//				return new Json(false,"fail",role,"角色名已存在插入失败");
+//			}else{
 				AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate);
 				boolean rt = roleAddService.addRoleUser(addrole);//插入角色
 				AddRole add = new AddRole();
@@ -304,7 +304,7 @@ public class RoleAddController {
 					logger.debug("插入失败"+e);
 					e.printStackTrace();
 				}
-			}
+//			}
 			return new Json(true,"success");
 	}
 	/**

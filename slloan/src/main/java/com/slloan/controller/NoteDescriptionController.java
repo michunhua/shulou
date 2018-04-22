@@ -47,7 +47,19 @@ public class NoteDescriptionController {
 		 	String note_Description3 =obj.getString("note");
 			String state=obj.getString("state");
 			String ctime=obj.getString("ctime");
-			 NoteDescription note = new NoteDescription(note_Description1,note_Description2,note_Description3,state, ctime);
+			String username = obj.getString("username");
+			 String parentnodeId = obj.getString("parentnodeId");
+			 String city = obj.getString("city");
+			String rolename = obj.getString("rolename");
+//			 PersonalProfile p = new PersonalProfile();
+//			 	p.setUsername("张三");
+//			 	p.setParentnodeId("27");
+//			 	p.setCity("北京");
+//			 	String username ="张三";
+//				 String parentnodeId = "27";
+//				 String city ="北京";
+//				 String rolename ="按揭员";
+			 NoteDescription note = new NoteDescription(note_Description1,note_Description2,note_Description3,state, ctime,username,parentnodeId,city,rolename);
 			 boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
 		
 

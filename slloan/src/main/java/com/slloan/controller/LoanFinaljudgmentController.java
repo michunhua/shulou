@@ -424,51 +424,51 @@ public class LoanFinaljudgmentController {
 			return new Json(false,"fail",isResult); 
 	}
 	
-	/**
-	 *  房产资料(终审房产资料)
-	 * @param req
-	 * @param contactsparam
-	 * @return
-	 */
-	@RequestMapping(value= "/propertydatadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
-	@ResponseBody
-	public Json updateadd(HttpServletRequest request,Contacts contactsparam){
-		String dataid = request.getParameter("data");
-		JSONObject req = new JSONObject().fromObject(dataid);
-		Integer id = req.getInt("id");
-		String ownership_And_percentage = req.getString("contacts"); // 权属人及占比
-		String property_Address = req.getString("contacts"); // 房产地址
-		String conStruction_Area =req.getString("contacts");// 建筑面积
-		String inner_Area = req.getString("contacts"); // 套内面积
-		String sales_Contract_Number =req.getString("contacts"); // 买卖合同编号
-		String certificate_of_Title = req.getString("contacts"); // 产权证号
-		String proPerty_for =req.getString("contacts");// 房产用于
-		String the_Assessed_Value =req.getString("contacts"); // 评估值
-		String original_Loan_Bank = req.getString("contacts"); // 原贷款银行
-		String original_Loan_Amount = req.getString("contacts");// 原贷款金额
-		String loan_Outstanding_Balance = req.getString("contacts"); // 原贷款尚欠本息余额
-		String house_Account = req.getString("contacts"); // 供楼账号
-		String transaCtion_Price =req.getString("contacts"); // 买卖成交价
-		String purchase_Deposit = req.getString("contacts"); // 购房定金
-		String supervision_of_funds =req.getString("contacts"); // 资金监管
-		String new_loan_Bank =req.getString("contacts");// 新贷款银行
-		String new_Loan_Approval_Amount =req.getString("contacts"); // 新贷款批复金额
-		String new_Loan_Bank_Account_Number = req.getString("contacts"); // 新贷款行账号
-		String note_DescriPtion = req.getString("contacts"); // 备注
-		String state=req.getString("contacts"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = req.getString("contacts");//更新时间
-		PropertyInformation preperty = new PropertyInformation(id,ownership_And_percentage, property_Address,
-				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
-				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
-				transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
-				new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
-			boolean isResult=	propertyinformationservice.proupdate(preperty);
-			if(isResult ==true){
-				return  new Json(true,"success",isResult);
-			}else{
-				return  new Json(false,"fail",isResult);
-			}
-	}
+//	/**
+//	 *  房产资料(终审房产资料)
+//	 * @param req
+//	 * @param contactsparam
+//	 * @return
+//	 */
+//	@RequestMapping(value= "/propertydatadd",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+//	@ResponseBody
+//	public Json updateadd(HttpServletRequest request,Contacts contactsparam){
+//		String dataid = request.getParameter("data");
+//		JSONObject req = new JSONObject().fromObject(dataid);
+//		Integer id = req.getInt("id");
+//		String ownership_And_percentage = req.getString("contacts"); // 权属人及占比
+//		String property_Address = req.getString("contacts"); // 房产地址
+//		String conStruction_Area =req.getString("contacts");// 建筑面积
+//		String inner_Area = req.getString("contacts"); // 套内面积
+//		String sales_Contract_Number =req.getString("contacts"); // 买卖合同编号
+//		String certificate_of_Title = req.getString("contacts"); // 产权证号
+//		String proPerty_for =req.getString("contacts");// 房产用于
+//		String the_Assessed_Value =req.getString("contacts"); // 评估值
+//		String original_Loan_Bank = req.getString("contacts"); // 原贷款银行
+//		String original_Loan_Amount = req.getString("contacts");// 原贷款金额
+//		String loan_Outstanding_Balance = req.getString("contacts"); // 原贷款尚欠本息余额
+//		String house_Account = req.getString("contacts"); // 供楼账号
+//		String transaCtion_Price =req.getString("contacts"); // 买卖成交价
+//		String purchase_Deposit = req.getString("contacts"); // 购房定金
+//		String supervision_of_funds =req.getString("contacts"); // 资金监管
+//		String new_loan_Bank =req.getString("contacts");// 新贷款银行
+//		String new_Loan_Approval_Amount =req.getString("contacts"); // 新贷款批复金额
+//		String new_Loan_Bank_Account_Number = req.getString("contacts"); // 新贷款行账号
+//		String note_DescriPtion = req.getString("contacts"); // 备注
+//		String state=req.getString("contacts"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+//		String ctime = req.getString("contacts");//更新时间
+//		PropertyInformation preperty = new PropertyInformation(id,ownership_And_percentage, property_Address,
+//				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
+//				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
+//				transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
+//				new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
+//			boolean isResult=	propertyinformationservice.proupdate(preperty);
+//			if(isResult ==true){
+//				return  new Json(true,"success",isResult);
+//			}else{
+//				return  new Json(false,"fail",isResult);
+//			}
+//	}
 	
 	/***
 	 * 联系人信息

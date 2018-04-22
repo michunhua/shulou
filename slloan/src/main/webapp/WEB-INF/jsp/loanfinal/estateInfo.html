@@ -187,7 +187,7 @@
           </span>
           <div class = 'validate'>注: 带有<span class = 'write'> * </span>必填项</div>
           <hr>
-          <!-- 页面具体内容 -->
+          <!-- 具体内容区域 -->
           <form class="layui-form layui-form-pane" action="">
             <div class="layui-form-item">
               <label class="layui-form-label">权属人姓名</label>
@@ -264,8 +264,8 @@
                 <input type="text" name="password" required lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input original-amount">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
+            
             <div class="layui-form-item">
               <label class="layui-form-label">供楼账号</label>
               <div class="layui-input-inline">
@@ -316,13 +316,13 @@
               <div class="layui-form-mid layui-word-aux">元</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
-          </form>
-           <div class="layui-form-item">
+            <div class="layui-form-item">
               <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-loaner'>立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id = "cancel">取消</button>
               </div>
             </div>
+          </form>
         </div>
     </div>
 

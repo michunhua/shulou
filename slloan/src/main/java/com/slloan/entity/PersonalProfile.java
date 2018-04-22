@@ -57,11 +57,16 @@ public class PersonalProfile implements Serializable {
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 	private String ctime;// 日期
 
+	private String username;//存入用户名
+	private String ParentnodeId;//存入登录用户名ID
+	private String city;//城市
+	private String rolename;//角色名
+	
 	private List<CircuLationRecord> notes;
 
 	private List<ApplyForLoanInformation> applyfor;
 	
-	private PersonalProfile(){}
+	public PersonalProfile(){}
 
 	public Integer getId() {
 		return id;
@@ -433,6 +438,39 @@ public class PersonalProfile implements Serializable {
 	
 	
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getParentnodeId() {
+		return ParentnodeId;
+	}
+
+	public void setParentnodeId(String parentnodeId) {
+		ParentnodeId = parentnodeId;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+
+	public String getRolename() {
+		return rolename;
+	}
+
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+
 	public PersonalProfile(Integer id, String product_Number, String name, String phoneticize, String id_type,
 			String other_identity_types, String id_number, String country_and_region, String other_Countries,
 			String sex, String local_domicile, String household_registration, String marital_status,
@@ -549,29 +587,90 @@ public class PersonalProfile implements Serializable {
 		this.ctime = ctime;
 	}
 
+	
+	public PersonalProfile(String product_Number, String name, String phoneticize, String id_type,
+			String other_identity_types, String id_number, String country_and_region, String other_Countries,
+			String sex, String local_domicile, String household_registration, String marital_status,
+			String housing_condition_now, String otherCensus, String birthday, String home_address_now,
+			String home_phone, String mobile_phone, String email, String present_address_zip_code, String vocation,
+			String unit_industry, String uni_name, String unit_address, String enterprise_scale,
+			double revenue_previous_year, String asset_scale, String unit_phone, String postCode, String job_category,
+			String seniority, String former_unit_name, String former_seniority, String source_of_income,
+			double monthly_income, double income_from_investment, double supportPeople, double other_income,
+			String family_number, double monthly_expenditure, String postal_address, String state, String ctime,
+			String username, String parentnodeId, String city,String rolename) {
+		super();
+		this.product_Number = product_Number;
+		this.name = name;
+		this.phoneticize = phoneticize;
+		this.id_type = id_type;
+		Other_identity_types = other_identity_types;
+		this.id_number = id_number;
+		this.country_and_region = country_and_region;
+		this.other_Countries = other_Countries;
+		this.sex = sex;
+		Local_domicile = local_domicile;
+		this.household_registration = household_registration;
+		this.marital_status = marital_status;
+		this.housing_condition_now = housing_condition_now;
+		this.otherCensus = otherCensus;
+		this.birthday = birthday;
+		this.home_address_now = home_address_now;
+		this.home_phone = home_phone;
+		this.mobile_phone = mobile_phone;
+		this.email = email;
+		this.present_address_zip_code = present_address_zip_code;
+		this.vocation = vocation;
+		this.unit_industry = unit_industry;
+		this.uni_name = uni_name;
+		this.unit_address = unit_address;
+		this.enterprise_scale = enterprise_scale;
+		Revenue_previous_year = revenue_previous_year;
+		this.asset_scale = asset_scale;
+		this.unit_phone = unit_phone;
+		this.postCode = postCode;
+		this.job_category = job_category;
+		this.seniority = seniority;
+		this.former_unit_name = former_unit_name;
+		this.former_seniority = former_seniority;
+		this.source_of_income = source_of_income;
+		this.monthly_income = monthly_income;
+		Income_from_investment = income_from_investment;
+		this.supportPeople = supportPeople;
+		Other_income = other_income;
+		this.family_number = family_number;
+		this.monthly_expenditure = monthly_expenditure;
+		this.postal_address = postal_address;
+		this.state = state;
+		this.ctime = ctime;
+		this.username = username;
+		ParentnodeId = parentnodeId;
+		this.city = city;
+		this.rolename = rolename;
+	}
+
 	@Override
 	public String toString() {
-		return "PersonalProfile [id=" + id + ", product_Number=" + product_Number + ", name=" + name + ", phoneticize="
-				+ phoneticize + ", id_type=" + id_type + ", Other_identity_types=" + Other_identity_types
-				+ ", id_number=" + id_number + ", country_and_region=" + country_and_region + ", other_Countries="
-				+ other_Countries + ", sex=" + sex + ", Local_domicile=" + Local_domicile + ", household_registration="
-				+ household_registration + ", marital_status=" + marital_status + ", housing_condition_now="
-				+ housing_condition_now + ", otherCensus=" + otherCensus + ", birthday=" + birthday
-				+ ", home_address_now=" + home_address_now + ", home_phone=" + home_phone + ", mobile_phone="
-				+ mobile_phone + ", email=" + email + ", present_address_zip_code=" + present_address_zip_code
-				+ ", vocation=" + vocation + ", unit_industry=" + unit_industry + ", uni_name=" + uni_name
-				+ ", unit_address=" + unit_address + ", enterprise_scale=" + enterprise_scale
-				+ ", Revenue_previous_year=" + Revenue_previous_year + ", asset_scale=" + asset_scale + ", unit_phone="
-				+ unit_phone + ", postCode=" + postCode + ", job_category=" + job_category + ", seniority=" + seniority
-				+ ", former_unit_name=" + former_unit_name + ", former_seniority=" + former_seniority
-				+ ", source_of_income=" + source_of_income + ", monthly_income=" + monthly_income
-				+ ", Income_from_investment=" + Income_from_investment + ", supportPeople=" + supportPeople
-				+ ", Other_income=" + Other_income + ", family_number=" + family_number + ", monthly_expenditure="
-				+ monthly_expenditure + ", postal_address=" + postal_address + ", state=" + state + ", ctime=" + ctime
-				+ ", notes=" + notes + ", applyfor=" + applyfor + "]";
+		return "PersonalProfile [product_Number=" + product_Number + ", name=" + name + ", phoneticize=" + phoneticize
+				+ ", id_type=" + id_type + ", Other_identity_types=" + Other_identity_types + ", id_number=" + id_number
+				+ ", country_and_region=" + country_and_region + ", other_Countries=" + other_Countries + ", sex=" + sex
+				+ ", Local_domicile=" + Local_domicile + ", household_registration=" + household_registration
+				+ ", marital_status=" + marital_status + ", housing_condition_now=" + housing_condition_now
+				+ ", otherCensus=" + otherCensus + ", birthday=" + birthday + ", home_address_now=" + home_address_now
+				+ ", home_phone=" + home_phone + ", mobile_phone=" + mobile_phone + ", email=" + email
+				+ ", present_address_zip_code=" + present_address_zip_code + ", vocation=" + vocation
+				+ ", unit_industry=" + unit_industry + ", uni_name=" + uni_name + ", unit_address=" + unit_address
+				+ ", enterprise_scale=" + enterprise_scale + ", Revenue_previous_year=" + Revenue_previous_year
+				+ ", asset_scale=" + asset_scale + ", unit_phone=" + unit_phone + ", postCode=" + postCode
+				+ ", job_category=" + job_category + ", seniority=" + seniority + ", former_unit_name="
+				+ former_unit_name + ", former_seniority=" + former_seniority + ", source_of_income=" + source_of_income
+				+ ", monthly_income=" + monthly_income + ", Income_from_investment=" + Income_from_investment
+				+ ", supportPeople=" + supportPeople + ", Other_income=" + Other_income + ", family_number="
+				+ family_number + ", monthly_expenditure=" + monthly_expenditure + ", postal_address=" + postal_address
+				+ ", state=" + state + ", ctime=" + ctime + ", username=" + username + ", ParentnodeId=" + ParentnodeId
+				+ ", city=" + city + ", rolename=" + rolename + "]";
 	}
 
 
 
-	
 }

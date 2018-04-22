@@ -47,7 +47,7 @@ var sendData = function(element) {
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/spoupdate'
-    	data.id = 1
+    	data.id = 2
     log(data)
     sendAjax(method, url, data)
   })
@@ -107,20 +107,32 @@ success: function(data) {
 })
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/spouses'
 	var data = {}
-	data.id = 1
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
+}
+
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
 }
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  cancelBtn("#cancel")
   searchData()
 }
 

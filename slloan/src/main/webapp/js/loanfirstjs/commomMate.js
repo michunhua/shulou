@@ -46,7 +46,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/SLLOAN/LOAN/cobupdate'
+    var url = '/slloan/loan/cobupdate'
     log(data)
     sendAjax(method, url, data)
   })
@@ -101,6 +101,7 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/coborrowers'
@@ -111,10 +112,21 @@ var searchData = function() {
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  cancelBtn("#cancel")
   searchData()
 }
 

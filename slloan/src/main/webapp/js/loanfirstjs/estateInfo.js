@@ -23,6 +23,10 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
+  data.name= '1'
+	  data.id= 2
+	  data.state= 'a'
+		  data.ctiam = 'b'
   return data
 }
 
@@ -54,8 +58,8 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/proupdate'
     log(data)
     sendAjax(method, url, data)
   })
@@ -137,9 +141,10 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+// 查询
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/pererty'
+	var url = '/slloan/loan/pper'
 	var data = {}
 	data.id = 2
 	if(data.id) {
@@ -147,10 +152,21 @@ var searchData = function() {
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
+
 //
 var __main = function() {
   log( "run")
   sendData()
+  cancelBtn("#cancel")
   searchData()
 }
 

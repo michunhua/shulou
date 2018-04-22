@@ -1,5 +1,16 @@
 log('loanInfo')
 
+//依赖库方法
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
+});
+
+
 // 收集信息
 var collectData = function() {
   log('收集数据')
@@ -47,7 +58,7 @@ var collectData = function() {
   data.state = 'c'
   data.ctime ='d'
   data.hi = 'hi'
-
+	  data.id = 2
   return data
 }
 
@@ -81,7 +92,6 @@ var sendData = function(element) {
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/perupdate'
-    	  data.id = 1
     log(data)
     sendAjax(method, url, data)
   })
@@ -207,22 +217,32 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
-// 查询
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/personalp'
 	var data = {}
-	data.id = 1
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  cancelBtn("#cancel")
   searchData()
 }
 

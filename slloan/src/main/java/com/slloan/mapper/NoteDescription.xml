@@ -8,6 +8,9 @@
 		<result column="note_Description3" property="note_Description3" />
 		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
+		<result column="username" property="username" />
+		<result column="parentnodeId" property="ParentnodeId" />
+		<result column="city" property="city" />
 	</resultMap>
 	
 <!-- 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
@@ -38,10 +41,13 @@
 		note_Description2,
 		note_Description3,
 		state,
-		ctime
+		ctime,
+		username,
+		ParentnodeId,
+		city,rolename
 		)
 		VALUES
 		(
-		#{note_Description1},#{note_Description2},#{note_Description3},#{state},#{ctime})
+		#{note_Description1},#{note_Description2},#{note_Description3},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
 	</insert>
 </mapper>

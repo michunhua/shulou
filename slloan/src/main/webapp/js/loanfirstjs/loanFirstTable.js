@@ -135,6 +135,7 @@ var addTable = function(data) {
       var time = datas.lists[i].ctime
       
       input.type = 'checkbox'
+      input.classList.add('indicate')
       a.classList.add('mark')
       a.href = '#'
       a.innerText = 0
@@ -214,13 +215,15 @@ var collectData = function() {
 }
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function(data) {
+    	console.log(data)
+    }
   })
 }
 
@@ -231,11 +234,11 @@ var sendData = function(element) {
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
-    var data = collectData()
-    var method = ''
+    var method = 'POST'
     var url = ''
+    var data = collectData()
     log(data)
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
 }
 
@@ -264,11 +267,104 @@ var searchData = function() {
 	searchAjax(method, url, data)
 }
 
+// 点击列表的具体信息查询
+var numberSearch = function(element) {
+	var envs = e(element)
+		envs.addEventListener('click', function(event) {
+			var indicate = event.target.classList
+			if(indicate == 'mark') {
+				console.log(event.target.innerText)
+			}
+		})
+}
+
+//分页接口 user/userlist
+var init = {
+		pages: 1,
+		limit: 10,
+}
+
+//下一页
+var nextpage = function() {
+	var envs = document.querySelector('.next')
+	envs.addEventListener('click', function() {
+		var flag = Number(document.querySelector('.totalPage').innerText)
+		if(init.pages >= 1 && init.pages < flag) {
+			init.pages = init.pages + 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有下一页!'
+				});
+		}
+	})
+}
+
+nextpage()
+
+// 上一页
+var previoupage = function() {
+	var envs = document.querySelector('.previous')
+	envs.addEventListener('click', function() {
+		if(init.pages > 1) {
+			init.pages = init.pages - 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有上一页!'
+				});
+		}
+	})
+}
+
+previoupage()
+
+
+//全部数据选中
+var fullDataCheck = function(elements) {
+	var tent = es(elements)
+	var len = tent.length
+	console.log('fullcheck', tent, len)
+	for(var i = 0; i < len; i++) {
+		tent[i].checked = true
+	}
+}
+
+//全部数据不选中
+var fullDataUncheck = function(elements) {
+	var tent = es(elements)
+	var len = tent.length
+	console.log('fullUncheck', tent, len)
+	for(var i = 0; i < len; i++) {
+		tent[i].checked = false
+	}
+}
+
+// 全选按钮
+var fullSelection = function(element) {
+	var intent = e(element)
+	intent.addEventListener('change', function() {
+		if(intent.checked) {
+			intent.checked = false
+			fullDataUncheck('.indicate')
+		} else {
+			intent.checked = true
+			fullDataCheck('.indicate')
+		}
+	})
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
   initData()
+  numberSearch('.tab-data')
+   fullSelection('#full')
 }
 
 __main()

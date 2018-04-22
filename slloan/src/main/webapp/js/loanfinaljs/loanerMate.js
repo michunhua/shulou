@@ -3,13 +3,15 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.cname = e('.ch-name').value
-  data.paperwork = e('.paperwork-type').value
-  data.paperNumb = e('.paperwork-numb').value
-  data.unitName = e('.until-name').value
-  data.unitPhone = e('.until-phone').value
-  data.residencePhone = e('.residence-phone').value
-  data.mobiePhone = e('.mobile-phone').value
+  data.certificate = e('.certificate').value
+  data.certificateType = e('.certificate-type').value
+  data.documents = e('.document-number').value
+  data.untilName = e('.until-name').value
+  data.untilPhone = e('.until-phone').value
+  data.residence = e('.residence-phone').value
+  data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
+  data.id = 1
   return data
 }
 
@@ -20,8 +22,7 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
-  })
+    success: callback  })
 }
 
 
@@ -32,9 +33,9 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
-    log(data)
+    var method = 'POST'
+    var url = '/slloan/loan/spoupdates'
+    log(data, data.id)
     sendAjax(method, url, data, null)
   })
 }
@@ -44,29 +45,31 @@ var searchExport = function(back) {
 	  cname = e('.ch-name')
 	  certificate = e('.certificate')
 	  certificateType = e('.certificate-type')
-	  document = e('.document-number')
+	  documents = e('.document-number')
 	  untilName = e('.until-name')
 	  untilPhone = e('.until-phone')
 	  residence = e('.residence-phone')
 	  mobile = e('.mobile-phone')
 	  salary = e('.salary')
 	  
-	  cname.value = back.id
-	  certificate.value = back.id
-	  certificateType.value = back.id
-	  document.value = back.id
-	  untilName.value = back.id
-	  untilPhone.value = back.id
-	  residence.value = back.id
-	  mobile.value = back.id
-	  salary.value = back.id
+	  cname.value = back.name
+//	  certificate.value = back.id_Type
+	  certificateType.value = back.paperother
+	  documents.value = back.id_Number
+	  untilName.value = back.uni_Name
+	  untilPhone.value = back.home_Phone
+	  residence.value = back.unit_Phone
+	  mobile.value = back.mobile_Phone
+	  salary.value = back.monthly_Income
+	  
+	  // 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".certificate").val(back.id_Type);
+		  form.render()
+		});
+	  
 }
-
-var initback = {
-		id: '23'
-}
-
-searchExport(initback)
 
 //查询
 //发送数据方法
@@ -79,28 +82,39 @@ data: {data:JSON.stringify(datas)},
 success: function(data) {
 	console.log('返回数据', data)
 	if(data.msg == 'success') {
-		
+		searchExport(data.obj)
 	}
 }
 })
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/personalp'
+	var url = '/slloan/loan/finaljudgmentspouseselectbyid'
 	var data = {}
-	data.id = 10
+	data.id = 1
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
 }
 
-
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
 
 //
 var __main = function() {
   log( "run")
+  searchData()
   sendData('#save-data')
+  cancelBtn('#cancel')
 }
 
 __main()

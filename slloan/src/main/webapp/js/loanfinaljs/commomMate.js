@@ -3,16 +3,16 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   // 固定值
-  data.a = new Date()
-  data.b = 'b'
   data.cname = e('.ch-name').value
-  data.paperwork = e('.paperwork-type').value
-  data.paperNumb = e('.paperwork-numb').value
-  data.mobilePhone = e('.mobile-phone').value
-  data.unitName = e('.unit-name').value
-  data.unitPhone = e('.unit-phone').value
-  data.housePhone = e('.house-phone').value
+  data.certificate = e('.certificate').value
+  data.certificateType = e('.certificate-type').value
+  data.documents = e('.document-number').value
+  data.untilName = e('.until-name').value
+  data.untilPhone = e('.until-phone').value
+  data.residence = e('.residence-phone').value
+  data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
+  data.id = 2
   return data
 }
 
@@ -47,29 +47,30 @@ var searchExport = function(back) {
 	  cname = e('.ch-name')
 	  certificate = e('.certificate')
 	  certificateType = e('.certificate-type')
-	  document = e('.document-number')
-	  untilName = e('.unit-name')
-	  untilPhone = e('.unit-phone')
-	  residence = e('.house-phone')
+	  documents = e('.document-number')
+	  untilName = e('.until-name')
+	  untilPhone = e('.until-phone')
+	  residence = e('.residence-phone')
 	  mobile = e('.mobile-phone')
 	  salary = e('.salary')
 	  
-	  cname.value = back.id
-	  certificate.value = back.id
-	  certificateType.value = back.id
-	  document.value = back.id
-	  untilName.value = back.id
-	  untilPhone.value = back.id
-	  residence.value = back.id
-	  mobile.value = back.id
-	  salary.value = back.id
+	  cname.value = back.name
+	  certificateType.value = back.id_Other
+	  documents.value = back.id_Number
+	  untilName.value = back.unit_Phone
+	  untilPhone.value = back.home_Phone
+	  residence.value = back.mobile_Phone
+	  mobile.value = back.uni_Name
+	  salary.value = back.monthly_Income
+	  
+	// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".certificate").val(back.id_Type);
+		  form.render()
+		});
 }
 
-var initback = {
-		id: '23'
-}
-
-searchExport(initback)
 
 // 查询
 // 发送数据方法
@@ -84,27 +85,39 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
-
+				searchExport(data.obj)
 			}
 		}
 	})
 }
 
+// 查询
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/personalp'
+	var url = '/slloan/loan/coborrowerssss'
 	var data = {}
-	data.id = 10
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
 
 //
 var __main = function() {
   log( "run")
+  searchData()
   sendData('#save-coMate')
+  cancelBtn('#cancel')
 }
 
 __main()

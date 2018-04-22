@@ -175,27 +175,24 @@
               <div class="layui-input-inline">
                 <input type="text" name="ctitle" placeholder="如 张三" autocomplete="off" class="layui-input ch-name">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">拼音或英文名</label>
               <div class="layui-input-inline">
                 <input type="text" name="etitle"  placeholder="如 zhangsan" autocomplete="off" class="layui-input en-name">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
                 <select name="paperwork"  class="paperwork-type">
-                  <option value=""></option>
-                  <option value="0">北京</option>
-                  <option value="1">上海</option>
-                  <option value="2">广州</option>
-                  <option value="3">深圳</option>
-                  <option value="4">杭州</option>
-                  <option value="5">其他</option>
+                  <option value="0">居民身份证</option>
+                  <option value="1">护照</option>
+                  <option value="2">户口薄</option>
+                  <option value="3">军官证</option>
+                  <option value="4">港澳居民身份证</option>
+                  <option value="5">台湾同胞来往内地通行证</option>
+                  <option value="6">其他</option>
                 </select>
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
                 <input type="text" name="password"  placeholder="请输入证件类型" autocomplete="off" class="layui-input other-paperwork">
               </div>
@@ -203,22 +200,17 @@
               <div class="layui-input-inline">
                 <input type="text" name="CardId"  placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">国家或地区</label>
               <div class="layui-input-inline">
                 <select name="city"  class="country">
-                  <option value=""></option>
-                  <option value="0">北京</option>
-                  <option value="1">上海</option>
-                  <option value="2">广州</option>
-                  <option value="3">深圳</option>
-                  <option value="4">杭州</option>
-                  <option value="5">其他</option>
+                  <option value="0">中国大陆</option>
+                  <option value="1">港澳</option>
+                  <option value="2">台湾地区</option>
+                  <option value="3">其他</option>
                 </select>
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="请输入国家或地区" autocomplete="off" class="layui-input other-country">
               </div>
@@ -230,7 +222,6 @@
                   <option value="1">女</option>
                 </select>
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">本地户籍</label>
@@ -245,7 +236,6 @@
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="请输入户籍地" autocomplete="off" class="layui-input other-census">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">婚姻状况</label>
               <div class="layui-input-inline">
                 <select name="city" class="marriage">
@@ -254,7 +244,6 @@
                   <option value="1">未婚</option>
                 </select>
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现住房情况</label>
@@ -270,7 +259,6 @@
                   <option value="6">其他</option>
                 </select>
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="请输入住房情况" autocomplete="off" class="layui-input other-housing">
               </div>
@@ -279,45 +267,38 @@
                 <input type="text" class="layui-input birthday" id="test1" placeholder="年/月/日">
                 </select>
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现住地址</label>
               <div class="layui-input-inline">
                 <input type="text" name="currentAddress" placeholder="省/县/乡/村/街道/门牌号" autocomplete="off" class="layui-input current-address">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">住宅电话</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="0755-xxxx" autocomplete="off" class="layui-input residence-phone">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">移动电话</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="158 7837 9527" autocomplete="off" class="layui-input mobile-phone">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">E-mail</label>
               <div class="layui-input-inline">
                 <input type="email" name="password" placeholder="abc@qq.com" autocomplete="off" class="layui-input E-mail">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">现住址邮编</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="518000" autocomplete="off" class="layui-input zip-code">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">职业</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="管理人员" autocomplete="off" class="layui-input career">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">单位属行业</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="金融" autocomplete="off" class="layui-input unit-industry">
@@ -328,14 +309,12 @@
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="三体第一舰队" autocomplete="off" class="layui-input unit-name">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现单位地址</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="省/县/乡/村/街道/门牌号" autocomplete="off" class="layui-input unit-address">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">企业人数</label>
@@ -366,7 +345,6 @@
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="管理人员" autocomplete="off" class="layui-input jobs-type">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">现单位工龄</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder=" 月" autocomplete="off" class="layui-input unit-time">
@@ -387,36 +365,30 @@
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="元/月" autocomplete="off" class="layui-input income-source">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">薪金</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="元/月" autocomplete="off" class="layui-input salary">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">投资收益</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="元/月" autocomplete="off" class="layui-input investment">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">租金收入</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="元/月" autocomplete="off" class="layui-input rent">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">其他收入</label>
               <div class="layui-input-inline">
                 <input type="text" name="password" placeholder="元/月" autocomplete="off" class="layui-input added">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">供养人数</label>
               <div class="layui-input-inline">
                 <input type="text" name="password"  placeholder=" 人" autocomplete="off" class="layui-input support-people">
               </div>
-              <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">月支出</label>
               <div class="layui-input-inline">
                 <input type="text" name="password"  placeholder=" 元" autocomplete="off" class="layui-input expenses">
@@ -436,7 +408,7 @@
           <div class="layui-form-item">
             <div class="layui-input-block">
               <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>立即提交</button>
-              <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+              <button type="reset" class="layui-btn layui-btn-primary" id = "cancel">取消</button>
             </div>
           </div>
         </div>

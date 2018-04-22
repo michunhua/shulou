@@ -13,6 +13,9 @@ var collectData = function() {
   data.linkt = e('.linkt').value
   data.linktMate = e('.linkt-mate').value
   data.linktPhone = e('.linkt-phone').value
+  data.state = 'a'
+	  data.ctime = 'b'
+		  data.id = 2
   return data
 }
 
@@ -44,8 +47,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/modifyuserss'
     log(data)
     sendAjax(method, url, data)
   })
@@ -113,20 +116,32 @@ var searchAjax = function(method, url, datas) {
   })
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactss'
+	var url = '/slloan/loan/contactob'
 	var data = {}
-	data.id = 2
+	  data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
+}
+
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
 }
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  cancelBtn("#cancel")
   searchData()
 }
 

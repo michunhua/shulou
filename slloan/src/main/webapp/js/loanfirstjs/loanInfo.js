@@ -115,6 +115,7 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanlinkfsss'
@@ -125,11 +126,21 @@ var searchData = function() {
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
+  cancelBtn("#cancel")
   searchData()
 }
 

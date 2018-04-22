@@ -23,3 +23,221 @@ layui.use('table', function(){
   });
 
 });
+
+//依赖库方法
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+	    elem: '#dates'
+	  });
+});
+
+
+
+//添加表格具体数据格
+var addTable = function(data) {
+ var datas = data
+// var len = 
+ var len = 10
+ var pageElement = document.querySelector('.tab-data')
+ for(var i = 0; i < len; i++) {
+   log(i)
+   var tr = document.createElement('tr')
+   var td0 = document.createElement('td')
+   var a = document.createElement('a')
+   var td1 = document.createElement('td')
+   var td2 = document.createElement('td')
+   var td3 = document.createElement('td')
+   var td4 = document.createElement('td')
+   var td5 = document.createElement('td')
+   var td6 = document.createElement('td')
+   var td7 = document.createElement('td')
+   var td8 = document.createElement('td')
+   var td9 = document.createElement('td')
+   var td10 = document.createElement('td')
+   var id = "datas.lists[i].userName"
+   var userName = "datas.lists[i].userName"
+   var role = "datas.lists[i].distribution_Role"
+   var employeeName = "datas.lists[i].employeeis_Name"
+   var time = "datas.lists[i].createdate"
+   a.classList.add('mark')
+   a.href = '#'
+   a.innerText = 0
+   td1.innerText = 1
+   td2.innerText = 2
+   td3.innerText = 3
+   td4.innerText = 4
+   td5.innerText = 5
+   td6.innerText = 6
+   td7.innerText = 7
+   td8.innerText = 8
+   td9.innerText = 9
+   td0.appendChild(a)
+   tr.appendChild(td0)
+   tr.appendChild(td1)
+   tr.appendChild(td2)
+   tr.appendChild(td3)
+   tr.appendChild(td4)
+   tr.appendChild(td5)
+   tr.appendChild(td6)
+   tr.appendChild(td7)
+   tr.appendChild(td8)
+   tr.appendChild(td9)
+   pageElement.insertAdjacentElement('beforeend', tr)
+ }
+}
+
+var testData = {
+		test: '233'
+}
+
+addTable(testData)
+
+
+//默认加载
+var sendAjax = function(method, url, datas, callback) {
+console.log(' send data ajax')
+ $.ajax({
+   type: method,
+   url: url,
+   data: {data:JSON.stringify(datas)},
+   success: function(data) {
+     consoel.log(data)
+     callback(data)
+   }
+ })
+}
+
+
+var initData = function() {
+	console.log('初始化加载数据')
+	var method = 'GET'
+	var url = '/slloan/financevoucher/transferaccountsvoucher'
+	var datas = {}
+	datas.a = 'a'
+	datas.b = 'b'
+		console.log('初始化加载数据233')
+	sendAjax(method, url, datas, addTable)
+	console.log('执行没有？')
+}
+
+//收集数据
+var collectData = function() {
+ var data = {}
+ data.userName = e('.username').value
+ data.iphone = e('.iphone').value
+ data.IDcard = e('.Idcard').value
+ data.numbering = e('.application').value
+ data.date = e('.start').value
+ data.end = e('.end').value
+ data.statu = e('.state').value
+ data.min = e('.min').value
+ data.max = e('.max').value
+ return data
+}
+
+//查询方法
+var inquireAjax = function(method, url, datas) {
+console.log(' send data ajax')
+ $.ajax({
+   type: method,
+   url: url,
+   data: {data:JSON.stringify(datas)},
+   success: function(data) {
+     console.log(data)
+   }
+ })
+}
+
+//事件响应
+var envs = function(element) {
+var ens = e(element)
+ens.addEventListener('click', function() {
+ console.log('running', datas)
+ var method = 'GET'
+ var url = ''
+ var datas = collectData()
+ inquireAjax(method, url, datas)
+})
+}
+
+
+//创建贷款按钮
+var createBtn = function() {
+	var ens = document.querySelector('#createLoan')
+	ens.addEventListener('click', function() {
+		window.location.href = '../../slloan/loan/loanjoin'
+	})
+}
+
+//具体查询
+var numberSearch = function() {
+	var envs = es('.mark')
+	for(var i = 0; i < envs.length; i++) {
+		envs[i].addEventListener('click', function(event) {
+			console.log(event.target.innerText)
+		})
+	}
+}
+
+//分页接口 user/userlist
+var init = {
+		pages: 1,
+		limit: 10,
+}
+
+//下一页
+var nextpage = function() {
+	var envs = document.querySelector('.next')
+	envs.addEventListener('click', function() {
+		var flag = Number(document.querySelector('.totalPage').innerText)
+		if(init.pages >= 1 && init.pages < flag) {
+			init.pages = init.pages + 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有下一页!'
+				});
+		}
+	})
+}
+
+nextpage()
+
+//上一页
+var previoupage = function() {
+	var envs = document.querySelector('.previous')
+	envs.addEventListener('click', function() {
+		if(init.pages > 1) {
+			init.pages = init.pages - 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有上一页!'
+				});
+		}
+	})
+}
+
+previoupage()
+
+var __main = function() {
+initData()
+numberSearch()
+envs('#save-data')
+}
+
+__main()

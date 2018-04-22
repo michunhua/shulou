@@ -3,16 +3,17 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.amount = e('.amount').value
-  data.deadline = e('.deadline').value
+  data.term = e('.term').value
   data.unit = e('.unit').value
   data.variety = e('.variety').value
-  data.manner = e('.manner').value
-  data.bank = e('.bank').value
-  data.accountName = e('.account-name').value
-  data.account = e('.account').value
-  data.repayBank = e('.repay-bank').value
-  data.repayCcount = e('.repay-ccount').value
-  data.reapyAccountbank = e('.reapy-accountbank').value
+  data.repayment = e('.repayment').value
+  data.beneficiarybank = e('.beneficiary-bank').value
+  data.bankaccount = e('.bank-account').value
+  data.receivingAccount = e('.receiving-account').value
+  data.repaymenBtank = e('.repayment-bank').value
+  data.repaymentAccount = e('.repayment-account').value
+  data.accountNumber = e('.account-number').value
+  data.id = 2
   return data
 }
 
@@ -45,36 +46,40 @@ var sendData = function(element) {
 
 //设置页面数据
 var searchExport = function(back) {
-	amount = e('.amount')
-	term = e('.deadline')
-	unit = e('.unit')
-	variety = e('.variety')
-	repayment = e('.manner')
-	beneficiarybank = e('.bank')
-	bankaccount = e('.account-name')
-	receivingAccount = e('.account')
-	repaymenBtank = e('.repay-bank')
-	repaymentAccount = e('.repay-ccount')
-	accountNumber = e('.reapy-accountbank')
+	  amount = e('.amount')
+	  term = e('.term')
+	  unit = e('.unit')
+	  variety = e('.variety')
+	  repayment = e('.repayment')
+	  beneficiarybank = e('.beneficiary-bank')
+	  bankaccount = e('.bank-account')
+	  receivingAccount = e('.receiving-account')
+	  repaymenBtank = e('.repayment-bank')
+	  repaymentAccount = e('.repayment-account')
+	  accountNumber = e('.account-number')
 	  
-	  amount.value = back.id
-	  term.value = back.id
-	  unit.value = back.id
-	  variety.value = back.id
-	  repayment.value = back.id
-	  beneficiarybank.value = back.id
-	  bankaccount.value = back.id
-	  receivingAccount.value = back.id
-	  repaymenBtank.value = back.id
+	  amount.value = back.amount
+	  term.value = back.time_Limit
+	  unit.value = back.repayment
+	  variety.value = back.borrowing_Variety
+	  repayment.value = back.receiving_Bank_Name
+	  beneficiarybank.value = back.receiving_Account
+	  bankaccount.value = back.repayment_Bank_name
+	  receivingAccount.value = back.repayment_Account_Name
+	  repaymenBtank.value = back.repayment_Account_Number
 	  repaymentAccount.value = back.id
 	  accountNumber.value = back.id
-}
+	  
 
-var initback = {
-		id: '21'
+		// 下拉选项
+		  layui.use('form', function(){
+			  var form = layui.form;
+			  $(".unit").val(back.repayment);
+			  $(".variety").val(back.borrowing_Variety);
+			  $(".repayment").val(back.receiving_Bank_Name);
+			  form.render()
+			});
 }
-
-searchExport(initback)
 
 //查询
 //发送数据方法
@@ -89,26 +94,39 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
-
+				searchExport(data.obj)
 			}
 		}
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/personalp'
+	var url = '/slloan/loan/loanlinkfa'
 	var data = {}
-	data.id = 10
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
 }
 
+//取消按钮事件
+var cancelBtn = function(element) {
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
+}
+
 //
 var __main = function() {
   log( "run")
+  searchData()
   sendData('#save-loaner')
+  cancelBtn('#cancel')
 }
 
 __main()

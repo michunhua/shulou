@@ -110,6 +110,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
+    window.history.back()
   })
 }
 
@@ -305,9 +306,6 @@ var validator = function(element, message) {
 	  }
 	  return result
 }
-
-
-
 
 
 //

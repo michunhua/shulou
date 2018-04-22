@@ -4,135 +4,39 @@ import java.io.Serializable;
 
 /**
  * 房产资料
+ * 
  * @author xue
  *
  */
-public class PropertyInformation implements Serializable{
-	
+public class PropertyInformation implements Serializable {
+
 	private Integer id;
-	private String ownership_And_percentage;             //权属人及占比
-	private String property_Address;						//房产地址
-	private String conStruction_Area;					//建筑面积
-	private String inner_Area;							//套内面积
-	private String sales_Contract_Number;				//买卖合同编号
-	private String certificate_of_Title;					//产权证号
-	private String proPerty_for;							//房产用于
-	private String the_Assessed_Value;					//评估值
-	private String original_Loan_Bank;    				//原贷款银行
-	private String original_Loan_Amount;   				//原贷款金额
-	private String loan_Outstanding_Balance;				//原贷款尚欠本息余额
-	private String house_Account;						//供楼账号
-	private String transaCtion_Price;					//买卖成交价
-	private String purchase_Deposit;						//购房定金
-	private String supervision_of_funds;					//资金监管
-	private String new_loan_Bank;						//新贷款银行
-	private String new_Loan_Approval_Amount;				//新贷款批复金额
-	private String new_Loan_Bank_Account_Number;			//新贷款行账号
-	private String note_DescriPtion;						//备注
+	private String name;
+	private String ownership_And_percentage; // 权属人及占比
+	private String property_Address; // 房产地址
+	private String conStruction_Area; // 建筑面积
+	private String inner_Area; // 套内面积
+	private String sales_Contract_Number; // 买卖合同编号
+	private String certificate_of_Title; // 产权证号
+	private String proPerty_for; // 房产用于
+	private String the_Assessed_Value; // 评估值
+	private String original_Loan_Bank; // 原贷款银行
+	private String original_Loan_Amount; // 原贷款金额
+	private String loan_Outstanding_Balance; // 原贷款尚欠本息余额
+	private String house_Account; // 供楼账号
+	private String transaCtion_Price; // 买卖成交价
+	private String purchase_Deposit; // 购房定金
+	private String supervision_of_funds; // 资金监管
+	private String new_loan_Bank; // 新贷款银行
+	private String new_Loan_Approval_Amount; // 新贷款批复金额
+	private String new_Loan_Bank_Account_Number; // 新贷款行账号
+	private String note_DescriPtion; // 备注
 	private String state;
 	private String ctime;
-	
-	public PropertyInformation(){
-		
+
+	public PropertyInformation() {
+
 	}
-
-	
-	
-
-	public PropertyInformation(Integer id, String ownership_And_percentage, String property_Address,
-			String conStruction_Area, String inner_Area, String sales_Contract_Number, String certificate_of_Title,
-			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
-			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
-			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
-			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
-		super();
-		this.id = id;
-		this.ownership_And_percentage = ownership_And_percentage;
-		this.property_Address = property_Address;
-		this.conStruction_Area = conStruction_Area;
-		this.inner_Area = inner_Area;
-		this.sales_Contract_Number = sales_Contract_Number;
-		this.certificate_of_Title = certificate_of_Title;
-		this.proPerty_for = proPerty_for;
-		this.the_Assessed_Value = the_Assessed_Value;
-		this.original_Loan_Bank = original_Loan_Bank;
-		this.original_Loan_Amount = original_Loan_Amount;
-		this.loan_Outstanding_Balance = loan_Outstanding_Balance;
-		this.house_Account = house_Account;
-		this.transaCtion_Price = transaCtion_Price;
-		this.purchase_Deposit = purchase_Deposit;
-		this.supervision_of_funds = supervision_of_funds;
-		this.new_loan_Bank = new_loan_Bank;
-		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
-		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
-		this.note_DescriPtion = note_DescriPtion;
-		this.state = state;
-		this.ctime = ctime;
-	}
-
-
-
-
-	public PropertyInformation(String ownership_And_percentage, String property_Address, String conStruction_Area,
-			String inner_Area, String sales_Contract_Number, String certificate_of_Title, String proPerty_for,
-			String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
-			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
-			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
-			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
-		super();
-		this.ownership_And_percentage = ownership_And_percentage;
-		this.property_Address = property_Address;
-		this.conStruction_Area = conStruction_Area;
-		this.inner_Area = inner_Area;
-		this.sales_Contract_Number = sales_Contract_Number;
-		this.certificate_of_Title = certificate_of_Title;
-		this.proPerty_for = proPerty_for;
-		this.the_Assessed_Value = the_Assessed_Value;
-		this.original_Loan_Bank = original_Loan_Bank;
-		this.original_Loan_Amount = original_Loan_Amount;
-		this.loan_Outstanding_Balance = loan_Outstanding_Balance;
-		this.house_Account = house_Account;
-		this.transaCtion_Price = transaCtion_Price;
-		this.purchase_Deposit = purchase_Deposit;
-		this.supervision_of_funds = supervision_of_funds;
-		this.new_loan_Bank = new_loan_Bank;
-		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
-		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
-		this.note_DescriPtion = note_DescriPtion;
-		this.state = state;
-		this.ctime = ctime;
-	}
-
-
-
-
-	public String getstate() {
-		return state;
-	}
-
-
-
-
-	public void setstate(String state) {
-		this.state = state;
-	}
-
-
-
-
-	public String getCtime() {
-		return ctime;
-	}
-
-
-
-
-	public void setCtime(String ctime) {
-		this.ctime = ctime;
-	}
-
-
-
 
 	public Integer getId() {
 		return id;
@@ -140,6 +44,14 @@ public class PropertyInformation implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getOwnership_And_percentage() {
@@ -294,13 +206,90 @@ public class PropertyInformation implements Serializable{
 		this.note_DescriPtion = note_DescriPtion;
 	}
 
+	public String getState() {
+		return state;
+	}
 
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCtime() {
+		return ctime;
+	}
+
+	public void setCtime(String ctime) {
+		this.ctime = ctime;
+	}
+
+	public PropertyInformation(Integer id, String name, String ownership_And_percentage, String property_Address,
+			String conStruction_Area, String inner_Area, String sales_Contract_Number, String certificate_of_Title,
+			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
+			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
+			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
+			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.ownership_And_percentage = ownership_And_percentage;
+		this.property_Address = property_Address;
+		this.conStruction_Area = conStruction_Area;
+		this.inner_Area = inner_Area;
+		this.sales_Contract_Number = sales_Contract_Number;
+		this.certificate_of_Title = certificate_of_Title;
+		this.proPerty_for = proPerty_for;
+		this.the_Assessed_Value = the_Assessed_Value;
+		this.original_Loan_Bank = original_Loan_Bank;
+		this.original_Loan_Amount = original_Loan_Amount;
+		this.loan_Outstanding_Balance = loan_Outstanding_Balance;
+		this.house_Account = house_Account;
+		this.transaCtion_Price = transaCtion_Price;
+		this.purchase_Deposit = purchase_Deposit;
+		this.supervision_of_funds = supervision_of_funds;
+		this.new_loan_Bank = new_loan_Bank;
+		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
+		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
+		this.note_DescriPtion = note_DescriPtion;
+		this.state = state;
+		this.ctime = ctime;
+	}
+
+	public PropertyInformation(String name, String ownership_And_percentage, String property_Address,
+			String conStruction_Area, String inner_Area, String sales_Contract_Number, String certificate_of_Title,
+			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
+			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
+			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
+			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
+		super();
+		this.name = name;
+		this.ownership_And_percentage = ownership_And_percentage;
+		this.property_Address = property_Address;
+		this.conStruction_Area = conStruction_Area;
+		this.inner_Area = inner_Area;
+		this.sales_Contract_Number = sales_Contract_Number;
+		this.certificate_of_Title = certificate_of_Title;
+		this.proPerty_for = proPerty_for;
+		this.the_Assessed_Value = the_Assessed_Value;
+		this.original_Loan_Bank = original_Loan_Bank;
+		this.original_Loan_Amount = original_Loan_Amount;
+		this.loan_Outstanding_Balance = loan_Outstanding_Balance;
+		this.house_Account = house_Account;
+		this.transaCtion_Price = transaCtion_Price;
+		this.purchase_Deposit = purchase_Deposit;
+		this.supervision_of_funds = supervision_of_funds;
+		this.new_loan_Bank = new_loan_Bank;
+		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
+		this.new_Loan_Bank_Account_Number = new_Loan_Bank_Account_Number;
+		this.note_DescriPtion = note_DescriPtion;
+		this.state = state;
+		this.ctime = ctime;
+	}
 
 	@Override
 	public String toString() {
-		return "PropertyInformation [id=" + id + ", ownership_And_percentage=" + ownership_And_percentage
-				+ ", property_Address=" + property_Address + ", conStruction_Area=" + conStruction_Area
-				+ ", inner_Area=" + inner_Area + ", sales_Contract_Number=" + sales_Contract_Number
+		return "PropertyInformation [id=" + id + ", name=" + name + ", ownership_And_percentage="
+				+ ownership_And_percentage + ", property_Address=" + property_Address + ", conStruction_Area="
+				+ conStruction_Area + ", inner_Area=" + inner_Area + ", sales_Contract_Number=" + sales_Contract_Number
 				+ ", certificate_of_Title=" + certificate_of_Title + ", proPerty_for=" + proPerty_for
 				+ ", the_Assessed_Value=" + the_Assessed_Value + ", original_Loan_Bank=" + original_Loan_Bank
 				+ ", original_Loan_Amount=" + original_Loan_Amount + ", loan_Outstanding_Balance="
@@ -310,8 +299,6 @@ public class PropertyInformation implements Serializable{
 				+ new_Loan_Approval_Amount + ", new_Loan_Bank_Account_Number=" + new_Loan_Bank_Account_Number
 				+ ", note_DescriPtion=" + note_DescriPtion + ", state=" + state + ", ctime=" + ctime + "]";
 	}
-
-
+	
 	
 }
-

@@ -24,7 +24,11 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 		 String note_Description3=notedescription.getNote_Description3();    		//借款品种
 		 String state = notedescription.getstate();
 		 String ctime = notedescription.getCtime();
-		 NoteDescription note = new NoteDescription(note_Description1, note_Description2, note_Description3, state, ctime);
+		 String username = notedescription.getUsername();
+			String ParentnodeId = notedescription.getParentnodeId();
+			String city = notedescription.getCity();
+			String rolename = notedescription.getRolename();
+		 NoteDescription note = new NoteDescription(note_Description1, note_Description2, note_Description3, state, ctime,username,ParentnodeId,city,rolename);
 		return notedescriptionDao.save(note);
 
 }

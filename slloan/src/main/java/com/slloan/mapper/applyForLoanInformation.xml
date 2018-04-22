@@ -16,6 +16,10 @@
 		<result column="repayment_Account_Number" property="repayment_Account_Number" />
 		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
+		<result column="username" property="username" />
+		<result column="parentnodeId" property="ParentnodeId" />
+		<result column="city" property="city" />
+		<result column="rolename" property="rolename" />
 	</resultMap>
 	<insert id="save" parameterType="com.slloan.entity.ApplyForLoanInformation">
 		INSERT INTO apply_for_loan_information (
@@ -30,11 +34,14 @@
 			repayment_Account_Name,
 			repayment_Account_Number,
 			state,
-			ctime
+			ctime,
+			username,
+			parentnodeId,
+			city,rolename
 		)
 		VALUES
 		(
-			#{amount},#{time_Limit},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{state},#{ctime})
+			#{amount},#{time_Limit},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
 	</insert>
 	<!-- <delect id="delete" parameterType="com.slloan.entity.ApplyForLoanInformation">
 		DELETE

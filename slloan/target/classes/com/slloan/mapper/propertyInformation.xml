@@ -3,6 +3,7 @@
 
 <mapper namespace="com.slloan.dao.propertyInformationDao">
 	<resultMap type="com.slloan.entity.PropertyInformation" id="propertyinfor">
+		<result column="name" property="name" />
 		<result column="ownership_And_percentage" property="ownership_And_percentage" />
 		<result column="property_Address" property="property_Address" />
 		<result column="conStruction_Area" property="conStruction_Area" />
@@ -31,6 +32,7 @@
 
 	<insert id="save" parameterType="com.slloan.entity.PropertyInformation">  
        INSERT INTO property_information (
+       name,
 	ownership_And_percentage,
 	property_Address,
 	conStruction_Area,
@@ -55,7 +57,7 @@
 )
 VALUES
 	(
-		#{ownership_And_percentage},#{property_Address},#{conStruction_Area},#{inner_Area},#{sales_Contract_Number},#{certificate_of_Title},#{proPerty_for},#{the_Assessed_Value},#{original_Loan_Bank},#{original_Loan_Amount},#{loan_Outstanding_Balance},				
+		#{name},#{ownership_And_percentage},#{property_Address},#{conStruction_Area},#{inner_Area},#{sales_Contract_Number},#{certificate_of_Title},#{proPerty_for},#{the_Assessed_Value},#{original_Loan_Bank},#{original_Loan_Amount},#{loan_Outstanding_Balance},				
 		#{house_Account},#{transaCtion_Price},#{purchase_Deposit},#{supervision_of_funds},#{new_loan_Bank},#{new_Loan_Approval_Amount},#{new_Loan_Bank_Account_Number},#{note_DescriPtion},#{state},#{ctime})
 
     </insert>  
@@ -68,6 +70,7 @@ VALUES
     <update id="proupdate" parameterType="com.slloan.entity.PropertyInformation">   
     update property_information  
        <set>
+       <if test="name !=null and name !=''">name = #{name},</if>
 					<if test="ownership_And_percentage !=null and ownership_And_percentage !=''">ownership_And_percentage = #{ownership_And_percentage},</if>
 					<if test="property_Address !=null and property_Address !=''">property_Address = #{property_Address},</if>
 					<if test="conStruction_Area  !=null and conStruction_Area !=''">conStruction_Area = #{conStruction_Area},</if>

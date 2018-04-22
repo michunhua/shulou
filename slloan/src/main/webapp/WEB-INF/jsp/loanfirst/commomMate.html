@@ -171,12 +171,13 @@
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
                 <select name="city" lay-verify="required" class="certificate">
-                  <option value=""></option>
-                  <option value="0">北京</option>
-                  <option value="1">上海</option>
-                  <option value="2">广州</option>
-                  <option value="3">深圳</option>
-                  <option value="4">杭州</option>
+                  <option value="0">居民身份证</option>
+                  <option value="1">护照</option>
+                  <option value="2">户口薄</option>
+                  <option value="3">军官证</option>
+                  <option value="4">港澳居民身份证</option>
+                  <option value="5">台湾同胞来往内地通行证</option>
+                  <option value="6">其他</option>
                 </select>
               </div>
               <div class="layui-input-inline">
@@ -217,7 +218,7 @@
           <div class="layui-form-item">
             <div class="layui-input-block">
               <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>立即提交</button>
-              <button type="reset" class="layui-btn layui-btn-primary">取消</button>
+              <button type="reset" class="layui-btn layui-btn-primary" id = "cancel">取消</button>
             </div>
           </div>
         </div>

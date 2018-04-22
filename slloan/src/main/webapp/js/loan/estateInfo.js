@@ -41,6 +41,7 @@ var collectData = function() {
   data.newApproved = e('.new-approved').value
   data.state='a'
   data.ctiam='b'
+	  data.id= 2
   return data
 }
 
@@ -82,6 +83,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
+    window.history.back()
   })
 }
 

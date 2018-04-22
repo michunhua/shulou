@@ -24,6 +24,23 @@
 //
 //});
 
+// 依赖库方法
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+	    elem: '#dates'
+	  });
+});
+
 
 // 添加表格具体数据格
 var addTable = function(data) {
@@ -112,28 +129,43 @@ var initData = function() {
 	console.log('执行没有？')
 }
 
-// 收集数据
+//收集数据
 var collectData = function() {
     var data = {}
     data.userName = e('.username').value
     data.iphone = e('.iphone').value
-    data.IDcard = e('.IDcard').value
-    data.numbering = e('.numbering').value
-    data.date = e('#date').value
-    data.end = e('#end').value
-    data.statu = e('.statu').value
+    data.IDcard = e('.Idcard').value
+    data.numbering = e('.application').value
+    data.date = e('.start').value
+    data.end = e('.end').value
+    data.statu = e('.state').value
     data.min = e('.min').value
     data.max = e('.max').value
     return data
 }
 
+//查询方法
+var inquireAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+      }
+    })
+}
 
 // 事件响应
 var envs = function(element) {
   var ens = e(element)
   ens.addEventListener('click', function() {
-    var datas = collectData()
     console.log('running', datas)
+    var method = 'GET'
+    var url = ''
+    var datas = collectData()
+    inquireAjax(method, url, datas)
   })
 }
 
@@ -156,9 +188,55 @@ var numberSearch = function() {
 	}
 }
 
+//分页接口 user/userlist
+var init = {
+		pages: 1,
+		limit: 10,
+}
+
+//下一页
+var nextpage = function() {
+	var envs = document.querySelector('.next')
+	envs.addEventListener('click', function() {
+		var flag = Number(document.querySelector('.totalPage').innerText)
+		if(init.pages >= 1 && init.pages < flag) {
+			init.pages = init.pages + 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有下一页!'
+				});
+		}
+	})
+}
+
+nextpage()
+
+// 上一页
+var previoupage = function() {
+	var envs = document.querySelector('.previous')
+	envs.addEventListener('click', function() {
+		if(init.pages > 1) {
+			init.pages = init.pages - 1
+			firtLoadlist()
+			currpages()
+		} else {
+			layer.open({
+				  title: '注意'
+				  ,content: '已经没有上一页!'
+				});
+		}
+	})
+}
+
+previoupage()
+
 var __main = function() {
 //  initData()
   numberSearch()
+  envs('#save-data')
 }
 
 __main()

@@ -75,6 +75,7 @@ var cancelBtn = function(element) {
 	var evs = e(element)
 	evs.addEventListener('click', function() {
 		forms.reset()
+		window.history.back()
 	})
 }
 

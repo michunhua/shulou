@@ -22,11 +22,37 @@ public class ApplyForLoanInformation implements Serializable{
 	private String repayment_Account_Number;		//还款账号
 	private String state;
 	private String ctime;
+	private String username;//存入用户名
+	private String ParentnodeId;//存入登录用户名ID
+	private String city;//城市
+	private String rolename;//角色名
 	
 	public ApplyForLoanInformation(){
 		
 	}
 	
+	public ApplyForLoanInformation(String amount, String time_Limit, String borrowing_Variety, String repayment,
+			String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
+			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String state,
+			String ctime, String username, String parentnodeId, String city) {
+		super();
+		this.amount = amount;
+		this.time_Limit = time_Limit;
+		this.borrowing_Variety = borrowing_Variety;
+		this.repayment = repayment;
+		this.receiving_Bank_Name = receiving_Bank_Name;
+		this.receiving_Account_Name = receiving_Account_Name;
+		this.receiving_Account = receiving_Account;
+		this.repayment_Bank_Name = repayment_Bank_Name;
+		this.repayment_Account_Name = repayment_Account_Name;
+		this.repayment_Account_Number = repayment_Account_Number;
+		this.state = state;
+		this.ctime = ctime;
+		this.username = username;
+		ParentnodeId = parentnodeId;
+		this.city = city;
+	}
+
 	public ApplyForLoanInformation(Integer id, String amount, String time_Limit, String borrowing_Variety,
 			String repayment, String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
 			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String state,
@@ -50,7 +76,7 @@ public class ApplyForLoanInformation implements Serializable{
 	public ApplyForLoanInformation(String amount, String time_Limit, String borrowing_Variety,
 			String repayment, String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
 			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String state,
-			String ctime) {
+			String ctime,String rolename) {
 		super();
 	
 		this.amount = amount;
@@ -65,10 +91,59 @@ public class ApplyForLoanInformation implements Serializable{
 		this.repayment_Account_Number = repayment_Account_Number;
 		this.state = state;
 		this.ctime = ctime;
+		this.rolename = rolename;
 	}
+	
 
 	
 	
+
+	public ApplyForLoanInformation(String amount, String time_Limit, String borrowing_Variety, String repayment,
+			String receiving_Bank_Name, String receiving_Account_Name, String receiving_Account,
+			String repayment_Bank_Name, String repayment_Account_Name, String repayment_Account_Number, String state,
+			String ctime, String username, String parentnodeId, String city, String rolename) {
+		super();
+		this.amount = amount;
+		this.time_Limit = time_Limit;
+		this.borrowing_Variety = borrowing_Variety;
+		this.repayment = repayment;
+		this.receiving_Bank_Name = receiving_Bank_Name;
+		this.receiving_Account_Name = receiving_Account_Name;
+		this.receiving_Account = receiving_Account;
+		this.repayment_Bank_Name = repayment_Bank_Name;
+		this.repayment_Account_Name = repayment_Account_Name;
+		this.repayment_Account_Number = repayment_Account_Number;
+		this.state = state;
+		this.ctime = ctime;
+		this.username = username;
+		ParentnodeId = parentnodeId;
+		this.city = city;
+		this.rolename = rolename;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getParentnodeId() {
+		return ParentnodeId;
+	}
+
+	public void setParentnodeId(String parentnodeId) {
+		ParentnodeId = parentnodeId;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 	public String getstate() {
 		return state;
@@ -153,6 +228,14 @@ public class ApplyForLoanInformation implements Serializable{
 		this.repayment_Account_Number = repayment_Account_Number;
 	}
 
+	public String getRolename() {
+		return rolename;
+	}
+
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
+
 	@Override
 	public String toString() {
 		return "ApplyForLoanInformation [id=" + id + ", amount=" + amount + ", time_Limit=" + time_Limit
@@ -160,9 +243,9 @@ public class ApplyForLoanInformation implements Serializable{
 				+ receiving_Bank_Name + ", receiving_Account_Name=" + receiving_Account_Name + ", receiving_Account="
 				+ receiving_Account + ", repayment_Bank_Name=" + repayment_Bank_Name + ", repayment_Account_Name="
 				+ repayment_Account_Name + ", repayment_Account_Number=" + repayment_Account_Number + ", state=" + state
-				+ ", ctime=" + ctime + "]";
+				+ ", ctime=" + ctime + ", username=" + username + ", ParentnodeId=" + ParentnodeId + ", city=" + city
+				+ ", rolename=" + rolename + "]";
 	}
-	
 	
 	
 	
