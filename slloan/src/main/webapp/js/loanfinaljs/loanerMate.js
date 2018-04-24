@@ -11,7 +11,7 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 1
+  data.id = 4
   return data
 }
 
@@ -22,7 +22,8 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback  })
+    success: callback
+  })
 }
 
 
@@ -34,8 +35,8 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/spoupdates'
-    log(data, data.id)
+    var url = '/slloan/loan/cobupdateas'
+    log(data)
     sendAjax(method, url, data, null)
   })
 }
@@ -91,9 +92,9 @@ success: function(data) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/finaljudgmentspouseselectbyid'
+	var url = '/slloan/loan/contactasss'
 	var data = {}
-	data.id = 1
+	data.id = 4
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

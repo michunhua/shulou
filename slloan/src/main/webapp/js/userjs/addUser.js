@@ -10,6 +10,7 @@ var sendAjax = function(method, url, datas) {
         if(data === 'success') {
           document.querySelector('form').reset()
           alert('保存成功')
+          window.location.href = '../user/ulist'
         }
       }
     })
@@ -140,6 +141,7 @@ var cancelBtn = function(element) {
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
     forms.reset()
+    window.location.href = '../user/ulist'
   })
 }
 

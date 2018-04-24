@@ -34,7 +34,11 @@ var collectData = function() {
   data.reapyAccountbank = e('.reapy-accountbank').value
   data.state = 'a'
   data.ctime = 'b'
-  return data
+	  data.role = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.id = localStorage.purid
+		  return data
 }
 	
 // 发送数据方法
@@ -66,7 +70,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/ApplyLoaninformation'
+    var url = '/slloan/loan/ApplyLoaninformations'
     log(data)	
     sendAjax(method, url, data)
   })
@@ -136,9 +140,10 @@ var searchAjax = function(method, url, datas) {
 
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/loanlinkfsss'
+	var url = '/slloan/loan/loanlinkfab'
 	var data = {}
-	data.id = localStorage.createID
+//	data.id = localStorage.createID
+   data.id= 3
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

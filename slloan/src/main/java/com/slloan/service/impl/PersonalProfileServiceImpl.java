@@ -172,48 +172,13 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}*/
 	
 	/**
-	 * 初审列表模糊查询
+	 *  按揭员模糊查询
 	 */
 
 	@Override
 	public List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param) {
 		Map<Object,Object> map = new HashMap<Object,Object>();
-//		 Map.Entry<String, Object> entry;
-//		Iterator<Map.Entry<String, Object>> it = param.entrySet().iterator();  
-//		while (it.hasNext()) {  
-//			    entry = it.next();  
-//			   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue()); 
-//			   map.put("name", entry.getValue());//姓名
-//				map.put("mobilephone", entry.getValue());//手机号码
-//				map.put("idnumber", entry.getValue());//证件号码
-////				map.put("", "");//申请编号
-//				map.put("ctim1", entry.getValue());//申请时间1
-//				map.put("ctim2", entry.getValue());//申请时间2
-//				map.put("amount", entry.getValue());//金额
-//				map.put("amount2", entry.getValue());//金额2
-////				map.put("state", entry.getValue());//状态
-//			  }  
-//		for(String key : param.keySet()){
-//			System.out.println("key= "+ key + " and value= " + map.get(key));  
-//			System.out.println(key);
-//			if(param.get("name") !=null){
-//				map.put("name", param.get(0));
-//				System.out.println(param.get(0));
-//			} if(param.get("idnumber")!=null){
-//				map.put("idnumber", param.get(1));
-//				System.out.println(param.get("idnumber"));
-//			} if(param.get("mobilephone")!=null){
-//				map.put("mobilephone", param.get(2));
-//			} if(param.get("ctim1")!=null){
-//				map.put("ctim1", param.get(3));
-//			} if(param.get("ctim2")!=null){
-//				map.put("ctim2", param.get(4));
-//			} if(param.get("amount")!=null){
-//				map.put("amount", param.get(5));
-//			} if(param.get("amount2")!=null){
-//				map.put("amount2", param.get(6));
-//			}
-//		}
+
 		 Iterator it = param.entrySet().iterator();  
 		 while (it.hasNext()) {  
 			   Map.Entry entry = (Map.Entry) it.next();  
@@ -224,119 +189,280 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 			   
 //			   return personalProfiledao.vaguelikeSelectCreate(map);
 			  }
-		/*ApplyForLoanInformation app = new ApplyForLoanInformation();
-		NoteDescription notestate = new NoteDescription();
-		map.put("name", param.getName());//姓名
-		map.put("mobilephone", param.getMobile_phone());//手机号码
-		map.put("idnumber", param.getId_number());//证件号码
-		map.put("", "");//申请编号
-		map.put("ctim1", param.getCtime());//申请时间1
-		map.put("ctim2", param.getCtime());//申请时间2
-		for(ApplyForLoanInformation ap: param.getApplyfor()){
-			map.put("amount", ap.getAmount());//贷款金额1
-			map.put("amount2", ap.getAmount());//贷款金额2
-			}
-		for(CircuLationRecord states: param.getNotes()){
-			map.put("state", states.getState());
-		}*/
-//		Map<String,Object> map = new HashMap<String,Object>();
+		
+		return personalProfiledao.vaguelikeSelectCreate(map);
+		
+//		return ;
+	}
+
+	/*
+	 *  初审模糊查询
+	 */
+	@Override
+	public List<PersonalProfile> vaguelikeSelectCreateone(Map<Object, Object> param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		 Iterator it = param.entrySet().iterator();  
+		 while (it.hasNext()) {  
+			   Map.Entry entry = (Map.Entry) it.next();  
+			   Object key = entry.getKey();  
+			   Object value = entry.getValue();  
+			   map.put(key, value);
+			   
+			  }
 		return personalProfiledao.vaguelikeSelectCreate(map);
 		
 //		return ;
 	}
 
 	@Override
-	public List<PersonalProfile> vaguelikeSelectCreateone(Map<String, String> param) {
-		Map<Object,Object> map = new HashMap<Object,Object>();
-//		 Map.Entry<String, Object> entry;
-//		Iterator<Map.Entry<String, Object>> it = param.entrySet().iterator();  
-//		while (it.hasNext()) {  
-//			    entry = it.next();  
-//			   System.out.println("key= " + entry.getKey() + " and value= " + entry.getValue()); 
-//			   map.put("name", entry.getValue());//姓名
-//				map.put("mobilephone", entry.getValue());//手机号码
-//				map.put("idnumber", entry.getValue());//证件号码
-////				map.put("", "");//申请编号
-//				map.put("ctim1", entry.getValue());//申请时间1
-//				map.put("ctim2", entry.getValue());//申请时间2
-//				map.put("amount", entry.getValue());//金额
-//				map.put("amount2", entry.getValue());//金额2
-////				map.put("state", entry.getValue());//状态
-//			  }  
-//		for(String key : param.keySet()){
-//			System.out.println("key= "+ key + " and value= " + map.get(key));  
-//			System.out.println(key);
-//			if(param.get("name") !=null){
-//				map.put("name", param.get(0));
-//				System.out.println(param.get(0));
-//			} if(param.get("idnumber")!=null){
-//				map.put("idnumber", param.get(1));
-//				System.out.println(param.get("idnumber"));
-//			} if(param.get("mobilephone")!=null){
-//				map.put("mobilephone", param.get(2));
-//			} if(param.get("ctim1")!=null){
-//				map.put("ctim1", param.get(3));
-//			} if(param.get("ctim2")!=null){
-//				map.put("ctim2", param.get(4));
-//			} if(param.get("amount")!=null){
-//				map.put("amount", param.get(5));
-//			} if(param.get("amount2")!=null){
-//				map.put("amount2", param.get(6));
-//			}
-//		}
-		 Iterator it = param.entrySet().iterator();  
-		 while (it.hasNext()) {  
-			   Map.Entry entry = (Map.Entry) it.next();  
-			   Object key = entry.getKey();  
-			   Object value = entry.getValue();  
-//			   System.out.println("key=" + key + " value=" + value);  
-			   map.put(key, value);
-			   
-//			   return personalProfiledao.vaguelikeSelectCreate(map);
-			  }
-		/*ApplyForLoanInformation app = new ApplyForLoanInformation();
-		NoteDescription notestate = new NoteDescription();
-		map.put("name", param.getName());//姓名
-		map.put("mobilephone", param.getMobile_phone());//手机号码
-		map.put("idnumber", param.getId_number());//证件号码
-		map.put("", "");//申请编号
-		map.put("ctim1", param.getCtime());//申请时间1
-		map.put("ctim2", param.getCtime());//申请时间2
-		for(ApplyForLoanInformation ap: param.getApplyfor()){
-			map.put("amount", ap.getAmount());//贷款金额1
-			map.put("amount2", ap.getAmount());//贷款金额2
-			}
-		for(CircuLationRecord states: param.getNotes()){
-			map.put("state", states.getState());
-		}*/
-//		Map<String,Object> map = new HashMap<String,Object>();
-		return personalProfiledao.vaguelikeSelectCreate(map);
-		
-//		return ;
+	public Page<PersonalProfile> getFirsttrialPage(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		//封装当前页数
+		pageBean.setCurrPage(currentPage);
+		//每页显示的数据
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		//封装总记录数
+		int totalCount = personalProfiledao.getFirsttrialPageCount();
+		pageBean.setTotalCount(totalCount);
+		//封装总页数
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		//封装每页显示的数据
+		List<PersonalProfile> lists = personalProfiledao.getFirsttrialPage(map); 
+		pageBean.setLists(lists);
+		return pageBean;
+}
+
+	@Override
+	public int getFirsttrialPageCount() {
+		return personalProfiledao.getFirsttrialPageCount();
 	}
 
-//	@Override
-//	public Page<PersonalProfile> getLoanPage(int currentPage) {
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		Page<AddRole> pageBean = new Page<AddRole>();
-//		//封装当前页数
-//		pageBean.setCurrPage(currentPage);
-//		//每页显示的数据
-//		int pageSize = 10;
-//		pageBean.setPageSize(pageSize);
-//		//封装总记录数
-//		int totalCount = roleAddDao.getRoleCount();
-//		pageBean.setTotalCount(totalCount);
-//		//封装总页数
-//		double tc = totalCount;
-//		Double num = Math.ceil(tc/pageSize);//向上取整
-//		pageBean.setTotalPage(num.intValue());
-//		map.put("page", (currentPage-1)*pageSize);
-//		map.put("limit", pageBean.getPageSize());
-//		//封装每页显示的数据
-//		List<AddRole> lists = roleAddDao.getRolePage(map);
-//		pageBean.setLists(lists);
-//			return pageBean;
-//	}
+	@Override
+	public Page<PersonalProfile> getFinalreviewPage(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		//封装当前页数
+		pageBean.setCurrPage(currentPage);
+		//每页显示的数据
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		//封装总记录数
+		int totalCount = personalProfiledao.getFinalreviewPageCount();
+		pageBean.setTotalCount(totalCount);
+		//封装总页数
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		//封装每页显示的数据
+		List<PersonalProfile> lists = personalProfiledao.getFinalreviewPage(map); 
+		pageBean.setLists(lists);
+		return pageBean;
+}
+
+	@Override
+	public int getFinalreviewPageCount() {
+		return personalProfiledao.getFinalreviewPageCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getFinancePagePage(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getFinancePageCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getFinancePagePage(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getFinancePageCount() {
+		return personalProfiledao.getFinancePageCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getjsloanPage(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getjsloanPageCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getjsloanPage(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getjsloanPageCount() {
+		return personalProfiledao.getjsloanPageCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getTransferloanPage(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getTransferloanPageCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getTransferloanPage(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getTransferloanPageCount() {
+		return personalProfiledao.getTransferloanPageCount();
+	}
+	
+
+	@Override
+	public Page<PersonalProfile> getLoanInformation(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getLoanInformationCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getLoanInformation(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getLoanInformationCount() {
+		return personalProfiledao.getLoanInformationCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getReturnMoney(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getReturnMoneyCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getReturnMoney(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getReturnMoneyCount() {
+		return personalProfiledao.getReturnMoneyCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getObtainEvidence(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getObtainEvidenceCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getObtainEvidence(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getObtainEvidenceCount() {
+		return personalProfiledao.getObtainEvidenceCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getDecompression(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getDecompressionCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getDecompression(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getDecompressionCount() {
+		return personalProfiledao.getDecompressionCount();
+	}
+
+	@Override
+	public Page<PersonalProfile> getLoanPressure(int currentPage) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getLoanPressureCount();
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getLoanPressure(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public int getLoanPressureCount() {
+		return personalProfiledao.getLoanPressureCount();
+	}
 
 }

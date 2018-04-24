@@ -57,4 +57,16 @@ public interface ImagedataService {
 		 boolean batchUpdateadopt(List adoptlist);
 		 
 		 public ObjectSeq listSeq();
+		 
+		 boolean FirsttrialbatchRefuse(List batchRefuse);
+		 
+		 boolean FirsttrialbatchPast(List batchPast);
+		 boolean loanFinalReviewPast(List loanFinalReviewpast);
+		 boolean loanFinalReviewRefuse(List loanFinalRefuse);
+		 boolean WaitForensics(int id);
+		 boolean tobesettled(int id);
+		 boolean tobeforensics(int id);//待取证
+		 boolean tobedetained(int id);//待进押
+		 boolean pendingconfirmation(int id);//待确认回款
+		 boolean loanClearing(int id);//待结算
 }

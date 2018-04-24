@@ -31,8 +31,12 @@ public class CircuLationRecordSubmitSController {
 		String state = req.getParameter("state");
 		int stateid = Integer.parseInt(state);
 		String spare1 = req.getParameter("spare1");
+		String username = req.getParameter("username");
+		 String parentnodeId = req.getParameter("parentnodeId");
+		 String city = req.getParameter("city");
+		String rolename = req.getParameter("rolename");
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,spare1,createDate);
+		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename);
 		
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		if(isResultInsert == true){

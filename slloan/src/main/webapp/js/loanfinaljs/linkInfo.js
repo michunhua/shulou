@@ -8,14 +8,11 @@ var collectData = function() {
   
   data.links = e('.links').value
   data.linksMate = e('.links-mate').value
-  data.linksPhone = e('.links-phone').value
+  data.linksencodPhone = e('.links-phone').value
   
   data.linkt = e('.linkt').value
   data.linktMate = e('.linkt-mate').value
   data.linktPhone = e('.linkt-phone').value
-	  data.state = 'b'
-	  data.ctime = 'c'
-	
   data.id = 2
   return data
 }
@@ -39,8 +36,8 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/modifyuserod'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -107,7 +104,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactoa'
+	var url = '/slloan/loan/contactsinformation'
 	var data = {}
 	data.id = 2
 	if(data.id) {

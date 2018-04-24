@@ -58,4 +58,18 @@ public interface ImagedataDao {
 		 * @return
 		 */
 		 boolean batchUpdateadopt(List updatelist);
+		 
+		 boolean FirsttrialbatchRefuse(List batchRefuse);
+		 
+		 boolean FirsttrialbatchPast(List batchPast);
+		 
+		 boolean loanFinalReviewPast(List loanFinalReviewpast);
+		 boolean loanFinalReviewRefuse(List loanFinalRefuse);
+		 
+		 boolean WaitForensics(int id);//待取证
+		 boolean tobesettled(int id);//已结清
+		 boolean tobedetained(int id);//待进押
+		 boolean tobeforensics(int id);//待取证
+		 boolean pendingconfirmation(int id);//待取证
+		 boolean loanClearing(int id);//待结算
 }

@@ -3,14 +3,10 @@
 var collectData = function() {
   log('收集数据')
   var data = {}
-  recordNote = e('.note')
-  recordFirst = e('.first-trial')
+  data.note = e('.note')
+  data.recordFirst = e('.first-trial')
   data.recorFinal = e('.final-trial').value
-  data.id = 1
- data.username ='a'
- data.parentnodeId ='b'
- data.city ='c'
- data.rolename ='d' 
+  data.id = 2
   return data
 }
 
@@ -81,7 +77,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/notedescid'
 	var data = {}
-	data.id = 1
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

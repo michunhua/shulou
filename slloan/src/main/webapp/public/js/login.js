@@ -1,193 +1,157 @@
 var log = console.log.bind(console)
-function loadXMLDoc()
-{
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{
-		//  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-		xmlhttp=new XMLHttpRequest();
-	}
-	else
-	{
-		// IE6, IE5 浏览器执行代码
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-			document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET","/try/ajax/ajax_info.txt",true);
-	xmlhttp.send();
-}
-
-var sendLogin = function(url, data, callback) {
-  var xmlhttp = new XMLHttpRequest()
-  xmlhttp.onreadystatechange = function() {
-    if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      console.log(xmlhttp.responseText)
-      callback()
-    }
-  }
-
-  xmlhttp.open('POST', url)
-  xmlhttp.send(data)
-}
 
 var firstPage = function() {
-  window.location.href = './home/firstPage.html'
+  window.location.href = '/slloan/loan/happy'
 }
 
 var verification = function(data) {
-    if(data.name.length){
-      if(data.password.length) {
-        console.log('to login')
-      } else {
-        alert('填写密码')
-      }
-    } else {
-      alert('填写用户名')
-    }
+    
 }
 
-var sendAjax = function(method, url, data) {
-	var xhr = new XMLHttpRequest()
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-		}
-	}
-	xhr.open(method, url)
-	xhr.send(data)
-}
-
-// 获取验证码
-var code = function() {
-	var method = 'GET'
-	var url = '/slloan/verificationcode'
-	var data = ''
-	sendAjax(method, url, data)
-}
-
-//code()
-
-// 发送数据
-var lsendAjax = function(method, url, datas, callback) {
-    $.ajax({
+//发送数据
+var lsendAjax = function(method, url, datas) {
+  $.ajax({
       type: method,
       url: url,
       data: {"username":$("#username").val(),"password":$("#password").val(),"code":$("#code").val()},
-      success: callback
-    })
+      success: function(data) {
+        console.log(data)
+		console.log(data.msg)
+		if(data.msg === 'success') {
+		  localStorage.username = ''
+          localStorage.purview = ''
+          localStorage.purrole = ''
+          localStorage.purusername = ''
+          localStorage.purcity = ''
+          localStorage.purid = ''
+          var len = data.obj.lists.length
+          for(var i = 0; i < len; i++) {
+            console.log(data.obj.lists[i].checkboxID)
+            if(data.obj.lists[i].checkboxID !== undefined) {
+               localStorage.purview += data.obj.lists[i].checkboxID + ','
+            }
+            console.log(data.obj.lists[i].belongs_City)
+            if(data.obj.lists[i].belongs_City !== undefined ) {
+            	localStorage.purcity = data.obj.lists[i].belongs_City
+            }
+            console.log(data.obj.lists[i].id)
+            if(data.obj.lists[i].id !== undefined && data.obj.lists[i].id !== null) {
+            	localStorage.purid = data.obj.lists[i].id
+            }
+            console.log(data.obj.lists[i].userName)
+            if(data.obj.lists[i].userName !== undefined ) {
+            	localStorage.purusername = data.obj.lists[i].userName
+            	localStorage.username = data.obj.lists[i].userName
+            }
+            console.log(data.obj.lists[i].roleName)
+            if(data.obj.lists[i].roleName !== undefined ) {
+            	localStorage.purrole = data.obj.lists[i].roleName
+            }
+          }
+						// layer.msg('玩命提示中')
+          firstPage()
+		} else if(data.msg === 'fail') {
+          localStorage.purview = ''
+          alert(data.obj)
+        } else {
+          localStorage.purview = ''
+          var errorData = data.split(':')
+          console.log(errorData)
+          var showinfo = errorData[3].split(' ')[0]
+          alert(showinfo)
+        }
+	},
+	error: function(){
+        alert('服务器出错!!!')
+    }
+  })
 }
 
-// 收集数据
+//收集数据
 var collectData = function() {
-    var data = {}
-    data.username = document.querySelector('#username').value
-    data.password  = document.querySelector('#password').value
-    return data
+  var data = {}
+  data.username = document.querySelector('#username').value
+  data.password  = document.querySelector('#password').value
+  data.code = document.querySelector('#code').value
+  return data
+}
+
+// 填写验证
+var verification = function(data, next) {
+	if(!data.username){
+		alert('请填写用户名')
+		document.querySelector('#username').focus()
+		return false
+	} 
+	
+	if(!data.password) {
+		alert('请填写密码')
+		document.querySelector('#password').focus()
+		return false
+	} 
+	
+	if(!data.code) {
+		alert('请填写验证码')
+		document.querySelector('#code').focus()
+		return false
+	}
+	
+	next()
+}
+
+// 页面监听回车键
+var mainPage = function() {
+	var intent = document.querySelector('body')
+	intent.addEventListener('keydown', function(e) {
+	    if(e.keyCode == 13) {
+	    	var valid = collectData()
+			verification(valid, submit)	      }
+	  })
+}
+
+var submit = function() {
+	var method = 'GET'
+		var url = '/slloan/user/login'
+		var data = collectData()
+		lsendAjax(method, url, data)
 }
 
 var login = function() {
-    // var data = {}
-    // data.name = document.querySelector('#userName')
-    // data.password = document.querySelector('#password')
-    // var datas = JSON.stringify(data)
-
-
     var loginBtn = document.querySelector('#login-btn')
     loginBtn.addEventListener('click', function () {
-				var method = 'GET'
-				var url = '/slloan/user/login'
-				var data = collectData()
-				lsendAjax(method, url, data, null)
-        // firstPage()
+		var valid = collectData()
+		verification(valid, submit)
     })
 }
 
-login()
-
-
-
-
-// debugger
-
-var btn1 = function() {
-  var findEle = document.querySelector('#admin')
-  findEle.addEventListener('click', function() {
-    firstPage()
-    localStorage.name = null
-    localStorage.name = "admin"
+//增加用户体验
+var useruse = function() {
+  var usernameInput = document.querySelector('#username')
+  var passwordInput = document.querySelector('#password')
+  var codefirstInput = document.querySelector('#code')
+  var loginbtn = document.querySelector('#login-btn')
+  usernameInput.focus()
+  usernameInput.addEventListener('keydown', function(e) {
+    if(e.keyCode == 13) {
+      passwordInput.focus()
+    }
+  })
+  passwordInput.addEventListener('keydown', function(e) {
+    if(e.keyCode == 13) {
+      codefirstInput.focus()
+    }
+  })
+  codefirstInput.addEventListener('keydown', function(e) {
+    if(e.keyCode == 13) {
+      loginbtn.focus()
+    }
   })
 }
 
-var btn2 = function() {
-  var findEle = document.querySelector('#city')
-  findEle.addEventListener('click', function() {
-    firstPage()
-    localStorage.name = null
-    localStorage.name = '城市经理'
-  })
+var __main = function() {
+	useruse()
+	login()
+	mainPage()
 }
 
-var btn3 = function() {
-  var findEle = document.querySelector('#mortage')
-  findEle.addEventListener('click', function() {
-    firstPage()
-    localStorage.name = null
-    localStorage.name = '按揭员'
-  })
-}
-
-var btn4 = function() {
-  var findEle = document.querySelector('#first')
-  findEle.addEventListener('click', function() {
-    firstPage()
-    localStorage.name = null
-    localStorage.name = '初审'
-  })
-}
-
-var btn5 = function() {
-  var findEle = document.querySelector('#final')
-  findEle.addEventListener('click', function() {
-    firstPage()
-    localStorage.name = null
-    localStorage.name = '终审'
-  })
-}
-
-var btn6 = function() {
-  var findEle = document.querySelector('#finance')
-  findEle.addEventListener('click', function() {
-    firstPage()
-    localStorage.name = null
-    localStorage.name = '审批财务'
-  })
-}
-
-
-btn1()
-btn2()
-btn3()
-btn4()
-btn5()
-btn6()
-
-function sumitlong(){
-	var name=	$("#username").val()
-	var pas=	$("#password").val()
-	var code =$("#code").val()
-	if(name == null || name==""){
-		alert("请输入用户名")
-		return ;
-	}else if(pas == null || pas == ""){
-		alert("请输入密码")
-		return ;
-	}else if(code == null || code == ""){
-		alert("请输入验证码")
-		return ;
-	}
-}
+__main()

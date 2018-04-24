@@ -5,7 +5,7 @@
 	<resultMap type="com.slloan.entity.SpousesOfBorrowers" id="spousesofb">
 		<result column="name" property="name" />
 		<result column="id_Type" property="id_Type" />
-		<result column="paperother" property="paperother" />
+		<result column="id_Other" property="id_Other" />
 		<result column="id_Number" property="id_Number" />
 		<result column="uni_Name" property="uni_Name" />
 		<result column="unit_Phone" property="unit_Phone" />
@@ -16,52 +16,43 @@
 		<result column="ctime" property="ctime" />
 	</resultMap>
 
-	<insert id="save" parameterType="com.slloan.entity.SpousesOfBorrowers">  
-        insert into borrower_spouse(
-     name,					
-	 id_Type, 
-	 paperother,      			
-	 id_Number,					
-	 uni_Name,						
-	 unit_Phone,				
-	 home_Phone,			
-	 mobile_Phone,					
-	 monthly_Income,			
-	 state,
-	 ctime) values(#{name},							
-	 #{id_Type}, 
-	 #{paperother},         			
-	 #{id_Number},					
-	 #{uni_Name},						
-	 #{unit_Phone},					
-	 #{home_Phone},					
-	 #{mobile_Phone},					
-	 #{monthly_Income},			
-	 #{state},
-	 #{ctime})
-    </insert>  
-   
-    <!-- 根据ID查记录 -->
-		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.SpousesOfBorrowers">
-				select * from borrower_spouse where id = #{id}
-		</select>
-	
-	
+	<insert id="save" parameterType="com.slloan.entity.SpousesOfBorrowers">
+		insert into borrower_spouse(
+		NAME,
+		id_Type,
+		id_Other,
+		id_Number,
+		uni_Name,
+		unit_Phone,
+		home_Phone,
+		mobile_Phone,
+		monthly_Income,
+		state,
+		ctime) values(#{name},#{id_Type},#{id_Other},#{id_Number},#{uni_Name},#{unit_Phone},#{home_Phone},#{mobile_Phone},#{monthly_Income},#{state},#{ctime})
+	</insert>
+
+	<!-- 根据ID查记录 -->
+	<select id="SelectById" parameterType="int"
+		resultType="com.slloan.entity.SpousesOfBorrowers">
+		select * from borrower_spouse where id = #{id}
+	</select>
+
+
 	<update id="spoupdate" parameterType="com.slloan.entity.SpousesOfBorrowers">
-				update borrower_spouse 
-				<set>
-					<if test="name !=null and name !=''">name = #{name},</if>
-					<if test="id_Type !=null and id_Type !=''">id_Type=#{id_Type},</if>
-					<if test="paperother !=null and paperother !=''">paperother=#{paperother},</if>
-					<if test="id_Number  !=null and id_Number !=''">id_Number=#{id_Number},</if>
-					<if test="uni_Name  !=null and uni_Name !=''">uni_Name=#{uni_Name},</if>
-					<if test="unit_Phone  !=null and unit_Phone !=''">unit_Phone=#{unit_Phone},</if>
-					<if test="home_Phone !=null and home_Phone !=''">home_Phone=#{home_Phone},</if>
-					<if test="mobile_Phone !=null and mobile_Phone !=''">mobile_Phone = #{mobile_Phone},</if>
-					<if test="monthly_Income !=null and monthly_Income !=''">monthly_Income = #{monthly_Income},</if>
-					<if test="state !=null and state !=''">state = #{state},</if>
-					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
-				</set>
-					 WHERE id = #{id}
-		</update>
+		update borrower_spouse
+		<set>
+			<if test="name !=null and name !=''">name = #{name},</if>
+			<if test="id_Type !=null and id_Type !=''">id_Type = #{id_Type},</if>
+			<if test="id_Other !=null and id_Other !=''">id_Other=#{id_Other},</if>
+			<if test="id_Number  !=null and id_Number !=''">id_Number=#{id_Number},</if>
+			<if test="uni_Name  !=null and uni_Name !=''">uni_Name=#{uni_Name},</if>
+			<if test="unit_Phone  !=null and unit_Phone !=''">unit_Phone=#{unit_Phone},</if>
+			<if test="home_Phone !=null and home_Phone !=''">home_Phone=#{home_Phone},</if>
+			<if test="mobile_Phone !=null and mobile_Phone !=''">mobile_Phone = #{mobile_Phone},</if>
+			<if test="monthly_Income !=null and monthly_Income !=''">monthly_Income = #{monthly_Income},</if>
+			<if test="state !=null and state !=''">state = #{state},</if>
+			<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 </mapper>

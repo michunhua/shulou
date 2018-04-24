@@ -1,4 +1,31 @@
-// 权限选择
+// 为了显示文字
+var updateOpower = {
+	"1":  "回款确认",
+	"2":  "贷款终审",
+	"3":  "贷款创建",
+	"4":  "贷款初审",
+	"5":  "贷款信息查看",
+	"6":  "取证凭证上传",
+	"7":  "进押凭证上传",
+	"8":  "解押凭证上传",
+	"9":  "财务审批",
+	"10":  "放款审批",
+	"11":  "结算凭证上传",
+	"12":  "转账凭证上传",
+	"13":  "个人信息修改",
+	"14":  "密码修改",
+	"15":  "添加角色",
+	"16":  "修改角色信息",
+	"17":  "删除角色",
+	"18":  "分配权限",
+	"19":  "删除权限",
+	"20":  "添加用户",
+	"21":  "分配角色",
+	"22":  "删除用户",
+	"23":  "修改用户信息",
+	}
+
+//权限选择
 var powerShow = []
 var Opower = {
   "回款确认": "1",
@@ -50,6 +77,8 @@ var addPower = function(data) {
 
 // 添加权限函数
 var addsomePower = function(element) {
+	console.log('添加权限')
+	console.log('powerShow', powerShow)
   var loan = e(element)
   var info = loan.querySelectorAll('.layui-form-checked')
   var into = loan.querySelectorAll('.layui-form-checkbox')
@@ -100,6 +129,7 @@ var collectData = function() {
    data.note = e('.role-note').value
    // data.setPurview = document.querySelector('.role-power').value
    data.setPurview = getEachData(powerShow, Opower)
+   data.id = localStorage.updateRoleName
    return data
 }
 
@@ -111,7 +141,8 @@ var sendAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
           if(data.msg === 'success')
-        	  alert('添加成功')
+        	  alert('修改成功')
+        	  data.id = null
               window.location.href = '../role/rolelist'
           }
     })
@@ -123,11 +154,12 @@ var sendForm = function() {
   btn.addEventListener('click', function() {
     var getData = collectData()
     var data = getData
-    var url = '/slloan/role/addpowerlimit'
+    var url = '/slloan/role/updateroleadd'
     var method = 'POST'
     sendAjax(method, url, data)
   })
 }
+
 
 // 取消按钮事件
 var cancelBtn = function(element) {
@@ -143,6 +175,7 @@ var cancelBtn = function(element) {
 
 // 重新渲染表单
 function renderForm(){
+	console.log('重新渲染表单')
   layui.use('form', function(){
    var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
    form.render();
@@ -181,6 +214,58 @@ var obtainCity = function() {
 }
 
 
+//发送数据方法
+var updatesendAjax = function(method, url, datas, callback) {
+  // log('send data method')
+  $.ajax({
+    type: method,
+    url: url,
+    data: {data:JSON.stringify(datas)},
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		console.log('获取数据成功')
+    		var name = e('.role-name')
+    		var description = e('.role-description')
+    		var city = e('.role-city')
+    		var note = e('.role-note')
+    		
+    		name.value = data.obj.roleName
+    		description.value = data.obj.descriPtion
+    		city.value = data.obj.belongs_City
+    		note.value = data.obj.note
+
+    		var yii = JSON.parse(data.obj.configuration)
+    		var flag = Object.keys(yii)
+    		var content = document.querySelector(".role-power")
+    		var selected = document.querySelectorAll('.layui-form-checkbox')
+    		for(var m = 0; m < selected.length; m++) {
+    			if(yii[flag[m]] > 0) {
+    				selected[yii[flag[m]] - 1].classList.add('layui-form-checked')
+    			}
+    		}
+    		
+    		for(var i = 0; i < flag.length; i++) {
+    				powerShow.push(updateOpower[yii[flag[i]]])
+    		}
+    		
+    		addPower(powerShow)
+    	}
+    }
+  })
+}
+
+// 默认加载
+var foo = function() {
+  var method = 'GET'
+  var url = '/slloan/role/selectbyid'
+  var data = {}
+  data.id = localStorage.updateRoleName
+  updatesendAjax(method, url, data, null)
+}
+
+foo()
+
+
 var __main = function() {
   obtainCity()                        // 获取并渲染城市
   removeSelectPower('.role-loan')     // 贷款权限 按钮
@@ -194,3 +279,4 @@ var __main = function() {
 }
 
 __main()
+

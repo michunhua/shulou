@@ -6,6 +6,7 @@
 		id="baseappforRole">
 		<result column="amount" property="amount" />
 		<result column="time_Limit" property="time_Limit" />
+		<result column="time_Limits" property="time_Limits" />
 		<result column="borrowing_Variety" property="nborrowing_Varietyame" />
 		<result column="repayment" property="repayment" />
 		<result column="receiving_Bank_Name" property="receiving_Bank_Name" />
@@ -25,6 +26,7 @@
 		INSERT INTO apply_for_loan_information (
 			amount,
 			time_Limit,
+			time_Limits,
 			borrowing_Variety,
 			repayment,
 			receiving_Bank_Name,
@@ -41,7 +43,7 @@
 		)
 		VALUES
 		(
-			#{amount},#{time_Limit},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
+			#{amount},#{time_Limit},#{time_Limits},#{borrowing_Variety},#{repayment},#{receiving_Bank_Name},#{receiving_Account_Name},#{receiving_Account},#{repayment_Bank_Name},#{repayment_Account_Name},#{repayment_Account_Number},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
 	</insert>
 	<!-- <delect id="delete" parameterType="com.slloan.entity.ApplyForLoanInformation">
 		DELETE
@@ -50,11 +52,12 @@
 			WHERE
 				id = #{id}
 	</delect> -->
-	<update id="update" parameterType="com.slloan.entity.ApplyForLoanInformation">    
+	<update id="appUpdate" parameterType="com.slloan.entity.ApplyForLoanInformation">    
 			update apply_for_loan_information 
 				<set>
 					<if test="amount !=null and amount !=''">amount = #{amount},</if>
 					<if test="time_Limit !=null and time_Limit !=''">time_Limit = #{time_Limit},</if>
+					<if test="time_Limits !=null and time_Limits !=''">time_Limits = #{time_Limits},</if>
 					<if test="borrowing_Variety  !=null and borrowing_Variety !=''">borrowing_Variety = #{borrowing_Variety},</if>
 					<if test="repayment  !=null and repayment !=''">repayment = #{repayment},</if>
 					<if test="receiving_Bank_Name  !=null and receiving_Bank_Name !=''">receiving_Bank_Name = #{receiving_Bank_Name},</if>

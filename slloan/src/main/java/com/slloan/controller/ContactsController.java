@@ -37,7 +37,7 @@ public class ContactsController {
 	private ContactsService contactsservice;
 	
 	@ResponseBody
-	@RequestMapping("/contactinformation")
+	@RequestMapping("/contactinformations")
 	public Json save(HttpServletRequest req) {
 		
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
@@ -78,7 +78,7 @@ public class ContactsController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="/contactss",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/contactasss",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json UserSelectById(HttpServletRequest req){
 		
@@ -96,51 +96,27 @@ public class ContactsController {
 			return new Json(false,"fail",isResult); 
 	}
 	
-//	/**
-//	 * 修改用户保存
-//	 * @return
-//	 */
-//	@RequestMapping(value="/modifyuser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
-//	@ResponseBody
-//	public String updateUser(HttpServletRequest req){
-//		String dataid = req.getParameter("datas");
-//		JSONObject json = new JSONObject().fromObject(dataid);
-//		String username = json.getString("username");//用户名
-//		String employeeis_Name = json.getString("employeeisname");//员工姓名
-//		String distribution_Role = json.getString("distributionrole");//分配角色
-//		String belongs_City = json.getString("belongscity");//所属城市
-//		String createDate = DateUtils.getInDateTime((new Date()));//日期
-//		String note =json.getString("note");
-//		UserLogin userlogin = new UserLogin(username,employeeis_Name,distribution_Role,belongs_City,note,createDate);
-//		boolean isResult =userservice.updateaddUser(userlogin);
-//		if(isResult == true){
-//			return JSON.toJSONString(isResult);
-//		}else
-//			return JSON.toJSONString("fail");
-//	}
-
-
 
 	/**
 	 * 修改用户保存
 	 * @return
 	 */
-	@RequestMapping(value="/modifyusers",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/modifyuseraaas",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String updateUser(HttpServletRequest req){
 		
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
-		String contacts = json.getString("linkfName"); //联系人姓名
-		String contacts1=json.getString("linkfName");//联系人姓名
-		String contacts2=json.getString("linkfName");//联系人姓名
-		String relationship=json.getString("linkfRelationship");//联系人关系
-		String relationship1=json.getString("linkfRelationship");//联系人关系
-		String relationship2=json.getString("linkfRelationship");//联系人关系
+		String contacts = json.getString("linkf"); //联系人姓名
+		String contacts1=json.getString("links");//联系人姓名
+		String contacts2=json.getString("linkt");//联系人姓名
+		String relationship=json.getString("linkfMate");//联系人关系
+		String relationship1=json.getString("linksMate");//联系人关系
+		String relationship2=json.getString("linktMate");//联系人关系
 		String c_Telephone=json.getString("linkfPhone");//联系人电话
-		String c_Telephone1=json.getString("linkfPhone");//联系人电话
-		String c_Telephone2=json.getString("linkfPhone");//联系人电话
+		String c_Telephone1=json.getString("linksPhone");//联系人电话
+		String c_Telephone2=json.getString("linktPhone");//联系人电话
 		String state=json.getString("state");
 		String ctime=json.getString("ctime");
 		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);

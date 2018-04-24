@@ -14,6 +14,7 @@ var lsendAjax = function(method, url, datas, callback) {
         data: datas,
         success: function(data) {
 					if((((String(data)).split('<title>')[1]).split('</title>')[0]) === '登录') {
+						localStorage.username = ''
             window.location.href = '../../slloan/user/signin'
           }
 				}

@@ -58,7 +58,7 @@ var collectData = function() {
   data.state = 'c'
   data.ctime ='d'
   data.hi = 'hi'
-	  data.id = 2
+
   return data
 }
 
@@ -92,6 +92,7 @@ var sendData = function(element) {
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/perupdate'
+    	  data.id = 4
     log(data)
     sendAjax(method, url, data)
   })
@@ -222,7 +223,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/personalp'
 	var data = {}
-	data.id = 2
+	data.id = 4
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

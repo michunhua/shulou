@@ -13,9 +13,9 @@ var collectData = function() {
   data.linkt = e('.linkt').value
   data.linktMate = e('.linkt-mate').value
   data.linktPhone = e('.linkt-phone').value
-  data.state = 'a'
-	  data.ctime = 'b'
-		  data.id = 2
+  data.id = 2
+  data.state = '1'
+	  data.ctime = '2'
   return data
 }
 
@@ -48,7 +48,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/modifyuserss'
+    var url = '/slloan/loan/modifyuseraaas'
     log(data)
     sendAjax(method, url, data)
   })
@@ -119,9 +119,9 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactob'
+	var url = '/slloan/loan/contactasss'
 	var data = {}
-	  data.id = 2
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

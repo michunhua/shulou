@@ -241,7 +241,10 @@ addUser()
 		url : url,
 		data : {datas:JSON.stringify(datas)},
 		success : function(data) {
-			console.log(data)
+			if(data.msg == 'success') {
+	    		alert('删除成功')
+	    		getPageData()
+	    	}
 		}
 	})
 }
@@ -288,7 +291,6 @@ var groupBtn = function() {
 								.querySelector('.flag').innerText
 						console.log(data)
 						deleteAjax(method, url, data)
-						getPageData()
 						  layer.close(index);
 						});
 				} else if (mark == '查看') {

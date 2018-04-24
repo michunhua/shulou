@@ -11,6 +11,7 @@
 		<result column="Parentnode" property="Parentnode" />
 		<result column="Subnode" property="Subnode" />
 		<result column="createdata" property="createData" />
+		<result column="city" property="city" />
 	</resultMap>
 
 <!-- 删除影像 -->
@@ -18,8 +19,8 @@
 	delete from imagedata where id=#{id}
 </delete>
 <insert id="imageDataAdd" parameterType="com.slloan.entity.ImageDataUpdate">
-	insert into imagedata(id,filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata)
-	values(nextval('empno'),#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData})
+	insert into imagedata(id,filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city)
+	values(nextval('empno'),#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city})
 </insert>
 <!-- 展示所有 -->
 <select id="list" resultType="com.slloan.entity.ImageDataUpdate">
@@ -27,9 +28,9 @@
 </select>
 <!-- 根据 上传类型 原文件名  上传者姓名查所上传的-->
 <select id="selectUploadsUpdateType"  parameterType="Map" resultType="com.slloan.entity.ImageDataUpdate">
-	select  filepath,note,uploads,uploadtype,Parentnode  from imagedata where  filepath LIKE CONCAT('%',#{filepath},'%')
+	select  filepath,note,uploads,uploadtype,Parentnode,id,Subnode  from imagedata where  filepath LIKE CONCAT('%',#{filepath},'%')
 <!-- 		<if test="filepath !=null and filepath !=''">and filepath LIKE CONCAT('%',#{filepath},'%')</if>  -->
-		<if test="Parentnode !=null and Parentnode  !='' ">and Parentnode =#{Parentnode}</if>
+		<if test="city !=null and city  !='' ">and city =#{city}</if>
 		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
 		
 <!-- 	<trim  prefix="WHERE" prefixOverrides="AND |OR"> -->
@@ -55,9 +56,66 @@
 	</trim>
 	ORDER BY id desc
 </select>
-<!-- 财务审核通过待放款 -->
+<!--贷款终审列表审批是否通过  -->
+<update id="loanFinalReviewRefuse" parameterType="java.util.List">
+	update recordsubmit_table set fallbackname  = '待初审审批中'  , state = '1'
+	where id in
+	<foreach collection ="list" item="item" index="index">
+		#{item}
+	</foreach>
+</update>
+<update id="loanFinalReviewPast" parameterType="java.util.List">
+	update 	recordsubmit_table set fallbackname  = '待出账确认'  , state = '3'
+	where id in 
+	<foreach collection="list" item="item" index="index">
+		#{item}
+	</foreach>
+</update>
+
+<!--贷款初审列表审批是否通过  -->
+<update id="FirsttrialbatchRefuse" parameterType="java.util.List">
+	update recordsubmit_table set fallbackname  = '初审审批回退'  , state = '0'
+	where id in
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+</update>
+
+<update id="FirsttrialbatchPast" parameterType="java.util.List">
+	update recordsubmit_table set fallbackname  = '待终审审批中'  , state = '2'
+	where id in
+	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+	</foreach>
+</update>
+
+<update id="tobesettled" parameterType="int" >
+	update recordsubmit_table set fallbackname  = '已结清'  , state = '10' where id=#{id}
+</update> 
+
+<update id="WaitForensics" parameterType="int" >
+	update recordsubmit_table set fallbackname  = '待解押'  , state = '6' where id=#{id}
+</update> 
+
+<update id="tobedetained" parameterType="int" >
+	update recordsubmit_table set fallbackname  = '待进押'  , state = '7' where id=#{id}
+</update>
+<update id="tobeforensics" parameterType="int" >
+	update recordsubmit_table set fallbackname  = '待取证'  , state = '5' where id=#{id}
+</update>
+
+<update id="pendingconfirmation" parameterType="int" >
+	update recordsubmit_table set fallbackname  = '待确认回款'  , state = '8' where id=#{id}
+</update>
+
+<update id="loanClearing" parameterType="int" >
+	update recordsubmit_table set fallbackname  = '待结算'  , state = '9' where id=#{id}
+</update>
+<!--
+财务列表审批是否通过 
+ 财务审核通过待放款 -->
 <update id="batchUpdateStudent"  parameterType="java.util.List">
-	update recordsubmit_table  set fallbackname = '待出账确认' , state = '6'
+	update recordsubmit_table  set fallbackname = '待放款' , state = '4'
 	where id in					   
 <!-- 	<if test="id !=null"> -->
 		<foreach collection="list"  item="item" index="index" open="(" separator="," close=")">
@@ -67,9 +125,11 @@
 <!-- 	where id in -->
 </update>
 
+
+
 <!-- 财务批量审核拒绝退回到终审 -->
 <update id="batchUpdateadopt"  parameterType="java.util.List">
-	update recordsubmit_table   set fallbackname='待终审审批中' ,state = '5'
+	update recordsubmit_table   set fallbackname='待终审审批中' ,state = '2'
 	where id in
 		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")">
 			#{item}

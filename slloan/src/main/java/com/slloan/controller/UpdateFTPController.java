@@ -114,8 +114,11 @@ public class UpdateFTPController{
 	  			final HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException{
     	final String note = req.getParameter("note");//备注
     	final String upload_type = req.getParameter("upload_type");//上传类型
-    	final	String filepath = req.getParameter("filepath");
+    	final	String filepath2 = req.getParameter("filepath");
+    	System.out.println(filepath2);
     	final	String city = req.getParameter("city");
+//    	final	String file = req.getParameter("FileUpload");
+//    	System.out.println(file);
     	ResultList<Object> pageBean = new ResultList<Object>();//返回权限集合
     	List<Object> li = new ArrayList<Object>();
     	System.out.println("获取web项目的根路径"+req.getLocalPort());
@@ -180,14 +183,14 @@ public class UpdateFTPController{
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setParentnode(city);
+                         	imagedata.setCity(city);
                          	imagedata.setSubnode("");
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);//添加一条记录
                          	
                      	}
-         	 			if(upload_type.equals("身份证明")&& requestsize >0 ){
+         	 			if(upload_type.equals("身份证明")){
                      		System.out.println("身份证明");
                      		if (!ftp.changeWorkingDirectory("shenfenzheng_image")) {
              	                ftp.makeDirectory("shenfenzheng_image");//创建目录
@@ -202,7 +205,7 @@ public class UpdateFTPController{
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setParentnode(city);
+                         	imagedata.setCity(city);
                          	imagedata.setSubnode("");
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
@@ -222,7 +225,7 @@ public class UpdateFTPController{
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setParentnode(city);
+                         	imagedata.setCity(city);
                          	imagedata.setSubnode("");
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
@@ -244,7 +247,7 @@ public class UpdateFTPController{
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setParentnode(city);
+                         	imagedata.setCity(city);
                          	imagedata.setSubnode("");
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
@@ -264,7 +267,7 @@ public class UpdateFTPController{
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setParentnode(city);
+                         	imagedata.setCity(city);
                          	imagedata.setSubnode("");
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
@@ -285,11 +288,12 @@ public class UpdateFTPController{
 //                         	imagedata.setFilepath("");
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setParentnode(city);
+                         	imagedata.setCity(city);
                          	imagedata.setSubnode("");
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
+                         	
                      	}
                      	
          	 			}
@@ -321,8 +325,17 @@ public class UpdateFTPController{
           	        	pageBean.setLists(li);
           	        	  input.close();
           	        	  ftp.logout();
-          	        	  return new Json(true,"success",seqid,"上传成功");
-          	        	  
+          	        	String filepath =targetFileName;//原文件名
+                    	String parentnode =city;
+                    	String uploadtype = upload_type;
+                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
+                    List<ImageDataUpdate> listimg= imagedataservice.selectUploadsUpdateType(imagedata2);
+                    	if(listimg.size()> 0){
+                    		//return new Json(true,"success",listimg);
+                    		  return new Json(true,"success",listimg,"上传成功");
+                    	}else{
+                    		return new Json(false,"fail",listimg,"请选择城市或上海类型");
+                    	}
           	          }else{
           	        	  System.err.println("上传失败！"); 
           	        	  return new Json(false,"fail",pageBean,"请选择上传文件类型jpg,png,jpge,bmp,png");
@@ -597,18 +610,18 @@ public class UpdateFTPController{
     @RequestMapping(value="/selectfiletype",method=RequestMethod.GET,produces="application/json;charset=utf-8")
     @ResponseBody
     public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
-//    	String data = req.getParameter("data");
-//    	JSONObject jsonobj = new JSONObject().fromObject(data);
-//    	String originalfilename = jsonobj.getString("file");//原文件名
-//    	String parentnode = jsonobj.getString("city");
-//    	String uploadtype = jsonobj.getString("upload_type");
+    	String data = req.getParameter("data");
+    	JSONObject jsonobj = new JSONObject().fromObject(data);
+    	String originalfilename = jsonobj.getString("file");//原文件名
+    	String parentnode = jsonobj.getString("city");
+    	String uploadtype = jsonobj.getString("upload_type");
 //    	String id = jsonobj.getString("id");
 //    	int zid = Integer.parseInt(id);
 //    	String sid = req.getParameter("id");
 //    	int zid = Integer.parseInt(sid);
-    	String originalfilename = req.getParameter("file");
-    	String parentnode= req.getParameter("city");
-    	String uploadtype =  req.getParameter("uploadtype");
+//    	String originalfilename = req.getParameter("file");
+//    	String parentnode= req.getParameter("city");
+//    	String uploadtype =  req.getParameter("uploadtype");
     	
 //    	System.out.println(zid+" "+ originalfilename+" "+ parentnode+" "+ uploadtype);
     	ImageDataUpdate imagedata = new ImageDataUpdate(originalfilename,parentnode,uploadtype);

@@ -220,7 +220,8 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/jointappli'
 	var data = {}
-	data.id = localStorage.createID
+//	data.id = localStorage.createID
+	data.id = 3
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

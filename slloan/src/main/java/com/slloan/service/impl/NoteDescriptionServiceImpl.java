@@ -37,7 +37,7 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 	@Override
 	public NoteDescription findById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return notedescriptionDao.findById(id);
 	}
 
 

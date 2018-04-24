@@ -9,6 +9,7 @@ import com.slloan.dao.coborrowerSpouseDao;
 import com.slloan.entity.ApplyForLoanInformation;
 import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.PersonalProfile;
 import com.slloan.service.inter.CoborrowerSpouseService;
 
 @Service(value = "CoborrowerSpouseServiceImpl")
@@ -38,11 +39,13 @@ public class CoborrowerSpouseServiceImpl implements CoborrowerSpouseService {
 			
 		
 	}
+
+	
 	@Override
 	public boolean update(CoborrowerSpouse coborrowerSpouse) {
-		
-		 return coborrowerSpouseDao.cobupdate(coborrowerSpouse);	
-		
+
+		return coborrowerSpouseDao.update(coborrowerSpouse);
+
 	}
 
 	@Override

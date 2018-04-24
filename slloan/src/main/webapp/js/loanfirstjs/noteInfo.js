@@ -4,8 +4,8 @@ log('noteInfo')
 var collectData = function() {
   log('收集数据')
   var data = {}
-  data.recordNote = e('.record-note').value
-  data.firstTrial = e('.first-trial').value
+  data.note = e('.record-note').value
+  data.recordFirst = e('.first-trial').value
   return data
 }
 
@@ -79,7 +79,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/notedescid'
+	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = 2
 	if(data.id) {

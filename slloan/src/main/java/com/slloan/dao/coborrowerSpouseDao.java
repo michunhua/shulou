@@ -18,7 +18,7 @@ public interface coborrowerSpouseDao {
 	
 	boolean delete(int id); 
 	
-	boolean cobupdate(CoborrowerSpouse coborrowerSpouse);  
+	boolean update(CoborrowerSpouse coborrowerSpouse);  
 	
 	List<CoborrowerSpouse> findAll(); 
 	//查询ID

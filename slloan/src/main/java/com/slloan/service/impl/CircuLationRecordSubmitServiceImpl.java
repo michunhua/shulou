@@ -35,12 +35,16 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	@Override
 	public boolean fallbackinsert(CircuLationRecord circuLationRecord) {
 		String fallbackname = circuLationRecord.getFallbackname();
-		String submit = circuLationRecord.getSubmit();
+//		String submit = circuLationRecord.getSubmit();
 		int state = circuLationRecord.getState();
-		String spare1 =circuLationRecord.getSpare1();
+//		String spare1 =circuLationRecord.getSpare1();
 //		String Sparefield =circuLationRecord.getSparefield();
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-		CircuLationRecord record = new CircuLationRecord(fallbackname,submit,state,spare1,createDate);
+		String username = circuLationRecord.getUsername();
+		String ParentnodeId = circuLationRecord.getParentnodeId();
+		String city = circuLationRecord.getCity();
+		String rolename = circuLationRecord.getRolename();
+		CircuLationRecord record = new CircuLationRecord(fallbackname,state,createDate,username,ParentnodeId,city,rolename);
 		return recordSubmitDao.fallbackinsert(record);
 	}
 

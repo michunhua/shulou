@@ -21,8 +21,14 @@ layui.use('laydate', function(){
 var collectData = function() {
   var data = {}
   data.note = e('.note').value
-  data.state = '2'
-  data.ctime = 'c'
+  data.recordFirst = '2'
+  data.recorFinal = 'c'
+	  data.rolename = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.parentnodeId = localStorage.purid
+	  data.state = 'q'
+		  data.ctime = 'b'
   return data
 }
 
@@ -80,9 +86,10 @@ var searchAjax = function(method, url, datas) {
 //查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/jointappliss'
+	var url = '/slloan/loan/notedescripti'
 	var data = {}
-	data.id = localStorage.createID
+//	data.id = localStorage.createID
+	data.id = 1
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
@@ -117,7 +124,7 @@ var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     var data = collectData()
-    var method = 'POST'
+    var method = 'GET'
     var url = '/slloan/loan/notedescription'
     log(data)
     sendAjax(method, url, data, null)
@@ -137,8 +144,8 @@ var cancelBtn = function(element) {
 var submitBtn = function(element) {
 	var purpose = e(element)
 	purpose.addEventListener('click', function() {
-		var method = 'POST'
-		var url = ''
+		var method = 'GET'
+		var url = '/slloan/loan/loannotfirsts'
 		var data = collectData()
 		submitAjax(method, url, data)
 	})

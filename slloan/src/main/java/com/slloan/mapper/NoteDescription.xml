@@ -44,10 +44,16 @@
 		ctime,
 		username,
 		ParentnodeId,
-		city,rolename
+		city,
+		rolename
 		)
 		VALUES
 		(
 		#{note_Description1},#{note_Description2},#{note_Description3},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
 	</insert>
+	
+	 <!-- 根据ID查记录 -->
+		<select id="findById" parameterType="int"  resultType="com.slloan.entity.NoteDescription">
+				select * from note_description where id = #{id}
+		</select>
 </mapper>

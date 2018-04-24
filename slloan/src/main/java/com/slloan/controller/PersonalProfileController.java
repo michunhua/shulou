@@ -93,10 +93,10 @@ public class PersonalProfileController {
 		String state=obj.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
 		String ctime=obj.getString("ctime"); // 日期
-		String username = obj.getString("username");
-		 String parentnodeId = obj.getString("parentnodeId");
-		 String city = obj.getString("city");
-		String rolename = obj.getString("rolename");
+		String username = obj.getString("username"); //用户名
+		 String parentnodeId = obj.getString("parentnodeId"); //用户名id
+		 String city = obj.getString("city"); //城市
+		String rolename = obj.getString("rolename"); //角色
 //		 PersonalProfile p = new PersonalProfile();
 //		 	p.setUsername("张三");
 //		 	p.setParentnodeId("27");
@@ -154,7 +154,7 @@ public class PersonalProfileController {
 	}
 
 	/**
-	 * 初审查询Id
+	 * 按揭员查询Id
 	 * 
 	 * @param req
 	 * @return
@@ -274,8 +274,18 @@ public class PersonalProfileController {
 	
 	
 
+	
+
 	/**
 	 * 终审申请人个人资料
+	 * 
+	 * @param req
+	 * @param contactsparam
+	 * @return
+	 */
+	
+	/**
+	 * 初审借款申请人个人资料
 	 * 
 	 * @param req
 	 * @param contactsparam
@@ -358,14 +368,13 @@ public class PersonalProfileController {
 			monthly_expenditure = Double.parseDouble(expenses);
 		}
 
-
-		PersonalProfile jointss = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
+		PersonalProfile jointss = new PersonalProfile(id,product_Number, name, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
 				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
 				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime, null, null);
 		boolean isResult = personalprofileservice.perupdate(jointss);
 		if (isResult == true) {
 			return new Json(true, "success", isResult);
@@ -373,27 +382,8 @@ public class PersonalProfileController {
 			return new Json(false, "fail", isResult);
 		}
 	}
-
-	/**
-	 * 终审查询Id
-	 * 
-	 * @param req
-	 * @return
-	 */
-	@RequestMapping(value = "/personalpss", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public Json UserSelectByIds(HttpServletRequest req) {
-		String dataid = req.getParameter("data");
-		JSONObject json = new JSONObject().fromObject(dataid);
-		String uid = json.getString("id");
-		int id = Integer.parseInt(uid);
-		PersonalProfile isResult = personalprofileservice.SelectById(id);
-		if (isResult != null) {
-			return new Json(true, "success", isResult);
-		} else
-			return new Json(false, "fail", isResult);
-	}
-
+	
+	
 	/**
 	 * 创建列表模糊查询
 	 * @return json
@@ -425,24 +415,24 @@ public class PersonalProfileController {
 		return JSON.toJSONString(personalprofileservice.vaguelikeSelectCreatetwo(map));
 	}
 	
-	/**
-	 * 创建借款人列表
-	 * 
-	 * @return json
-	 */
-	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public String rolemanagements(HttpServletRequest req) {
-		String page = req.getParameter("page");
-		String limit = req.getParameter("limit");
-		int startPos = Integer.parseInt(page);
-		int pageSize = Integer.parseInt(limit);
-		System.out.println(page);
-		System.out.println(limit);// startPos, int pageSize
-		// roleAddService.getRolePage(startPos);
-		// JSON.toJSONString(user)
-		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
-	}
+//	/**
+//	 * 贷款按揭员列表
+//	 * 
+//	 * @return json
+//	 */
+//	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	@ResponseBody
+//	public String rolemanagements(HttpServletRequest req) {
+//		String page = req.getParameter("page");
+//		String limit = req.getParameter("limit");
+//		int startPos = Integer.parseInt(page);
+//		int pageSize = Integer.parseInt(limit);
+//		System.out.println(page);
+//		System.out.println(limit);// startPos, int pageSize
+//		// roleAddService.getRolePage(startPos);
+//		// JSON.toJSONString(user)
+//		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
+//	}
 
 	
 

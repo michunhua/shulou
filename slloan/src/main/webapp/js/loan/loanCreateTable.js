@@ -154,7 +154,8 @@ var addTable = function(data) {
 }
 
 var testData = {
-		test: '233'
+		test: '233',
+		lists: [1, 2, 3, 4]
 }
 
 //addTable(testData)
@@ -181,9 +182,13 @@ var initData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/rolemanagement?page=1&limit=10'
 	var datas = {}
-	datas.a = 'a'
+		datas.a = 'a'
 	datas.b = 'b'
-	datas.id = '1'
+	datas.id = 1 
+    datas.role = localStorage.purrole
+    datas.username = localStorage.purusername
+    datas.city = localStorage.purcity
+	datas.parentnodeId = localStorage.purid
 	console.log('初始化加载数据233')
 	initAjax(method, url, datas, addTable)
 	console.log('执行没有？')
@@ -239,21 +244,13 @@ var createBtn = function() {
 }
 
 // 具体查询
-//var numberSearch = function() {
-//	var envs = es('.mark')
-//	for(var i = 0; i < envs.length; i++) {
-//		envs[i].addEventListener('click', function(event) {
-//			console.log(event.target.innerText)
-//		})
-//	}
-//}
-
 var numberSearch = function(element) {
 	var envs = e(element)
 		envs.addEventListener('click', function(event) {
 			var indicate = event.target.classList
 			if(indicate == 'mark') {
 				console.log(event.target.innerText)
+				window.location.href = '../loan/loanjoin'
 			}
 		})
 }

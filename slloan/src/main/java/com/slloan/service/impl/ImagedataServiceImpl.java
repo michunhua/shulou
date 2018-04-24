@@ -30,10 +30,11 @@ public class ImagedataServiceImpl implements ImagedataService {
 			String uploads = imagedata.getUploads();
 			String originalfilename = imagedata.getOriginalfilename();
 			String upload_type = imagedata.getUploadtype();
-			String Parentnode = imagedata.getParentnode();//父节点
+//			String Parentnode = imagedata.getParentnode();//父节点
 			String Subnode = imagedata.getSubnode();
 			String createdate = imagedata.getCreateData();
-		ImageDataUpdate imdata = new ImageDataUpdate(filepate,note,uploads,originalfilename,upload_type,Parentnode,Subnode,createdate);
+			String city = imagedata.getCity();
+		ImageDataUpdate imdata = new ImageDataUpdate(filepate,note,uploads,originalfilename,upload_type,city,Subnode,createdate);
 		return imagedatadao.imageDataAdd(imdata);
 	}
 
@@ -56,7 +57,7 @@ public class ImagedataServiceImpl implements ImagedataService {
 	public List<ImageDataUpdate> selectUploadsUpdateType(ImageDataUpdate param) {
 		Map<String,Object> mapparam = new HashMap<String,Object>();
 //		mapparam.put("id",param.getId());
-		mapparam.put("filepath", param.getOriginalfilename());
+		mapparam.put("filepath", param.getFilepath());
 		mapparam.put("Parentnode", param.getParentnode());
 		mapparam.put("uploadtype",param.getUploadtype());
 		return imagedatadao.selectUploadsUpdateType(mapparam);
@@ -78,12 +79,57 @@ public class ImagedataServiceImpl implements ImagedataService {
 	}
 
 	@Override
-	public boolean batchUpdateadopt(List updatelList) {
-		return imagedatadao.batchUpdateadopt(updatelList);
+	public boolean batchUpdateadopt(List updatelist) {
+		return imagedatadao.batchUpdateadopt(updatelist);
 	}
 
 	@Override
 	public ObjectSeq listSeq() {
 		return imagedatadao.listSeq();
+	}
+
+	@Override
+	public boolean FirsttrialbatchRefuse(List batchRefuse) {
+		return imagedatadao.FirsttrialbatchRefuse(batchRefuse);
+	}
+	
+	@Override
+	public boolean FirsttrialbatchPast(List batchPast) {
+		return imagedatadao.FirsttrialbatchRefuse(batchPast);
+	}
+
+	@Override
+	public boolean loanFinalReviewPast(List loanFinalReviewpast) {
+		return imagedatadao.loanFinalReviewPast(loanFinalReviewpast);
+	}
+
+	@Override
+	public boolean loanFinalReviewRefuse(List loanFinalRefuse) {
+		return imagedatadao.loanFinalReviewRefuse(loanFinalRefuse);
+	}
+	@Override
+	public boolean WaitForensics(int id) {
+		return imagedatadao.WaitForensics(id);
+	}
+	@Override
+	public boolean tobesettled(int id) {
+		return imagedatadao.tobesettled(id);
+	}
+	
+	@Override
+	public boolean tobeforensics(int id) {
+		return imagedatadao.tobeforensics(id);
+	}
+	@Override
+	public boolean tobedetained(int id) {
+		return imagedatadao.tobedetained(id);
+	}
+	@Override
+	public boolean pendingconfirmation(int id) {
+		return imagedatadao.pendingconfirmation(id);
+	}
+	@Override
+	public boolean loanClearing(int id) {
+		return imagedatadao.loanClearing(id);
 	}
 }

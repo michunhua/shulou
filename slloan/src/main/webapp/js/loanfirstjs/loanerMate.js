@@ -13,6 +13,8 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
+  data.state = 'a'
+	  data.ctime = 'b'
 
   return data
 }
@@ -47,7 +49,7 @@ var sendData = function(element) {
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/spoupdate'
-    	data.id = 2
+    	data.id = 8
     log(data)
     sendAjax(method, url, data)
   })
@@ -112,7 +114,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/spouses'
 	var data = {}
-	data.id = 2
+	data.id = 8
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

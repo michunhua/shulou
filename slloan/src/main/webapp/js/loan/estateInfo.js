@@ -41,7 +41,6 @@ var collectData = function() {
   data.newApproved = e('.new-approved').value
   data.state='a'
   data.ctiam='b'
-	  data.id= 2
   return data
 }
 
@@ -156,9 +155,10 @@ success: function(data) {
 
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/perer'
+	var url = '/slloan/loan/pper'
 	var data = {}
-	data.id = localStorage.createID
+//	data.id = localStorage.createID
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

@@ -2,6 +2,8 @@ package com.slloan.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.SpousesOfBorrowers;
 import com.slloan.service.inter.PropertyInformationService;
 import com.slloan.service.inter.SpousesOfBorrowersService;
+import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
@@ -43,20 +47,19 @@ public class SpousesOfBorrowersController {
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 
-		String name = obj.getString("cname"); // 借款人配偶姓名
-		String id_Type = obj.getString("paperwork"); // 身份证件类型
-		String paperother = obj.getString("paperother"); // 身份证件类型
-		String id_Number = obj.getString("paperNumb"); // 身份证件号码
-		String uni_Name = obj.getString("unitName"); // 单位名称
-		String unit_Phone = obj.getString("residencePhone"); // 单位电话
-		String home_Phone = obj.getString("unitPhone"); // 住宅电话
-		String mobile_Phone = obj.getString("mobiePhone"); // 手机
-		String monthly_Income = obj.getString("salary"); // 月收入
-		String state =obj.getString("state");
-		String ctime = obj.getString("ctime");
-		
+		  String name = obj.getString("cname"); // 共同借款人配偶姓名戦
+			String id_Type = obj.getString("paperwork"); //身份证件类型
+			String id_Other = obj.getString("paperother"); //其他
+			String id_Number =obj.getString("paperNumb"); // 身份证件号码
+			String uni_Name = obj.getString("unitName"); // 工作单位名称
+			String unit_Phone =obj.getString("residencePhone");// 单位电话
+			String home_Phone =obj.getString("unitPhone"); // 住宅电话
+			String mobile_Phone = obj.getString("mobiePhone"); // 移动电话
+			String monthly_Income =obj.getString("salary");// 月薪（人民币）
+		String state = obj.getString("state");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
 
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, paperother,id_Number, uni_Name, unit_Phone, home_Phone,
+		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Other,id_Number, uni_Name, unit_Phone, home_Phone,
 				mobile_Phone, monthly_Income,state,ctime);
 
 		boolean sp = spousesofborrowers.save(spouses);// 插入角色
@@ -69,31 +72,7 @@ public class SpousesOfBorrowersController {
 		}
 	}
 	
-//	@RequestMapping(value="")	
-//	@ResponseBody
-//	
-//	public String update(SpousesOfBorrowers spousesOfBorrowers){
-//		boolean isResult = spousesofborrowers.update(spousesOfBorrowers);
-//		if (isResult == true) {
-//			return JSON.toJSONString(isResult);
-//		}else {
-//			return JSON.toJSONString(isResult);
-//		}
-//
-//	}
-//	
-//	@RequestMapping(value = "")
-//	@ResponseBody
-//	
-//	public String delete(@RequestParam("id")Integer id){
-//		boolean isResult = spousesofborrowers.delete(id);
-//		if (isResult == true) {
-//			return JSON.toJSONString(isResult);
-//		}else {
-//			return JSON.toJSONString(isResult);
-//		}
-//	}
-	
+
 	/***
 	 * 根据ID查所有联系人信息
 	 * @param req
@@ -117,31 +96,66 @@ public class SpousesOfBorrowersController {
 			return new Json(false,"fail",isResult); 
 	}
 	
-	@RequestMapping(value= "/spoupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
-	@ResponseBody
-	public Json updateadd(HttpServletRequest req,Contacts contactsparam){
-		String name = req.getParameter("contacts");// 借款人配偶姓名
-		String id_Type =req.getParameter("contacts"); // 身份证件类型
-		String paperother = req.getParameter("paperother");
-		String id_Number =req.getParameter("contacts"); // 身份证件号码
-		String uni_Name = req.getParameter("contacts"); // 单位名称
-		String unit_Phone = req.getParameter("contacts"); // 单位电话
-		String home_Phone = req.getParameter("contacts"); // 住宅电话
-		String mobile_Phone = req.getParameter("contacts"); // 手机
-		String monthly_Income = req.getParameter("contacts"); // 月收入
-		String state =req.getParameter("contacts");
-		String ctime = req.getParameter("contacts");
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, paperother,id_Number, uni_Name, unit_Phone, home_Phone,
-				mobile_Phone, monthly_Income,state,ctime);
-
-			boolean isResult=	spousesofborrowers.spoupdate(spouses);
-			if(isResult ==true){
-				return  new Json(true,"success",isResult);
-			}else{
-				return  new Json(false,"fail",isResult);
-			}
-	}
 	
+	/**
+	 * 初审修改用户保存
+	 * @return
+	 */
+	@RequestMapping(value="/spoupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String spoupdate(HttpServletRequest req){
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String name = json.getString("cname");  // 共同借款人配偶姓名戦
+		String id_Type =  json.getString("certificate"); //身份证件类型
+		String id_Other = json.getString("certificateType");
+		String id_Number =json.getString("document");  // 身份证件号码
+		String uni_Name =  json.getString("untilName"); // 工作单位名称
+		String unit_Phone =json.getString("untilPhone"); // 单位电话
+		String home_Phone =json.getString("residence"); // 住宅电话
+		String mobile_Phone = json.getString("mobile"); // 移动电话
+		String monthly_Income =json.getString("salary"); // 月薪（人民币）
+		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime=json.getString("ctime");
+		SpousesOfBorrowers coborrow = new SpousesOfBorrowers(id,name, id_Type,id_Other, id_Number, uni_Name,
+				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
+		boolean isResult =spousesofborrowers.spoupdate(coborrow);
+		if(isResult == true){
+			return JSON.toJSONString(isResult);
+		}else
+			return JSON.toJSONString("fail");
+	} 
+	
+	/**
+	 * 初审修改用户保存
+	 * @return
+	 */
+	@RequestMapping(value="/spoupdates",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String spoupdates(HttpServletRequest req){
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String name = json.getString("cname");  // 共同借款人配偶姓名戦
+		String id_Type =  json.getString("certificate"); //身份证件类型
+		String id_Other = json.getString("certificateType");
+		String id_Number =json.getString("document");  // 身份证件号码
+		String uni_Name =  json.getString("untilName"); // 工作单位名称
+		String unit_Phone =json.getString("untilPhone"); // 单位电话
+		String home_Phone =json.getString("residence"); // 住宅电话
+		String mobile_Phone = json.getString("mobile"); // 移动电话
+		String monthly_Income =json.getString("salary"); // 月薪（人民币）
+		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime=json.getString("ctime");
+		SpousesOfBorrowers coborrow = new SpousesOfBorrowers(id,name, id_Type,id_Other, id_Number, uni_Name,
+				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
+		boolean isResult =spousesofborrowers.spoupdate(coborrow);
+		if(isResult == true){
+			return JSON.toJSONString(isResult);
+		}else
+			return JSON.toJSONString("fail");
+	} 
 	/**
 	 * 申请人配偶
 	 * 

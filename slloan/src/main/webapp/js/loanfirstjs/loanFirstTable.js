@@ -139,6 +139,7 @@ var addTable = function(data) {
       a.classList.add('mark')
       a.href = '#'
       a.innerText = 0
+      td1.classList.add('flag')
       td1.innerText = id
       td2.innerText = userName
       td3.innerText = phone
@@ -166,7 +167,8 @@ var addTable = function(data) {
 }
 
 var testData = {
-		test: '233'
+		test: '233',
+		lists: [1, 2, 3, 4, 5, 6],
 }
 
 //addTable(testData)
@@ -187,7 +189,7 @@ var initAjax = function(method, url, datas, callback) {
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/loan/rolemanagement?page=1&limit=10'
+	var url = '/slloan/loan/loanlist?page=1&limit=10'
 	var datas = {}
 	datas.a = 'a'
 	datas.b = 'b'
@@ -323,6 +325,31 @@ var previoupage = function() {
 
 previoupage()
 
+// 存储要发送的数据
+var saveSend = []
+
+// 找到需要存储的数据
+var findSave = function() {
+	var parentElement = e('.tab-data')
+	var definite = parentElement.querySelectorAll('.indicate')
+	var flags = es('.flag')
+	console.log(definite.length)
+	console.log(flags[1].innerText)
+	for(var i = 0; i < definite.length; i++) {
+		if(definite[i].checked == true) {
+			saveSend.push(flags[i].innerText)
+		} else {
+			if(saveSend.includes(flags[i].innerText)) {
+				for(var j = 0; j < saveSend.length; j++) {
+					if(saveSend[j] ==  flags[i].innerText) {
+						saveSend.splice(j, 1)
+					}
+				}
+			}
+		}
+	}
+	console.log(saveSend)
+}
 
 //全部数据选中
 var fullDataCheck = function(elements) {
@@ -332,6 +359,7 @@ var fullDataCheck = function(elements) {
 	for(var i = 0; i < len; i++) {
 		tent[i].checked = true
 	}
+	findSave()
 }
 
 //全部数据不选中
@@ -342,6 +370,7 @@ var fullDataUncheck = function(elements) {
 	for(var i = 0; i < len; i++) {
 		tent[i].checked = false
 	}
+	findSave()
 }
 
 // 全选按钮
@@ -364,7 +393,7 @@ var __main = function() {
   sendData('#save-data')
   initData()
   numberSearch('.tab-data')
-   fullSelection('#full')
+  fullSelection('#full')
 }
 
 __main()

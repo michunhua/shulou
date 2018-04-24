@@ -3,6 +3,7 @@ package com.slloan.service.inter;
 import java.util.List;
 import java.util.Map;
 
+
 import com.slloan.entity.AddRole;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
@@ -31,18 +32,141 @@ public interface PersonalProfileService {
 		 	
 		 	
 		 	/**
-		 	 * 按揭员模糊查询
+		 	 * 初审模糊查询
 		 	 * @param param
 		 	 * @return
 		 	 */
-		 	List<PersonalProfile> vaguelikeSelectCreateone(Map<String,String> param);
+		 	List<PersonalProfile> vaguelikeSelectCreateone(Map<Object,Object> param);
 		 	
 		 	/**
-		 	 * 初审模糊查询
+		 	 * 按揭员模糊查询
 		 	 * @param param
 		 	 * @return
 		 	 */
 		 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param);
 		 	
+		 	/**
+		     *初审 分页操作，调用分页方法
+		     * @param map
+		     * @return
+		     */
+		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage);
+		 		/**
+			     * 初审用户记录总数
+			     * @return
+			     */
+		 	int getFirsttrialPageCount();
 		 	
+			/**
+		     *终审分页操作，调用分页方法
+		     * @param map
+		     * @return
+		     */
+		 	public Page<PersonalProfile> getFinalreviewPage(int currentPage);
+		 		/**
+			     * 终审用户记录总数
+			     * @return
+			     */
+		 	int getFinalreviewPageCount();
+		 	
+		 	/**
+		 	 * 财务列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getFinancePagePage(int currentPage);
+		 	
+		 	/**
+		 	 * 财务状态统计
+		 	 * @return
+		 	 */
+		 	int getFinancePageCount();
+		 	
+		 	/**
+		 	 * 结算列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getjsloanPage(int currentPage);
+		 	
+		 	/**
+		 	 * 结算状态统计
+		 	 * @return
+		 	 */
+		 	int getjsloanPageCount();
+		 	
+		 	/**
+		 	 * 转账列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getTransferloanPage(int currentPage);
+		 	
+		 	/**
+		 	 * 转账状态统计
+		 	 * @return
+		 	 */
+		 	int getTransferloanPageCount();
+		 	
+
+		 	/**
+		 	 * 贷款信息列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getLoanInformation(int currentPage);
+		 	
+		 	/**
+		 	 * 贷款信息统计
+		 	 * @return
+		 	 */
+		 	int getLoanInformationCount();
+
+			/**
+		 	 * 回款列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getReturnMoney(int currentPage);
+		 	
+		 	/**
+		 	 * 回款统计
+		 	 * @return
+		 	 */
+		 	int getReturnMoneyCount();
+
+			/**
+		 	 * 取证列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getObtainEvidence(int currentPage);
+		 	
+		 	/**
+		 	 * 取证统计
+		 	 * @return
+		 	 */
+		 	int getObtainEvidenceCount();
+
+			/**
+		 	 * 解压列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getDecompression(int currentPage);
+		 	
+		 	/**
+		 	 * 解压统计
+		 	 * @return
+		 	 */
+		 	int getDecompressionCount();
+	
+			/**
+		 	 * 进压列表
+		 	 * @return
+		 	 */
+		 	public Page<PersonalProfile> getLoanPressure(int currentPage);
+		 	
+		 	/**
+		 	 * 进压统计
+		 	 * @return
+		 	 */
+		 	int getLoanPressureCount();
+
+//			int getPersonalProfilePage();
+		 	
+			
 }

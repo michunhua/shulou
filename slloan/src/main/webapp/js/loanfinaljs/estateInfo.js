@@ -21,10 +21,6 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
-  data.name= '1'
-	  data.id= 2
-	  data.state= 'a'
-		  data.ctiam = 'b'
   data.id = 2
   return data
 }
@@ -48,8 +44,8 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/proupdates'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -128,7 +124,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/propertyinf'
+	var url = '/slloan/loan/ppers'
 	var data = {}
 	data.id = 2
 	if(data.id) {

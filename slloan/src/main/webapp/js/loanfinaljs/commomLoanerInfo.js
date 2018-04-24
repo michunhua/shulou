@@ -207,7 +207,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/finaljudgmentselectid'
+	var url = '/slloan/loan/jointappli'
 	var data = {}
 	data.id = 2
 	if(data.id) {

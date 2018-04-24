@@ -126,4 +126,16 @@ public class NoteDescription {
 	public NoteDescription(){
 		
 	}
+	public NoteDescription(Integer id, String note_Description1, String note_Description2, String note_Description3,
+			String state, String ctime) {
+		super();
+		this.id = id;
+		this.note_Description1 = note_Description1;
+		this.note_Description2 = note_Description2;
+		this.note_Description3 = note_Description3;
+		this.state = state;
+		this.ctime = ctime;
+	}
+	
+	
 }

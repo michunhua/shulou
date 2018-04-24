@@ -155,7 +155,11 @@ public class JointApplicantController {
 
 	}
 
-
+/**
+ * 初审
+ * @param req
+ * @return
+ */
 
 	@RequestMapping(value = "/joinupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
@@ -282,8 +286,101 @@ public class JointApplicantController {
 	// return JSON.toJSONString(isReslt);
 	// }
 	// }
-	
-	
+
+	/**
+	 * 终审
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value = "/joinupdates", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateadds(HttpServletRequest req) {
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String name=json.getString("cname"); // 共同借款人姓名
+		String phoneticize=json.getString("ename"); // 拼音、英文姓名
+		String id_type=json.getString("paperwork"); // 身份证件类型
+		String Other_identity_types=json.getString("otherPaperwork"); // 输入身份证类型
+		String id_number=json.getString("paperNumb"); // 身份证件号码
+		String country_and_region=json.getString("country"); // 国家及地区
+		String other_Countries=json.getString("otherCountry");// 其他国家
+		String sex=json.getString("gender"); // 性别: 0男 1女
+		String Local_domicile=json.getString("census"); // 本地户籍
+		String household_registration=json.getString("otherCensus");// 其他户籍所在地
+		String marital_status=json.getString("marriage");// 婚姻情况0已婚，1未婚
+		String housing_condition_now=json.getString("housing"); // 0房改/继承
+		String otherCensus=json.getString("otherHousing");// 其他
+		String birthday=json.getString("birthday"); // 出生日期
+		String home_address_now=json.getString("currentAddress"); // 现住房地址
+		String home_phone=json.getString("residencePhone"); // 住宅电话
+		String mobile_phone=json.getString("mobilePhone");// 移动电话
+		String email=json.getString("email"); // E-mail
+		String present_address_zip_code=json.getString("code"); // 现住址邮编
+		String vocation=json.getString("career");// 职业
+		String unit_industry=json.getString("unit"); // 现单位所处行业
+		String uni_name=json.getString("unitName"); // 现单位名称
+		String unit_address=json.getString("unitAddress");// 现单位地址
+		String enterprise_scale=json.getString("companyNumber");// 企业人数
+		String lastyearIncome=json.getString("lastyearIncome");// 上年营收
+		String asset_scale=json.getString("assetSize"); // 资产规模
+		String unit_phone=json.getString("unitPhone"); // 单位电话
+		String postCode=json.getString("unitCode"); // 单位邮编
+		String job_category=json.getString("jobsType"); // 职位类别
+		String seniority=json.getString("unitTime"); // 现单位工龄
+		String former_unit_name=json.getString("lastunitName"); // 前单位名称
+		String former_seniority=json.getString("lastunitTime");// 前单位工龄
+		String source_of_income=json.getString("incomeSource");// 收入来源
+		String salary=json.getString("salary");// 月收入
+		String investment=json.getString("investment");// 投资收益
+		String rent=json.getString("rent"); // 租金收入
+		String added=json.getString("added"); // 其他收入
+		String family_number=json.getString("supportPeople"); // 供养人数
+		String expenses=json.getString("expenses");// 月支出
+		String postal_address=json.getString("communication"); // 通讯地址
+		String state=json.getString("state"); // 状态;//
+							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
+		String ctime=json.getString("ctime"); // 日期
+		
+		Double Revenue_previous_year = 0.0;
+		if (lastyearIncome.length() > 0) {
+			Revenue_previous_year = Double.parseDouble(lastyearIncome);
+		}
+		Double monthly_income = 0.0;
+		if (salary.length() > 0) {
+			monthly_income = Double.parseDouble(salary);
+		}
+		Double Income_from_investment = 0.0;
+		if (investment.length() > 0) {
+			Income_from_investment = Double.parseDouble(investment);
+		}
+		Double supportPeople = 0.0;
+		if (rent.length() > 0) {
+			supportPeople = Double.parseDouble(rent);
+		}
+		Double Other_income = 0.0;
+		if (added.length() > 0) {
+			Other_income = Double.parseDouble(added);
+		}
+		Double monthly_expenditure = 0.0;
+		if (expenses.length() > 0) {
+			monthly_expenditure = Double.parseDouble(expenses);
+		}
+		JointApplicant joints= new JointApplicant(id,name, phoneticize, id_type, Other_identity_types,
+				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
+		boolean isResult = jointapplicant.update(joints);
+		if (isResult == true) {
+			return new Json(true, "success", isResult);
+		} else {
+			return new Json(false, "fail", isResult);
+		}
+	}
+
 	
 
 	/**
@@ -342,6 +439,25 @@ public class JointApplicantController {
 	}
 
 	/**
+	 * 贷款信息查看列表
+	 * 
+	 * @return json
+	 */
+	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String rolemanagements(HttpServletRequest req) {
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int startPos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// startPos, int pageSize
+		// roleAddService.getRolePage(startPos);
+		// JSON.toJSONString(user)
+		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
+	}
+	
+	/**
 	 * 贷款初审列表
 	 * 
 	 * @return
@@ -356,9 +472,172 @@ public class JointApplicantController {
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(jointapplicant.getRolePage(statePos));
+		return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos));
+	}
+	/**
+	 * 贷款终审列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanfinalreviewlist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String loanFinalreviewlist(HttpServletRequest req) {
+		System.out.println("-----------贷款终审列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getFinalreviewPage(statePos));
 	}
 
+	
+	/**
+	 * 贷款财务列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanfinancelist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String loanfinancelist(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos));
+	}
+	
+	/**
+	 * 转账凭证列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loantransferlist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String loantransferlist(HttpServletRequest req) {
+		System.out.println("-----------转账凭证列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getTransferloanPage(statePos));
+	}
+	
+	
+	/**
+	 * 结算凭证列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/loanjslist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String loanjslist(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos));
+	}
+	
+	/**
+	 * 贷款信息查看列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/LoanInformation", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String LoanInformation(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getLoanInformation(statePos));
+	}
+	
+	
+	/**
+	 * 回款确认列表
+	 * 
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/ReturnMoney", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String ReturnMoney(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getReturnMoney(statePos));
+	}
+	/**
+	 * 取证凭证列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/ObtainEvidence", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String ObtainEvidence(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getObtainEvidence(statePos));
+	}
+	/**
+	 * 解压列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/Decompression", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String Decompression(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getDecompression(statePos));
+	}
+	/**
+	 * 进压列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/LoanPressure", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public String LoanPressure(HttpServletRequest req) {
+		System.out.println("-----------财务列表---------------");
+		String page = req.getParameter("page");
+		String limit = req.getParameter("limit");
+		int statePos = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(limit);
+		System.out.println(page);
+		System.out.println(limit);// statePos, int pageSize
+		return JSON.toJSONString(personalprofileservice.getLoanPressure(statePos));
+	}
+	
+	
 	/**
 	 * 贷款初审共同借款人资料
 	 * 
@@ -393,101 +672,101 @@ public class JointApplicantController {
 	}
 	
 
-	/**
-	 * 贷款初审备注回退
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loannotFallback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public String loannotesFallback(HttpServletRequest req, HttpServletResponse response) {
-		
-		CircuLationRecord circuLationRecord = new CircuLationRecord();
-		circuLationRecord.setState(0);// 退回后状态改为1
-		String createDate = DateUtils.getInDateTime((new Date()));
-		circuLationRecord.setCreateDate(createDate);
-		circuLationRecord.setFallbackname("退回到按揭员------------------>");
-		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-		if (isResultInsert == true) {
-			System.out.println("插入流程表成功");
-		} else {
-			System.out.println("失败");
-		}
-		return "loanfirst/loanFirstTable";
-
-
-	}
+//	/**
+//	 * 贷款初审备注回退
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannotFallback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	public String loannotesFallback(HttpServletRequest req, HttpServletResponse response) {
+//		
+//		CircuLationRecord circuLationRecord = new CircuLationRecord();
+//		circuLationRecord.setState(0);// 退回后状态改为1
+//		String createDate = DateUtils.getInDateTime((new Date()));
+//		circuLationRecord.setCreateDate(createDate);
+//		circuLationRecord.setFallbackname("退回到按揭员------------------>");
+//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+//		if (isResultInsert == true) {
+//			System.out.println("插入流程表成功");
+//		} else {
+//			System.out.println("失败");
+//		}
+//		return "loanfirst/loanFirstTable";
+//
+//
+//	}
+//	
+//	/**
+//	 * 贷款终审备注回退
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannotllback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	public String FallbackFirst(HttpServletRequest req, HttpServletResponse response) {
+//		
+//		CircuLationRecord circuLationRecord = new CircuLationRecord();
+//		circuLationRecord.setState(1);// 退回后状态改为1
+//		String createDate = DateUtils.getInDateTime((new Date()));
+//		circuLationRecord.setCreateDate(createDate);
+//		circuLationRecord.setFallbackname("退回到初审------------------>");
+//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+//		if (isResultInsert == true) {
+//			System.out.println("插入流程表成功");
+//		} else {
+//			System.out.println("失败");
+//		}
+//		return "loanfirst/loanFirstTable";
+//
+//
+//	}
+//
+//	/**
+//	 * 贷款初审备注提交到贷款终审
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET)
+//	public String loannotesSubmit(HttpServletRequest req) {
+//
+//		CircuLationRecord circuLationRecord = new CircuLationRecord();
+//		circuLationRecord.setState(2);// 状态改为2
+//		String createDate = DateUtils.getInDateTime((new Date()));
+//		circuLationRecord.setCreateDate(createDate);
+//		circuLationRecord.setFallbackname("提交到贷款初审------------------>");
+//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+//		if (isResultInsert == true) {
+//			System.out.println("插入流程表成功");
+//		} else {
+//			System.out.println("失败");
+//		}
+//
+//		return "loanfinal/loanFinalTable";// 提交到贷款终审
+//	}
+//	
 	
-	/**
-	 * 贷款终审备注回退
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loannotllback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-	public String FallbackFirst(HttpServletRequest req, HttpServletResponse response) {
-		
-		CircuLationRecord circuLationRecord = new CircuLationRecord();
-		circuLationRecord.setState(1);// 退回后状态改为1
-		String createDate = DateUtils.getInDateTime((new Date()));
-		circuLationRecord.setCreateDate(createDate);
-		circuLationRecord.setFallbackname("退回到初审------------------>");
-		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-		if (isResultInsert == true) {
-			System.out.println("插入流程表成功");
-		} else {
-			System.out.println("失败");
-		}
-		return "loanfirst/loanFirstTable";
-
-
-	}
-
-	/**
-	 * 贷款初审备注提交到贷款终审
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET)
-	public String loannotesSubmit(HttpServletRequest req) {
-
-		CircuLationRecord circuLationRecord = new CircuLationRecord();
-		circuLationRecord.setState(2);// 退回后状态改为1
-		String createDate = DateUtils.getInDateTime((new Date()));
-		circuLationRecord.setCreateDate(createDate);
-		circuLationRecord.setFallbackname("提交到贷款初审------------------>");
-		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-		if (isResultInsert == true) {
-			System.out.println("插入流程表成功");
-		} else {
-			System.out.println("失败");
-		}
-
-		return "loanfinal/loanFinalTable";// 提交到贷款终审
-	}
-	
-	
-	/**
-	 * 贷款初审备注提交到贷款终审
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/loannotfile", method = RequestMethod.GET)
-	public String loannotesFile(HttpServletRequest req) {
-
-		CircuLationRecord circuLationRecord = new CircuLationRecord();
-		circuLationRecord.setState(3);// 退回后状态改为1
-		String createDate = DateUtils.getInDateTime((new Date()));
-		circuLationRecord.setCreateDate(createDate);
-		circuLationRecord.setFallbackname("贷款终审跳转财务------------------>");
-		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-		if (isResultInsert == true) {
-			System.out.println("插入流程表成功");
-		} else {
-			System.out.println("失败");
-		}
-
-		return "financeApproval/financeApproval";// 提交到贷款终审
-	}
-	
+//	/**
+//	 * 按揭员备注提交到贷款初审
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannotfile", method = RequestMethod.GET)
+//	public String loannotesFile(HttpServletRequest req) {
+//
+//		CircuLationRecord circuLationRecord = new CircuLationRecord();
+//		circuLationRecord.setState(1);// 退回后状态改为1
+//		String createDate = DateUtils.getInDateTime((new Date()));
+//		circuLationRecord.setCreateDate(createDate);
+//		circuLationRecord.setFallbackname("贷款终审跳转财务------------------>");
+//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+//		if (isResultInsert == true) {
+//			System.out.println("插入流程表成功");
+//		} else {
+//			System.out.println("失败");
+//		}
+//
+//		return "financeApproval/financeApproval";// 提交到贷款初审
+//	}
+//	
 //	/**
 //	 * 贷款初审备注说明保存
 //	 * 

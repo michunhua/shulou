@@ -13,7 +13,10 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 1
+  data.state = 'a'
+	  data.ctime = 'b'
+		
+  data.id = 3
   return data
 }
 
@@ -106,7 +109,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/coborrowers'
 	var data = {}
-	data.id = 1
+	data.id = 3
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

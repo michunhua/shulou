@@ -53,6 +53,9 @@ var saveAjax = function(method, url, datas){
 		data : {datas:JSON.stringify(datas)},
 		success : function(data) {
 			console.log(data)
+			alert('修改成功')
+			localStorage.editorUserName = null
+			window.location.href = '../user/ulist'
 		}
 	})
 }
@@ -77,7 +80,6 @@ var saveData = function() {
 		var url = '/slloan/user/modifyuser'
 		var data = collectData()
 		saveAjax(method, url, data)
-		localStorage.editorUserName = null
 	})
 }
 

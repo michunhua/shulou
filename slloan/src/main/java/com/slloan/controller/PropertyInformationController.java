@@ -77,7 +77,7 @@ public class PropertyInformationController {
 
 
 	/***
-	 * 根据ID查所有联系人信息
+	 * 初审根据ID查所有联系人信息
 	 * @param req
 	 * @return
 	 */
@@ -116,10 +116,15 @@ public class PropertyInformationController {
 			return new Json(false,"fail",isResult); 
 	}
 //	
-//	
+/**
+ * 初审修改
+ * @param request
+ * @param contactsparam
+ * @return
+ */
 	@RequestMapping(value= "/proupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public Json updateadd(HttpServletRequest request,Contacts contactsparam){
+	public Json proupdate(HttpServletRequest request,Contacts contactsparam){
 		String dataid = request.getParameter("data");
 		JSONObject req = new JSONObject().fromObject(dataid);
 		Integer id = req.getInt("id");
@@ -158,7 +163,12 @@ public class PropertyInformationController {
 			}
 	}
 	
-	
+	/**
+	 * 终审修改
+	 * @param request
+	 * @param contactsparam
+	 * @return
+	 */
 	@RequestMapping(value= "/proupdates",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json updateadds(HttpServletRequest request,Contacts contactsparam){

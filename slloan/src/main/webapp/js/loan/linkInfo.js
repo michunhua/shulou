@@ -65,7 +65,7 @@ var sendData = function() {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/contactinformation'
+    var url = '/slloan/loan/contactinformations'
     log(data)
     sendAjax(method, url, data)
   })
@@ -135,9 +135,10 @@ var searchAjax = function(method, url, datas) {
 
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactoc'
+	var url = '/slloan/loan/contactss'
 	var data = {}
-	data.id = localStorage.createID
+//	data.id = localStorage.createID
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

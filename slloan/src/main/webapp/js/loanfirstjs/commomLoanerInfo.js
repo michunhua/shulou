@@ -58,7 +58,7 @@ var collectData = function() {
   data.state = 'c'
   data.ctime ='d'
   data.hi = 'hi'
-  data.id = 1
+  data.id = 2
   return data
 }
 
@@ -226,7 +226,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/jointappli'
 	var data = {}
-	data.id = 1
+	data.id = 2
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

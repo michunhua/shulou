@@ -2,13 +2,16 @@ package com.slloan.util;
 
 import java.io.Serializable;
 
+import com.slloan.entity.Page;
+import com.slloan.entity.PersonalProfile;
+
 @SuppressWarnings("serial")
 public class Json implements  Serializable{
 	private boolean status;
     private String msg;
     private Object obj;
     private String value;//增加一个状态值
-    public Json() {
+    public Json(Page<PersonalProfile> page, String string) {
         super();
     }
 
@@ -30,7 +33,11 @@ public class Json implements  Serializable{
         this.obj = obj;
         this.value = value;
     }
-    public boolean getStatus() {
+    public Json(String string, boolean fallbackinsert) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public boolean getStatus() {
         return status;
     }
 

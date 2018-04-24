@@ -17,24 +17,26 @@ public class ImageDataUpdate implements Serializable{
  private String Parentnode;//父节点
  private String Subnode;//子节点
  private String createData;//创建日期
- 
- 
- public ImageDataUpdate(String originalfilename, String parentnode, String uploadtype) {
+ private String city;
+ private String uploadFtpRoute;
+ private String spare;
+ private String sparetwo;
+ public ImageDataUpdate(String filepath, String parentnode, String uploadtype) {
 	super();
 //	this.id = id;
-	this.originalfilename = originalfilename;
+	this.filepath = filepath;
 	this.uploadtype = uploadtype;
 	Parentnode = parentnode;
 }
 public ImageDataUpdate(){}
- public ImageDataUpdate( String filepath, String note, String uploads,String originalfilename,String uploadtype,String Parentnode,String Subnode, String createData) {
+ public ImageDataUpdate( String filepath, String note, String uploads,String originalfilename,String uploadtype,String city,String Subnode, String createData) {
 	super();
 	this.filepath = filepath;
 	this.note = note;
 	this.uploads = uploads;
 	this.originalfilename = originalfilename;
 	this.uploadtype=uploadtype;
-	this.Parentnode=Parentnode;
+	this.city=city;
 	this.Subnode=Subnode;
 	this.createData = createData;
 }
@@ -121,11 +123,37 @@ public String getNote() {
 public void setNote(String note) {
 	this.note = note;
 }
+
+public String getCity() {
+	return city;
+}
+public void setCity(String city) {
+	this.city = city;
+}
+public String getUploadFtpRoute() {
+	return uploadFtpRoute;
+}
+public void setUploadFtpRoute(String uploadFtpRoute) {
+	this.uploadFtpRoute = uploadFtpRoute;
+}
+public String getSpare() {
+	return spare;
+}
+public void setSpare(String spare) {
+	this.spare = spare;
+}
+public String getSparetwo() {
+	return sparetwo;
+}
+public void setSparetwo(String sparetwo) {
+	this.sparetwo = sparetwo;
+}
 @Override
 public String toString() {
 	return "ImageDataUpdate [id=" + id + ", filepath=" + filepath + ", note=" + note + ", uploads=" + uploads
 			+ ", originalfilename=" + originalfilename + ", uploadtype=" + uploadtype + ", Parentnode=" + Parentnode
-			+ ", Subnode=" + Subnode + ", createData=" + createData + "]";
+			+ ", Subnode=" + Subnode + ", createData=" + createData + ", city=" + city + ", uploadFtpRoute="
+			+ uploadFtpRoute + ", spare=" + spare + ", sparetwo=" + sparetwo + "]";
 }
 
 }

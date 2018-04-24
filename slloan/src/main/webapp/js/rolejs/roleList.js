@@ -147,7 +147,12 @@ var singlesendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		alert('删除成功')
+    		callback()
+    	}
+    }
   })
 }
 
@@ -164,12 +169,19 @@ var singlesendAjax = function(method, url, datas, callback) {
   var deletes = function() {
       var findEl = document.querySelector('.delete')
       findEl.addEventListener('click', function() {
-        console.log('delete')
-        var method = 'POST'
-        var url = '/slloan/role/batchdelrole'
-        var data = {}
-        data.id = result
-        singlesendAjax(method, url, data, firtLoadlist)
+    	  var data = {}
+          data.id = result
+          var sign = data.id.length
+    		if(sign > 0){
+    			layer.confirm('确定删除?', {icon: 3, title:'注意'}, function(index){
+    					var method = 'POST'
+        	            var url = '/slloan/role/batchdelrole'
+        	            singlesendAjax(method, url, data, firtLoadlist)
+    				  layer.close(index);
+    				});
+    		} else {
+    			alert('请选中至少一个')
+    		}
       })
   }
 
@@ -178,11 +190,15 @@ var singlesendAjax = function(method, url, datas, callback) {
   var updates = function() {
       var findEl = document.querySelector('.update')
       findEl.addEventListener('click', function() {
-        var method = 'GET'
-        var url = '/role/selectbyid'
-        var data = {'id':'150'}
-        console.log('update')
-        singlesendAjax(method, url, data, null)
+    	var flag = result 
+    	console.log('1234', flag.length)
+    	if(flag.length == 1){
+    		localStorage.updateRoleName = null
+    		localStorage.updateRoleName = flag[0]
+    		window.location.href = '../role/updaterole'
+    	} else {
+    		alert('请选中一个')
+    	}
       })
   }
 
