@@ -95,79 +95,60 @@ layui.use('laydate', function(){
   });
 });
 
-//过滤数据
-var myFilter = function(data) {
-	var result = ""
-	if(data) {
-		return data
-	} else {
-		return  result
-	}
-}
-
-
 // 添加表格具体数据格
 var addTable = function(data) {
     var datas = data
 //    var len = 
     var len = (data.lists).length
     var pageElement = document.querySelector('.tab-data')
-    var totalPage = document.querySelector('.totalPage')
-	totalPage.innerText = datas.totalPage
     pageElement.innerHTML = null
     for(var i = 0; i < len; i++) {
-		    	  log(i)
-		var tr = document.createElement('tr')
-		var td0 = document.createElement('td')
-		var a = document.createElement('a')
-		var td1 = document.createElement('td')
-		var td1a = document.createElement('td')
-		var td2 = document.createElement('td')
-		var td3 = document.createElement('td')
-		var td4 = document.createElement('td')
-		var td5 = document.createElement('td')
-		var td6 = document.createElement('td')
-		var td7 = document.createElement('td')
-		var td8 = document.createElement('td')
-		var td9 = document.createElement('td')
-		var td10 = document.createElement('td')
-		var ID = myFilter(data.lists[i].notes[0].id)
-		var userid = myFilter(datas.lists[i].name)
-		var userName = myFilter(datas.lists[i].applyfor[0].amount)
-		var phone = myFilter(datas.lists[i].mobile_phone)
-		var number = myFilter(datas.lists[i].id_number)
-		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)
-		var state = myFilter(datas.lists[i].state)
-		var address = myFilter(datas.lists[i].home_address_now)
-		var time = myFilter(datas.lists[i].ctime)
-
-
-		a.classList.add('mark')
-		a.href = '#'
-		a.innerText = '201802241931'
-		td1.classList.add('flag')
-		td1a.innerText = ID
-		td1.innerText = userid
-		td2.innerText = userName
-		td3.innerText = phone
-		td4.innerText = number
-		td5.innerText = limit
-		td6.innerText = state
-		td7.innerText = address
-		td8.innerText = time
-	      td9.innerText = 9
-	      td0.appendChild(a)
-	      tr.appendChild(td0)
-	      tr.appendChild(td1a)
-	      tr.appendChild(td1)
-	      tr.appendChild(td2)
-	      tr.appendChild(td3)
-	      tr.appendChild(td4)
-	      tr.appendChild(td5)
-	      tr.appendChild(td6)
-	      tr.appendChild(td7)
-	      tr.appendChild(td8)
-	      tr.appendChild(td9)
+      log(i)
+      var tr = document.createElement('tr')
+      var td0 = document.createElement('td')
+      var a = document.createElement('a')
+      var td1 = document.createElement('td')
+      var td2 = document.createElement('td')
+      var td3 = document.createElement('td')
+      var td4 = document.createElement('td')
+      var td5 = document.createElement('td')
+      var td6 = document.createElement('td')
+      var td7 = document.createElement('td')
+      var td8 = document.createElement('td')
+      var td9 = document.createElement('td')
+      var td10 = document.createElement('td')
+      var id = datas.lists[i].name
+      var userName = datas.lists[i].amount
+      var phone = datas.lists[i].mobile_phone
+      var number = datas.lists[i].id_number
+      var limit = datas.lists[i].time_Limit
+      var state = datas.lists[i].state
+      var address = datas.lists[i].home_address_now
+      var time = datas.lists[i].ctime
+      
+      a.classList.add('mark')
+      a.href = '#'
+      a.innerText = 0
+      td1.innerText = id
+      td2.innerText = userName
+      td3.innerText = phone
+      td4.innerText = number
+      td5.innerText = limit
+      td6.innerText = state
+      td7.innerText = address
+      td8.innerText = time
+      td9.innerText = 9
+      td0.appendChild(a)
+      tr.appendChild(td0)
+      tr.appendChild(td1)
+      tr.appendChild(td2)
+      tr.appendChild(td3)
+      tr.appendChild(td4)
+      tr.appendChild(td5)
+      tr.appendChild(td6)
+      tr.appendChild(td7)
+      tr.appendChild(td8)
+      tr.appendChild(td9)
       pageElement.insertAdjacentElement('beforeend', tr)
     }
 }
@@ -177,10 +158,10 @@ var testData = {
 		lists: [1, 2, 3, 4]
 }
 
-// addTable(testData)
+//addTable(testData)
 
 
-// 默认加载
+//默认加载
 var initAjax = function(method, url, datas, callback) {
   console.log(' send data ajax')
     $.ajax({
@@ -189,12 +170,18 @@ var initAjax = function(method, url, datas, callback) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
         console.log(data)
-        callback(data)
-        addTable(data)
+        if(data.msg == 'success') {
+        	callback(data)
+            addTable(data)
+            var totalPage = document.querySelector('.totalPage')
+			totalPage.innerText = data.totalPage
+        } else {
+        	alert('服务器错误')
+        }
       },
-      error: function() {
-    	  alert('服务器错误')
-      }
+      error: function(){
+          alert('服务器错误')
+       }      
     })
 }
 
@@ -204,18 +191,16 @@ var initData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/rolemanagement?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
+	datas.a = 'a'
+	datas.b = 'b'
+	datas.id = '9'
     datas.role = localStorage.purrole
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
-	datas.parentnodeId = localStorage.purid
+	datas.id = localStorage.purid
 	console.log('初始化加载数据233')
-	if(datas.parentnodeId) {
-		initAjax(method, url, datas, addTable)
-	} else {
-		layer.msg('请登录！', function(){
-			window.location.href = '/slloan/user/signin'
-			}); 
-	}
+	initAjax(method, url, datas, addTable)
+	console.log('执行没有？')
 }
 
 // 收集数据
@@ -230,7 +215,7 @@ var collectData = function() {
     data.statu = e('.statu').value
     data.min = e('.min').value
     data.max = e('.max').value
-    return data
+    return data    
 }
 
 //查询方法
@@ -242,7 +227,10 @@ var sendAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
         console.log(data)
-      }
+      },
+      error: function(){
+          alert('服务器错误')
+       }      
     })
 }
 
@@ -273,11 +261,8 @@ var numberSearch = function(element) {
 		envs.addEventListener('click', function(event) {
 			var indicate = event.target.classList
 			if(indicate == 'mark') {
-				console.log(event.target.parentNode.nextSibling.innerText, '就这个数据')
-				console.log(event.target.innerText, '好的')
-				localStorage.createID = event.target.parentNode.nextSibling.innerText
+				console.log(event.target.innerText)
 				window.location.href = '../loan/loanjoin'
-				
 			}
 		})
 }

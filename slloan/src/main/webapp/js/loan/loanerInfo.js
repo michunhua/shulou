@@ -3,129 +3,135 @@ var log = console.log.bind(console)
 
 // 自定义
 var e = function(elements) {
-	return document.querySelector(elements)
+  return  document.querySelector(elements)
 }
 
 // 依赖库方法
-layui.use('laydate', function() {
-	var laydate = layui.laydate;
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
 
-	// 执行一个laydate实例
-	laydate.render({
-		elem : '#test1' // 指定元素
-	});
+  //执行一个laydate实例
+  laydate.render({
+    elem: '#test1' //指定元素
+  });
 });
+
 
 // 收集信息
 var collectData = function() {
-	log('收集数据')
-	var data = {}
-	data.cname = e('.ch-name').value
-	data.ename = e('.en-name').value
-	data.paperwork = e('.paperwork-type').value
-	data.otherPaperwork = e('.other-paperwork').value
-	data.paperNumb = e('.paperwork-numb').value
-	data.country = e('.country').value
-	data.otherCountry = e('.other-country').value
-	data.gender = e('.gender').value
-	data.census = e('.census').value
-	data.otherCensus = e('.other-census').value
-	data.marriage = e('.marriage').value
-	data.housing = e('.housing').value
-	data.otherHousing = e('.other-housing').value
-	data.birthday = e('.birthday').value
-	data.currentAddress = e('.current-address').value
-	data.residencePhone = e('.residence-phone').value
-	data.mobilePhone = e('.mobile-phone').value
-	data.email = e('.E-mail').value
-	data.code = e('.zip-code').value
-	data.career = e('.career').value
-	data.unit = e('.unit-industry').value
-	data.unitName = e('.unit-name').value
-	data.unitAddress = e('.unit-address').value
-	data.companyNumber = e('.company-number').value
-	data.lastyearIncome = e('.lastyear-income').value
-	data.assetSize = e('.asset-size').value
-	data.unitPhone = e('.unit-phone').value
-	data.unitCode = e('.unit-code').value
-	data.jobsType = e('.jobs-type').value
-	data.unitTime = e('.unit-time').value
-	data.lastunitName = e('.lastunit-name').value
-	data.lastunitTime = e('.lastunit-time').value
-	data.incomeSource = e('.income-source').value
-	data.salary = e('.salary').value
-	data.investment = e('.investment').value
-	data.rent = e('.rent').value
-	data.added = e('.added').value
-	data.supportPeople = e('.support-people').value
-	data.expenses = e('.expenses').value
-	data.communication = e('.communication').value
-	data.state = 'c'
-	data.ctime = 'd'
-	data.hi = 'hi'
-	data.rolename = localStorage.purrole
-	data.username = localStorage.purusername
-	data.city = localStorage.purcity
-	data.parentnodeId = localStorage.purid
-	return data
+  log('收集数据')
+  var data = {}
+  data.cname = e('.ch-name').value
+  data.ename = e('.en-name').value
+  data.paperwork = e('.paperwork-type').value
+  data.otherPaperwork = e('.other-paperwork').value
+  data.paperNumb = e('.paperwork-numb').value
+  data.country = e('.country').value
+  data.otherCountry = e('.other-country').value
+  data.gender = e('.gender').value
+  data.census = e('.census').value
+  data.otherCensus = e('.other-census').value
+  data.marriage = e('.marriage').value
+  data.housing = e('.housing').value
+  data.otherHousing = e('.other-housing').value
+  data.birthday = e('.birthday').value
+  data.currentAddress = e('.current-address').value
+  data.residencePhone = e('.residence-phone').value
+  data.mobilePhone = e('.mobile-phone').value
+  data.email = e('.E-mail').value
+  data.code = e('.zip-code').value
+  data.career = e('.career').value
+  data.unit = e('.unit-industry').value
+  data.unitName = e('.unit-name').value
+  data.unitAddress = e('.unit-address').value
+  data.companyNumber = e('.company-number').value
+  data.lastyearIncome = e('.lastyear-income').value
+  data.assetSize = e('.asset-size').value
+  data.unitPhone = e('.unit-phone').value
+  data.unitCode = e('.unit-code').value
+  data.jobsType = e('.jobs-type').value
+  data.unitTime = e('.unit-time').value
+  data.lastunitName = e('.lastunit-name').value
+  data.lastunitTime = e('.lastunit-time').value
+  data.incomeSource = e('.income-source').value
+  data.salary = e('.salary').value
+  data.investment = e('.investment').value
+  data.rent = e('.rent').value
+  data.added = e('.added').value
+  data.supportPeople = e('.support-people').value
+  data.expenses = e('.expenses').value
+  data.communication = e('.communication').value
+  data.state = 'c'
+  data.ctime ='d'
+  data.hi = 'hi'
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid	  
+  return data
 }
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-	log('send data method')
-	$.ajax({
-		type : method,
-		url : url,
-		data : {
-			data : JSON.stringify(datas)
-		},
-		success : function(data) {
-			console.log('12316546465')
-			if (data.msg == 'success') {
-				console.log('666666')
-				layer.msg('保存成功', {
-					icon : 2,
-					time : 2000
-				}, function() {
-					window.location.href = '../../slloan/loan/loancom'
-				});
-			} else {
-				alert('服务器错误')
-			}
-		},
-		error : function() {
-			alert('服务器错误')
-		}
-	})
+  log('send data method')
+  $.ajax({
+    type: method,
+    url: url,
+    data: {data:JSON.stringify(datas)},
+    success: function(data) {
+    	console.log('12316546465')
+    	if(data.msg == 'success') {
+    		console.log('666666')
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loancom'
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
+  })
 }
+
 
 // 提交按钮&发送数据
 var sendData = function(element) {
-	log('send data to server')
-	var evs = e(element)
-	evs.addEventListener('click', function() {
-		log('data to send at time')
-		var data = collectData()
-		var method = 'POST'
-		var url = '/slloan/loan/loanApplypersonaldata'
-		log(data)
-		sendAjax(method, url, data)
-	})
+  log('send data to server')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    log('data to send at time')
+    var data = collectData()
+    var method = 'POST'
+    var url = '/slloan/loan/loanApplypersonaldata'
+    log(data)
+    if(data.parentnodeId) {
+    	 sendAjax(method, url, data)	
+    } else {
+    	layer.msg('请登录！', function(){
+			window.location.href = '/slloan/user/signin'
+			}); 
+    }
+  })
 }
 
 // 取消按钮事件
 var cancelBtn = function(element) {
-	var forms = e('form')
-	var evs = e(element)
-	evs.addEventListener('click', function() {
-		forms.reset()
-		window.history.back()
-	})
+  var forms = e('form')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    forms.reset()
+    window.history.back()
+  })
 }
 
 // 设置页面数据
 var searchExport = function(back) {
-	// 获取页面元素
+    // 获取页面元素
 	cname = e('.ch-name')
 	ename = e('.en-name')
 	paperwork = e('.paperwork-type')
@@ -166,8 +172,8 @@ var searchExport = function(back) {
 	supportPeople = e('.support-people')
 	expenses = e('.expenses').value
 	communication = e('.communication')
-
-	// 设置具体值
+	
+    //设置具体值
 	cname.value = back.name
 	ename.value = back.phoneticize
 	paperwork.value = back.id_type
@@ -206,7 +212,7 @@ var searchExport = function(back) {
 	rent.value = back.supportPeople
 	added.value = back.other_income
 	supportPeople.value = back.family_number
-	expenses.value = back.monthly_expenditure
+	expenses.value =  back.monthly_expenditure
 	communication.value = back.monthly_expenditure
 }
 
@@ -228,106 +234,106 @@ var searchAjax = function(method, url, datas) {
 				alert('服务器错误')
 			}
 		},
-		error : function() {
-			alert('服务器错误')
-		}
+	    error: function(){
+	        alert('服务器错误')
+	     }	
 	})
 }
 
-// 查询
+//查询
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/personalp'
 	var data = {}
-	data.id = 1
-	data.paperNumb = 1
-	if (data.id) {
-		searchAjax(method, url, data)
+	data.id = localStorage.createID
+	if(data.id) {
+		searchAjax(method, url, data)	
 	}
 }
 
 // 提交表单
 var sendFormData = function() {
-	log('send data to server')
-	log('data to send at time')
-	var data = collectData()
-	var method = 'POST'
-	var url = '/slloan/loan/loanApplypersonaldata'
-	log(data)
-	sendAjax(method, url, data)
+    log('send data to server')
+    log('data to send at time')
+    var data = collectData()
+    var method = 'POST'
+    var url = '/slloan/loan/loanApplypersonaldata'
+    log(data)
+    sendAjax(method, url, data)
 }
 
-// 开启验证 后提交表单
-// $.validator.setDefaults({
-// submitHandler: function() {
-// // alert("提交事件!");
-// sendFormData()
-// }
-// });
 
-$().ready(function() {
-	$("#loaner").validate({
-		rules : {
-			ctitle : {
-				required : true,
-				minlength : 2
-			},
-			etitle : {
-				required : true,
-				minlength : 3
-			},
-			CardId : {
-				required : true,
-				minlength : 5
-			},
-			currentAddress : {
-				required : true,
-				minlength : 12
-			}
-		},
-		messages : {
-			ctitle : {
-				required : "请输入用户名",
-				minlength : "用户名必需由两个字母组成"
-			},
-			etitle : {
-				required : "请输证件号码",
-				minlength : "密码长度不能小于 3 个字母"
-			},
-			CardId : {
-				required : "请输证件号码",
-				minlength : "证件长度不能小于 16 个"
-			},
-			currentAddress : {
-				required : "请输入现住址",
-				minlength : "请正确输入现住址"
-			}
-		}
-	});
-});
+//开启验证 后提交表单
+//$.validator.setDefaults({
+//    submitHandler: function() {
+////      alert("提交事件!");
+//    	sendFormData()
+//    }
+//});
+
+//$().ready(function() {
+//    $("#loaner").validate({
+//    	rules: {
+//    	      ctitle: {
+//    	        required: true,
+//    	        minlength: 2
+//    	      },
+//    	      etitle: {
+//    	        required: true,
+//    	        minlength: 3
+//    	      },
+//    	      CardId: {
+//    	        required: true,
+//    	        minlength: 5
+//    	      },
+//    	      currentAddress: {
+//    	    	required: true,
+//      	        minlength: 12
+//    	      }
+//    	    },
+//    	    messages: {
+//    	      ctitle: {
+//    	    	required:  "请输入用户名",
+//    	        minlength: "用户名必需由两个字母组成"
+//    	      },
+//    	      etitle: {
+//    	    	required:  "请输证件号码",
+//    	        minlength: "密码长度不能小于 3 个字母"
+//    	      },
+//    	      CardId: {
+//    	    	required:  "请输证件号码",
+//    	        minlength: "证件长度不能小于 16 个"
+//    	      },
+//    	      currentAddress: {
+//    	    	required:  "请输入现住址",
+//      	        minlength: "请正确输入现住址"
+//    	      }
+//    	     }
+//    });
+//});
 
 // 自定义验证
 var validator = function(element, message) {
-	var potion = document.querySelector(element)
-	var flag = (potion.value).length
-	var result = true
-	if (!flag) {
-		var lable = document.createElement('lable')
-		lable.classList.add('error')
-		lable.innerText = message
-		potion.parentNode.appendChild(lable)
-		result = false
-	}
-	return result
+	  var potion = document.querySelector(element)
+	  var flag = (potion.value).length
+	  var result = true
+	  if(!flag) {
+		 var lable = document.createElement('lable')
+		 lable.classList.add('error')
+		 lable.innerText = message
+		 potion.parentNode.appendChild(lable)
+		 result = false
+	  }
+	  return result
 }
+
 
 //
 var __main = function() {
-	log("run")
-	cancelBtn('#cancel')
-	sendData('#save-data')
-	searchData()
-	
+  log( "run")
+  cancelBtn('#cancel')
+  sendData('#save-data')
+  searchData()
 }
 
 __main()

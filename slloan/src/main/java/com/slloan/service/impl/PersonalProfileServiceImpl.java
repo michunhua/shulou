@@ -121,15 +121,15 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		pageBean.setTotalCount(totalCount);
 		//封装总页数
 		double tc = totalCount;
-		Double num = Math.ceil(tc/pageSize);
+		Double num = Math.ceil(tc/pageSize);//向上取整
 		pageBean.setTotalPage(num.intValue());
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
-		List<PersonalProfile> lists = personalProfiledao.getPersonalProfilePage(map); 
+		List<PersonalProfile> lists =personalProfiledao.getPersonalProfilePage(map);
 		pageBean.setLists(lists);
-		return pageBean;
-}
+			return pageBean;
+	}
 
 	@Override
 	public int getPersonalProfileCount() {

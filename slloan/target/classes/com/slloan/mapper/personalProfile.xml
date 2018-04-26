@@ -193,84 +193,99 @@
 
 	<!-- 按揭员回退按揭员状态 -->
 	<select id="getPersonalProfileCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='0'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='0'
 	</select>
-	
+
 	<!-- 初审状态 -->
 	<select id="getFirsttrialPageCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='1'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='1'
 	</select>
 	<!-- 终审状态 -->
 	<select id="getFinalreviewPageCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='2'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='2'
 	</select>
 	<!-- 财务状态 -->
 	<select id="getFinancePageCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='3'
+		SELECT COUNT(*) FROM
+		recordsubmit_table WHERE state='3'
 	</select>
 	<!-- 结算状态 -->
 	<select id="getjsloanPageCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='9'
+		SELECT COUNT(*) FROM
+		recordsubmit_table WHERE state='9'
 	</select>
 	<!-- 转账凭证状态 -->
 	<select id="getTransferloanPageCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='4'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='4'
 	</select>
 
 	<!-- 贷款信息状态 -->
 	<select id="getLoanInformationCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='5'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='10'
 	</select>
-	
+
 	<!-- 回款状态 -->
 	<select id="getReturnMoneyCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='6'
+		SELECT COUNT(*) FROM
+		recordsubmit_table WHERE state='8'
 	</select>
 
 	<!-- 取证状态 -->
 	<select id="getObtainEvidenceCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='7'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='5'
 	</select>
 
 	<!-- 解压状态 -->
 	<select id="getDecompressionCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='8'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='6'
 	</select>
 
 	<!-- 进压状态 -->
 	<select id="getLoanPressureCount" resultType="Integer">
-		SELECT COUNT(*) FROM recordsubmit_table WHERE state='10'
+		SELECT COUNT(*)
+		FROM recordsubmit_table WHERE state='7'
 	</select>
-<!-- 按揭员列表展示 -->
+	<!-- 按揭员列表展示 -->
 	<select id="getPersonalProfilePage" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		a.`id`,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='0' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='0' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
 
-<!-- 初审列表展示 -->
+	<!-- 初审列表展示 -->
 	<select id="getFirsttrialPage" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		a.id,a.name,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='1' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='1' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
 	<!-- 终审列表展示 -->
 	<select id="getFinalreviewPage" resultType="Map" resultMap="personalpr">
@@ -279,16 +294,18 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		a.`id`,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='2' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='2' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
-	
+
+
 	<!-- 财务列表展示 -->
 	<select id="getFinancePagePage" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
@@ -296,16 +313,18 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,c.id
+		a.id,a.name,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,c.id
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='3' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='3' GROUP
+		BY a.id
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
-	
+
+
 	<!-- 结算凭证列表 -->
 	<select id="getjsloanPage" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
@@ -315,13 +334,15 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='9' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='9' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
+
 	<!-- 转账凭证列表 -->
 	<select id="getTransferloanPage" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
@@ -331,14 +352,16 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='4' GROUP
-		BY a.`id`  order by a.name  
+		on(a.id = b.id) RIGHT JOIN recordsubmit_table c on
+		(a.id = c.id) where c.state='4' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
-	
+
+
 	<!-- 贷款信息列表 -->
 	<select id="getLoanInformation" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
@@ -348,11 +371,13 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='5' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='10' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
 
 	<!-- 回款列表 -->
@@ -364,11 +389,13 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='6' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='8' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
 
 	<!-- 取证列表 -->
@@ -380,13 +407,15 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='7' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='5' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
+
 	<!-- 解压列表 -->
 	<select id="getDecompression" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
@@ -396,13 +425,15 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='8' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='6' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
+
 	<!-- 进压列表 -->
 	<select id="getLoanPressure" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
@@ -412,44 +443,51 @@
 		SELECT
 		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
 		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)  where c.state='10' GROUP
-		BY a.`id`  order by a.name  
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId) where c.state='7' GROUP
+		BY a.`id`
+		order by a.name
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
-			</if>
+		</if>
 	</select>
-	
-	
 
-	
+
+
+
 	<select id="vaguelikeSelectCreate" resultType="Map" resultMap="personalpr">
-			SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime
-				FROM borrow_information a LEFT JOIN apply_for_loan_information b
-				on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on (a.parentnodeId = c.parentnodeId)
-<!-- 				  where a.name like  CONCAT('%', #{name}, '%') -->
-<!-- 				or  a.id_number like  CONCAT('%', #{idnumber}, '%') -->
-<!-- 				or  a.mobile_phone like  CONCAT('%', #{mobilephone}, '%') -->
-<!-- 				or  a.ctime BETWEEN #{ctim1} and #{ctim2} -->
-<!-- 				or  b.amount  BETWEEN #{amount} and #{amount2} and c.state ='1' -->
+		SELECT
+		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime
+		FROM borrow_information a LEFT JOIN apply_for_loan_information b
+		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
+		(a.parentnodeId = c.parentnodeId)
+		<!-- where a.name like CONCAT('%', #{name}, '%') -->
+		<!-- or a.id_number like CONCAT('%', #{idnumber}, '%') -->
+		<!-- or a.mobile_phone like CONCAT('%', #{mobilephone}, '%') -->
+		<!-- or a.ctime BETWEEN #{ctim1} and #{ctim2} -->
+		<!-- or b.amount BETWEEN #{amount} and #{amount2} and c.state ='1' -->
 
-				 where 1=1
-				<if test="name!=null and name!=''">and a.name like  CONCAT('%', #{name}, '%')</if>
-				<if test="id_number!=null and id_number!=''">and a.id_number like  CONCAT('%', #{id_number}, '%')</if>
-				<if test="mobile_phone!=null and mobile_phone!=''">and a.mobile_phone like  CONCAT('%', #{mobile_phone}, '%')</if>
-				<if test="ctime !=null and ctime !=''">and a.ctime BETWEEN #{ctime} and #{ctime2}</if>
-				<if test="amount !=null and amount !=''">and b.amount  BETWEEN #{amount} and #{amount2}</if>
-				
-<!-- 		<where> -->
-<!-- 			<if test="name!=null">or a.name like  CONCAT('%', #{name}, '%')</if> -->
-<!-- 			<if test="id_number!=null">or a.id_number like  CONCAT('%', #{idnumber}, '%')</if> -->
-<!-- 			<if test="mobile_phone!=null">or a.mobile_phone like  CONCAT('%', #{mobilephone}, '%')</if> -->
-<!-- 			<if test="ctime!=null">or a.ctime BETWEEN #{ctim0} and #{ctim2}</if> -->
-<!-- 			<if test="amount !=null">or b.amount  BETWEEN #{amount} and #{amount2}</if> -->
-<!-- 			and c.state ='1'  -->
-<!-- 		</where>  -->
+		where 1=1
+		<if test="name!=null and name!=''">and a.name like CONCAT('%', #{name}, '%')</if>
+		<if test="id_number!=null and id_number!=''">and a.id_number like CONCAT('%', #{id_number}, '%')</if>
+		<if test="mobile_phone!=null and mobile_phone!=''">and a.mobile_phone like CONCAT('%', #{mobile_phone}, '%')
+		</if>
+		<if test="ctime !=null and ctime !=''">and a.ctime BETWEEN #{ctime} and #{ctime2}</if>
+		<if test="amount !=null and amount !=''">and b.amount BETWEEN #{amount} and #{amount2}</if>
+
+		<!-- <where> -->
+		<!-- <if test="name!=null">or a.name like CONCAT('%', #{name}, '%')</if> -->
+		<!-- <if test="id_number!=null">or a.id_number like CONCAT('%', #{idnumber}, 
+			'%')</if> -->
+		<!-- <if test="mobile_phone!=null">or a.mobile_phone like CONCAT('%', #{mobilephone}, 
+			'%')</if> -->
+		<!-- <if test="ctime!=null">or a.ctime BETWEEN #{ctim0} and #{ctim2}</if> -->
+		<!-- <if test="amount !=null">or b.amount BETWEEN #{amount} and #{amount2}</if> -->
+		<!-- and c.state ='1' -->
+		<!-- </where> -->
 		and c.state ='1'
-		GROUP BY a.`id`  order by a.name   
-		</select> 
+		GROUP BY a.`id` order by a.name
+	</select>
 
 
 
@@ -464,7 +502,8 @@
 	<!-- 根据ID查记录 -->
 	<select id="SelectToById" parameterType="int"
 		resultType="com.slloan.entity.PersonalProfile">
-		select * from borrow_information where id = #{id} AND id_number =
+		select * from borrow_information where id = #{id} AND
+		id_number =
 		#{id_number}
 	</select>
 

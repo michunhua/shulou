@@ -71,5 +71,7 @@ public interface RoleAddService extends BaseDao<AddRole>{
      * @return
      */
     public AddRole selectroleRoleName(Map<Object,Object>map);
+    
+  
 	
 }

@@ -11,7 +11,7 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 4
+  data.id = 1
   return data
 }
 
@@ -22,7 +22,12 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function() {
+    	callback()
+    },
+    error: function(){
+        alert('服务器错误')
+     }
   })
 }
 
@@ -35,8 +40,8 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/cobupdateas'
-    log(data)
+    var url = '/slloan/loan/spoupdates'
+    log(data, data.id)
     sendAjax(method, url, data, null)
   })
 }
@@ -84,17 +89,22 @@ success: function(data) {
 	console.log('返回数据', data)
 	if(data.msg == 'success') {
 		searchExport(data.obj)
+	} else {
+		alert('服务器错误')
 	}
-}
+},
+error: function(){
+    alert('服务器错误')
+ }
 })
 }
 
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactasss'
+	var url = '/slloan/loan/finaljudgmentspouseselectbyid'
 	var data = {}
-	data.id = 4
+	data.id = localStorage.finalID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

@@ -50,8 +50,13 @@ var sendAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loancomm'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -132,7 +137,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/spouses'
 	var data = {}
-	data.id = 2
+	data.id = localStorage.firstID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

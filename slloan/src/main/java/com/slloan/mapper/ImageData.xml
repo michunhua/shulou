@@ -12,6 +12,8 @@
 		<result column="Subnode" property="Subnode" />
 		<result column="createdata" property="createData" />
 		<result column="city" property="city" />
+		<result column="spare" property="spare" />
+		<result column="sparetwo" property="sparetwo" />
 	</resultMap>
 
 <!-- 删除影像 -->
@@ -19,8 +21,8 @@
 	delete from imagedata where id=#{id}
 </delete>
 <insert id="imageDataAdd" parameterType="com.slloan.entity.ImageDataUpdate">
-	insert into imagedata(id,filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city)
-	values(nextval('empno'),#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city})
+	insert into imagedata(id,filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city,spare,sparetwo)
+	values(nextval('empno'),#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city},#{spare},#{sparetwo})
 </insert>
 <!-- 展示所有 -->
 <select id="list" resultType="com.slloan.entity.ImageDataUpdate">
@@ -28,7 +30,7 @@
 </select>
 <!-- 根据 上传类型 原文件名  上传者姓名查所上传的-->
 <select id="selectUploadsUpdateType"  parameterType="Map" resultType="com.slloan.entity.ImageDataUpdate">
-	select  filepath,note,uploads,uploadtype,Parentnode,id,Subnode  from imagedata where  filepath LIKE CONCAT('%',#{filepath},'%')
+	select  filepath,note,uploads,uploadtype,id,Subnode,city  from imagedata where  filepath LIKE CONCAT('%',#{filepath},'%')
 <!-- 		<if test="filepath !=null and filepath !=''">and filepath LIKE CONCAT('%',#{filepath},'%')</if>  -->
 		<if test="city !=null and city  !='' ">and city =#{city}</if>
 		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
@@ -46,14 +48,13 @@
 <!-- 	</where> -->
 </select>
 
-<!-- 转账凭证&结算凭证上传文件上传改为已传 -->
+<!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
 <select id="financevoucherSelectToupload"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
-		select filepath,note,uploads,uploadtype,Subnode from imagedata 
-	<trim prefix="WHERE" prefixOverrides="and|or">
-		<if test="filepath !=null and filepath.length()>0">and filepath LIKE CONCAT('%',#{filepath},'%')</if>
-		<if test="Parentnode !=null and Parentnode.length()>0 ">and Parentnode =#{parentnode}</if>
-		<if test="uploadtype !=null and uploadtype.length()>0">and uploadtype=#{uploadtype}</if>
-	</trim>
+		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where city =#{city}
+		<if test="Parentnode !=null and Parentnode !='' ">and Parentnode =#{parentnode}</if>
+		<if test="spare !=null and spare !='' ">and spare =#{spare1}</if>
+		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo2}</if>
+		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
 	ORDER BY id desc
 </select>
 <!--贷款终审列表审批是否通过  -->

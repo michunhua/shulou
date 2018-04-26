@@ -5,7 +5,7 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.note = e('.record-note').value
-  data.recordFirst = e('.first-trial').value
+  data.firstTrial = e('.first-trial').value
   return data
 }
 
@@ -24,8 +24,13 @@ var sendAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loancreas'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -71,8 +76,13 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+		error: function(){
+	        alert('服务器错误')
+	     }		
 	})
 }
 
@@ -81,7 +91,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/notedescripti'
 	var data = {}
-	data.id = 2
+	data.id = localStorage.firstID
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}
@@ -98,12 +108,90 @@ var cancelBtn = function(element) {
   })
 }
 
+
+// 提交方法
+var submitAjax = function(method, url, datas) {
+	  log('send data method')
+	  $.ajax({
+	    type: method,
+	    url: url,
+	    data: {data:JSON.stringify(datas)},
+	    success: function(data) {
+	    	if(data.msg == 'success') {
+	    		layer.msg('保存成功', {
+	  			  icon: 2,
+	  			  time: 2000 
+	  			}, function(){
+	  				window.location.href = '../../slloan/loan/loancreas'
+	  			});
+	    	} else {
+	    		alert('服务器错误')
+	    	}
+	    },
+	    error: function(){
+	        alert('服务器错误')
+	     }    
+	  })
+	}
+// 提交按钮提交数据
+var submitBtn = function(element) {
+	var intent = e(element) 
+	intent.addEventListener('click', function() {
+		    var method = 'GET'
+			var url = '/slloan/loan/loannotsubmit'
+			var data = collectData()
+			data.id = localStorage.firstID
+			data.rolename = localStorage.purrole
+		    data.username = localStorage.purusername
+		    data.city = localStorage.purcity
+			data.parentnodeId = localStorage.purid
+			submitAjax(method, url, data)
+	})
+}
+
+// 回退方法
+var backAjax = function(method, url, datas) {
+	  log('send data method')
+	  $.ajax({
+	    type: method,
+	    url: url,
+	    data: {data:JSON.stringify(datas)},
+	    success: function(data) {
+	    	if(data.msg == 'success') {
+	    		layer.msg('保存成功', {
+	  			  icon: 2,
+	  			  time: 2000 
+	  			}, function(){
+	  				window.location.href = '../../slloan/loan/loancreas'
+	  			});
+	    	} else {
+	    		alert('服务器错误')
+	    	}
+	    },
+	    error: function(){
+	        alert('服务器错误')
+	     }    
+	  })
+	}
+// 回退按钮回退数据
+var backBtn = function(element) {
+	var intent = e(element) 
+	intent.addEventListener('click', function() {
+		    var method = 'GET'
+			var url = '/slloan/loan/loannotFallback'
+			var data = collectData()
+			submitAjax(method, url, data)
+	})
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
   cancelBtn("#cancel")
   searchData()
+  submitBtn('#submit')
+  backBtn("#go-back")
 }
 
 __main()

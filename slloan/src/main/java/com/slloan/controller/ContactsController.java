@@ -37,7 +37,7 @@ public class ContactsController {
 	private ContactsService contactsservice;
 	
 	@ResponseBody
-	@RequestMapping("/contactinformations")
+	@RequestMapping("/contactinformation")
 	public Json save(HttpServletRequest req) {
 		
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕

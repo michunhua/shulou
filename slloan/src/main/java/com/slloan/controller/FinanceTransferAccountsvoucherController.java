@@ -7,8 +7,10 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -101,7 +103,10 @@ public class FinanceTransferAccountsvoucherController {
 	    	final String upload_type = req.getParameter("upload_type");//上传类型
 //	    	final	String filepath = req.getParameter("filepath");
 	    	final	String city = req.getParameter("city");
-	    	String reqid= req.getParameter("id");
+	    	String reqid= req.getParameter("state");
+	    	String usernameid = req.getParameter("usernameid");
+			String username = req.getParameter("username");
+			String roleName = req.getParameter("rolename");
 	    	String targetFileName = "";
 	    	for(final MultipartFile f:tmpfile){
 	    	        FTPClient ftp = new FTPClient();
@@ -183,8 +188,11 @@ public class FinanceTransferAccountsvoucherController {
 		          	        	String filepath =targetFileName;//原文件名
 		                    	String parentnode =city;
 		                    	String uploadtype = upload_type;
-		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-		                        List<ImageDataUpdate> listimg2= imagedataservice.selectUploadsUpdateType(imagedata2);
+		                    	String Parentnode = usernameid;
+		                    	String spare = username;
+		                    	String sparetwo = roleName;
+		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
 		                        if(listimg2.size()> 0 && listimg ==true){
 		                    		//return new Json(true,"success",listimg);
 		                    		  return new Json(true,"success",listimg2,"上传成功 -待放款确认");
@@ -264,8 +272,11 @@ public class FinanceTransferAccountsvoucherController {
 		          	        	String filepath =targetFileName;//原文件名
 		                    	String parentnode =city;
 		                    	String uploadtype = upload_type;
-		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-		                        List<ImageDataUpdate> listimg2= imagedataservice.selectUploadsUpdateType(imagedata2);
+		                    	String Parentnode = usernameid;
+		                    	String spare = username;
+		                    	String sparetwo = roleName;
+		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
 		                        if(listimg2.size()> 0 && listimg ==true){
 		                    		//return new Json(true,"success",listimg);
 		                    		  return new Json(true,"success",listimg2,"上传成功 -已结清");
@@ -322,17 +333,20 @@ public class FinanceTransferAccountsvoucherController {
 	   * @param res
 	   * @return JSON			
 	   */
-	  @RequestMapping(value="/voucherupload",method=RequestMethod.POST)
+	  @RequestMapping(value="/voucherupload",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	  @ResponseBody
 	  public Json reimbursement_Voucher(
 			  @RequestParam(value="file",required=false) MultipartFile[]tmpfile,
 			  HttpServletRequest req , HttpServletResponse res){
 		  String note = req.getParameter("note");
+		  String usernameid = req.getParameter("usernameid");
+			String username = req.getParameter("username");
+			String roleName = req.getParameter("rolename");
 		  String upload_type= req.getParameter("upload_type");
 //		  String filepath = req.getParameter("filepath");
 		  String city = req.getParameter("city");
 		  String targetFileName = "";
-		  String reqid= req.getParameter("id");
+		  String reqid= req.getParameter("state");
 		  for(MultipartFile f:tmpfile){
 			  FTPClient ftp = new FTPClient();
 			  try {
@@ -408,8 +422,11 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	String filepath =targetFileName;//原文件名
 	                            	String parentnode =city;
 	                            	String uploadtype = upload_type;
-	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-	                            List<ImageDataUpdate> listimg2= imagedataservice.selectUploadsUpdateType(imagedata2);
+	                            	String Parentnode = usernameid;
+	                            	String spare = username;
+	                            	String sparetwo = roleName;
+	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+	                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
 	                  	        	if(listimg2.size()> 0 && listimg == true){
 	                            		//return new Json(true,"success",listimg);
 	                            		  return new Json(true,"success",listimg2,"上传成功-- 待结算审核");
@@ -473,11 +490,14 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	String filepath =targetFileName;//原文件名
 	                            	String parentnode =city;
 	                            	String uploadtype = upload_type;
-	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-	                            List<ImageDataUpdate> listimg2= imagedataservice.selectUploadsUpdateType(imagedata2);
+	                            	String Parentnode = usernameid;
+	                            	String spare = username;
+	                            	String sparetwo = roleName;
+	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+	                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
 	                  	        	if(listimg2.size()> 0 && listimg == true){
 	                            		//return new Json(true,"success",listimg);
-	                            		  return new Json(true,"success",listimg2,"上传成功-- 待进解压凭证审核");
+	                            		  return new Json(true,"success",listimg2,"上传成功-- 待解押压凭证审核");
 	                            	}else{
 	                            		return new Json(false,"fail",listimg2,"请选择城市或上海类型");
 	                            	}
@@ -539,8 +559,11 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	String filepath =targetFileName;//原文件名
 	                            	String parentnode =city;
 	                            	String uploadtype = upload_type;
-	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-	                            List<ImageDataUpdate> listimg2= imagedataservice.selectUploadsUpdateType(imagedata2);
+	                            	String Parentnode = usernameid;
+	                            	String spare = username;
+	                            	String sparetwo = roleName;
+	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+	                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
 	                  	        	if(listimg2.size()> 0 && listimg == true){
 	                            		//return new Json(true,"success",listimg);
 	                            		  return new Json(true,"success",listimg2,"上传成功-- 待进押凭证审核");
@@ -567,7 +590,7 @@ public class FinanceTransferAccountsvoucherController {
 								imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/entervoucher/"+targetFileName.trim());
+	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/entervoucher/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
@@ -605,8 +628,11 @@ public class FinanceTransferAccountsvoucherController {
                   	        	String filepath =targetFileName;//原文件名
                             	String parentnode =city;
                             	String uploadtype = upload_type;
-                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-                            List<ImageDataUpdate> listimg2= imagedataservice.selectUploadsUpdateType(imagedata2);
+                            	String Parentnode = usernameid;
+                            	String spare = username;
+                            	String sparetwo = roleName;
+                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
                   	        	if(listimg2.size()> 0 && listimg == true){
                             		//return new Json(true,"success",listimg);
                             		  return new Json(true,"success",listimg2,"上传成功-- 待确认回款审核");
@@ -655,6 +681,91 @@ public class FinanceTransferAccountsvoucherController {
 	    @RequestMapping(value="/selectuploadsupdatetype",method=RequestMethod.GET)
 	    @ResponseBody
 	    public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
+    	res.setContentType("text/html; charset=utf-8");
+    	String data = req.getParameter("data");
+    	JSONObject jsonobj = new JSONObject().fromObject(data);
+    	String uploadtype = jsonobj.getString("uploadtype");//原文件名
+    	String city = jsonobj.getString("city");
+    	String sparetwo = jsonobj.getString("rolename");//角色名
+    	String spare = jsonobj.getString("username");//用户名
+    	String Parentnode = jsonobj.getString("usernameid");//用户ID
+    	String[] splist = uploadtype.split(",");
+    	Map<Object,Object> map = new HashMap<Object,Object>();
+    		ResultList<ImageDataUpdate> result = new ResultList<ImageDataUpdate>();
+    	Map<String,List<ImageDataUpdate>> listmap = new HashMap<String,List<ImageDataUpdate>>();
+    	for(String s :splist){
+    		String strplist = s.replace("[", " ").replace("]"," ").replace("\""," ").trim();
+    		if(strplist.equals("转账凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("转账凭证", listimg);
+    		}else if(strplist.equals("结算凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("结算凭证", listimg);
+    		}else if(strplist.equals("回款确认")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("回款确认", listimg);
+    		}else if(strplist.equals("取证凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("取证凭证", listimg);
+    		}else if(strplist.equals("解押凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("解押凭证", listimg);
+    		}else if(strplist.equals("进押凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("进押凭证", listimg);
+    		}
+    	}
+    	 return new Json(true,"success",listmap,"财务凭证");
+    	
+	    }
+	    
+	 /*   *//**
+	     * 不用
+	     * 修改待取证
+	     * @param req
+	     * @param res
+	     * @return 对象
+	     *//*
+	    @RequestMapping(value="/waitforensics",method=RequestMethod.POST)
+	    @ResponseBody
+	    public Json WaitForensics(HttpServletRequest req , HttpServletResponse res){
+//	    	String data = req.getParameter("data");
+//	    	JSONObject jsonobj = new JSONObject().fromObject(data);
+//	    	String originalfilename = jsonobj.getString("file");//原文件名
+//	    	String parentnode = jsonobj.getString("city");
+//	    	String uploadtype = jsonobj.getString("upload_type");
+	    	String sid = req.getParameter("id");
+	    	int id = Integer.parseInt(sid);
+//	    	ImageDataUpdate imagedata = new ImageDataUpdate(originalfilename,parentnode,uploadtype);
+	    boolean listimg= imagedataservice.WaitForensics(id);
+	    	if(listimg == true){
+	    		return new Json(true,"success",listimg,"待放款到待取证修改成功");
+	    	}else{
+	    		return new Json(false,"fail",listimg,"待放款到待取证修改失改");
+	    	}
+	    }*/
+	  
+	/*  *//**
+	     * 根据 上传类型 原文件名  上传者姓名查所上传的
+	     * @param req
+	     * @param res
+	     * @return 对象
+	     *//*
+	    @RequestMapping(value="/selectuploadsupdatetype",method=RequestMethod.GET)
+	    @ResponseBody
+	    public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
 	    	String data = req.getParameter("data");
 	    	JSONObject jsonobj = new JSONObject().fromObject(data);
 	    	String originalfilename = jsonobj.getString("file");//原文件名
@@ -669,7 +780,7 @@ public class FinanceTransferAccountsvoucherController {
 	    	}else{
 	    		return new Json(false,"fail",listimg);
 	    	}
-	    }
+	    }*/
 	    
 	    /**
 	     * 修改待取证
@@ -759,10 +870,11 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json batchRefuse(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+//	    	String items = "[2,3,4]";
+//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
 	    	List<String> batchRefuse = new ArrayList<String>();
-	    	String id = jsonobj.getString("id");
-	    	String[] split= id.split(",");
+//	    	String id = jsonobj.getString("id");
+	    	String[] split= items.split(",");
 	    	for(String s:split){
 	    		String str = s.replace("[", " ").replace("]", " ").trim();
 	    		batchRefuse.add(str);
@@ -782,14 +894,16 @@ public class FinanceTransferAccountsvoucherController {
 	     * @return
 	     */
 	    @RequestMapping(value="/pastgobackfinalreview",method=RequestMethod.POST)
+	    @ResponseBody
 	    public Json batchPast(HttpServletRequest request,HttpServletResponse response){
-	    	String item = request.getParameter("data");
-	    	JSONObject jsonobject = new JSONObject().fromObject(item);
-	    	String id = jsonobject.getString("id");
+	    	String items = request.getParameter("data");
+//	    	String item = "[2,3,4]";
+//	    	JSONObject jsonobject = new JSONObject().fromObject(item);
+//	    	String id = jsonobject.getString("id");
 	    	List<String> batchPast = new ArrayList<String>();
-	    	String [] split = id.split(",");
+	    	String [] split = items.split(",");
 	    	for(String s : split){
-	    		String streplacee = s.replace("[", " ").replace("]", " ").trim();
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
 	    		batchPast.add(streplacee);
 	    	}
 	    	boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
@@ -811,19 +925,10 @@ public class FinanceTransferAccountsvoucherController {
 		@ResponseBody
 		public Json batchUpdateStudent(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject obj = new JSONObject().fromObject(items);
-//	    	System.out.println(obj);
-	    	String id = obj.getString("id");
-	    	
-//	    	String id = request.getParameter("id");
-//	    	String dt = id.replace("[[\"", " ").replace("\"]]", " ").replace("\"", "");
-//	    	System.out.println(dt);
-	    	String [] split = id.split(",");
-//	    	String  split = id;
+	    	String [] split = items.split(",");
 	    	List<String> updatelist = new ArrayList<String>();
 	    	for(String s:split){
-	    		String dt = s.replace("[", " ").replace("]", " ").trim();
-//	    		System.out.println(dt);
+	    		String dt = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
 	    		updatelist.add(dt);
 	    	}
 	    	

@@ -21,14 +21,14 @@ public class PropertyInformation implements Serializable {
 	private String proPerty_for; // 房产用于
 	private String the_Assessed_Value; // 评估值
 	private String original_Loan_Bank; // 原贷款银行
-	private String original_Loan_Amount; // 原贷款金额
-	private String loan_Outstanding_Balance; // 原贷款尚欠本息余额
+	private double original_Loan_Amount; // 原贷款金额
+	private double loan_Outstanding_Balance; // 原贷款尚欠本息余额
 	private String house_Account; // 供楼账号
-	private String transaCtion_Price; // 买卖成交价
-	private String purchase_Deposit; // 购房定金
+	private double transaCtion_Price; // 买卖成交价
+	private double purchase_Deposit; // 购房定金
 	private String supervision_of_funds; // 资金监管
 	private String new_loan_Bank; // 新贷款银行
-	private String new_Loan_Approval_Amount; // 新贷款批复金额
+	private double new_Loan_Approval_Amount; // 新贷款批复金额
 	private String new_Loan_Bank_Account_Number; // 新贷款行账号
 	private String note_DescriPtion; // 备注
 	private String state;
@@ -126,19 +126,19 @@ public class PropertyInformation implements Serializable {
 		this.original_Loan_Bank = original_Loan_Bank;
 	}
 
-	public String getOriginal_Loan_Amount() {
+	public double getOriginal_Loan_Amount() {
 		return original_Loan_Amount;
 	}
 
-	public void setOriginal_Loan_Amount(String original_Loan_Amount) {
+	public void setOriginal_Loan_Amount(double original_Loan_Amount) {
 		this.original_Loan_Amount = original_Loan_Amount;
 	}
 
-	public String getLoan_Outstanding_Balance() {
+	public double getLoan_Outstanding_Balance() {
 		return loan_Outstanding_Balance;
 	}
 
-	public void setLoan_Outstanding_Balance(String loan_Outstanding_Balance) {
+	public void setLoan_Outstanding_Balance(double loan_Outstanding_Balance) {
 		this.loan_Outstanding_Balance = loan_Outstanding_Balance;
 	}
 
@@ -150,19 +150,19 @@ public class PropertyInformation implements Serializable {
 		this.house_Account = house_Account;
 	}
 
-	public String getTransaCtion_Price() {
+	public double getTransaCtion_Price() {
 		return transaCtion_Price;
 	}
 
-	public void setTransaCtion_Price(String transaCtion_Price) {
+	public void setTransaCtion_Price(double transaCtion_Price) {
 		this.transaCtion_Price = transaCtion_Price;
 	}
 
-	public String getPurchase_Deposit() {
+	public double getPurchase_Deposit() {
 		return purchase_Deposit;
 	}
 
-	public void setPurchase_Deposit(String purchase_Deposit) {
+	public void setPurchase_Deposit(double purchase_Deposit) {
 		this.purchase_Deposit = purchase_Deposit;
 	}
 
@@ -182,11 +182,11 @@ public class PropertyInformation implements Serializable {
 		this.new_loan_Bank = new_loan_Bank;
 	}
 
-	public String getNew_Loan_Approval_Amount() {
+	public double getNew_Loan_Approval_Amount() {
 		return new_Loan_Approval_Amount;
 	}
 
-	public void setNew_Loan_Approval_Amount(String new_Loan_Approval_Amount) {
+	public void setNew_Loan_Approval_Amount(double new_Loan_Approval_Amount) {
 		this.new_Loan_Approval_Amount = new_Loan_Approval_Amount;
 	}
 
@@ -224,9 +224,9 @@ public class PropertyInformation implements Serializable {
 
 	public PropertyInformation(Integer id, String name, String ownership_And_percentage, String property_Address,
 			String conStruction_Area, String inner_Area, String sales_Contract_Number, String certificate_of_Title,
-			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
-			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
-			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
+			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, double original_Loan_Amount,
+			double loan_Outstanding_Balance, String house_Account, double transaCtion_Price, double purchase_Deposit,
+			String supervision_of_funds, String new_loan_Bank, double new_Loan_Approval_Amount,
 			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
 		super();
 		this.id = id;
@@ -256,9 +256,9 @@ public class PropertyInformation implements Serializable {
 
 	public PropertyInformation(String name, String ownership_And_percentage, String property_Address,
 			String conStruction_Area, String inner_Area, String sales_Contract_Number, String certificate_of_Title,
-			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, String original_Loan_Amount,
-			String loan_Outstanding_Balance, String house_Account, String transaCtion_Price, String purchase_Deposit,
-			String supervision_of_funds, String new_loan_Bank, String new_Loan_Approval_Amount,
+			String proPerty_for, String the_Assessed_Value, String original_Loan_Bank, double original_Loan_Amount,
+			double loan_Outstanding_Balance, String house_Account, double transaCtion_Price, double purchase_Deposit,
+			String supervision_of_funds, String new_loan_Bank, double new_Loan_Approval_Amount,
 			String new_Loan_Bank_Account_Number, String note_DescriPtion, String state, String ctime) {
 		super();
 		this.name = name;

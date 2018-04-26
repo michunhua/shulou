@@ -6,11 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
@@ -107,16 +110,21 @@ public class UpdateFTPController{
      * @throws IOException 
      * @throws ServletException 
      */
-    @RequestMapping(value = "/imagedatafileupload",method=RequestMethod.POST)
+    @RequestMapping(value = "/imagedatafileupload",method=RequestMethod.POST,produces="application/json;charset=utf-8")
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
 	  	public Json imagedatafile(@RequestParam(value="file",required=false)MultipartFile[] tmpfile,
 	  			final HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException{
+    	res.setContentType("text/html; charset=utf-8");
+    	res.setCharacterEncoding("text/html; charset=utf-8");
     	final String note = req.getParameter("note");//备注
     	final String upload_type = req.getParameter("upload_type");//上传类型
     	final	String filepath2 = req.getParameter("filepath");
-    	System.out.println(filepath2);
     	final	String city = req.getParameter("city");
+    			String usernameid = req.getParameter("id");//用户ID
+    			String username = req.getParameter("username");
+    			String roleName = req.getParameter("rolename");
+    	
 //    	final	String file = req.getParameter("FileUpload");
 //    	System.out.println(file);
     	ResultList<Object> pageBean = new ResultList<Object>();//返回权限集合
@@ -178,13 +186,17 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
+//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setCity(city);
                          	imagedata.setSubnode("");
+                         	imagedata.setParentnode(usernameid);//用户名ID
+                         	imagedata.setSpare(username);//用户名
+                         	imagedata.setSparetwo(roleName);//角色名
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);//添加一条记录
@@ -200,13 +212,17 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
+//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setCity(city);
                          	imagedata.setSubnode("");
+                         	imagedata.setParentnode(usernameid);//用户名ID
+                         	imagedata.setSpare(username);//用户名
+                         	imagedata.setSparetwo(roleName);//角色名
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
@@ -220,13 +236,17 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
+//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setCity(city);
                          	imagedata.setSubnode("");
+                         	imagedata.setParentnode(usernameid);//用户名ID
+                         	imagedata.setSpare(username);//用户名
+                         	imagedata.setSparetwo(roleName);//角色名
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
@@ -241,7 +261,8 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
+//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+tdf+"/"+"pishi_image/"+str.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
@@ -249,6 +270,9 @@ public class UpdateFTPController{
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setCity(city);
                          	imagedata.setSubnode("");
+                         	imagedata.setParentnode(usernameid);//用户名ID
+                         	imagedata.setSpare(username);//用户名
+                         	imagedata.setSparetwo(roleName);//角色名
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
@@ -263,12 +287,16 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/loan/qita_image/"+city+"/"+targetFileName.trim());
+//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setCity(city);
                          	imagedata.setSubnode("");
+                         	imagedata.setParentnode(usernameid);//用户名ID
+                         	imagedata.setSpare(username);//用户名
+                         	imagedata.setSparetwo(roleName);//角色名
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
@@ -283,13 +311,17 @@ public class UpdateFTPController{
                      		imagedata.setNote(note);//备注
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
+//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
                          	readerZipFile(tmpFileName.trim());
 //                         	imagedata.setFilepath("");
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
                          	imagedata.setCity(city);
                          	imagedata.setSubnode("");
+                         	imagedata.setParentnode(usernameid);//用户名ID
+                         	imagedata.setSpare(username);//用户名
+                         	imagedata.setSparetwo(roleName);//角色名
                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                          	imagedata.setCreateData(createData);
                          	imagedataservice.imageDataAdd(imagedata);
@@ -325,11 +357,14 @@ public class UpdateFTPController{
           	        	pageBean.setLists(li);
           	        	  input.close();
           	        	  ftp.logout();
-          	        	String filepath =targetFileName;//原文件名
-                    	String parentnode =city;
+//          	        	String filepath =targetFileName;//原文件名
+//                    	String parentnode =city;
                     	String uploadtype = upload_type;
-                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(filepath,parentnode,uploadtype);
-                    List<ImageDataUpdate> listimg= imagedataservice.selectUploadsUpdateType(imagedata2);
+                    	String Parentnode = usernameid;
+                    	String spare = username;
+                    	String sparetwo = roleName;
+                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+                    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata2);
                     	if(listimg.size()> 0){
                     		//return new Json(true,"success",listimg);
                     		  return new Json(true,"success",listimg,"上传成功");
@@ -423,10 +458,11 @@ public class UpdateFTPController{
 	  	public Json imagedatadel(HttpServletRequest req) throws IOException{
     	String data = req.getParameter("data");
     	JSONObject obj = new JSONObject().fromObject(data);
-    		
     	String sid = obj.getString("id");
-    	String image = obj.getString("image");
-    	System.out.println(sid+ ""+ image);
+    	String image = obj.getString("file");
+//    	System.out.println(sid+ ""+ image)
+//    	String sid=req.getParameter("id");
+//    	String image=req.getParameter("file");//文件名
     	 filenameimage = image;//图片
     		int imageid = Integer.valueOf(sid);
     		boolean isResult = imagedataservice.imagedatedel(imageid);
@@ -606,33 +642,72 @@ public class UpdateFTPController{
      * @param req
      * @param res
      * @return 对象
+     * @throws UnsupportedEncodingException 
      */
     @RequestMapping(value="/selectfiletype",method=RequestMethod.GET,produces="application/json;charset=utf-8")
     @ResponseBody
-    public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
+    public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res) throws UnsupportedEncodingException{
+    	res.setContentType("text/html; charset=utf-8");
     	String data = req.getParameter("data");
     	JSONObject jsonobj = new JSONObject().fromObject(data);
-    	String originalfilename = jsonobj.getString("file");//原文件名
-    	String parentnode = jsonobj.getString("city");
-    	String uploadtype = jsonobj.getString("upload_type");
-//    	String id = jsonobj.getString("id");
-//    	int zid = Integer.parseInt(id);
-//    	String sid = req.getParameter("id");
-//    	int zid = Integer.parseInt(sid);
-//    	String originalfilename = req.getParameter("file");
-//    	String parentnode= req.getParameter("city");
-//    	String uploadtype =  req.getParameter("uploadtype");
+    	String uploadtype = jsonobj.getString("uploadtype");//原文件名
+    	String city = jsonobj.getString("city");
+    	String sparetwo = jsonobj.getString("rolename");//角色名
+    	String spare = jsonobj.getString("username");//用户名
+    	String Parentnode = jsonobj.getString("usernameid");//用户ID
+    	String[] splist = uploadtype.split(",");
+    	Map<Object,Object> map = new HashMap<Object,Object>();
+    		ResultList<ImageDataUpdate> result = new ResultList<ImageDataUpdate>();
+    	Map<String,List<ImageDataUpdate>> listmap = new HashMap<String,List<ImageDataUpdate>>();
     	
-//    	System.out.println(zid+" "+ originalfilename+" "+ parentnode+" "+ uploadtype);
-    	ImageDataUpdate imagedata = new ImageDataUpdate(originalfilename,parentnode,uploadtype);
-    List<ImageDataUpdate> listimg= imagedataservice.selectUploadsUpdateType(imagedata);
-    	if(listimg.size()> 0){
-    		return new Json(true,"success",listimg);
-    	}else{
-    		return new Json(false,"fail",listimg);
+    	for(String s :splist){
+    		String strplist = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
+//    		System.out.println(strplist);
+    		if(strplist.equals("申请表")){
+    			map.put("申请表", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("申请表", listimg);
+    		}else if(strplist.equals("身份证明")){
+    			map.put("身份证明", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("身份证明", listimg);
+    		}else if(strplist.equals("批示")){
+    			map.put("批示", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    			listmap.put("批示", listimg);
+    		}else if(strplist.equals("凭证类")){
+    			map.put("凭证类", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("凭证类", listimg);
+    		}else if(strplist.equals("其他类")){
+    			map.put("其他类", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("其他类", listimg);
+    		}else if(strplist.equals("房产证明")){
+    			map.put("房产证明", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("房产证明", listimg);
+    		}
     	}
-    		
-    	
+		 return new Json(true,"success",listmap,"贷款凭证");
     }
     
     @RequestMapping(value = "/bb",method=RequestMethod.GET)

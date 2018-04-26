@@ -21,14 +21,12 @@ layui.use('laydate', function(){
 var collectData = function() {
   var data = {}
   data.note = e('.note').value
-  data.recordFirst = '2'
-  data.recorFinal = 'c'
-	  data.rolename = localStorage.purrole
-	  data.username = localStorage.purusername
-	  data.city = localStorage.purcity
-	  data.parentnodeId = localStorage.purid
-	  data.state = 'q'
-		  data.ctime = 'b'
+  data.state = '2'
+  data.ctime = 'c'
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid
   return data
 }
 
@@ -46,8 +44,13 @@ var sendAjax = function(method, url, datas, callback) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loancrea'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }   
   })
 }
 
@@ -78,8 +81,13 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(initback)
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+	    error: function(){
+	        alert('服务器错误')
+	     }		
 	})
 }
 
@@ -88,8 +96,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/notedescripti'
 	var data = {}
-//	data.id = localStorage.createID
-	data.id = 1
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
@@ -107,6 +114,8 @@ var submitAjax = function(method, url, datas) {
 		},
 		success : function(data) {
 		console.log('返回数据', data)
+		var flag = data.split('<title>')[1]
+		console.log(flag)
     	if(data.msg == 'success') {
     		layer.msg('保存成功', {
   			  icon: 2,
@@ -114,8 +123,13 @@ var submitAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loancrea'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-		}
+	 },
+     error: function(){
+         alert('服务器错误')
+      }	 
 	})
 }
 
@@ -127,7 +141,7 @@ var sendData = function(element) {
     var method = 'GET'
     var url = '/slloan/loan/notedescription'
     log(data)
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
 }
 
@@ -147,6 +161,7 @@ var submitBtn = function(element) {
 		var method = 'GET'
 		var url = '/slloan/loan/loannotfirsts'
 		var data = collectData()
+		data.id = localStorage.createID
 		submitAjax(method, url, data)
 	})
 }

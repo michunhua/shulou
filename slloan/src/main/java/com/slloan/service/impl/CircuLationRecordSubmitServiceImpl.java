@@ -70,6 +70,34 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 		return false;
 	}
 
+	@Override
+	public boolean updatefallbackinsert(CircuLationRecord circuLationRecord) {
+		int id =circuLationRecord.getId();
+		String fallbackname =circuLationRecord.getFallbackname();
+		int state =circuLationRecord.getState();
+//		String username = circuLationRecord.getUsername();
+//		String rolename =circuLationRecord.getRolename();//obj.getString("rolename");
+//		String city =circuLationRecord.getCity();//obj.getString("city");
+//		 String parentnodeId =circuLationRecord.getParentnodeId();// obj.getString("parentnodeId");
+		
+		CircuLationRecord c = new CircuLationRecord(fallbackname,state,id);
+		
+		return recordSubmitDao.updatefallbackinsert(c);
+	}
+
+	@Override
+	public boolean fallbackinserts(CircuLationRecord circuLationRecord) {
+		String fallbackname = circuLationRecord.getFallbackname();
+		int state = circuLationRecord.getState();
+		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		String username = circuLationRecord.getUsername();
+		String ParentnodeId = circuLationRecord.getParentnodeId();
+		String city = circuLationRecord.getCity();
+		String rolename = circuLationRecord.getRolename();
+		CircuLationRecord record = new CircuLationRecord(fallbackname,state,createDate,username,ParentnodeId,city,rolename);
+		return recordSubmitDao.fallbackinserts(record);
+	}
+
 
 	
 	

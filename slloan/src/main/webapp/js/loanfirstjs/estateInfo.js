@@ -23,7 +23,10 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
-  data.id = 2
+  data.name= '1'
+	  data.id= 2
+	  data.state= 'a'
+		  data.ctiam = 'b'
   return data
 }
 
@@ -42,8 +45,13 @@ var sendAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loanimags'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -133,8 +141,13 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+		error: function(){
+	        alert('服务器错误')
+	     }		
 	})
 }
 
@@ -143,7 +156,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/pper'
 	var data = {}
-	data.id = 2
+	data.id = localStorage.firstID
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

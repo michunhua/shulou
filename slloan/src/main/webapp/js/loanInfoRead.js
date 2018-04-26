@@ -41,19 +41,30 @@ layui.use('laydate', function(){
 	  });
 });
 
+//过滤数据
+var myFilter = function(data) {
+	var result = ""
+	if(data) {
+		return data
+	} else {
+		return  result
+	}
+}
+
 
 // 添加表格具体数据格
 var addTable = function(data) {
     var datas = data
 //    var len = 
-    var len = 10
+    var len = datas.lists
     var pageElement = document.querySelector('.tab-data')
-    for(var i = 0; i < len; i++) {
+    for(var i = 0; i < len.length; i++) {
       log(i)
       var tr = document.createElement('tr')
       var td0 = document.createElement('td')
       var a = document.createElement('a')
       var td1 = document.createElement('td')
+      var td1a = document.createElement('td')
       var td2 = document.createElement('td')
       var td3 = document.createElement('td')
       var td4 = document.createElement('td')
@@ -62,26 +73,44 @@ var addTable = function(data) {
       var td7 = document.createElement('td')
       var td8 = document.createElement('td')
       var td9 = document.createElement('td')
-      var td10 = document.createElement('td')
-      var id = "datas.lists[i].userName"
-      var userName = "datas.lists[i].userName"
-      var role = "datas.lists[i].distribution_Role"
-      var employeeName = "datas.lists[i].employeeis_Name"
-      var time = "datas.lists[i].createdate"
-      a.classList.add('mark')
-      a.href = '#'
-      a.innerText = 0
-      td1.innerText = 1
-      td2.innerText = 2
-      td3.innerText = 3
-      td4.innerText = 4
-      td5.innerText = 5
-      td6.innerText = 6
-      td7.innerText = 7
-      td8.innerText = 8
-      td9.innerText = 9
+      var span1 = document.createElement('a')
+   	  var span2 = document.createElement('a')
+   	  var ID = myFilter(data.lists[i].notes[0].id)
+		var userid = myFilter(datas.lists[i].name)
+		var userName = myFilter(datas.lists[i].applyfor[0].amount)
+		var phone = myFilter(datas.lists[i].mobile_phone)
+		var number = myFilter(datas.lists[i].id_number)
+		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)
+		var state = myFilter(datas.lists[i].state)
+		var address = myFilter(datas.lists[i].home_address_now)
+		var time = myFilter(datas.lists[i].ctime)
+
+
+		a.classList.add('mark')
+		a.href = '#'
+		a.innerText = '201802241931'
+		td1.classList.add('flag')
+		td1a.innerText = ID
+		td1.innerText = userid
+		td2.innerText = userName
+		td3.innerText = phone
+		td4.innerText = number
+		td5.innerText = limit
+		td6.innerText = state
+		td7.innerText = address
+		td8.innerText = time
+//      td9.innerText = 9
+      span1.classList.add('upload')
+      span1.href = '#'
+      span1.innerText = '[   上传     ]'
+      span2.classList.add('record')
+      span2.href = '#'  
+      span2.innerText = '[ 流转记录   ]'
+      td9.appendChild(span1)
+      td9.appendChild(span2)
       td0.appendChild(a)
       tr.appendChild(td0)
+      tr.appendChild(td1a)
       tr.appendChild(td1)
       tr.appendChild(td2)
       tr.appendChild(td3)
@@ -99,19 +128,18 @@ var testData = {
 		test: '233'
 }
 
-addTable(testData)
+//addTable(testData)
 
 
 //默认加载
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        consoel.log(data)
-        callback(data)
+        addTable(data)
       }
     })
 }
@@ -120,12 +148,10 @@ var sendAjax = function(method, url, datas, callback) {
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/loan/loancreate'
+	var url = '/slloan/loan/LoanInformation?page=1&limit=10'
 	var datas = {}
-	datas.a = 'a'
-	datas.b = 'b'
 		console.log('初始化加载数据233')
-	sendAjax(method, url, datas, addTable)
+	sendAjax(method, url, datas)
 	console.log('执行没有？')
 }
 
@@ -163,7 +189,7 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = ''
+    var url = '/slloan/loan/LoanInformation?page=1&limit=10'
     var datas = collectData()
     inquireAjax(method, url, datas)
   })
@@ -234,7 +260,7 @@ var previoupage = function() {
 previoupage()
 
 var __main = function() {
-//  initData()
+  initData()
   numberSearch()
   envs('#save-data')
 }

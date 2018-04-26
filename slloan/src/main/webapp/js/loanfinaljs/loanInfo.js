@@ -13,10 +13,7 @@ var collectData = function() {
   data.repaymenBtank = e('.repayment-bank').value
   data.repaymentAccount = e('.repayment-account').value
   data.accountNumber = e('.account-number').value
-  data.id = 3
-  data.contacts = 'a'
-	  data.state = '1'
-	  data.ctime= '2'
+  data.id = 2
   return data
 }
 
@@ -28,7 +25,12 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: callback
+    success: function() {
+    	callback()
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -40,8 +42,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/modifyusers'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -98,17 +100,22 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+	    error: function(){
+	        alert('服务器错误')
+	     }		
 	})
 }
 
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/loanlinkfab'
+	var url = '/slloan/loan/loanlinkfa'
 	var data = {}
-	data.id = 3
+	data.id = localStorage.finalID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

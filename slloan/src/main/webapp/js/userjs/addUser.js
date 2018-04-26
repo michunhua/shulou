@@ -11,7 +11,12 @@ var sendAjax = function(method, url, datas) {
           document.querySelector('form').reset()
           alert('保存成功')
           window.location.href = '../user/ulist'
+        } else {
+        	alert('服务器出错!')
         }
+      },
+      error: function(){
+          alert('服务器出错!!!')
       }
     })
 }
@@ -42,6 +47,9 @@ var obtainRoleAjax = function(method, url, datas) {
           envs.appendChild(options)
         }
         renderForm()
+      },
+      error: function(){
+          alert('服务器出错')
       }
     })
 }
@@ -67,6 +75,9 @@ var obtainCityAjax = function(method, url, datas) {
           envs.appendChild(options)
         }
         renderForm()
+      },
+      error: function(){
+          alert('服务器错误')
       }
     })
 }
@@ -128,10 +139,14 @@ var sendData = function() {
   var ev = document.querySelector('#save-data')
   ev.addEventListener('click', function() {
     var datas = colect()
-    console.log(datas)
-    var url = '/slloan/user/adduser'
-    var method = 'POST'
-    sendAjax(method, url, datas)
+    if(datas.userName.length > 0 && datas.password.length) {
+    	console.log(datas)
+        var url = '/slloan/user/adduser'
+        var method = 'POST'
+        sendAjax(method, url, datas)
+    } else {
+    	alert('请正确填写')
+    }
   })
 }
 

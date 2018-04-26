@@ -104,6 +104,9 @@ var sendAjax = function(method, url, datas) {
 					Felement.insertAdjacentElement('beforeend', tr)
 				}
 			}
+      },
+      error: function(){
+          alert('服务器错误')
       }
     })
 }
@@ -152,6 +155,9 @@ var singlesendAjax = function(method, url, datas, callback) {
     		alert('删除成功')
     		callback()
     	}
+    },
+    error: function(){
+        alert('服务器错误')
     }
   })
 }
@@ -229,13 +235,21 @@ var checkboxEvs = function() {
       console.log(event.target)
       var flag = event.target.checked
       console.log(flag)
-      if(flag) {
+      var content = event.target.parentNode.nextSibling.innerText
+      console.log('内容', content)
+      if(flag) { 
         console.log('will go')
         var text = event.target.parentNode.nextSibling.innerText
         console.log('text', text)
         if(!result.includes(text)) {
           result.push(text)
         }
+      } else if(result.includes(content)) {
+    	  for(var i = 0; i < result.length; i++) {
+    		  if(result[i] == content) {
+    			  result.splice(i, 1)
+    		  }
+    	  }
       }
       console.log(result)
       return result

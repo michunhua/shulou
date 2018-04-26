@@ -244,8 +244,13 @@ addUser()
 			if(data.msg == 'success') {
 	    		alert('删除成功')
 	    		getPageData()
+	    	} else {
+	    		alert('服务器发生了一个错误')
 	    	}
-		}
+		},
+		error: function(){
+            alert('服务器错误')
+        }
 	})
 }
 // 查看按钮发送数据
@@ -266,7 +271,10 @@ addUser()
 				  			'所属城市: '  + data.belongs_City + '<br>' +
 				  			'备注: ' + data.note,
 				});
-		}
+		},
+		error: function(){
+	          alert('服务器错误')
+	      }
 	})
 }
 // 编辑 删除 查看

@@ -27,6 +27,9 @@ public interface CircuLationRecordSubmitService {
 	public boolean fallbackinsert(CircuLationRecord circuLationRecord);
 	
 	
+	public boolean updatefallbackinsert(CircuLationRecord circuLationRecord);
+	
+	
 	/**
 	 * 贷款初审备注
 	 * @param noteexplain
@@ -48,6 +51,6 @@ public interface CircuLationRecordSubmitService {
 	boolean firstname(Firstfilla firstfilla);
 
 
-	
+	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
 	
 }

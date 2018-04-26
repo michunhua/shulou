@@ -144,7 +144,10 @@ var sendAjax = function(method, url, datas) {
         	  alert('修改成功')
         	  data.id = null
               window.location.href = '../role/rolelist'
-          }
+          },
+      error: function(){
+          alert('服务器错误')
+       }
     })
 }
 
@@ -199,6 +202,9 @@ var obtainAjax = function(method, url, datas) {
           evs.appendChild(options)
         }
         renderForm()
+      },
+      error: function(){
+          alert('服务器错误')
       }
     })
 }
@@ -224,6 +230,7 @@ var updatesendAjax = function(method, url, datas, callback) {
     success: function(data) {
     	if(data.msg == 'success') {
     		console.log('获取数据成功')
+    		powerShow.length = 0
     		var name = e('.role-name')
     		var description = e('.role-description')
     		var city = e('.role-city')
@@ -238,6 +245,14 @@ var updatesendAjax = function(method, url, datas, callback) {
     		var flag = Object.keys(yii)
     		var content = document.querySelector(".role-power")
     		var selected = document.querySelectorAll('.layui-form-checkbox')
+    		//有选中的情况下就删除
+    		for(var k = 0; k < selected.length; k++) {
+    			if(selected[k].classList.contains('layui-form-checked')) {
+    				selected[k].classList.remove('layui-form-checked')
+    			}
+    		}
+    			
+    			
     		for(var m = 0; m < selected.length; m++) {
     			if(yii[flag[m]] > 0) {
     				selected[yii[flag[m]] - 1].classList.add('layui-form-checked')
@@ -249,6 +264,8 @@ var updatesendAjax = function(method, url, datas, callback) {
     		}
     		
     		addPower(powerShow)
+    		
+    		console.log(powerShow)
     	}
     }
   })

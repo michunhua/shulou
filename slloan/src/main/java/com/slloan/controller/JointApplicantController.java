@@ -448,6 +448,7 @@ public class JointApplicantController {
 	public String rolemanagements(HttpServletRequest req) {
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
+		
 		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
@@ -456,6 +457,8 @@ public class JointApplicantController {
 		// JSON.toJSONString(user)
 		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
 	}
+	
+	
 	
 	/**
 	 * 贷款初审列表
@@ -468,6 +471,7 @@ public class JointApplicantController {
 		System.out.println("-----------初审列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
+		String id = req.getParameter("id");
 		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
@@ -545,7 +549,7 @@ public class JointApplicantController {
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos));
+		return JSON.toJSONString(personalprofileservice.getjsloanPage(statePos));
 	}
 	
 	/**

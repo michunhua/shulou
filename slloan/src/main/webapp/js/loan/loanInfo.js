@@ -34,11 +34,11 @@ var collectData = function() {
   data.reapyAccountbank = e('.reapy-accountbank').value
   data.state = 'a'
   data.ctime = 'b'
-	  data.role = localStorage.purrole
-	  data.username = localStorage.purusername
-	  data.city = localStorage.purcity
-	  data.id = localStorage.purid
-		  return data
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid
+  return data
 }
 	
 // 发送数据方法
@@ -56,8 +56,13 @@ var sendAjax = function(method, url, datas, callback) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loanesta'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -133,8 +138,13 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+	      error: function(){
+	          alert('服务器错误')
+	       }		
 	})
 }
 
@@ -142,8 +152,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanlinkfab'
 	var data = {}
-//	data.id = localStorage.createID
-   data.id= 3
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)	
 	}

@@ -78,36 +78,10 @@
 				#{rolename,jdbcType=VARCHAR},
 			</if>
 		</trim> -->
-<!-- 		INSERT INTO recordsubmit_table 
-(
-		
-		fallbackname ,
-		submit ,
-		state,
-		spare1 ,
-		createDate ,
-		username,
-		parentnodeId,
-		city,
-		rolename
-		)
-		VALUES
-		(
-		
-		#{fallbackname},
-		#{submit},
-		#{state},
-		#{spare1},
-		#{createDate},
-		#{username},
-		#{parentnodeId},
-		#{city},
-		#{rolename}) -->
-		
-<!-- 	</insert> -->
+
 	
 	<insert id="fallbackinsert" parameterType="com.slloan.entity.CircuLationRecord">  
- 	INSERT INTO recordsubmit_table 
+ 	insert into recordsubmit_table 
 (
 		
 		fallbackname ,
@@ -131,6 +105,20 @@
 		#{ParentnodeId},
 		#{city},
 		#{rolename})
-    </insert>  
-
+    </insert>
+<update id="updatefallbackinsert" parameterType="com.slloan.entity.CircuLationRecord">    
+			update recordsubmit_table 
+				<set>
+					<if test="fallbackname !=null and fallbackname !=''">fallbackname = #{fallbackname},</if>
+<!-- 					<if test="submit !=null and submit !=''">submit = #{submit},</if> -->
+					<if test="state !=null and state !=''">state = #{state},</if>
+<!-- 					<if test="spare1  !=null and spare1 !=''">spare1 = #{spare1},</if> -->
+<!-- 					<if test="createDate  !=null and createDate !=''">createDate = #{createDate},</if> -->
+<!-- 					<if test="username  !=null and username !=''">username = #{username},</if> -->
+<!-- 					<if test="parentnodeId !=null and parentnodeId !=''">parentnodeId = #{parentnodeId},</if> -->
+<!-- 					<if test="city !=null and city !=''">city = #{city},</if> -->
+<!-- 					<if test="rolename !=null and rolename !=''">rolename = #{rolename},</if> -->
+				</set>
+					 WHERE id = #{id}
+    </update>
 </mapper>

@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class SpousesOfBorrowers implements Serializable{
 	
 	private Integer id;
-	private String name;						//借款人配偶姓名
+	private String name;						//共同借款人配偶姓名
 	private String id_Type;          			//身份证件类型
 	private String id_Other;                     //其他
 	private String id_Number;					//身份证件号码
@@ -18,7 +18,7 @@ public class SpousesOfBorrowers implements Serializable{
 	private String unit_Phone;					//单位电话
 	private String home_Phone;					//住宅电话
 	private String mobile_Phone;				//手机
-	private String monthly_Income;				//月收入
+	private double monthly_Income;				//月收入
 	private String state;
 	private String ctime;
 	
@@ -29,7 +29,7 @@ public class SpousesOfBorrowers implements Serializable{
 
 
 	public SpousesOfBorrowers(String name, String id_Type, String id_Other, String id_Number, String uni_Name,
-			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String state,
+			String unit_Phone, String home_Phone, String mobile_Phone, double monthly_Income, String state,
 			String ctime) {
 		super();
 		this.name = name;
@@ -48,7 +48,7 @@ public class SpousesOfBorrowers implements Serializable{
 
 
 	public SpousesOfBorrowers(Integer id, String name, String id_Type, String id_Other, String id_Number,
-			String uni_Name, String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income,
+			String uni_Name, String unit_Phone, String home_Phone, String mobile_Phone, double monthly_Income,
 			String state, String ctime) {
 		super();
 		this.id = id;
@@ -175,13 +175,13 @@ public class SpousesOfBorrowers implements Serializable{
 
 
 
-	public String getMonthly_Income() {
+	public double getMonthly_Income() {
 		return monthly_Income;
 	}
 
 
 
-	public void setMonthly_Income(String monthly_Income) {
+	public void setMonthly_Income(double monthly_Income) {
 		this.monthly_Income = monthly_Income;
 	}
 

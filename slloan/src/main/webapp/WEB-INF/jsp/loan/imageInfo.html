@@ -8,6 +8,8 @@
      <link rel="stylesheet" href="../public/layui/css/layui.css">
     <link rel="stylesheet" href="../public/css/navigate.css">
     <link rel="stylesheet" href="../public/css/main.css">
+    <script type="text/javascript" src="//consumer-res.huawei.com/etc/designs/huawei-cbg-site/statics/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../public/js/jquery.form.js"></script>
     <title>贷款管理/ 贷款创建/ 影像资料</title>
 </head>
 <body class="layui-layout-body">
@@ -209,9 +211,63 @@
                 </div>
               </div>
               <div class="layui-tab-item">
-              	<img src="" alt="第一张身份证明 ">
-              	<img src="" alt="第一张身份证明 ">
-              	<input type="file">
+              	        	<script type="text/javascript">
+    			function updateUserInfo() {
+    	      var form = new FormData(document.getElementById("frm-reg"));  
+    	      $.ajax({  
+    	      url:"../financevoucher/voucherupload",  
+    	      type:"post",  
+    	      data:form,  
+    	      cache: false,  
+    	      processData: false,  
+    	      contentType: false,  
+    	      success:function(data){  
+    	    	  var len = data.length;
+    	    	  console.log(len)
+    	    	  if(len == undefined){
+    	    		  alert("操作成功！"+data.value); 
+    	    		  var file = data.obj[0].filepath
+      	        	console.log( data.obj[0])
+      	        	var udata = data.obj[0]
+      	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+      	        	  $("#imagedata").append(dd)
+    	    	  }else{
+    	    		  alert(data)
+    	    	  }
+    	      },complete:function(msg){ 
+    	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+    	          
+    	      } ,  
+    	      error:function(e){  
+    	          alert("网络错误，请重试！！");  
+    	       }  
+    	      });          
+    	    }
+    	function uuuu(udata){
+    	alert(udata)
+    	}
+    	</script>
+	</head>
+	<body>
+		<form  id="frm-reg"  enctype="multipart/form-data">
+			上传类型 <input type="text" id="upload_type" value="回款确认" id="upload_type" name="upload_type" />
+			用户名：<input type="text" value="aa" id="note" name="note"/><br/>  备注 
+			city：<input type="text" value="aa" id="city" name="city"/><br/>  备注 
+			id：<input type="text" id="id"  value="1" name="id"/><br/>  
+			<input type="file"  name="file" onchange="document.getElementById('filepath2').value=this.value;"/>
+			<input type="hidden" name="filepath" id="filepath2" onchange="alert(this.value)" value=""/>
+			<input type="button" onclick="updateUserInfo()"  value="提交" />
+		</form> 
+		
+		<form action="../updateftpimage/imagedatadel" method="POST"> 
+			file：<input type="text" id="id"  name="id"/><br/>
+			city：<input type="text" id="file" name="file"/><br/> 
+	<!-- 			上传类型 <input type="text" id="uploadtype"  name="uploadtype" /><br/> -->
+			
+			<input type="submit"  value="查询" />
+		</form>
+		<div id="imagedata" class="nav-container">
+     	</div></br>
               </div>
               <div class="layui-tab-item">
               	<img src="" alt="第一张房产证明">

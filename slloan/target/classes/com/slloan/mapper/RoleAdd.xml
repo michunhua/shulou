@@ -43,13 +43,14 @@
     <!-- 修改查询 -->
     <select id="updateselectId" parameterType="Integer"
 		resultType="com.slloan.entity.AddRole">
-		select id,rolename,descriPtion,belongs_city,note,createDate from add_role  where id=#{id}
+		select id,rolename,descriPtion,belongs_city,note,createDate,configuration from add_role  where id=#{id}
+<!-- 		SELECT * FROM add_role r LEFT JOIN permission p on(r.id = p.r_id) where  r.id=#{id} -->
 	</select>
 	
 	<!-- 修改 -->
 	<update id="updateRole" parameterType="com.slloan.entity.AddRole">
 		update add_role set roleName = #{roleName},
-		descriPtion=#{descriPtion},belongs_city=#{belongs_City}
+		descriPtion=#{descriPtion},belongs_city=#{belongs_City},
 		note=#{note},configuration=#{configuration},updatedate = #{updatedate} WHERE id = #{id}
 	</update>
 	

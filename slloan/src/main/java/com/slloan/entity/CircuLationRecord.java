@@ -24,6 +24,16 @@ public class CircuLationRecord implements Serializable{
 
 
 
+	public CircuLationRecord(String fallbackname, int state, int id) {
+		super();
+		this.fallbackname = fallbackname;
+		this.state = state;
+		this.id = id;
+	}
+
+
+
+
 	public CircuLationRecord(String fallbackname, int state, String createDate,
 			String username, String parentnodeId, String city, String rolename) {
 		super();
@@ -34,6 +44,18 @@ public class CircuLationRecord implements Serializable{
 		ParentnodeId = parentnodeId;
 		this.city = city;
 		this.rolename = rolename;
+	}
+	public CircuLationRecord(String fallbackname, int state, String createDate,
+			String username, String parentnodeId, String city, String rolename,int id) {
+		super();
+		this.fallbackname = fallbackname;
+		this.state = state;
+		this.createDate = createDate;
+		this.username = username;
+		ParentnodeId = parentnodeId;
+		this.city = city;
+		this.rolename = rolename;
+		this.id = id;
 	}
 
 

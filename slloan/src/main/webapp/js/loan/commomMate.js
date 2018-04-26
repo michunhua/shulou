@@ -30,7 +30,7 @@ var collectData = function() {
 	data.housePhone = e('.house-phone').value
 	data.salary = e('.salary').value
 	data.state = 'a'
-	data.ctime = 'b'
+	data.catime = 'b'
 	data.other = e('.document-number').value
 	return data
 }
@@ -52,8 +52,13 @@ var sendAjax = function(method, url, datas, callback) {
 				}, function() {
 					window.location.href = '../../slloan/loan/loanapply'
 				});
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+	    error: function(){
+	       alert('服务器错误')
+	    }
 	})
 }
 
@@ -112,25 +117,31 @@ var initback = {
 //发送数据方法
 var searchAjax = function(method, url, datas) {
 log('send data method')
-$.ajax({
-type: method,
-url: url,
-data: {data:JSON.stringify(datas)},
-success: function(data) {
-	console.log('返回数据', data)
-	if(data.msg == 'success') {
-		searchExport(data.obj)
-	}
-}
-})
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log('返回数据', data)
+			if (data.msg == 'success') {
+				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
+			}
+		},
+	    error: function(){
+	        alert('服务器错误')
+	     }
+	})
 }
 
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/coborrowers'
 	var data = {}
-//	data.id = localStorage.createID
-	data.id = 1
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

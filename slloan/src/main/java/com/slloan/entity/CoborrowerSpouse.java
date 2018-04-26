@@ -18,7 +18,7 @@ public class CoborrowerSpouse implements Serializable{
 	private String unit_Phone;					//单位电话
 	private String home_Phone;					//住宅电话
 	private String mobile_Phone;				//手机
-	private String monthly_Income;				//月收入
+	private double monthly_Income;				//月收入
 	private String state;
 	private String ctime;
 	
@@ -35,7 +35,7 @@ public class CoborrowerSpouse implements Serializable{
 
 
 	public CoborrowerSpouse(String name, String id_Type, String id_Other, String id_Number, String uni_Name,
-			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income) {
+			String unit_Phone, String home_Phone, String mobile_Phone, double monthly_Income) {
 		super();
 		this.name = name;
 		this.id_Type = id_Type;
@@ -49,7 +49,7 @@ public class CoborrowerSpouse implements Serializable{
 	}
 
 	public CoborrowerSpouse(String name, String id_Type, String id_Other, String id_Number, String uni_Name,
-			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String state,
+			String unit_Phone, String home_Phone, String mobile_Phone, double monthly_Income, String state,
 			String ctime) {
 		super();
 		this.name = name;
@@ -68,7 +68,7 @@ public class CoborrowerSpouse implements Serializable{
 	public CoborrowerSpouse(){}
 	
 	public CoborrowerSpouse(String name, String id_Type, String id_Number, String uni_Name, String unit_Phone,
-			String home_Phone, String mobile_Phone, String monthly_Income) {
+			String home_Phone, String mobile_Phone, double monthly_Income) {
 		super();
 		this.name = name;
 		this.id_Type = id_Type;
@@ -81,7 +81,7 @@ public class CoborrowerSpouse implements Serializable{
 	}
 
 	public CoborrowerSpouse(String name, String id_Type, String id_Number, String uni_Name, String unit_Phone,
-			String home_Phone, String mobile_Phone, String monthly_Income, String state, String ctime) {
+			String home_Phone, String mobile_Phone, double monthly_Income, String state, String ctime) {
 		super();
 		this.name = name;
 		this.id_Type = id_Type;
@@ -98,7 +98,7 @@ public class CoborrowerSpouse implements Serializable{
 	
 	
 	public CoborrowerSpouse(Integer id, String name, String id_Type, String id_Other, String id_Number, String uni_Name,
-			String unit_Phone, String home_Phone, String mobile_Phone, String monthly_Income, String state,
+			String unit_Phone, String home_Phone, String mobile_Phone, double monthly_Income, String state,
 			String ctime) {
 		super();
 		this.id = id;
@@ -163,10 +163,10 @@ public class CoborrowerSpouse implements Serializable{
 	public void setMobile_Phone(String mobile_Phone) {
 		this.mobile_Phone = mobile_Phone;
 	}
-	public String getMonthly_Income() {
+	public double getMonthly_Income() {
 		return monthly_Income;
 	}
-	public void setMonthly_Income(String monthly_Income) {
+	public void setMonthly_Income(double monthly_Income) {
 		this.monthly_Income = monthly_Income;
 	}
 	

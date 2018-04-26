@@ -22,4 +22,11 @@ public interface AddPermissionService{
 //	boolean addpermission(PermissionEntity permision);
 	public List<PermissionEntity> getRolePermissiondata(Map<String,String>param);//得到角色权限数据
 	public List<PermissionEntity> find(PermissionEntity map);
+	public boolean updatePermissionadd(PermissionEntity updateadd);//修改保存
+	  /**
+     * 批量删除权限表权限
+     * @param delList
+     * @return
+     */
+    boolean batchDelList(List batchdelpermission);//批量删除
 }

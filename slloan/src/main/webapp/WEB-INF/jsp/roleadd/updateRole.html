@@ -174,84 +174,96 @@
           </span>
           <hr>
           <!-- 表单部分 -->
-          <form class="layui-form layui-form-pane" action="">
+          <form class="layui-form layui-form-pane">
             <div class="layui-form-item">
               <label class="layui-form-label">角色名</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required">
-                  <option value=""></option>
-                  <option value="0">北京</option>
-                  <option value="1">上海</option>
-                  <option value="2">广州</option>
-                  <option value="3">深圳</option>
-                  <option value="4">杭州</option>
-                </select>
+                <input type="text" name="title" required  lay-verify="required" placeholder="财务" autocomplete="off" class="layui-input role-name">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">角色描述</label>
+              <div class="layui-input-inline role">
+                <input type="text" name="title" required  lay-verify="required" placeholder="角色描述" autocomplete="off" class="layui-input role-description">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">所属城市</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="角色描述" autocomplete="off" class="layui-input" readonly>
+                <select name="city" required lay-verify="required" class="role-city">
+                <option value=""></option>
+                </select>
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">备注说明</label>
               <div class="layui-input-inline">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" rows="8" cols="80"></textarea>
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea role-note" rows="12" cols="80"></textarea>
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">复选框</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
+              <label class="layui-form-label">权限配置</label>
+              <div class="layui-input-inline">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea role-power" rows="12" cols="80"></textarea>
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">复选框</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
+              <label class="layui-form-label">贷款管理</label>
+              <div class="layui-input-block role-loan">
+                <input type="checkbox" name="1" title="回款确认">
+                <input type="checkbox" name="2" title="贷款终审">
+                <input type="checkbox" name="3" title="贷款创建">
+                <input type="checkbox" name="4" title="贷款初审">
+                <input type="checkbox" name="5" title="贷款信息查看">
+                <input type="checkbox" name="6" title="取证凭证上传">
+                <input type="checkbox" name="7" title="进押凭证上传">
+                <input type="checkbox" name="8" title="解押凭证上传">
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">复选框</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
+              <label class="layui-form-label">财务管理</label>
+              <div class="layui-input-block role-finance">
+                <input type="checkbox" name="8" title="财务审批">
+                <input type="checkbox" name="9" title="放款审批">
+                <input type="checkbox" name="10" title="结算凭证上传">
+                <input type="checkbox" name="11" title="转账凭证上传">
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">复选框</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
+              <label class="layui-form-label">个人信息</label>
+              <div class="layui-input-block role-info">
+                <input type="checkbox" name="12" title="个人信息修改">
+                <input type="checkbox" name="13" title="密码修改">
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">复选框</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
+              <label class="layui-form-label">角色设定</label>
+              <div class="layui-input-block role-set">
+                <input type="checkbox" name="14" title="添加角色">
+                <input type="checkbox" name="15" title="修改角色信息">
+                <input type="checkbox" name="16" title="删除角色">
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">复选框</label>
-              <div class="layui-input-block">
-                <input type="checkbox" name="like[write]" title="写作">
-                <input type="checkbox" name="like[read]" title="阅读" checked>
-                <input type="checkbox" name="like[dai]" title="发呆">
+              <label class="layui-form-label">权限设置</label>
+              <div class="layui-input-block role-handle">
+                <input type="checkbox" name="17" title="分配权限">
+                <input type="checkbox" name="18" title="删除权限">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">用户管理</label>
+              <div class="layui-input-block role-manage">
+                <input type="checkbox" name="19" title="添加用户">
+                <input type="checkbox" name="20" title="分配角色">
+                <input type="checkbox" name="21" title="删除用户">
+                <input type="checkbox" name="22" title="修改用户信息">
               </div>
             </div>
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button id = 'send-data' type="reset" class="layui-btn">立即提交</button>
+                <button id = 'cancel' type="reset" class="layui-btn layui-btn-primary">取消</button>
               </div>
             </div>
           </form>
@@ -263,8 +275,10 @@
         © 版权所有
     </div>
 </div>
-
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/rolejs/updateRole.js"></script>
 </body>
 </html>

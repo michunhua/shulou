@@ -15,10 +15,6 @@ var collectData = function() {
   data.repaymenBtank = e('.repayment-bank').value
   data.repaymentAccount = e('.repayment-account').value
   data.accountNumber = e('.account-number').value
-  data.contacts = 'a'
-	  data.state = '1'
-	  data.ctime= '2'
-  data.id = 3
   return data
 }
 
@@ -37,8 +33,13 @@ var sendAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loanestas'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -50,8 +51,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/modifyuser'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data)
   })
@@ -114,8 +115,13 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
 			}
-		}
+		},
+		error: function(){
+	        alert('服务器错误')
+	     }		
 	})
 }
 
@@ -124,7 +130,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanlinkfab'
 	var data = {}
-	data.id = 3
+	data.id = localStorage.firstID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

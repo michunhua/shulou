@@ -81,8 +81,13 @@ var sendAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loanerma'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }
   })
 }
 
@@ -211,8 +216,13 @@ $.ajax({
   	console.log('返回数据', data)
   	if(data.msg == 'success') {
   		searchExport(data.obj)
+  	} else {
+  		alert('服务器错误')
   	}
-  }
+  },
+  error: function(){
+      alert('服务器错误')
+   }
 })
 }
 
@@ -220,8 +230,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/jointappli'
 	var data = {}
-//	data.id = localStorage.createID
-	data.id = 3
+	data.id = localStorage.createID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

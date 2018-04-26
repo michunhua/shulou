@@ -29,7 +29,7 @@ public class SpousesOfBorrowersServiceImpl implements SpousesOfBorrowersService 
 		 String unit_Phone=spousesOfBorrowers.getUnit_Phone();  		//收款银行名称
 		 String home_Phone=spousesOfBorrowers.getHome_Phone();	    //收款账户名
 		 String mobile_Phone=spousesOfBorrowers.getMobile_Phone();    		//收款账号
-		 String monthly_Income=spousesOfBorrowers.getMonthly_Income();  		//还款银行名称
+		 double monthly_Income=spousesOfBorrowers.getMonthly_Income();  		//还款银行名称
 		 String state = spousesOfBorrowers.getState();
 		 String ctime = spousesOfBorrowers.getCtime();
 

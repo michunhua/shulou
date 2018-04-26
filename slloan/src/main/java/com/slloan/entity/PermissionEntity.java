@@ -15,10 +15,17 @@ public class PermissionEntity implements Serializable{
 	private String url;
 	public PermissionEntity(){}
 	
+
+
 	public PermissionEntity(String checkboxID, String r_id,String url) {
 		this.checkboxID = checkboxID;
 		this.r_id = r_id;
 		this.url = url;
+	}
+	
+	public PermissionEntity(String checkboxID, String r_id) {
+		this.checkboxID = checkboxID;
+		this.r_id = r_id;
 	}
 	public PermissionEntity(Integer id, String checkboxID, String r_id,String url) {
 		this.id = id;

@@ -7,7 +7,7 @@
 <!-- 		<result column="name" property="name" /> -->
 <!-- 		<result column="permissionname" property="permissionname" /> -->
 		<result column="url" property="url" />
-		<result column="checkboxid" property="checkboxid" />
+		<result column="checkboxid" property="checkboxID" />
 	</resultMap>
 	<!-- 插入权限 -->
 	<insert id="addPermission" parameterType="com.slloan.entity.PermissionEntity"  useGeneratedKeys="true" keyProperty="id">
@@ -21,10 +21,39 @@
 		</trim>
 	</sql> -->
 	<!-- 修改权限 -->
-	<update id="updateRole" parameterType="Integer">
-		update from permission where
+	<update id="updatePermissionadd" parameterType="com.slloan.entity.PermissionEntity">
+		update  permission set  checkboxid= #{checkboxID} where r_id =#{id}
 	</update>
 	
+	<update id="updateUser" parameterType="com.slloan.entity.UserLogin">
+		update User_Login 
+		set
+		username = #{userName},
+		password = #{passWord},
+		employeeis_name=#{employeeis_Name},
+		distribution_role=#{distribution_Role}
+		,belongs_city=#{belongs_City},
+		note=#{note},
+		updateDate = #{updateDate} 
+<!-- 			<set> -->
+<!-- 				<if test="username !=null and username !=''">userName = #{userName},</if> -->
+<!-- 					<if test="password !=null and password !=''">passWord= #{passWord},</if> -->
+<!-- 					<if test=" employeeis_name !=null and  employeeis_name !=''"> employeeis_Name=#{employeeis_Name},</if> -->
+<!-- 					<if test="distribution_role  !=null and distribution_role !=''">distribution_Role=#{distribution_Role},</if> -->
+<!-- 					<if test="belongs_city  !=null and belongs_city !=''">belongs_city=#{belongs_city},</if> -->
+<!-- 					<if test="note !=null and note !=''">note=#{note},</if> -->
+<!-- 					<if test="create_Date !=null and create_Date !=''">create_Date=#{create_Date},</if> -->
+<!-- 			</set> -->
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 批量删除权限 -->
+	<delete id="batchDelList" parameterType="java.util.List">
+		  DELETE FROM permission where r_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
+            #{item}   
+         </foreach>
+	</delete>
 	<!-- 批量删除 -->
 	 <delete id="batchDeletes" parameterType="java.util.List">
             DELETE FROM permission where id in

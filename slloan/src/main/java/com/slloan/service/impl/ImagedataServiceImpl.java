@@ -34,7 +34,10 @@ public class ImagedataServiceImpl implements ImagedataService {
 			String Subnode = imagedata.getSubnode();
 			String createdate = imagedata.getCreateData();
 			String city = imagedata.getCity();
-		ImageDataUpdate imdata = new ImageDataUpdate(filepate,note,uploads,originalfilename,upload_type,city,Subnode,createdate);
+			String Parentnode = imagedata.getParentnode();//用户名ID
+			String spare = imagedata.getSpare();
+			String sparetwo = imagedata.getSparetwo();
+		ImageDataUpdate imdata = new ImageDataUpdate(filepate,note,uploads,originalfilename,upload_type,city,Subnode,createdate,Parentnode,spare,sparetwo);
 		return imagedatadao.imageDataAdd(imdata);
 	}
 
@@ -66,8 +69,10 @@ public class ImagedataServiceImpl implements ImagedataService {
 	@Override
 	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param) {
 		Map<String,Object> mapparam = new HashMap<String,Object>();
-		mapparam.put("filepath", param.getOriginalfilename());
-		mapparam.put("parentnode", param.getNote());
+		mapparam.put("city", param.getCity());
+		mapparam.put("parentnode", param.getParentnode());
+		mapparam.put("spare1", param.getSpare());
+		mapparam.put("sparetwo2",param.getSparetwo());
 		mapparam.put("uploadtype",param.getUploadtype());
 		return imagedatadao.financevoucherSelectToupload(mapparam);
 	}

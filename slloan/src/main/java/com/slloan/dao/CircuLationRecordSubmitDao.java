@@ -32,7 +32,9 @@ public interface CircuLationRecordSubmitDao {
 	public boolean firstTrial(NoteExplain note);
 	
 
-	
+	public boolean updatefallbackinsert(CircuLationRecord circuLationRecord);
 
+	
+	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
 	
 }

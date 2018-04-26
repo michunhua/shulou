@@ -71,4 +71,20 @@ public class AddPermissionImplService  implements AddPermissionService{
 	}
 
 
+	@Override
+	public boolean updatePermissionadd(PermissionEntity updateadd) {
+		//PermissionEntity [id=null, checkboxID=1, r_id=301, url=null]
+		String checkboxID= updateadd.getCheckboxID();
+		String r_id = updateadd.getR_id();
+		PermissionEntity per = new PermissionEntity(checkboxID,r_id);
+		return addpermissiondao.updatePermissionadd(per);
+	}
+
+
+	@Override
+	public boolean batchDelList(List batchdelpermission) {
+		return addpermissiondao.batchDelList(batchdelpermission);
+	}
+
+
 }

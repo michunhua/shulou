@@ -13,8 +13,6 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.state = 'a'
-	  data.ctime = 'b'
 
   return data
 }
@@ -34,8 +32,13 @@ var sendAjax = function(method, url, datas) {
   			}, function(){
   				window.location.href = '../../slloan/loan/loancomms'
   			});
+    	} else {
+    		alert('服务器错误')
     	}
-    }
+    },
+    error: function(){
+        alert('服务器错误')
+     }    
   })
 }
 
@@ -49,7 +52,7 @@ var sendData = function(element) {
     var data = collectData()
     var method = 'POST'
     var url = '/slloan/loan/spoupdate'
-    	data.id = 8
+    	data.id = 2
     log(data)
     sendAjax(method, url, data)
   })
@@ -104,8 +107,13 @@ success: function(data) {
 	console.log('返回数据', data)
 	if(data.msg == 'success') {
 		searchExport(data.obj)
+	} else {
+		alert('服务器错误')
 	}
-}
+},
+error: function(){
+    alert('服务器错误')
+ }
 })
 }
 
@@ -114,7 +122,7 @@ var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/spouses'
 	var data = {}
-	data.id = 8
+	data.id = localStorage.firstID
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

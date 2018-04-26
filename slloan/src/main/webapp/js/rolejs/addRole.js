@@ -113,7 +113,10 @@ var sendAjax = function(method, url, datas) {
           if(data.msg === 'success')
         	  alert('添加成功')
               window.location.href = '../role/rolelist'
-          }
+          },
+      error: function(){
+        alert('服务器错误')
+       }         
     })
 }
 
@@ -122,10 +125,14 @@ var sendForm = function() {
   var btn = document.querySelector('#send-data')
   btn.addEventListener('click', function() {
     var getData = collectData()
-    var data = getData
-    var url = '/slloan/role/addpowerlimit'
-    var method = 'POST'
-    sendAjax(method, url, data)
+    if(getData.name.length > 0) {
+        var data = getData
+        var url = '/slloan/role/addpowerlimit'
+        var method = 'POST'
+        sendAjax(method, url, data)
+    } else {
+    	alert('请正确填写')
+    }
   })
 }
 
@@ -159,6 +166,7 @@ var obtainAjax = function(method, url, datas) {
         var evs = document.querySelector('.role-city')
         var datas = data
         var len = datas.length
+        evs.appendChild(initOptions)
         for(var i = 0; i < len; i++) {
           var options = document.createElement('option')
           options.value = datas[i].name
@@ -166,6 +174,9 @@ var obtainAjax = function(method, url, datas) {
           evs.appendChild(options)
         }
         renderForm()
+      },
+      error: function(){
+          alert('服务器错误')
       }
     })
 }

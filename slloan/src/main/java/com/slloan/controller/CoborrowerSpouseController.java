@@ -56,9 +56,13 @@ public class CoborrowerSpouseController {
 		String unit_Phone =obj.getString("unitName");// 单位电话
 		String home_Phone =obj.getString("unitPhone"); // 住宅电话
 		String mobile_Phone = obj.getString("housePhone"); // 移动电话
-		String monthly_Income =obj.getString("salary");// 月薪（人民币）
+		String salary =obj.getString("salary");// 月薪（人民币）
 		String state = obj.getString("state");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		Double monthly_Income = 0.0;
+		if (salary.length() > 0) {
+			monthly_Income = Double.parseDouble(salary);
+		}
 
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type,id_Other,id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime);
@@ -114,9 +118,13 @@ public class CoborrowerSpouseController {
 		String unit_Phone =json.getString("untilPhone"); // 单位电话
 		String home_Phone =json.getString("residence"); // 住宅电话
 		String mobile_Phone = json.getString("mobile"); // 移动电话
-		String monthly_Income =json.getString("salary"); // 月薪（人民币）
+		String salary =json.getString("salary"); // 月薪（人民币）
 		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime=json.getString("ctime");
+		Double monthly_Income = 0.0;
+		if (salary.length() > 0) {
+			monthly_Income = Double.parseDouble(salary);
+		}
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(id,name, id_Type,id_Other, id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
 		boolean isResult =coborrowerSpouseService.update(coborrow);
@@ -143,9 +151,13 @@ public class CoborrowerSpouseController {
 		String unit_Phone =json.getString("untilPhone"); // 单位电话
 		String home_Phone =json.getString("residence"); // 住宅电话
 		String mobile_Phone = json.getString("mobile"); // 移动电话
-		String monthly_Income =json.getString("salary"); // 月薪（人民币）
+		String salary =json.getString("salary"); // 月薪（人民币）
 		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime=json.getString("ctime");
+		Double monthly_Income = 0.0;
+		if (salary.length() > 0) {
+			monthly_Income = Double.parseDouble(salary);
+		}
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(id,name, id_Type,id_Other, id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
 		boolean isResult =coborrowerSpouseService.update(coborrow);

@@ -27,6 +27,7 @@ import com.slloan.entity.Page;
 import com.slloan.entity.PermissionEntity;
 import com.slloan.entity.UserLogin;
 import com.slloan.entity.UtilCity;
+import com.slloan.entity.permission;
 import com.slloan.service.inter.AddPermissionService;
 import com.slloan.service.inter.DistrictService;
 import com.slloan.service.inter.RoleAddService;
@@ -100,7 +101,7 @@ public class RoleAddController {
 	}
 	/**
 	 * 添加角色
-	 * @param addRole 参数
+	 * @param addRole 参数	
 	 * @return json
 	 *//*
 	@RequestMapping(value="/addrole")
@@ -121,7 +122,7 @@ public class RoleAddController {
 	 */
 	@RequestMapping(value="/batchdelrole",method=RequestMethod.POST)
 	@ResponseBody
-	public String delRole(HttpServletRequest request,HttpServletResponse response){
+	public Json delRole(HttpServletRequest request,HttpServletResponse response){
 		String items = request.getParameter("data");
 		JSONObject obj = new JSONObject().fromObject(items);
 		String id = obj.getString("id");
@@ -134,10 +135,10 @@ public class RoleAddController {
 		}
 	boolean isResult = roleAddService.batchDeletes(delList);
 			if(isResult == true){
-				 return JSON.toJSONString("success");
+				 return new Json(true,"success",isResult,"");//JSON.toJSONString("success");
 			}else{
 				logger.error("删除失败:"+isResult);
-				 return JSON.toJSONString("fail");
+				 return new Json(false,"fail",isResult,"");//JSON.toJSONString("fail");
 			}
 	}
 	/**
@@ -171,28 +172,46 @@ public class RoleAddController {
 	public Json updateId(HttpServletRequest req){
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
-		String username = json.getString("roleName");//用户名
-		String belongs_City = json.getString("belongs_City");//员工姓名
-		String descriPtion = json.getString("descriPtion");//分配角色
-		String note = json.getString("note");//所属城市
+		String username = json.getString("name");//用角色名
+//		String belongs_City = json.getString("belongs_City");//员工姓名
+		String descriPtion = json.getString("description");///角色描述
+		String city = json.getString("city");//所属城市
+		String note = json.getString("note");//备注
+		String configuration = json.getString("setPurview");//权限配置
 		String id = json.getString("id");//id
 		int idint = Integer.parseInt(id);
-		String configuration = json.getString("configuration");//权限配置
 		String updatedate = DateUtils.getInDateTime((new Date()));//日期
-		AddRole addrole = new AddRole(username,descriPtion,belongs_City,note,configuration,updatedate,idint);
-		
+		AddRole addrole = new AddRole(username,descriPtion,city,note,configuration,updatedate,idint);
+		List<String> updateadd = new ArrayList<String>();
 //		Map<Object,Object> map = new HashMap<Object,Object>();
 //		map.put("rolename", username);
 //		AddRole role= roleAddService.selectroleRoleName(map);
 //			if(role !=null){
 //				return JSON.toJSONString("修改保存角色名已存在插入失败");//new Json(false,"fail",role,"角色名已存在插入失败");
 //			}else{
+					
 				 boolean isResult = roleAddService.updateRole(addrole);
-				 if(isResult == true){
+				 boolean result = false;
+				 StringBuilder sb = new StringBuilder();
+				 List<String> batchdelpermission = new ArrayList<String>();//批量删除权限
+						batchdelpermission.add(id);
+						addpermissionservice.batchDelList(batchdelpermission);
+						
+						JSONObject jsonObject = new JSONObject().fromObject(configuration);
+						Iterator iterator = jsonObject.keys();
+					while(iterator.hasNext()){
+						String key= (String)iterator.next();
+						System.out.println(jsonObject.getString(key));
+							sb.append(jsonObject.getString(key));
+						PermissionEntity permissionEntity = new PermissionEntity(jsonObject.getString(key),id);
+						result = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
+					}
+						
+				 if(isResult == true && result == true){
 					 
-					 return  new Json(true,"success",isResult,"修改角色保存成功");//JSON.toJSONString("success");
+					 return  new Json(true,"success",isResult,"修改角色权限保存成功");//JSON.toJSONString("success");
 				 }else{
-					 return new Json(true,"success",isResult,"修改角色保存失败");
+					 return new Json(true,"success",isResult,"修改角色权限保存失败");
 				 }
 //			}
 		

@@ -21,15 +21,18 @@ public class ImageDataUpdate implements Serializable{
  private String uploadFtpRoute;
  private String spare;
  private String sparetwo;
- public ImageDataUpdate(String filepath, String parentnode, String uploadtype) {
+ public ImageDataUpdate( String city, String uploadtype,String Parentnode,String spare,String sparetwo) {
 	super();
 //	this.id = id;
-	this.filepath = filepath;
+	this.city = city;
 	this.uploadtype = uploadtype;
-	Parentnode = parentnode;
+	this.Parentnode = Parentnode;
+	this.spare = spare;
+	this.sparetwo = sparetwo;
+	
 }
 public ImageDataUpdate(){}
- public ImageDataUpdate( String filepath, String note, String uploads,String originalfilename,String uploadtype,String city,String Subnode, String createData) {
+ public ImageDataUpdate( String filepath, String note, String uploads,String originalfilename,String uploadtype,String city,String Subnode, String createData,String Parentnode,String spare,String sparetwo) {
 	super();
 	this.filepath = filepath;
 	this.note = note;
@@ -39,6 +42,9 @@ public ImageDataUpdate(){}
 	this.city=city;
 	this.Subnode=Subnode;
 	this.createData = createData;
+	this.Parentnode = Parentnode;
+	this.spare = spare;
+	this.sparetwo = sparetwo;
 }
  public ImageDataUpdate(int id, String filepath, String note, String uploads,String originalfilename,String uploadtype,String Parentnode,String Subnode) {
 	super();

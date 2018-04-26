@@ -41,77 +41,105 @@ layui.use('laydate', function(){
 	  });
 });
 
+//过滤数据
+var myFilter = function(data) {
+	var result = ""
+	if(data) {
+		return data
+	} else {
+		return  result
+	}
+}
 
-//添加表格具体数据格
+
+// 添加表格具体数据格
 var addTable = function(data) {
- var datas = data
-// var len = 
- var len = 10
- var pageElement = document.querySelector('.tab-data')
- for(var i = 0; i < len; i++) {
-   log(i)
-   var tr = document.createElement('tr')
-   var td0 = document.createElement('td')
-   var a = document.createElement('a')
-   var td1 = document.createElement('td')
-   var td2 = document.createElement('td')
-   var td3 = document.createElement('td')
-   var td4 = document.createElement('td')
-   var td5 = document.createElement('td')
-   var td6 = document.createElement('td')
-   var td7 = document.createElement('td')
-   var td8 = document.createElement('td')
-   var td9 = document.createElement('td')
-   var td10 = document.createElement('td')
-   var id = "datas.lists[i].userName"
-   var userName = "datas.lists[i].userName"
-   var role = "datas.lists[i].distribution_Role"
-   var employeeName = "datas.lists[i].employeeis_Name"
-   var time = "datas.lists[i].createdate"
-   a.classList.add('mark')
-   a.href = '#'
-   a.innerText = 0
-   td1.innerText = 1
-   td2.innerText = 2
-   td3.innerText = 3
-   td4.innerText = 4
-   td5.innerText = 5
-   td6.innerText = 6
-   td7.innerText = 7
-   td8.innerText = 8
-   td9.innerText = 9
-   td0.appendChild(a)
-   tr.appendChild(td0)
-   tr.appendChild(td1)
-   tr.appendChild(td2)
-   tr.appendChild(td3)
-   tr.appendChild(td4)
-   tr.appendChild(td5)
-   tr.appendChild(td6)
-   tr.appendChild(td7)
-   tr.appendChild(td8)
-   tr.appendChild(td9)
-   pageElement.insertAdjacentElement('beforeend', tr)
- }
+    var datas = data
+//    var len = 
+    var len = datas.lists
+    var pageElement = document.querySelector('.tab-data')
+    for(var i = 0; i < len.length; i++) {
+      log(i)
+      var tr = document.createElement('tr')
+      var td0 = document.createElement('td')
+      var a = document.createElement('a')
+      var td1 = document.createElement('td')
+      var td1a = document.createElement('td')
+      var td2 = document.createElement('td')
+      var td3 = document.createElement('td')
+      var td4 = document.createElement('td')
+      var td5 = document.createElement('td')
+      var td6 = document.createElement('td')
+      var td7 = document.createElement('td')
+      var td8 = document.createElement('td')
+      var td9 = document.createElement('td')
+      var span1 = document.createElement('a')
+   	  var span2 = document.createElement('a')
+   	  var ID = myFilter(data.lists[i].notes[0].id)
+		var userid = myFilter(datas.lists[i].name)
+		var userName = myFilter(datas.lists[i].applyfor[0].amount)
+		var phone = myFilter(datas.lists[i].mobile_phone)
+		var number = myFilter(datas.lists[i].id_number)
+		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)
+		var state = myFilter(datas.lists[i].state)
+		var address = myFilter(datas.lists[i].home_address_now)
+		var time = myFilter(datas.lists[i].ctime)
+
+
+		a.classList.add('mark')
+		a.href = '#'
+		a.innerText = '201802241931'
+		td1.classList.add('flag')
+		td1a.innerText = ID
+		td1.innerText = userid
+		td2.innerText = userName
+		td3.innerText = phone
+		td4.innerText = number
+		td5.innerText = limit
+		td6.innerText = state
+		td7.innerText = address
+		td8.innerText = time
+//      td9.innerText = 9
+      span1.classList.add('upload')
+      span1.href = '#'
+      span1.innerText = '[   上传     ]'
+      span2.classList.add('record')
+      span2.href = '#'  
+      span2.innerText = '[ 流转记录   ]'
+      td9.appendChild(span1)
+      td9.appendChild(span2)
+      td0.appendChild(a)
+      tr.appendChild(td0)
+      tr.appendChild(td1a)
+      tr.appendChild(td1)
+      tr.appendChild(td2)
+      tr.appendChild(td3)
+      tr.appendChild(td4)
+      tr.appendChild(td5)
+      tr.appendChild(td6)
+      tr.appendChild(td7)
+      tr.appendChild(td8)
+      tr.appendChild(td9)
+      pageElement.insertAdjacentElement('beforeend', tr)
+    }
 }
 
 var testData = {
 		test: '233'
 }
 
-addTable(testData)
+//addTable(testData)
 
 
 //默认加载
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
 console.log(' send data ajax')
  $.ajax({
    type: method,
    url: url,
    data: {data:JSON.stringify(datas)},
    success: function(data) {
-     consoel.log(data)
-     callback(data)
+     addTable(data)
    }
  })
 }
@@ -120,12 +148,10 @@ console.log(' send data ajax')
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/financevoucher/transferaccountsvoucher'
+	var url = '/slloan/loan/loanjslist?page=1&limit=10'
 	var datas = {}
-	datas.a = 'a'
-	datas.b = 'b'
 		console.log('初始化加载数据233')
-	sendAjax(method, url, datas, addTable)
+	sendAjax(method, url, datas)
 	console.log('执行没有？')
 }
 
@@ -233,10 +259,95 @@ var previoupage = function() {
 
 previoupage()
 
+
+//上传&流转记录
+var uploadCertificate = function(element) {
+	var intent = e(element)
+	intent.addEventListener('click', function(event) {
+		if(event.target.classList.contains("upload")) {
+			console.log('上传')
+			layer.open({
+				  title: '上传凭证'
+				  ,content: '<form  id="frm-reg"  enctype="multipart/form-data"><fieldset>'+
+						'<legend>上传凭证</legend>'+
+						'上传类型 <input type="text" id="uploadtype1" value="结算凭证" name="upload_type" /><br>'+
+						'用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> '+
+						'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
+						'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
+						'角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>'+
+						'状态:<input type="text" id="state"  value="1" name="state" readonly="readonly"/><br/>'+
+						'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
+						'<input type="file"  name="file" onchange="document.getElementById("filepath1").value=this.value;"/>'+
+						'<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>'+
+						'<input type="button" onclick="updateUserInfo()"  value="提交" />'+
+						'</fieldset>'+
+						'</form>'+
+						'<div id="imagedata1" class="nav-container">'+
+						'</div></br>'
+				});     
+			
+			userInitUpload("#username1", '#city1', '#id1', '#rolename1')
+		} else if(event.target.classList.contains("record")) {
+			console.log('流转记录')
+		}
+	}) 
+} 
+
+
+//添加默认上传相关的用户值
+var userInitUpload = function(element, elements, elementss, elementes) {
+	var intent = document.querySelector(element)
+	var intents = document.querySelector(elements)
+	var intentss = document.querySelector(elementss)
+	var intentes = document.querySelector(elementes)
+
+	
+	intent.value = localStorage.purusername
+	intents.value = localStorage.purcity
+	intentss.value = localStorage.purid
+	intentes.value = localStorage.purrole
+}
+
+function updateUserInfo() {
+    var form = new FormData(document.getElementById("frm-reg"));  
+    $.ajax({  
+    url: "/slloan/financevoucher/transferaccountsvoucher",
+    type:"post",  
+    data:form,  
+    cache: false,  
+    processData: false,  
+    contentType: false,  
+    success:function(data){
+  	  var len = data.length;
+  	  console.log(len)
+  	  if(len == undefined){
+  		  alert("操作成功！"+data.value); 
+  		  var file = data.obj[0].filepath
+      	console.log( data.obj[0])
+      	var udata = data.obj[0]
+      	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+      	  $("#imagedata1").append(dd)
+  	  }else{
+  		  alert(data)
+  	  }
+    },complete:function(msg){ 
+        //请求完成后调用的回调函数（请求成功或失败时均调用）
+        
+    } ,  
+    error:function(e){  
+        alert("网络错误，请重试！！");  
+     }  
+    });          
+  }
+function uuuu(udata){
+alert(udata)
+}
+
 var __main = function() {
 initData()
 numberSearch()
 envs('#save-data')
+uploadCertificate(".tab-data")
 }
 
 __main()

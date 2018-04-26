@@ -47,18 +47,38 @@ public class PropertyInformationController {
 		String proPerty_for = obj.getString("certificate"); // 房产用于
 		String the_Assessed_Value = obj.getString("evaluation"); // 评估值
 		String original_Loan_Bank = obj.getString("property"); // 原贷款银行
-		String original_Loan_Amount = obj.getString("originalBank"); // 原贷款金额
-		String loan_Outstanding_Balance = obj.getString("originalBank"); // 原贷款尚欠本息余额
+		String originalBank = obj.getString("originalBank"); // 原贷款金额
+		String originalBanks = obj.getString("originalBank"); // 原贷款尚欠本息余额
 		String house_Account = obj.getString("houseAccount"); // 供楼账号
-		String transaCtion_Price = obj.getString("originalOwed"); // 买卖成交价
-		String purchase_Deposit = obj.getString("bidPrice"); // 购房定金
+		String originalOwed = obj.getString("originalOwed"); // 买卖成交价
+		String bidPrice = obj.getString("bidPrice"); // 购房定金
 		String supervision_of_funds = obj.getString("deposit"); // 资金监管
 		String new_loan_Bank = obj.getString("newBank"); // 新贷款银行
-		String new_Loan_Approval_Amount = obj.getString("funds"); // 新贷款批复金额
+		String funds = obj.getString("funds"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = obj.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = obj.getString("newApproved"); // 备注
 		String state=obj.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = obj.getString("ctiam"); //更新时间
+		Double original_Loan_Amount = 0.0;
+		if (originalBank.length() > 0) {
+			original_Loan_Amount = Double.parseDouble(originalBank);
+		}
+		Double loan_Outstanding_Balance = 0.0;
+		if (originalBanks.length() > 0) {
+			loan_Outstanding_Balance = Double.parseDouble(originalBanks);
+		}
+		Double transaCtion_Price = 0.0;
+		if (originalOwed.length() > 0) {
+			transaCtion_Price = Double.parseDouble(originalOwed);
+		}
+		Double purchase_Deposit = 0.0;
+		if (bidPrice.length() > 0) {
+			purchase_Deposit = Double.parseDouble(bidPrice);
+		}	
+		Double new_Loan_Approval_Amount = 0.0;
+		if (funds.length() > 0) {
+			new_Loan_Approval_Amount = Double.parseDouble(funds);
+		}
 		PropertyInformation preperty = new PropertyInformation(name,ownership_And_percentage, property_Address,
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
 				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
@@ -138,18 +158,38 @@ public class PropertyInformationController {
 		String proPerty_for = req.getString("certificate"); // 房产用于
 		String the_Assessed_Value = req.getString("evaluation"); // 评估值
 		String original_Loan_Bank = req.getString("property"); // 原贷款银行
-		String original_Loan_Amount = req.getString("originalBank"); // 原贷款金额
-		String loan_Outstanding_Balance = req.getString("originalBank"); // 原贷款尚欠本息余额
+		String originalBank = req.getString("originalBank"); // 原贷款金额
+		String originalBanks = req.getString("originalBank"); // 原贷款尚欠本息余额
 		String house_Account = req.getString("houseAccount"); // 供楼账号
-		String transaCtion_Price = req.getString("originalOwed"); // 买卖成交价
-		String purchase_Deposit = req.getString("bidPrice"); // 购房定金
+		String originalOwed = req.getString("originalOwed"); // 买卖成交价
+		String bidPrice = req.getString("bidPrice"); // 购房定金
 		String supervision_of_funds = req.getString("deposit"); // 资金监管
 		String new_loan_Bank = req.getString("newBank"); // 新贷款银行
-		String new_Loan_Approval_Amount = req.getString("funds"); // 新贷款批复金额
+		String funds = req.getString("funds"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = req.getString("newApproved"); // 备注
 		String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = req.getString("ctiam"); //更新时间
+		Double original_Loan_Amount = 0.0;
+		if (originalBank.length() > 0) {
+			original_Loan_Amount = Double.parseDouble(originalBank);
+		}
+		Double loan_Outstanding_Balance = 0.0;
+		if (originalBanks.length() > 0) {
+			loan_Outstanding_Balance = Double.parseDouble(originalBanks);
+		}
+		Double transaCtion_Price = 0.0;
+		if (originalOwed.length() > 0) {
+			transaCtion_Price = Double.parseDouble(originalOwed);
+		}
+		Double purchase_Deposit = 0.0;
+		if (bidPrice.length() > 0) {
+			purchase_Deposit = Double.parseDouble(bidPrice);
+		}	
+		Double new_Loan_Approval_Amount = 0.0;
+		if (funds.length() > 0) {
+			new_Loan_Approval_Amount = Double.parseDouble(funds);
+		}
 		PropertyInformation preperty = new PropertyInformation(id,name,ownership_And_percentage, property_Address,
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
 				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
@@ -185,18 +225,38 @@ public class PropertyInformationController {
 		String proPerty_for = req.getString("certificate"); // 房产用于
 		String the_Assessed_Value = req.getString("evaluation"); // 评估值
 		String original_Loan_Bank = req.getString("property"); // 原贷款银行
-		String original_Loan_Amount = req.getString("originalBank"); // 原贷款金额
-		String loan_Outstanding_Balance = req.getString("originalBank"); // 原贷款尚欠本息余额
+		String originalBank = req.getString("originalBank"); // 原贷款金额
+		String originalBanks = req.getString("originalBank"); // 原贷款尚欠本息余额
 		String house_Account = req.getString("houseAccount"); // 供楼账号
-		String transaCtion_Price = req.getString("originalOwed"); // 买卖成交价
-		String purchase_Deposit = req.getString("bidPrice"); // 购房定金
+		String originalOwed = req.getString("originalOwed"); // 买卖成交价
+		String bidPrice = req.getString("bidPrice"); // 购房定金
 		String supervision_of_funds = req.getString("deposit"); // 资金监管
 		String new_loan_Bank = req.getString("newBank"); // 新贷款银行
-		String new_Loan_Approval_Amount = req.getString("funds"); // 新贷款批复金额
+		String funds = req.getString("funds"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = req.getString("newApproved"); // 备注
 		String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = req.getString("ctiam"); //更新时间
+		Double original_Loan_Amount = 0.0;
+		if (originalBank.length() > 0) {
+			original_Loan_Amount = Double.parseDouble(originalBank);
+		}
+		Double loan_Outstanding_Balance = 0.0;
+		if (originalBanks.length() > 0) {
+			loan_Outstanding_Balance = Double.parseDouble(originalBanks);
+		}
+		Double transaCtion_Price = 0.0;
+		if (originalOwed.length() > 0) {
+			transaCtion_Price = Double.parseDouble(originalOwed);
+		}
+		Double purchase_Deposit = 0.0;
+		if (bidPrice.length() > 0) {
+			purchase_Deposit = Double.parseDouble(bidPrice);
+		}	
+		Double new_Loan_Approval_Amount = 0.0;
+		if (funds.length() > 0) {
+			new_Loan_Approval_Amount = Double.parseDouble(funds);
+		}
 		PropertyInformation preperty = new PropertyInformation(id,name,ownership_And_percentage, property_Address,
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
 				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,

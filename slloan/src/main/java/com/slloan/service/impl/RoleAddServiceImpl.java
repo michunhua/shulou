@@ -110,8 +110,8 @@ public class RoleAddServiceImpl implements RoleAddService{
 		String city = id.getBelongs_City();
 		String note = id.getNote();
 		String configuration = id.getConfiguration();
-		String date =	DateUtils.getInDateTime((new Date()));//日期
-		AddRole roleupdate = new AddRole(sid,rolename,descriPtion,city,note,configuration,date);
+		String updatedate =	DateUtils.getInDateTime((new Date()));//日期
+		AddRole roleupdate = new AddRole(rolename,descriPtion,city,note,configuration,updatedate,sid);
 		return roleAddDao.updateRole(roleupdate);
 	}
 
@@ -190,5 +190,6 @@ public class RoleAddServiceImpl implements RoleAddService{
 		}
 		return roleAddDao.selectroleRoleName(param);
 	}
+
 
 }
