@@ -100,12 +100,12 @@ public class ImagedataServiceImpl implements ImagedataService {
 	
 	@Override
 	public boolean FirsttrialbatchPast(List batchPast) {
-		return imagedatadao.FirsttrialbatchRefuse(batchPast);
+		return imagedatadao.FirsttrialbatchPast(batchPast);
 	}
 
 	@Override
-	public boolean loanFinalReviewPast(List loanFinalReviewpast) {
-		return imagedatadao.loanFinalReviewPast(loanFinalReviewpast);
+	public boolean loanFinalReviewPast(List loanfianl) {
+		return imagedatadao.loanFinalReviewPast(loanfianl);
 	}
 
 	@Override

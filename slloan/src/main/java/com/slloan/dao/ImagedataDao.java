@@ -63,7 +63,7 @@ public interface ImagedataDao {
 		 
 		 boolean FirsttrialbatchPast(List batchPast);
 		 
-		 boolean loanFinalReviewPast(List loanFinalReviewpast);
+		 boolean loanFinalReviewPast(List loanfianl);
 		 boolean loanFinalReviewRefuse(List loanFinalRefuse);
 		 
 		 boolean WaitForensics(int id);//待取证

@@ -36,5 +36,6 @@ public interface CircuLationRecordSubmitDao {
 
 	
 	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
+	CircuLationRecord findById(int id);
 	
 }

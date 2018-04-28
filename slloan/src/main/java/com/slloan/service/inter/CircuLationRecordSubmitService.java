@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Firstfilla;
+import com.slloan.entity.NoteDescription;
 import com.slloan.entity.NoteExplain;
 
 /**
@@ -53,4 +54,5 @@ public interface CircuLationRecordSubmitService {
 
 	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
 	
+	CircuLationRecord findById(int id);
 }

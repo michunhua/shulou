@@ -530,7 +530,7 @@ public class UpdateFTPController{
     }
     
     private boolean filetype(String str) {
-    	if(str.contains("jpg")|| str.contains("png") || str.contains("jpge")
+    	if(str.contains("jpg")|| str.contains("png") || str.contains("jpeg")
     			 || str.contains("bmp")
     			 || str.contains("png")){
     		return true;

@@ -61,14 +61,14 @@
 <update id="loanFinalReviewRefuse" parameterType="java.util.List">
 	update recordsubmit_table set fallbackname  = '待初审审批中'  , state = '1'
 	where id in
-	<foreach collection ="list" item="item" index="index">
+	<foreach collection ="list" item="item" index="index" open="(" separator="," close=")">
 		#{item}
 	</foreach>
 </update>
 <update id="loanFinalReviewPast" parameterType="java.util.List">
 	update 	recordsubmit_table set fallbackname  = '待出账确认'  , state = '3'
 	where id in 
-	<foreach collection="list" item="item" index="index">
+	<foreach collection ="list" item="item" index="index" open="(" separator="," close=")">
 		#{item}
 	</foreach>
 </update>

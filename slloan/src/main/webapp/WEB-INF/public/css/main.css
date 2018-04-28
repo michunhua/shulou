@@ -1,0 +1,30 @@
+.footer {
+    position: fixed;
+    bottom: o;
+    margin: 0 atuo;
+}
+.container {
+  margin-left: 12px;
+  margin-top: 12px;
+}
+
+.validate {
+	float: right;
+	margin-right: 120px;
+}
+
+.write {
+	color: red !important;	
+}
+
+.mark {
+	color: #009688 !important;
+	text-decoration: underline !important;
+}
+
+label.error {
+	color: red !important;
+}
+input.error { 
+	border: 1px solid red !important; 
+	}

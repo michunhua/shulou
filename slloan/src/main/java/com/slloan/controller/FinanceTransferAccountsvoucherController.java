@@ -818,12 +818,12 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json loaninalreviewbatch(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
 	    	List<String> loanFinalRefuse = new ArrayList<String>();
-	    	String id = jsonobj.getString("id");
-	    	String[] split= id.split(",");
+//	    	String id = jsonobj.getString("id");
+	    	String[] split= items.split(",");
 	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").trim();
+	    		String str = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
 	    		loanFinalRefuse.add(str);
 	    	}
 	    	boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
@@ -844,15 +844,17 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json loaninalreviewbatchpast(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject jsonobj = new JSONObject().fromObject(items);
-	    	List<String> loanFinalRefuse = new ArrayList<String>();
-	    	String id = jsonobj.getString("id");
-	    	String[] split= id.split(",");
-	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").trim();
-	    		loanFinalRefuse.add(str);
+//	    	String item = "[2,3,4]";
+//	    	JSONObject jsonobject = new JSONObject().fromObject(item);
+//	    	String id = jsonobject.getString("id");
+	    	List<String> loanFinal = new ArrayList<String>();
+	    	String [] split = items.split(",");
+	    	for(String s : split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
+	    		System.out.println(streplacee);
+	    		loanFinal.add(streplacee);
 	    	}
-	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinalRefuse);
+	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
 	    	if(isResult == true){
 	    		return new Json(true,"success",isResult,"终审到待出账确认成功");
 	    	}else{
@@ -876,7 +878,7 @@ public class FinanceTransferAccountsvoucherController {
 //	    	String id = jsonobj.getString("id");
 	    	String[] split= items.split(",");
 	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").trim();
+	    		String str = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
 	    		batchRefuse.add(str);
 	    	}
 	    	boolean isResult = imagedataservice.FirsttrialbatchRefuse(batchRefuse);
@@ -960,12 +962,12 @@ public class FinanceTransferAccountsvoucherController {
 //	    		adoptlist.add(s);
 //	    	}
 	    	String items = request.getParameter("data");
-	    	JSONObject obj = new JSONObject().fromObject(items);
-	    	String id = obj.getString("id");
+//	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	String id = obj.getString("id");
 	    	List<String> updatelist = new ArrayList<String>();
-	    	String[] splist = id.split(",");
+	    	String[] splist = items.split(",");
 	    	for(String s :splist){
-	    		String dt = s.replace("["," ").replace("]"," ").trim();
+	    		String dt = s.replace("["," ").replace("]"," ").replace("\"", " ").trim();
 	    		updatelist.add(dt);
 	    	}
 	    	boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
@@ -985,7 +987,7 @@ public class FinanceTransferAccountsvoucherController {
 	   * @return jpg,png,jpge,png,bmp
 	   */
 	  private boolean filetype(String str) {
-	    	if(str.contains("jpg")|| str.contains("png") || str.contains("jpge")
+	    	if(str.contains("jpg")|| str.contains("png") || str.contains("jpeg")
 	    			 || str.contains("bmp")
 	    			 || str.contains("png")){
 	    		return true;

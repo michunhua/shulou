@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slloan.dao.circulationDao">
+	
+	<resultMap type="com.slloan.entity.circulation" id="circul">
+		<result column="state" property="state" />
+		<result column="circulation" property="circulation" />
+		<result column="ctime" property="ctime" />
+		<result column="username" property="username" />
+		<result column="parentnodeId" property="ParentnodeId" />
+		<result column="city" property="city" />
+		<result column="rolename" property="rolename" />
+	</resultMap>
+	<insert id="save" parameterType="com.slloan.entity.circulation">
+		INSERT INTO the_circulation (
+			state,
+			circulation,
+			ctime,
+			username,parentnodeId,city,rolename
+		)
+		VALUES
+		(
+			#{state},#{circulation},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
+	</insert>
+	<insert id="save2" parameterType="com.slloan.entity.circulation">
+		INSERT INTO the_circulation (
+			state,
+			circulation,
+			ctime,
+			username,parentnodeId,city,rolename
+		)
+		VALUES
+		(
+			#{state},#{circulation},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
+	</insert>
+	<select id="findById" parameterType="Map" resultType="com.slloan.entity.circulation">
+		SELECT circulation,ctime,city,rolename FROM the_circulation where city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username}
+	</select>
+	
+</mapper>

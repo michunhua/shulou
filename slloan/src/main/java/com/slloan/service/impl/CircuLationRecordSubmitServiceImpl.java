@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.slloan.dao.CircuLationRecordSubmitDao;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Firstfilla;
+import com.slloan.entity.NoteDescription;
 import com.slloan.entity.NoteExplain;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
 import com.slloan.util.DateUtils;
@@ -44,7 +45,8 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 		String ParentnodeId = circuLationRecord.getParentnodeId();
 		String city = circuLationRecord.getCity();
 		String rolename = circuLationRecord.getRolename();
-		CircuLationRecord record = new CircuLationRecord(fallbackname,state,createDate,username,ParentnodeId,city,rolename);
+		String spare1 = circuLationRecord.getSpare1();
+		CircuLationRecord record = new CircuLationRecord(fallbackname,state,createDate,username,ParentnodeId,city,rolename,spare1);
 		return recordSubmitDao.fallbackinsert(record);
 	}
 
@@ -99,6 +101,9 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	}
 
 
-	
+	@Override
+	public CircuLationRecord findById(int id) {
+		return recordSubmitDao.findById(id);
+	}
 	
 }

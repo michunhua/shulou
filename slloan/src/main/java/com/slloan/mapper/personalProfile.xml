@@ -259,12 +259,11 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`id`,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='0' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='0'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -276,13 +275,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+		
 		SELECT
-		a.id,a.name,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='1' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='1'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -294,12 +293,11 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`id`,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='2' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='2'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -312,13 +310,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+	
 		SELECT
-		a.id,a.name,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,c.id
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='3' GROUP
-		BY a.id
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='3'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -332,12 +330,11 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='9' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='9'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -349,13 +346,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+	
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.id = b.id) RIGHT JOIN recordsubmit_table c on
-		(a.id = c.id) where c.state='4' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='4'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -368,13 +365,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+	
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='10' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='10'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -386,13 +383,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+	
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='8' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='8'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -404,13 +401,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+	
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='5' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='5'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -423,12 +420,11 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='6' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='6'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -440,13 +436,13 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
+		
 		SELECT
-		a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
-		FROM borrow_information a LEFT JOIN apply_for_loan_information b
-		on(a.parentnodeId = b.parentnodeId) RIGHT JOIN recordsubmit_table c on
-		(a.parentnodeId = c.parentnodeId) where c.state='7' GROUP
-		BY a.`id`
-		order by a.name
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit
+		FROM borrow_information a
+		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
+		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
+		where c.state='7'
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>

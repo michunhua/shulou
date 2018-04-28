@@ -6,7 +6,10 @@ var collectData = function() {
   data.note = e('.note')
   data.recordFirst = e('.first-trial')
   data.recorFinal = e('.final-trial').value
-
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid
   return data
 }
 
@@ -34,8 +37,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/notedescriptionaweqc'
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -54,7 +57,7 @@ var initback = {
 		id: '17'
 }
 
-searchExport(initback)
+//searchExport(initback)
 
 
 

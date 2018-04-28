@@ -147,6 +147,11 @@ public class DateUtils {
  		return YYYY_MM_DD_HH_MM_SS_FULL.format(date);
  	}
  	
+ // yyyy-MM-dd HH:mm:ss
+  	public static String getInDateTime2(Date date) {
+  		return YYYY_MM_DD_HH_MM_SS_SSS_FULL.format(date);
+  	}
+  	
     public static void main(String[] args) throws ParseException {
     	String ssss="1483088260";
     	Long long1 = Long.valueOf(ssss);
