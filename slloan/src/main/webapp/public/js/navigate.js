@@ -55,3 +55,71 @@ var initUsername = function() {
 }
 
 initUsername()
+
+
+
+//导航栏权限
+var powerNavgator = function() {
+	var power = localStorage.purview
+	
+}
+
+// 导航状态
+var navgatorState = {
+		off: function(element) {
+			var intent = document.querySelector(element)
+			intent.style.display = 'none'
+		},
+		on: function(element) {
+			var goal = document.querSelector(element)
+			goal.style.display = 'block'
+		}
+}
+
+// 各个单条目
+//navgatorState.off("#tree-create")
+//navgatorState.off("#tree-trival")
+//navgatorState.off("#tree-final")
+//navgatorState.off("#tree-read")
+//navgatorState.off("#tree-confirm")
+//navgatorState.off("#tree-gain")
+//navgatorState.off("#tree-relief")
+//navgatorState.off("#tree-incare")
+//navgatorState.off("#navfinance-list")
+//navgatorState.off("#navfinance-trans")
+//navgatorState.off("#navfinance-clear")
+//navgatorState.off("#navuserInfo-update")
+//navgatorState.off("#navuserInfo-password")
+//navgatorState.off("#navuserManagement-user")
+//navgatorState.off("#navuserManagement-role")
+
+// 总条目
+//navgatorState.off("#navloan")
+//navgatorState.off("#navfinance")
+//navgatorState.off("#navuserInfo")
+//navgatorState.off("#navuserManagement")
+
+
+//根据权限值来显示
+var Authority = {
+		create: [], 
+		trival: [],
+		finals: [],
+		read: [],
+		confirm: [],
+		gain: [],
+		relief: [],
+		incare: [],
+		list: [],
+		trans: [],
+		clear: [],
+		update: [],
+		password: [],
+		user: [],
+		role: [],
+}
+
+
+
+
+
