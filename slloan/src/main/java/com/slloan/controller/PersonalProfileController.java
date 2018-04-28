@@ -1,6 +1,5 @@
 package com.slloan.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,18 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.slloan.entity.CoborrowerSpouse;
-import com.slloan.entity.Contacts;
-import com.slloan.entity.JointApplicant;
 import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.ResultList;
-import com.slloan.service.inter.JointApplicantService;
 import com.slloan.service.inter.PersonalProfileService;
-import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;

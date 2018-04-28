@@ -182,13 +182,13 @@ public class RoleAddController {
 		int idint = Integer.parseInt(id);
 		String updatedate = DateUtils.getInDateTime((new Date()));//日期
 		AddRole addrole = new AddRole(username,descriPtion,city,note,configuration,updatedate,idint);
-		List<String> updateadd = new ArrayList<String>();
-//		Map<Object,Object> map = new HashMap<Object,Object>();
-//		map.put("rolename", username);
-//		AddRole role= roleAddService.selectroleRoleName(map);
-//			if(role !=null){
-//				return JSON.toJSONString("修改保存角色名已存在插入失败");//new Json(false,"fail",role,"角色名已存在插入失败");
-//			}else{
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("rolename", username);
+//		map.put("belongscity", city);
+		AddRole role= roleAddService.selectroleRoleName(map);
+			if(role !=null){
+				return  new  Json(false,"fail",role,"同城同名的角色有修改失败");//new Json(false,"fail",role,"角色名已存在插入失败");
+			}else{
 					
 				 boolean isResult = roleAddService.updateRole(addrole);
 				 boolean result = false;
@@ -213,7 +213,7 @@ public class RoleAddController {
 				 }else{
 					 return new Json(true,"success",isResult,"修改角色权限保存失败");
 				 }
-//			}
+			}
 		
 	}
 	
@@ -248,12 +248,13 @@ public class RoleAddController {
 		//先查询roleName权限表是否有同名否则插入失败
 		
 //		String rolenamee = req.getParameter("name");//查询角色名
-//		Map<Object,Object> map = new HashMap<Object,Object>();
-//		map.put("rolename", roleName);
-//		AddRole role= roleAddService.selectroleRoleName(map);
-//			if(role !=null){
-//				return new Json(false,"fail",role,"角色名已存在插入失败");
-//			}else{
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("rolename", roleName);
+		map.put("belongscity", belongs_City);
+		AddRole role= roleAddService.selectroleRoleName(map);
+			if(role !=null){
+				return new Json(false,"fail",role,"同城同名的角色和城市已存在插入角色失败");
+			}else{
 				AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate);
 				boolean rt = roleAddService.addRoleUser(addrole);//插入角色
 				AddRole add = new AddRole();
@@ -323,7 +324,7 @@ public class RoleAddController {
 					logger.debug("插入失败"+e);
 					e.printStackTrace();
 				}
-//			}
+			}
 			return new Json(true,"success");
 	}
 	/**

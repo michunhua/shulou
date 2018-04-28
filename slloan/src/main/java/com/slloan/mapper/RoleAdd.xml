@@ -81,6 +81,7 @@
 <!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->
 <!-- 	 		</trim> -->
 	 </select> 
+	 
 	  <!-- 查询角色传到用户 -->
 	 <select id="list" resultType="com.slloan.entity.AddRole">
 	 		select rolename,id from add_role
@@ -103,6 +104,6 @@
 	 </update>
 	 
 	 <select id="selectroleRoleName" resultType="Map" resultMap="roleaadddao">
-	 	SELECT rolename FROM add_role WHERE rolename=#{rolename}
+	 	SELECT rolename,belongs_city FROM add_role WHERE rolename=#{rolename}  and belongs_city=#{belongscity}
 	 </select>
 </mapper>

@@ -61,14 +61,8 @@ var sendAjax = function(method, url, datas, callback) {
 var searchExport = function(back) {
 	recordNote = e('.note')
 	
-	recordNote.value = back.id
+	recordNote.value = back.spare1
 }
-
-var initback = {
-		id: '17'
-}
-
-//searchExport(initback)
 
 //查询
 //发送数据方法
@@ -83,7 +77,7 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
-				searchExport(initback)
+				searchExport(data.obj)
 			} else {
 				alert('服务器错误')
 			}
@@ -166,7 +160,11 @@ var submitBtn = function(element) {
 		var url = '/slloan/loan/loannotfirsts'
 		var data = collectData()
 		data.id = localStorage.createID
-		submitAjax(method, url, data)
+		if(data.id) {
+			submitAjax(method, url, data)
+		} else {
+			layer.msg("请先填写完资料保存后提交", {time: 3000})
+		}
 	})
 }
 

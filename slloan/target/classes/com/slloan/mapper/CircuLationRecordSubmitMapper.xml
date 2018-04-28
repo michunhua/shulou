@@ -126,4 +126,8 @@
 		<select id="findById" parameterType="int"  resultType="com.slloan.entity.CircuLationRecord">
 				select * from recordsubmit_table where id = #{id}
 		</select>
+		
+		<select id="selectByid" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
+				select spare1 from recordsubmit_table where city=#{city} and rolename=#{rolename} and username= #{username} and parentnodeId = #{parentnodeId} 
+		</select>
 </mapper>

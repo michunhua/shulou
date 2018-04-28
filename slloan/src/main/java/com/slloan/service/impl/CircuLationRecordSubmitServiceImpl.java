@@ -1,8 +1,9 @@
 package com.slloan.service.impl;
 
 import java.util.Date;
-
-import javax.rmi.CORBA.UtilDelegate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.slloan.dao.CircuLationRecordSubmitDao;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Firstfilla;
-import com.slloan.entity.NoteDescription;
 import com.slloan.entity.NoteExplain;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
 import com.slloan.util.DateUtils;
@@ -104,6 +104,16 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	@Override
 	public CircuLationRecord findById(int id) {
 		return recordSubmitDao.findById(id);
+	}
+
+	@Override
+	public List<CircuLationRecord> selectByid(CircuLationRecord c) {
+		Map<String,Object> map = new HashMap<String,Object>();
+			map.put("city", c.getCity());
+			map.put("rolename", c.getRolename());
+			map.put("username", c.getUsername());
+			map.put("parentnodeId", c.getParentnodeId());
+		return recordSubmitDao.selectByid(map);
 	}
 	
 }

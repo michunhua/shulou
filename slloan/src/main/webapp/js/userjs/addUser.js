@@ -7,14 +7,17 @@ var sendAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        if(data === 'success') {
+    	  console.log(data)
+        if(data.msg === 'success') {
           document.querySelector('form').reset()
           alert('保存成功')
           window.location.href = '../user/ulist'
+        } else if(data.msg === 'fail') {
+        	alert(data.value)
         } else {
         	alert('服务器出错!')
-        }
-      },
+      }
+    },
       error: function(){
           alert('服务器出错!!!')
       }

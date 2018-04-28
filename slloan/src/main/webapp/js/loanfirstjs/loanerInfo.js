@@ -58,7 +58,7 @@ var collectData = function() {
   data.state = 'c'
   data.ctime ='d'
   data.hi = 'hi'
-	  data.id = 2
+	  data.id = ""
   return data
 }
 

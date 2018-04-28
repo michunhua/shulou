@@ -45,8 +45,7 @@ layui.use('laydate', function(){
 var addTable = function(data) {
 	console.log('添加表格儿')
     var datas = data
-//    var len = 
-    var len = (data.lists).length
+    var len = (datas.lists).length
     var pageElement = document.querySelector('.tab-data')
     pageElement.innerHTML = null
     for(var i = 0; i < len; i++) {
@@ -68,7 +67,7 @@ var addTable = function(data) {
       var td9 = document.createElement('td')
       var span1 = document.createElement('a')
       var span2 = document.createElement('a')
-      var ID = data.lists[i].notes[0].id
+      var ID = datas.lists[i].notes[0].id
       var userid = datas.lists[i].name
       var userName = datas.lists[i].applyfor[0].amount
       var phone = datas.lists[i].mobile_phone
@@ -95,10 +94,12 @@ var addTable = function(data) {
       td8.innerText = time
       span1.classList.add('upload')
       span1.href = '#'
-      span1.innerText = '[   上传     ]'
+      span1.innerText = '[   挂起     ]'
       span2.classList.add('record')
       span2.href = '#'  
       span2.innerText = '[ 流转记录   ]'
+      td9.appendChild(span1)
+      td9.appendChild(span2)
       td.appendChild(input)
       td0.appendChild(a)
       tr.appendChild(td)

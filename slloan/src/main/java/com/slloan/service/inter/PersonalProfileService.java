@@ -26,7 +26,7 @@ public interface PersonalProfileService {
 
 //			Page<PersonalProfile> getLoanPage(int currentPage);	
 			
-		 	public Page<PersonalProfile> getPersonalProfilePage(int currentPage);
+		 	public Page<PersonalProfile> getPersonalProfilePage(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	int getPersonalProfileCount();
 		 	
@@ -50,7 +50,7 @@ public interface PersonalProfileService {
 		     * @param map
 		     * @return
 		     */
-		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage);
+		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage,String username,String role,String city,String parentnodeId);
 		 		/**
 			     * 初审用户记录总数
 			     * @return
@@ -62,7 +62,7 @@ public interface PersonalProfileService {
 		     * @param map
 		     * @return
 		     */
-		 	public Page<PersonalProfile> getFinalreviewPage(int currentPage);
+		 	public Page<PersonalProfile> getFinalreviewPage(int currentPage,String username,String role,String city,String parentnodeId);
 		 		/**
 			     * 终审用户记录总数
 			     * @return
@@ -73,7 +73,7 @@ public interface PersonalProfileService {
 		 	 * 财务列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getFinancePagePage(int currentPage);
+		 	public Page<PersonalProfile> getFinancePagePage(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 财务状态统计
@@ -85,7 +85,7 @@ public interface PersonalProfileService {
 		 	 * 结算列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getjsloanPage(int currentPage);
+		 	public Page<PersonalProfile> getjsloanPage(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 结算状态统计
@@ -97,7 +97,7 @@ public interface PersonalProfileService {
 		 	 * 转账列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getTransferloanPage(int currentPage);
+		 	public Page<PersonalProfile> getTransferloanPage(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 转账状态统计
@@ -110,7 +110,7 @@ public interface PersonalProfileService {
 		 	 * 贷款信息列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getLoanInformation(int currentPage);
+		 	public Page<PersonalProfile> getLoanInformation(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 贷款信息统计
@@ -122,7 +122,7 @@ public interface PersonalProfileService {
 		 	 * 回款列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getReturnMoney(int currentPage);
+		 	public Page<PersonalProfile> getReturnMoney(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 回款统计
@@ -134,7 +134,7 @@ public interface PersonalProfileService {
 		 	 * 取证列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getObtainEvidence(int currentPage);
+		 	public Page<PersonalProfile> getObtainEvidence(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 取证统计
@@ -146,7 +146,7 @@ public interface PersonalProfileService {
 		 	 * 解压列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getDecompression(int currentPage);
+		 	public Page<PersonalProfile> getDecompression(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 解压统计
@@ -158,7 +158,7 @@ public interface PersonalProfileService {
 		 	 * 进压列表
 		 	 * @return
 		 	 */
-		 	public Page<PersonalProfile> getLoanPressure(int currentPage);
+		 	public Page<PersonalProfile> getLoanPressure(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 进压统计

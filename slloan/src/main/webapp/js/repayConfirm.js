@@ -57,9 +57,11 @@ var myFilter = function(data) {
 // 添加表格具体数据格
 var addTable = function(data) {
     var datas = data
-//    var len = 
     var len = datas.lists
     var pageElement = document.querySelector('.tab-data')
+    var totalPage = document.querySelector('.totalPage')
+    totalPage.innerText = datas.totalPage
+    pageElement.innerHTML = null
     for(var i = 0; i < len.length; i++) {
       log(i)
       var tr = document.createElement('tr')
@@ -149,11 +151,11 @@ var sendAjax = function(method, url, datas) {
     })
 }
 
-
+//默认查询
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
-	var url = '/slloan/loan/ReturnMoney?page=1&limit=10'
+	var url = '/slloan/loan/ReturnMoney?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
 		console.log('初始化加载数据233')
 	sendAjax(method, url, datas)
@@ -217,6 +219,13 @@ var init = {
 		limit: 10,
 }
 
+var currpages = function() {
+	var pages = document.querySelector('.currtPage')
+	pages.innerText = init.pages
+}
+
+currpages()
+
 //下一页
 var nextpage = function() {
 	var envs = document.querySelector('.next')
@@ -224,7 +233,7 @@ var nextpage = function() {
 		var flag = Number(document.querySelector('.totalPage').innerText)
 		if(init.pages >= 1 && init.pages < flag) {
 			init.pages = init.pages + 1
-			firtLoadlist()
+			initData()
 			currpages()
 		} else {
 			layer.open({
@@ -243,7 +252,7 @@ var previoupage = function() {
 	envs.addEventListener('click', function() {
 		if(init.pages > 1) {
 			init.pages = init.pages - 1
-			firtLoadlist()
+			initData()
 			currpages()
 		} else {
 			layer.open({

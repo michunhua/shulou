@@ -23,10 +23,10 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
-  data.name= '1'
-	  data.id= 2
-	  data.state= 'a'
-		  data.ctiam = 'b'
+  data.name= ""
+  data.id = localStorage.firstID
+  data.state= ''
+  data.ctime = ''
   return data
 }
 
@@ -121,9 +121,6 @@ var searchExport = function(back) {
 			});
 }
 
-var initback = {
-		id: '20'
-}
 
 //searchExport(initback)
 

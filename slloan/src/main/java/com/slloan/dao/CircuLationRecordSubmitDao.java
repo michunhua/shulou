@@ -1,5 +1,8 @@
 package com.slloan.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.CircuLationRecord;
@@ -38,4 +41,5 @@ public interface CircuLationRecordSubmitDao {
 	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
 	CircuLationRecord findById(int id);
 	
+	public List<CircuLationRecord> selectByid(Map<String,Object>param);
 }

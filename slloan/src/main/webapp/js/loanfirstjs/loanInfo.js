@@ -15,6 +15,8 @@ var collectData = function() {
   data.repaymenBtank = e('.repayment-bank').value
   data.repaymentAccount = e('.repayment-account').value
   data.accountNumber = e('.account-number').value
+  data.state = ''
+  data.ctime = ''
   return data
 }
 
@@ -51,8 +53,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+    var method = 'POST'
+    var url = '/slloan/loan/modifyuser'
     log(data)
     sendAjax(method, url, data)
   })

@@ -363,7 +363,8 @@ public class UpdateFTPController{
                     	String Parentnode = usernameid;
                     	String spare = username;
                     	String sparetwo = roleName;
-                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo);
+                    	String createDate = DateUtils.getInDateTime((new Date()));//日期
+                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
                     List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata2);
                     	if(listimg.size()> 0){
                     		//return new Json(true,"success",listimg);
@@ -656,6 +657,7 @@ public class UpdateFTPController{
     	String spare = jsonobj.getString("username");//用户名
     	String Parentnode = jsonobj.getString("usernameid");//用户ID
     	String[] splist = uploadtype.split(",");
+    	String createDate = DateUtils.getInDateTime((new Date()));//日期
     	Map<Object,Object> map = new HashMap<Object,Object>();
     		ResultList<ImageDataUpdate> result = new ResultList<ImageDataUpdate>();
     	Map<String,List<ImageDataUpdate>> listmap = new HashMap<String,List<ImageDataUpdate>>();
@@ -666,42 +668,43 @@ public class UpdateFTPController{
     		if(strplist.equals("申请表")){
     			map.put("申请表", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
     		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
     		    result.setLists(listimg);
     		    listmap.put("申请表", listimg);
     		}else if(strplist.equals("身份证明")){
     			map.put("身份证明", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+//    			String createDate = DateUtils.getInDateTime((new Date()));//日期
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
     		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
     		    result.setLists(listimg);
     		    listmap.put("身份证明", listimg);
     		}else if(strplist.equals("批示")){
     			map.put("批示", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
     		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
     		    result.setLists(listimg);
     			listmap.put("批示", listimg);
     		}else if(strplist.equals("凭证类")){
     			map.put("凭证类", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
     		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
     		    result.setLists(listimg);
     		    listmap.put("凭证类", listimg);
     		}else if(strplist.equals("其他类")){
     			map.put("其他类", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
     		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
     		    result.setLists(listimg);
     		    listmap.put("其他类", listimg);
     		}else if(strplist.equals("房产证明")){
     			map.put("房产证明", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
     		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
     		    result.setLists(listimg);
     		    listmap.put("房产证明", listimg);

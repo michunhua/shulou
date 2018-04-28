@@ -108,7 +108,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 
 
 	@Override
-	public Page<PersonalProfile> getPersonalProfilePage(int currentPage) {
+	public Page<PersonalProfile> getPersonalProfilePage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		//封装当前页数
@@ -123,6 +123,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);//向上取整
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
@@ -215,7 +219,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getFirsttrialPage(int currentPage) {
+	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		//封装当前页数
@@ -230,6 +234,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
@@ -244,7 +252,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getFinalreviewPage(int currentPage) {
+	public Page<PersonalProfile> getFinalreviewPage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		//封装当前页数
@@ -259,6 +267,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
@@ -273,7 +285,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getFinancePagePage(int currentPage) {
+	public Page<PersonalProfile> getFinancePagePage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -284,6 +296,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getFinancePagePage(map);
@@ -297,7 +313,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getjsloanPage(int currentPage) {
+	public Page<PersonalProfile> getjsloanPage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -308,6 +324,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getjsloanPage(map);
@@ -321,7 +341,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getTransferloanPage(int currentPage) {
+	public Page<PersonalProfile> getTransferloanPage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -332,6 +352,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getTransferloanPage(map);
@@ -346,7 +370,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	
 
 	@Override
-	public Page<PersonalProfile> getLoanInformation(int currentPage) {
+	public Page<PersonalProfile> getLoanInformation(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -357,6 +381,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getLoanInformation(map);
@@ -370,7 +398,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getReturnMoney(int currentPage) {
+	public Page<PersonalProfile> getReturnMoney(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -381,6 +409,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getReturnMoney(map);
@@ -394,7 +426,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getObtainEvidence(int currentPage) {
+	public Page<PersonalProfile> getObtainEvidence(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -405,6 +437,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getObtainEvidence(map);
@@ -418,7 +454,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getDecompression(int currentPage) {
+	public Page<PersonalProfile> getDecompression(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -429,6 +465,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getDecompression(map);
@@ -442,7 +482,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getLoanPressure(int currentPage) {
+	public Page<PersonalProfile> getLoanPressure(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -453,6 +493,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",role);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getLoanPressure(map);

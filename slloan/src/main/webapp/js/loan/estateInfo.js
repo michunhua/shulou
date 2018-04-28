@@ -40,7 +40,7 @@ var collectData = function() {
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
   data.state='a'
-  data.ctiam='b'
+  data.ctime='b'
 	  data.id= 2
   return data
 }

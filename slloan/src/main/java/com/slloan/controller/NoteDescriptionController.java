@@ -1,6 +1,7 @@
 package com.slloan.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -120,9 +121,13 @@ public class NoteDescriptionController {
 		System.out.println("======================================");
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
-		String uid = json.getString("id");
-		int id = Integer.parseInt(uid);
-		CircuLationRecord isResult = c.findById(id);
+//		String uid = json.getString("id");
+		String username = json.getString("username");
+		String city = json.getString("city");
+		String rolename = json.getString("rolename");
+		String parentnodeId = json.getString("parentnodeId");
+		CircuLationRecord ct = new CircuLationRecord(parentnodeId,rolename,city,username);
+		List<CircuLationRecord> isResult = c.selectByid(ct);
 
 		if (isResult != null) {
 			return new Json(true, "success", isResult);
@@ -135,29 +140,29 @@ public class NoteDescriptionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/NoteDescriptions", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public String updateUser(HttpServletRequest req) {
-
-		String dataid = req.getParameter("data");
-		JSONObject json = new JSONObject().fromObject(dataid);
-		Integer id = json.getInt("id");
-
-		String note_Description1 = json.getString("note");
-		String note_Description2 = json.getString("recordFirst");
-		String note_Description3 = json.getString("recorFinal");
-		String state = json.getString("state");
-		String ctime = json.getString("ctime");
-
-		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
-				state, ctime);
-		boolean isResult = notedesc.update(contact);
-		if (isResult == true) {
-			return JSON.toJSONString(isResult);
-		} else
-			return JSON.toJSONString("fail");
-	}
-	
+//	@RequestMapping(value = "/NoteDescriptions", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+//	@ResponseBody
+//	public String updateUser(HttpServletRequest req) {
+//
+//		String dataid = req.getParameter("data");
+//		JSONObject json = new JSONObject().fromObject(dataid);
+//		Integer id = json.getInt("id");
+//
+//		String note_Description1 = json.getString("note");
+//		String note_Description2 = json.getString("recordFirst");
+//		String note_Description3 = json.getString("recorFinal");
+//		String state = json.getString("state");
+//		String ctime = json.getString("ctime");
+//
+//		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
+//				state, ctime);
+//		boolean isResult = notedesc.update(contact);
+//		if (isResult == true) {
+//			return JSON.toJSONString(isResult);
+//		} else
+//			return JSON.toJSONString("fail");
+//	}
+//	
 	/**
 	 * 保存
 	 * 
@@ -204,7 +209,7 @@ public class NoteDescriptionController {
 		String username = obj.getString("username");
 		String rolename =obj.getString("rolename");
 		String city =obj.getString("city");
-		String spare1 = obj.getString("note");//备注
+		String spare1 = obj.getString("firstTrial");//备注
 		 String parentnodeId = obj.getString("parentnodeId");
 		int stateid =1;
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
@@ -235,7 +240,7 @@ public class NoteDescriptionController {
 		String username = obj.getString("username");
 		String rolename =obj.getString("rolename");
 		String city =obj.getString("city");
-		String spare1 = obj.getString("note");//备注
+		String spare1 = obj.getString("recorFinal");//备注
 		 String parentnodeId = obj.getString("parentnodeId");
 		int stateid =1;
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期

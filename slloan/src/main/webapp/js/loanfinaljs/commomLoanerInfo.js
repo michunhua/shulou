@@ -52,10 +52,10 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
-  data.state = 'c'
-  data.ctime ='d'
+  data.state = ''
+  data.ctime =''
   data.hi = 'hi'
-  data.id = 2
+	  data.id = localStorage.finalID
   return data
 }
 
@@ -217,7 +217,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/finaljudgmentselectid'
+	var url = '/slloan/loan/jointappli'
 	var data = {}
 	data.id = localStorage.finalID
 	if(data.id) {

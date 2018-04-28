@@ -12,7 +12,9 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 2
+  data.id = localStorage.finalID
+  data.state = ''
+	  data.ctime = ''
   return data
 }
 
@@ -41,7 +43,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/save'
+    var url = '/slloan/loan/cobupdates'
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -104,7 +106,7 @@ var searchAjax = function(method, url, datas) {
 // 查询
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/coborrowerssss'
+	var url = '/slloan/loan/coborrowers'
 	var data = {}
 	data.id = localStorage.finalID
 	if(data.id) {

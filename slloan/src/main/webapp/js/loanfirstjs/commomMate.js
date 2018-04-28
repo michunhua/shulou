@@ -13,7 +13,9 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 1
+  data.state = ''
+  data.ctime = ''
+  data.id = localStorage.firstID	
   return data
 }
 

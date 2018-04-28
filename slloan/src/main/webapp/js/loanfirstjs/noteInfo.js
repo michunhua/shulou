@@ -9,7 +9,9 @@ var collectData = function() {
   data.rolename = localStorage.purrole
   data.username = localStorage.purusername
   data.city = localStorage.purcity
-  data.parentnodeId = localStorage.purid	
+  data.parentnodeId = localStorage.purid
+  data.state = ''
+  data.ctime = ''
   return data
 }
 
@@ -57,14 +59,8 @@ var sendData = function(element) {
 var searchExport = function(back) {
 	recordNote = e('.record-note')
 	
-	recordNote.value = back.id
+	recordNote.value = back.spare1
 }
-
-var initback = {
-		id: '17'
-}
-
-//searchExport(initback)
 
 //查询
 //发送数据方法
@@ -96,9 +92,13 @@ var searchData = function() {
 	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = localStorage.firstID
-	if(data.id) {
+	  data.rolename = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.parentnodeId = localStorage.purid
+//	if(data.id) {
 		searchAjax(method, url, data)	
-	}
+//	}
 }
 
 
@@ -137,19 +137,23 @@ var submitAjax = function(method, url, datas) {
 	     }    
 	  })
 	}
+
 // 提交按钮提交数据
 var submitBtn = function(element) {
 	var intent = e(element) 
 	intent.addEventListener('click', function() {
-		    var method = 'GET'
-			var url = '/slloan/loan/loannotsubmit'
-			var data = collectData()
-			data.id = localStorage.firstID
-			data.rolename = localStorage.purrole
-		    data.username = localStorage.purusername
-		    data.city = localStorage.purcity
-			data.parentnodeId = localStorage.purid
-			submitAjax(method, url, data)
+			layer.confirm('通过该贷款?', {icon: 3, title:'注意'}, function(index){
+			    var method = 'GET'
+				var url = '/slloan/loan/loannotsubmit'
+				var data = collectData()
+				data.id = localStorage.firstID
+				data.rolename = localStorage.purrole
+			    data.username = localStorage.purusername
+				data.city = localStorage.purcity
+			    data.parentnodeId = localStorage.purid
+				submitAjax(method, url, data)
+			  layer.close(index);
+			});
 	})
 }
 
@@ -181,10 +185,13 @@ var backAjax = function(method, url, datas) {
 var backBtn = function(element) {
 	var intent = e(element) 
 	intent.addEventListener('click', function() {
-		    var method = 'GET'
-			var url = '/slloan/loan/loannotFallback'
-			var data = collectData()
-			submitAjax(method, url, data)
+			layer.confirm('确定回退该贷款?', {icon: 3, title:'注意'}, function(index){
+			    var method = 'GET'
+				var url = '/slloan/loan/loannotFallback'
+				var data = collectData()
+				submitAjax(method, url, data)
+			  layer.close(index);
+			});
 	})
 }
 

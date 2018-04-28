@@ -1,5 +1,6 @@
 package com.slloan.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -244,9 +245,11 @@ public class JointApplicantController {
 				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
 		boolean isResult = jointapplicant.update(joints);
 		if (isResult == true) {
-			return new Json(true, "success", isResult);
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
 		} else {
-			return new Json(false, "fail", isResult);
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
 		}
 	}
 
@@ -442,10 +445,14 @@ public class JointApplicantController {
 	 * 贷款信息查看列表
 	 * 
 	 * @return json
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String rolemanagements(HttpServletRequest req) {
+	public String rolemanagements(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		
@@ -453,9 +460,12 @@ public class JointApplicantController {
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
 		System.out.println(limit);// startPos, int pageSize
-		// roleAddService.getRolePage(startPos);
-		// JSON.toJSONString(user)
-		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
+		System.out.println(username+" "+ role);
+		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos,username,role,city,parentnodeId));
 	}
 	
 	
@@ -464,36 +474,52 @@ public class JointApplicantController {
 	 * 贷款初审列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/loanlist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String loanlist(HttpServletRequest req) {
+	public String loanlist(HttpServletRequest req) throws UnsupportedEncodingException {
 		System.out.println("-----------初审列表---------------");
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		String id = req.getParameter("id");
+//		String id = req.getParameter("id");
 		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos));
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
+		return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos,username,role,city,parentnodeId));
 	}
 	/**
 	 * 贷款终审列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/loanfinalreviewlist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String loanFinalreviewlist(HttpServletRequest req) {
+	public String loanFinalreviewlist(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------贷款终审列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getFinalreviewPage(statePos));
+		return JSON.toJSONString(personalprofileservice.getFinalreviewPage(statePos,username,role,city,parentnodeId));
 	}
 
 	
@@ -501,36 +527,52 @@ public class JointApplicantController {
 	 * 贷款财务列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/loanfinancelist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String loanfinancelist(HttpServletRequest req) {
+	public String loanfinancelist(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos));
+		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos,username,role,city,parentnodeId));
 	}
 	
 	/**
 	 * 转账凭证列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/loantransferlist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String loantransferlist(HttpServletRequest req) {
+	public String loantransferlist(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------转账凭证列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getTransferloanPage(statePos));
+		return JSON.toJSONString(personalprofileservice.getTransferloanPage(statePos,username,role,city,parentnodeId));
 	}
 	
 	
@@ -538,36 +580,53 @@ public class JointApplicantController {
 	 * 结算凭证列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/loanjslist", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String loanjslist(HttpServletRequest req) {
+	public String loanjslist(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		int statePos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getjsloanPage(statePos));
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
+		return JSON.toJSONString(personalprofileservice.getjsloanPage(statePos,username,role,city,parentnodeId));
 	}
 	
 	/**
 	 * 贷款信息查看列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/LoanInformation", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String LoanInformation(HttpServletRequest req) {
+	public String LoanInformation(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		int statePos = Integer.parseInt(page);
+		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getLoanInformation(statePos));
+		return JSON.toJSONString(personalprofileservice.getLoanInformation(startPos,username,role,city,parentnodeId));
 	}
 	
 	
@@ -575,70 +634,104 @@ public class JointApplicantController {
 	 * 回款确认列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	
 	@RequestMapping(value = "/ReturnMoney", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String ReturnMoney(HttpServletRequest req) {
+	public String ReturnMoney(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		int statePos = Integer.parseInt(page);
+		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getReturnMoney(statePos));
+		return JSON.toJSONString(personalprofileservice.getReturnMoney(startPos,username,role,city,parentnodeId));
 	}
 	/**
 	 * 取证凭证列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/ObtainEvidence", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String ObtainEvidence(HttpServletRequest req) {
+	public String ObtainEvidence(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		int statePos = Integer.parseInt(page);
+		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getObtainEvidence(statePos));
+		return JSON.toJSONString(personalprofileservice.getObtainEvidence(startPos,username,role,city,parentnodeId));
 	}
 	/**
 	 * 解压列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/Decompression", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String Decompression(HttpServletRequest req) {
+	public String Decompression(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		int statePos = Integer.parseInt(page);
+		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getDecompression(statePos));
+		return JSON.toJSONString(personalprofileservice.getDecompression(startPos,username,role,city,parentnodeId));
 	}
 	/**
 	 * 进压列表
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/LoanPressure", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String LoanPressure(HttpServletRequest req) {
+	public String LoanPressure(HttpServletRequest req) throws UnsupportedEncodingException {
+		req.setCharacterEncoding("utf-8");
+		String data = req.getParameter("data");
+		JSONObject obj = new JSONObject().fromObject(data);
 		System.out.println("-----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-		int statePos = Integer.parseInt(page);
+		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
+
+		String username = obj.getString("username");
+		String role = obj.getString("role").toString();
+		String city = obj.getString("city").toString();
+		String parentnodeId = obj.getString("parentnodeId");
 		System.out.println(page);
 		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getLoanPressure(statePos));
+		return JSON.toJSONString(personalprofileservice.getLoanPressure(startPos,username,role,city,parentnodeId));
 	}
 	
 	

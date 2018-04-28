@@ -92,7 +92,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/adduser",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String addUser(HttpServletRequest req,UserLogin userlogin){
+	public Json addUser(HttpServletRequest req,UserLogin userlogin){
 		boolean isResult =false;
 		try {
 			String json = req.getParameter("data");
@@ -114,20 +114,21 @@ public class UserController {
 			selectUserName.put("username", username);
 			UserLogin selectuserName2 = userservice.selectroleUserName(selectUserName);
 				if(selectuserName2 !=null){
-					return JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
+					return new Json(false,"fail",selectuserName2,"用户名已存在插入失败");//JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
 				}else{
 					isResult=	userservice.addUser(u);
 				}
 			
 		} catch (Exception e) {
-			logger.error("连接异常"+e);
+//			logger.error("连接异常"+e);
+			 return new Json(false,"fail",e.getMessage(),"连接异常");
 		}
 		if(isResult == true){
 			logger.info("添加用户成功");
-			return JSON.toJSONString("success");
+			return new Json(true,"success",isResult,"用户名添加成功");//JSON.toJSONString("success");
 		}else
 			logger.debug("添加用户失败");
-			return JSON.toJSONString("fail");
+			return new Json(false,"fail",isResult,"添加用户失败");//JSON.toJSONString("fail");
 		
 	}
 	/***
@@ -180,16 +181,16 @@ public class UserController {
 	 */
 	@RequestMapping(value="/deluser",method=RequestMethod.POST)
 	@ResponseBody
-	public String delUser(HttpServletRequest req){
+	public Json delUser(HttpServletRequest req){
 		String dataid = req.getParameter("datas");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String deid = json.getString("id");
 		int id = Integer.parseInt(deid);
 		boolean isResult =userservice.deleteById(id);
 		if(isResult == true){
-			return JSON.toJSONString(isResult); 
+			return new Json(true,"success",isResult,"");//JSON.toJSONString(isResult); 
 		}else
-			return JSON.toJSONString(isResult); 
+			return  new Json(false,"fail",isResult,"");//JSON.toJSONString(isResult); 
 	}
 	/**
 	 * 修改用户保存
@@ -305,11 +306,23 @@ public class UserController {
 				if(userlogin.getUserName().equals(key)){
 					if(session.getId().equals(loginMap.get(key))){
 						 System.out.println("在同一地点多次登录");
+						    //获取session的创建时间
+						 System.out.println(session.getCreationTime());
+						    //获取上次与服务器交互时间
+						  System.out.println(session.getLastAccessedTime());
+						 //获取session最大的不活动的间隔时间，以秒为单位120秒。
+						  System.out.println(  session.getMaxInactiveInterval());
 //						return JSON.toJSONString(username+"在同一地点多次登录！");
 						 return new Json(false,"fail","在同一地点多次登录！","multiplelogon");
 					}else{
 //						response.sendRedirect("/signin");
 						 System.out.println("异地登录被拒绝！");
+						    //获取session的创建时间
+						 System.out.println(session.getCreationTime());
+						    //获取上次与服务器交互时间
+						  System.out.println(session.getLastAccessedTime());
+						 //获取session最大的不活动的间隔时间，以秒为单位120秒。
+						  System.out.println(  session.getMaxInactiveInterval());
 //						return JSON.toJSONString(username+"异地登录被拒绝！该用户已经登录！");
 						 return new Json(false,"fail","异地登录被拒绝！该用户已经登录！","loginrefusal");
 					}
@@ -485,10 +498,13 @@ public class UserController {
 	@RequestMapping(value="/exit")
 	public String exit(HttpServletRequest req,HttpServletResponse res) throws IOException{
 		UserLogin userlogin = (UserLogin)req.getSession().getAttribute("loginMap");
+//		UserLogin username = (UserLogin)req.getSession().getAttribute("username");
 		//清除页面缓存 在html页里
 		res.setHeader("Pragma", "No-cache");
 		res.setHeader("Cache-Control", "no-cache");
+		res.setDateHeader("Expires", 0);
 		res.flushBuffer();
+		req.getSession().setMaxInactiveInterval(1);
 		//删除登录cookie
 //		Cookie userNameCookie = new Cookie("loginUserName", userlogin.getUserName());
 //		Cookie passWordCokie = new Cookie("loginPassowrd",userlogin.getPassWord());
@@ -511,11 +527,18 @@ public class UserController {
 				System.out.println("没有cookie");
 			}else{
 				for(Cookie cc:cookie){
-					if(cc.getName().equals("name_test")){
+					if(cc.getName().equals("loginMap")){
 						cc.setValue(null);
 						cc.setMaxAge(0);
 						cc.setPath("/");
-						res.addCookie(cc);;
+						res.addCookie(cc);
+					    //获取session的创建时间
+						 HttpSession session = req.getSession();
+						 System.out.println(session.getCreationTime());
+						    //获取上次与服务器交互时间
+						  System.out.println(session.getLastAccessedTime());
+						 //获取session最大的不活动的间隔时间，以秒为单位120秒。
+						  System.out.println(  session.getMaxInactiveInterval());
 						break;
 					}
 				}
@@ -523,7 +546,9 @@ public class UserController {
 		}
 //		 session.invalidate();  
 		req.getSession().removeAttribute("loginMap");
+//		req.getSession().removeAttribute("username");
 		req.getSession().invalidate();//清除 session 中的所有信息  
+		//request.getSession().setMaxInactiveInterval(1800);/*秒为单位，1800= 60*30 即30分种*/
 		return "index/index";
 	}
 	

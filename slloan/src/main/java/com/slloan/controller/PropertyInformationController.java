@@ -58,7 +58,7 @@ public class PropertyInformationController {
 		String new_Loan_Bank_Account_Number = obj.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = obj.getString("newApproved"); // 备注
 		String state=obj.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = obj.getString("ctiam"); //更新时间
+		String ctime = obj.getString("ctime"); //更新时间
 		Double original_Loan_Amount = 0.0;
 		if (originalBank.length() > 0) {
 			original_Loan_Amount = Double.parseDouble(originalBank);
@@ -169,7 +169,7 @@ public class PropertyInformationController {
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = req.getString("newApproved"); // 备注
 		String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = req.getString("ctiam"); //更新时间
+		String ctime = req.getString("ctime"); //更新时间
 		Double original_Loan_Amount = 0.0;
 		if (originalBank.length() > 0) {
 			original_Loan_Amount = Double.parseDouble(originalBank);
@@ -236,7 +236,7 @@ public class PropertyInformationController {
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = req.getString("newApproved"); // 备注
 		String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = req.getString("ctiam"); //更新时间
+		String ctime = req.getString("ctime"); //更新时间
 		Double original_Loan_Amount = 0.0;
 		if (originalBank.length() > 0) {
 			original_Loan_Amount = Double.parseDouble(originalBank);

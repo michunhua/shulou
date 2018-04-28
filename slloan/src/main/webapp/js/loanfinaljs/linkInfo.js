@@ -13,10 +13,9 @@ var collectData = function() {
   data.linkt = e('.linkt').value
   data.linktMate = e('.linkt-mate').value
   data.linktPhone = e('.linkt-phone').value
-	  data.state = 'b'
-	  data.ctime = 'c'
-	
-  data.id = 2
+	  data.state = ''
+	  data.ctime = ''
+		  data.id = localStorage.finalID
   return data
 }
 
@@ -117,7 +116,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/contactoa'
+	var url = '/slloan/loan/contactasss'
 	var data = {}
 	data.id = localStorage.finalID
 	if(data.id) {

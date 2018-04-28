@@ -98,12 +98,12 @@ public class ContactsController {
 	
 
 	/**
-	 * 修改用户保存
+	 * 初审修改用户保存
 	 * @return
 	 */
 	@RequestMapping(value="/modifyuseraaas",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updateUser(HttpServletRequest req){
+	public Json updateUser(HttpServletRequest req){
 		
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
@@ -121,12 +121,51 @@ public class ContactsController {
 		String ctime=json.getString("ctime");
 		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
-		if(isResult == true){
-			return JSON.toJSONString(isResult);
-		}else
-			return JSON.toJSONString("fail");
+		
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
+		}
+		
 	}
-
+	
+	/**
+	 * 终审修改用户保存
+	 * @return
+	 */
+	@RequestMapping(value="/modifyuserod",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateUsera(HttpServletRequest req){
+		
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String contacts = json.getString("linkf"); //联系人姓名
+		String contacts1=json.getString("links");//联系人姓名
+		String contacts2=json.getString("linkt");//联系人姓名
+		String relationship=json.getString("linkfMate");//联系人关系
+		String relationship1=json.getString("linksMate");//联系人关系
+		String relationship2=json.getString("linktMate");//联系人关系
+		String c_Telephone=json.getString("linkfPhone");//联系人电话
+		String c_Telephone1=json.getString("linksPhone");//联系人电话
+		String c_Telephone2=json.getString("linktPhone");//联系人电话
+		String state=json.getString("state");
+		String ctime=json.getString("ctime");
+		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
+		boolean isResult =contactsservice.updateadd(contact);
+		
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
+		}
+		
+	}
 	/**
 	 * 联系人信息
 	 * 

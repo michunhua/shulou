@@ -1,5 +1,7 @@
 package com.slloan.service.inter;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.CircuLationRecord;
@@ -55,4 +57,6 @@ public interface CircuLationRecordSubmitService {
 	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
 	
 	CircuLationRecord findById(int id);
+	
+	public List<CircuLationRecord> selectByid(CircuLationRecord c);
 }

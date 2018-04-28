@@ -21,11 +21,11 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
-  data.name= '1'
-	  data.id= 2
-	  data.state= 'a'
-		  data.ctiam = 'b'
-  data.id = 2
+  data.name= ''
+	  data.id = localStorage.finalID
+	  data.state= ''
+		  data.ctime = ''
+
   return data
 }
 

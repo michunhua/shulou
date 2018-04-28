@@ -128,7 +128,12 @@ var searchAjax = function(method, url, datas) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
+			} else {
+				alert('服务器错误')
 			}
+		},
+		error: function() {
+			alert('服务器错误')
 		}
 	})
 }

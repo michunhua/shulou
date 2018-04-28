@@ -198,7 +198,7 @@ var initAjax = function(method, url, datas) {
     })
 }
 
-
+//默认加载
 var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
@@ -301,7 +301,7 @@ var nextpage = function() {
 		var flag = Number(document.querySelector('.totalPage').innerText)
 		if(init.pages >= 1 && init.pages < flag) {
 			init.pages = init.pages + 1
-			firtLoadlist()
+			initData()
 			currpages()
 		} else {
 			layer.open({
@@ -320,7 +320,7 @@ var previoupage = function() {
 	envs.addEventListener('click', function() {
 		if(init.pages > 1) {
 			init.pages = init.pages - 1
-			firtLoadlist()
+			initData ()
 			currpages()
 		} else {
 			layer.open({

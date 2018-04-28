@@ -53,7 +53,7 @@ var sendData = function(element) {
 var searchExport = function(back) {
 	recordNote = e('.record-note')
 	
-	recordNote.value = back.id
+	recordNote.value = back.spare1
 }
 
 var initback = {
@@ -75,7 +75,7 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				searchExport(data.spare1)
 			} else {
 				alert('服务器错误')
 			}
@@ -92,9 +92,13 @@ var searchData = function() {
 	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = localStorage.firstID
-	if(data.id) {
+	data.rolename = localStorage.purrole
+	data.username = localStorage.purusername
+	data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
+//	if(data.id) {
 		searchAjax(method, url, data)	
-	}
+//	}
 }
 
 

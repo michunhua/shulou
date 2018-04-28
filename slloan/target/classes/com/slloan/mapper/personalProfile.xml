@@ -193,63 +193,63 @@
 
 	<!-- 按揭员回退按揭员状态 -->
 	<select id="getPersonalProfileCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='0'
 	</select>
 
 	<!-- 初审状态 -->
 	<select id="getFirsttrialPageCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='1'
 	</select>
 	<!-- 终审状态 -->
 	<select id="getFinalreviewPageCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='2'
 	</select>
 	<!-- 财务状态 -->
 	<select id="getFinancePageCount" resultType="Integer">
-		SELECT COUNT(*) FROM
+		SELECTCOUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename) FROM
 		recordsubmit_table WHERE state='3'
 	</select>
 	<!-- 结算状态 -->
 	<select id="getjsloanPageCount" resultType="Integer">
-		SELECT COUNT(*) FROM
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename) FROM
 		recordsubmit_table WHERE state='9'
 	</select>
 	<!-- 转账凭证状态 -->
 	<select id="getTransferloanPageCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='4'
 	</select>
 
 	<!-- 贷款信息状态 -->
 	<select id="getLoanInformationCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='10'
 	</select>
 
 	<!-- 回款状态 -->
 	<select id="getReturnMoneyCount" resultType="Integer">
-		SELECT COUNT(*) FROM
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename) FROM
 		recordsubmit_table WHERE state='8'
 	</select>
 
 	<!-- 取证状态 -->
 	<select id="getObtainEvidenceCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='5'
 	</select>
 
 	<!-- 解压状态 -->
 	<select id="getDecompressionCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='6'
 	</select>
 
 	<!-- 进压状态 -->
 	<select id="getLoanPressureCount" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM recordsubmit_table WHERE state='7'
 	</select>
 	<!-- 按揭员列表展示 -->
@@ -263,7 +263,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='0'
+		where c.state='0' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId} 
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -281,7 +281,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='1'
+		where c.state='1' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -297,7 +297,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='2'
+		where c.state='2' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -316,7 +316,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='3'
+		where c.state='3' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -334,7 +334,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='9'
+		where c.state='9' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -352,7 +352,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='4'
+		where c.state='4' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -371,7 +371,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='10'
+		where c.state='10' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -389,7 +389,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='8'
+		where c.state='8' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -407,7 +407,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='5'
+		where c.state='5' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -424,7 +424,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='6'
+		where c.state='6' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -442,7 +442,7 @@
 		FROM borrow_information a
 		LEFT JOIN apply_for_loan_information b on(a.id = b.id)
 		RIGHT JOIN recordsubmit_table c on (c.id = a.id)
-		where c.state='7'
+		where c.state='7' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>

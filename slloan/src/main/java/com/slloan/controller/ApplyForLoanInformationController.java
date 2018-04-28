@@ -109,7 +109,7 @@ public class ApplyForLoanInformationController {
 	 */
 	@RequestMapping(value = "/modifyuser", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String updateUser(HttpServletRequest req) {
+	public Json updateUser(HttpServletRequest req) {
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
@@ -131,19 +131,22 @@ public class ApplyForLoanInformationController {
 				repayment_Account_Name, repayment_Account_Number, state, ctime);
 		boolean isResult = applyForLoanInformationservice.appUpdate(ap);
 		if (isResult == true) {
-			return JSON.toJSONString(isResult);
-		} else
-			return JSON.toJSONString("fail");
+			logger.info("数据插入成功!");
+			return new Json(true, "success", isResult);
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false, "fail", isResult);
+		}
 	}
 
 	/**
-	 * 修改用户保存
+	 * 终审修改用户保存
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/modifyusers", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String updateUserw(HttpServletRequest req) {
+	public Json updateUserw(HttpServletRequest req) {
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
@@ -165,9 +168,12 @@ public class ApplyForLoanInformationController {
 				repayment_Account_Name, repayment_Account_Number, state, ctime);
 		boolean isResult = applyForLoanInformationservice.appUpdate(ap);
 		if (isResult == true) {
-			return JSON.toJSONString(isResult);
-		} else
-			return JSON.toJSONString("fail");
+			logger.info("数据插入成功!");
+			return new Json(true, "success", isResult);
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false, "fail", isResult);
+		}
 	}
 
 	/**

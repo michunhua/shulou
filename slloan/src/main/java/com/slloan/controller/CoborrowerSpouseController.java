@@ -106,7 +106,7 @@ public class CoborrowerSpouseController {
 	 */
 	@RequestMapping(value="/cobupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String update(HttpServletRequest req){
+	public Json update(HttpServletRequest req){
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
@@ -128,10 +128,13 @@ public class CoborrowerSpouseController {
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(id,name, id_Type,id_Other, id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
 		boolean isResult =coborrowerSpouseService.update(coborrow);
-		if(isResult == true){
-			return JSON.toJSONString(isResult);
-		}else
-			return JSON.toJSONString("fail");
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
+		}
 	} 
 	/**
 	 * 终审修改用户保存
@@ -139,14 +142,14 @@ public class CoborrowerSpouseController {
 	 */
 	@RequestMapping(value="/cobupdates",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
-	public String updates(HttpServletRequest req){
+	public Json updates(HttpServletRequest req){
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
 		String name = json.getString("cname");  // 共同借款人配偶姓名戦
 		String id_Type =  json.getString("certificate"); //身份证件类型
 		String id_Other = json.getString("certificateType");
-		String id_Number =json.getString("document");  // 身份证件号码
+		String id_Number =json.getString("documents");  // 身份证件号码
 		String uni_Name =  json.getString("untilName"); // 工作单位名称
 		String unit_Phone =json.getString("untilPhone"); // 单位电话
 		String home_Phone =json.getString("residence"); // 住宅电话
@@ -161,10 +164,13 @@ public class CoborrowerSpouseController {
 		CoborrowerSpouse coborrow = new CoborrowerSpouse(id,name, id_Type,id_Other, id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
 		boolean isResult =coborrowerSpouseService.update(coborrow);
-		if(isResult == true){
-			return JSON.toJSONString(isResult);
-		}else
-			return JSON.toJSONString("fail");
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
+		}
 	} 
 	
 	/**

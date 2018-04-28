@@ -88,12 +88,16 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/notedescid'
+	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = localStorage.finalID
-	if(data.id) {
+	data.rolename = localStorage.purrole
+	data.username = localStorage.purusername
+	data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
+//	if(data.id) {
 		searchAjax(method, url, data)
-	}
+//	}
 }
 
 //取消按钮事件
@@ -134,15 +138,18 @@ var submitAjax = function(method, url, datas) {
 var submitBtn = function(element) {
 	var intent = e(element) 
 	intent.addEventListener('click', function() {
-		    var method = 'GET'
-			var url = '/slloan/loan/loanfinance'
-			var data = collectData()
-			data.id = localStorage.finalID
-			data.rolename = localStorage.purrole
-		    data.username = localStorage.purusername
-		    data.city = localStorage.purcity
-			data.parentnodeId = localStorage.purid
-			submitAjax(method, url, data)
+		    layer.confirm('确定通过该贷款?', {icon: 3, title:'注意'}, function(index){
+			    var method = 'GET'
+				var url = '/slloan/loan/loanfinance'
+				var data = collectData()
+				data.id = localStorage.finalID
+				data.rolename = localStorage.purrole
+				data.username = localStorage.purusername
+				data.city = localStorage.purcity
+			    data.parentnodeId = localStorage.purid
+				submitAjax(method, url, data)
+			  layer.close(index);
+			});
 	})
 }
 
@@ -174,10 +181,13 @@ var backAjax = function(method, url, datas) {
 var backBtn = function(element) {
 	var intent = e(element) 
 	intent.addEventListener('click', function() {
-		    var method = 'GET'
-			var url = '/slloan/loan/loannotllback'
-			var data = collectData()
-			submitAjax(method, url, data)
+			layer.confirm('确定回退该贷款?', {icon: 3, title:'注意'}, function(index){
+			    var method = 'GET'
+				var url = '/slloan/loan/loannotllback'
+				var data = collectData()
+				submitAjax(method, url, data)
+			  layer.close(index);
+			});
 	})
 }
 

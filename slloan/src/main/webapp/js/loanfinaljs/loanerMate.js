@@ -11,7 +11,9 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 1
+  data.id = localStorage.finalID
+  data.state = ''
+	  data.ctime = ''
   return data
 }
 
@@ -102,7 +104,7 @@ error: function(){
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/finaljudgmentspouseselectbyid'
+	var url = '/slloan/loan/spouses'
 	var data = {}
 	data.id = localStorage.finalID
 	if(data.id) {
