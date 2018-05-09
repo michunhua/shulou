@@ -407,9 +407,9 @@ var singleAdd = function() {
 	var intent = e('#full')
 	var definite = es('.indicate')
 	console.log('一个接一个的点击')
-	parentElement.addEventListener('click', function() {
+	parentElement.addEventListener('click', function(){
 		console.log('执行到这', definite.length)
-		for(var i = 0; i < definite.length; i++) {
+		for(var i = 0; i < definite.length; i++) {        
 			console.log('有没有选中的')
 			if(!definite[i].checked) {
 				result.push('1')

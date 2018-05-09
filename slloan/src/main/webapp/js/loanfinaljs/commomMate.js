@@ -12,9 +12,7 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = localStorage.finalID
-  data.state = ''
-	  data.ctime = ''
+  data.id = 2
   return data
 }
 
@@ -43,7 +41,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/cobupdates'
+    var url = '/slloan/loan/save'
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -120,7 +118,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreass"
   })
 }
 

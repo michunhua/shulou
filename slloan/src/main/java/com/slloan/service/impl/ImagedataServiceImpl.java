@@ -1,6 +1,10 @@
 package com.slloan.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +16,7 @@ import com.slloan.dao.ImagedataDao;
 import com.slloan.entity.ImageDataUpdate;
 import com.slloan.entity.ObjectSeq;
 import com.slloan.service.inter.ImagedataService;
+import com.slloan.util.DateUtils;
 
 @Service(value="imagedataService")
 public class ImagedataServiceImpl implements ImagedataService {
@@ -67,16 +72,43 @@ public class ImagedataServiceImpl implements ImagedataService {
 	}
 
 	@Override
-	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param) {
-		Map<String,Object> mapparam = new HashMap<String,Object>();
-		mapparam.put("city", param.getCity());
-		mapparam.put("parentnode", param.getParentnode());
-		mapparam.put("spare1", param.getSpare());
-		mapparam.put("sparetwo2",param.getSparetwo());
-		mapparam.put("uploadtype",param.getUploadtype());
+	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param){
+		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd");
+		  String createDate = DateUtils.getInDateTime((new Date()));//日期
+		  Map<String,Object> mapparam = new HashMap<String,Object>();
+		try {
+			Date date1 = f.parse(createDate);
+			  Calendar calen = Calendar.getInstance();
+			  calen.setTime(date1);
+			  calen.add(Calendar.DAY_OF_YEAR,5);
+			  Date createdata2=calen.getTime();
+			 System.out.println(f.format(createdata2));
+				mapparam.put("city", param.getCity());
+				mapparam.put("parentnode", param.getParentnode());
+				mapparam.put("spare", param.getSpare());
+				mapparam.put("sparetwo",param.getSparetwo());
+				mapparam.put("uploadtype",param.getUploadtype());
+				mapparam.put("createData",param.getCreateData());
+				mapparam.put("createData2",f.format(createdata2));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		
 		return imagedatadao.financevoucherSelectToupload(mapparam);
 	}
 
+	@Override
+	public List<ImageDataUpdate> financevoucherSelectToupload2(ImageDataUpdate param){
+		Map<String,Object> mapparam = new HashMap<String,Object>();
+		mapparam.put("city", param.getCity());
+		mapparam.put("parentnode", param.getParentnode());
+		mapparam.put("spare", param.getSpare());
+		mapparam.put("sparetwo",param.getSparetwo());
+		mapparam.put("uploadtype",param.getUploadtype());
+		mapparam.put("createdata",param.getCreateData());
+		return imagedatadao.financevoucherSelectToupload2(mapparam);
+	}
 
 	@Override
 	public boolean batchUpdateStudent(List updatelList) {
@@ -136,5 +168,10 @@ public class ImagedataServiceImpl implements ImagedataService {
 	@Override
 	public boolean loanClearing(int id) {
 		return imagedatadao.loanClearing(id);
+	}
+
+	@Override
+	public ObjectSeq addSeq() {
+		return imagedatadao.addSeq();
 	}
 }

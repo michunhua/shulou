@@ -53,7 +53,7 @@ var __main = function() {
     var fname = e('#Fname').value
     var id = e('#Id').value
     var method = 'GET'
-    var url = '/slloan/updateftpimage/selectfiletype'
+    var url = '/../../updateftpimage/selectfiletype'
     var data = {}
     
     data.upload_type = ftype

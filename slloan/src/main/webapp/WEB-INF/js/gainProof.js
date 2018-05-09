@@ -151,7 +151,7 @@ var initData = function() {
 	console.log('初始化加载数据')
 	var method = 'GET'
 	var url = '/slloan/loan/ObtainEvidence'
-		var url = '/slloan/loan/ObtainEvidence?page=1&limit=10'
+		var url = '/slloan/loan/ObtainEvidence?page=' + init.pages + '&limit='+ init.limit
 			var datas = {}
 		console.log('初始化加载数据233')
 	sendAjax(method, url, datas, addTable)

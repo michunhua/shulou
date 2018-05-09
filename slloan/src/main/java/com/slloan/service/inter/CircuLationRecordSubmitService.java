@@ -8,6 +8,7 @@ import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Firstfilla;
 import com.slloan.entity.NoteDescription;
 import com.slloan.entity.NoteExplain;
+import com.slloan.entity.circulation;
 
 /**
  * 提交&回退Service
@@ -58,5 +59,5 @@ public interface CircuLationRecordSubmitService {
 	
 	CircuLationRecord findById(int id);
 	
-	public List<CircuLationRecord> selectByid(CircuLationRecord c);
+	List<CircuLationRecord> findById2(CircuLationRecord param); 
 }

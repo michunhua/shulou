@@ -4,9 +4,6 @@ var firstPage = function() {
   window.location.href = '/slloan/loan/happy'
 }
 
-var verification = function(data) {
-    
-}
 
 //发送数据
 var lsendAjax = function(method, url, datas) {
@@ -24,6 +21,7 @@ var lsendAjax = function(method, url, datas) {
           localStorage.purusername = ''
           localStorage.purcity = ''
           localStorage.purid = ''
+          localStorage.roleUseID = ''
           var len = data.obj.lists.length
           for(var i = 0; i < len; i++) {
             console.log(data.obj.lists[i].checkboxID)
@@ -33,6 +31,7 @@ var lsendAjax = function(method, url, datas) {
             console.log(data.obj.lists[i].belongs_City)
             if(data.obj.lists[i].belongs_City !== undefined ) {
             	localStorage.purcity = data.obj.lists[i].belongs_City
+            	localStorage.roleUseID = data.obj.lists[i].r_id
             }
             console.log(data.obj.lists[i].id)
             if(data.obj.lists[i].id !== undefined && data.obj.lists[i].id !== null) {
@@ -76,8 +75,9 @@ var collectData = function() {
   return data
 }
 
-// 填写验证
+// 填写验证 后登录
 var verification = function(data, next) {
+	console.log("执行登录验证")
 	if(!data.username){
 		alert('请填写用户名')
 		document.querySelector('#username').focus()
@@ -103,9 +103,27 @@ var verification = function(data, next) {
 var mainPage = function() {
 	var intent = document.querySelector('body')
 	intent.addEventListener('keydown', function(e) {
+		console.log("监听回车键")
 	    if(e.keyCode == 13) {
 	    	var valid = collectData()
-			verification(valid, submit)	      }
+			verification(valid, submit)
+			} else {
+				console.log('keydown')
+			}
+	  })
+}
+
+//页面监听点击登录按钮
+var listenLoginBtn = function() {
+	var intent = document.querySelector('body')
+	intent.addEventListener('click', function(e) {
+		console.log("监听点击登录按钮", e.target.id)
+	    if(e.target.id == "login-btn") {
+	    	var valid = collectData()
+			verification(valid, submit)	 
+			} else {
+				console.log('click')
+			}
 	  })
 }
 
@@ -116,13 +134,13 @@ var submit = function() {
 		lsendAjax(method, url, data)
 }
 
-var login = function() {
-    var loginBtn = document.querySelector('#login-btn')
-    loginBtn.addEventListener('click', function () {
-		var valid = collectData()
-		verification(valid, submit)
-    })
-}
+//var login = function() {
+//    var loginBtn = document.querySelector('#login-btn')
+//        loginBtn.addEventListener('click', function() {
+//    		var valid = collectData()
+//    		verification(valid, submit)
+//        })
+//}
 
 //增加用户体验
 var useruse = function() {
@@ -143,15 +161,15 @@ var useruse = function() {
   })
   codefirstInput.addEventListener('keydown', function(e) {
     if(e.keyCode == 13) {
-      loginbtn.focus()
+//      loginbtn.focus()
     }
   })
 }
 
 var __main = function() {
 	useruse()
-	login()
 	mainPage()
+	listenLoginBtn()
 }
 
 __main()

@@ -190,4 +190,6 @@ public interface personalProfileDao{
 	 	 * @return
 	 	 */
 	 	int getLoanPressureCount();
+	 	
+	 	public PersonalProfile getSelectById(Map<String,Object> param);
 }

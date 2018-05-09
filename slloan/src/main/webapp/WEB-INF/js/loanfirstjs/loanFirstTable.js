@@ -271,15 +271,15 @@ var initData = function() {
 var collectData = function() {
 	log('收集数据')
 	var data = {}
-	data.name = e('.username').value
-	data.iphone = e('.iphone').value
-	data.Idcard = e('.Idcard').value
-	data.application = e('.application').value
-	data.start = e('.start').value
-	data.end = e('.end').value
-	data.min = e('.min').value
-	data.max = e('.max').value
-	data.state = e('.state').value
+	data.userName = e('.username').value
+	  data.iphone = e('.iphone').value
+	  data.IDcard = e('.Idcard').value
+	  data.numbering = e('.application').value
+	  data.start = e('.start').value
+	  data.end = e('.end').value
+	  data.min = e('.min').value
+	  data.max = e('.max').value
+	  data.state = e('.state').value
 	return data
 }
 

@@ -1,5 +1,6 @@
 package com.slloan.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.slloan.dao.coborrowerSpouseDao;
 import com.slloan.dao.personalProfileDao;
 import com.slloan.entity.AddRole;
@@ -16,8 +18,10 @@ import com.slloan.entity.Contacts;
 import com.slloan.entity.JointApplicant;
 import com.slloan.entity.Page;
 import com.slloan.entity.PersonalProfile;
+import com.slloan.entity.ResultList;
 import com.slloan.entity.UserLogin;
 import com.slloan.service.inter.PersonalProfileService;
+import com.slloan.util.DateUtils;
 
 @Service(value = "personalprofileserviceimpl")
 public class PersonalProfileServiceImpl implements PersonalProfileService {
@@ -75,13 +79,14 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		String ParentnodeId = personalProfile.getParentnodeId();
 		String city = personalProfile.getCity();
 		String rolename = personalProfile.getRolename();
+		String applicationnumber = DateUtils.getInDateTime(new Date());
 		PersonalProfile joint = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
 				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
 				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,username,ParentnodeId,city,rolename);
+				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,username,ParentnodeId,city,rolename,applicationnumber);
 		return personalProfiledao.save(personalProfile);
 	}
 
@@ -182,7 +187,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	@Override
 	public List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param) {
 		Map<Object,Object> map = new HashMap<Object,Object>();
-
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
 		 Iterator it = param.entrySet().iterator();  
 		 while (it.hasNext()) {  
 			   Map.Entry entry = (Map.Entry) it.next();  
@@ -193,8 +198,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 			   
 //			   return personalProfiledao.vaguelikeSelectCreate(map);
 			  }
-		
-		return personalProfiledao.vaguelikeSelectCreate(map);
+		 List<PersonalProfile>  p= personalProfiledao.vaguelikeSelectCreate(map);
+		 resulit.setLists(p);
+//		return resulit;
+		return p;
 		
 //		return ;
 	}
@@ -507,6 +514,17 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	@Override
 	public int getLoanPressureCount() {
 		return personalProfiledao.getLoanPressureCount();
+	}
+
+	@Override
+	public PersonalProfile getSelectById(PersonalProfile param) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("username", param.getUsername());
+		map.put("city", param.getCity());
+		map.put("rolename", param.getRolename());
+		map.put("parentnodeId", param.getParentnodeId());
+		map.put("name", param.getName());
+		return personalProfiledao.getSelectById(map);
 	}
 
 }

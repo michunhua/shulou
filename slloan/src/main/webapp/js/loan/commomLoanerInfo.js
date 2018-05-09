@@ -63,7 +63,7 @@ var collectData = function() {
   data.communication = e('.communication').value
   data.state = 'c'
   data.ctime ='d'
-  data.hi = 'hi'
+  data.hi = 'hi'  
   return data
 }
 
@@ -98,10 +98,14 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.temporaryId = localStorage.createTemporaryId
+    data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/commonApplydata'
     log(data)
-    sendAjax(method, url, data)
+    if(!data.mark) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -111,7 +115,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -226,6 +230,7 @@ $.ajax({
 })
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/jointappli'
@@ -236,6 +241,21 @@ var searchData = function() {
 	}
 }
 
+//保存修改数据
+var updateData = function(element) {
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/joinupdatessaq'
+    log(data)
+    if(data.id) {
+    	sendAjax(method, url, data)
+    }
+  })
+}
 
 
 //
@@ -243,6 +263,7 @@ var __main = function() {
   sendData('#save-data')
   cancelBtn('#cancel')
   searchData()
+  updateData('#save-data')
 }
 
 __main()

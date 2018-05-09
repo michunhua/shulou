@@ -86,6 +86,11 @@ public class circulation {
 	public void setRolename(String rolename) {
 		this.rolename = rolename;
 	}
+
+	public void setUpdatedata(String updatedate) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

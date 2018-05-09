@@ -24,10 +24,6 @@ var collectData = function() {
   data.recordFirst = e('.note').value
   data.recorFinal = e('.note').value
   data.state = ''
-  data.rolename = localStorage.purrole
-  data.username = localStorage.purusername
-  data.city = localStorage.purcity
-  data.parentnodeId = localStorage.purid
   return data
 }
 
@@ -39,19 +35,19 @@ var sendAjax = function(method, url, datas, callback) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	localStorage.createID = ""
+        localStorage.createTemporaryId = ""
     	if(data.msg == 'success') {
     		layer.msg('保存成功', {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
-  				window.location.href = '../../slloan/loan/loancrea'
+  				window.location.href = "/slloan/loan/loancrea"
   			});
     	} else {
     		alert('服务器错误')
     	}
     },
     error: function(){
-    	localStorage.createID = ""
         alert('服务器错误')
      }   
   })
@@ -61,7 +57,7 @@ var sendAjax = function(method, url, datas, callback) {
 var searchExport = function(back) {
 	recordNote = e('.note')
 	
-	recordNote.value = back.spare1
+	recordNote.value = back.note_Description1
 }
 
 //查询
@@ -94,6 +90,10 @@ var searchData = function() {
 	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = localStorage.createID
+	data.rolename = localStorage.purrole
+	data.username = localStorage.purusername
+	data.city = localStorage.purcity
+	data.parentnodeId = localStorage.purid
 	if(data.id) {
 		searchAjax(method, url, data)
 	}
@@ -117,7 +117,7 @@ var submitAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
-  				window.location.href = '../../slloan/loan/loancrea'
+  				window.location.href = "/slloan/loan/loancrea"
   			});
     	} else {
     		localStorage.createID = ""
@@ -136,10 +136,17 @@ var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     var data = collectData()
+    data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
+    data.temporaryId = localStorage.createTemporaryId
     var method = 'POST'
     var url = '/slloan/loan/notedescription'
     log(data)
-    sendAjax(method, url, data)
+    if(data.temporaryId) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -148,7 +155,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
 	  document.getElementById('createNote').value = null
-	  window.history.back()
+	  window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -159,6 +166,10 @@ var submitBtn = function(element) {
 		var method = 'GET'
 		var url = '/slloan/loan/loannotfirsts'
 		var data = collectData()
+		data.rolename = localStorage.purrole
+	data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
 		data.id = localStorage.createID
 		if(data.id) {
 			submitAjax(method, url, data)
@@ -168,6 +179,21 @@ var submitBtn = function(element) {
 	})
 }
 
+// 修改数据保存
+var updateData = function(element) {
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/updatenote'
+    log(data)
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+  })
+}
+
 //
 var __main = function() {
   log( "run")
@@ -175,6 +201,7 @@ var __main = function() {
   cancelBtn('#cancel')
   submitBtn('#submit')
   searchData()
+  updateData('#save-note')
 }
 
 __main()

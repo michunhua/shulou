@@ -58,7 +58,6 @@ var collectData = function() {
   data.state = 'c'
   data.ctime ='d'
   data.hi = 'hi'
-	  data.id = ""
   return data
 }
 
@@ -88,17 +87,20 @@ var sendAjax = function(method, url, datas) {
 }
 
 
-// 发送数据
+// 修改发送数据
 var sendData = function(element) {
   log('send data to server')
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.id = localStorage.firstID
     var method = 'POST'
     var url = '/slloan/loan/perupdate'
     log(data)
-    sendAjax(method, url, data)
+    if(data.id) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -244,7 +246,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreas"
   })
 }
 

@@ -11,6 +11,8 @@
 		<result column="username" property="username" />
 		<result column="parentnodeId" property="ParentnodeId" />
 		<result column="city" property="city" />
+		<result column="rolename" property="rolename" />
+		<result column="submit" property="submit" />
 	</resultMap>
 	
 <!-- 	<insert id="save" parameterType="com.slloan.entity.NoteDescription">
@@ -45,15 +47,58 @@
 		username,
 		ParentnodeId,
 		city,
-		rolename
+		rolename,
+		submit
 		)
 		VALUES
 		(
-		#{note_Description1},#{note_Description2},#{note_Description3},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
+		#{note_Description1},#{note_Description2},#{note_Description3},#{state},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename},#{submit})
 	</insert>
+	
 	
 	 <!-- 根据ID查记录 -->
 		<select id="findById" parameterType="int"  resultType="com.slloan.entity.NoteDescription">
 				select * from note_description where id = #{id}
 		</select>
+		
+		<update id="update" parameterType="com.slloan.entity.NoteDescription">
+		update note_description
+		<set>
+			<if test="note_Description1 !=null and note_Description1 !=''">note_Description1 = #{note_Description1},</if>	
+			<if test="state !=null and state !=''">state = #{state},</if>
+			<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updatetwo" parameterType="com.slloan.entity.NoteDescription">
+		update note_description
+		<set>
+			<if test="note_Description2 !=null and note_Description2 !=''">note_Description2 = #{note_Description2},</if>	
+			<if test="state !=null and state !=''">state = #{state},</if>
+			<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updatethere" parameterType="com.slloan.entity.NoteDescription">
+		update note_description
+		<set>
+			<if test="note_Description3 !=null and note_Description3 !=''">note_Description3 = #{note_Description3},</if>	
+			<if test="state !=null and state !=''">state = #{state},</if>
+			<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updatefore" parameterType="com.slloan.entity.NoteDescription">
+		update note_description
+		<set>
+			<if test="note_Description4 !=null and note_Description4 !=''">note_Description4 = #{note_Description4},</if>	
+			<if test="state !=null and state !=''">state = #{state},</if>
+			<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 </mapper>

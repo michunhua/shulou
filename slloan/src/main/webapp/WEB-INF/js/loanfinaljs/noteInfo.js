@@ -174,6 +174,7 @@ var backBtn = function(element) {
 		    var method = 'GET'
 			var url = '/slloan/loan/loannotllback'
 			var data = collectData()
+				data.id=localStorage.finalID
 			submitAjax(method, url, data)
 	})
 }

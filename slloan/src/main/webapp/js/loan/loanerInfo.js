@@ -63,11 +63,7 @@ var collectData = function() {
   data.communication = e('.communication').value
   data.state = 'c'
   data.ctime ='d'
-  data.hi = 'hi'
-  data.rolename = localStorage.purrole
-  data.username = localStorage.purusername
-  data.city = localStorage.purcity
-  data.parentnodeId = localStorage.purid	  
+  data.hi = 'hi'	  
   return data
 }
 
@@ -80,7 +76,9 @@ var sendAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	console.log('12316546465')
+    	localStorage.createTemporaryId = ""
     	if(data.msg == 'success') {
+    		localStorage.createTemporaryId = data.value
     		console.log('666666')
     		layer.msg('保存成功', {
   			  icon: 2,
@@ -99,22 +97,27 @@ var sendAjax = function(method, url, datas) {
 }
 
 
-// 提交按钮&发送数据
+// 录单提交按钮&发送数据
 var sendData = function(element) {
   log('send data to server')
   var evs = e(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid
+  data.id = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/loanApplypersonaldata'
     log(data)
-    if(data.parentnodeId) {
+    if(!data.id) {
     	 sendAjax(method, url, data)	
     } else {
-    	layer.msg('请登录！', function(){
-			window.location.href = '/slloan/user/signin'
-			}); 
+//    	layer.msg('请登录！', function(){
+//			window.location.href = '/slloan/user/signin'
+//			}); 
     }
   })
 }
@@ -125,7 +128,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -327,6 +330,22 @@ var validator = function(element, message) {
 	  return result
 }
 
+// 修改保存数据 
+var updateData = function(element) {
+  log('send data to server')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/perupdate'
+    log(data)
+    if(data.id) {
+    	 sendAjax(method, url, data)	
+    }
+  })
+}
 
 //
 var __main = function() {
@@ -334,6 +353,7 @@ var __main = function() {
   cancelBtn('#cancel')
   sendData('#save-data')
   searchData()
+  updateData('#save-data')
 }
 
 __main()

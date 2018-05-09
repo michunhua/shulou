@@ -29,7 +29,7 @@ public interface ImagedataDao {
 
 		public ObjectSeq listSeq();
 //	//自增ID
-//	public boolean addSeq(ObjectSeq addseq);
+		ObjectSeq   addSeq( );
 	
 	/**
 	 * 根据 上传类型 原文件名  上传者姓名查所上传的
@@ -44,7 +44,7 @@ public interface ImagedataDao {
 	 * @return
 	 */
 	public List<ImageDataUpdate> financevoucherSelectToupload(Map<String,Object> param);
-	
+	public List<ImageDataUpdate> financevoucherSelectToupload2(Map<String,Object> param);
 	/**
 	 * 财务批量修改审核通过
 	 * @param delList

@@ -7,6 +7,8 @@ import com.slloan.entity.NoteDescription;
 public interface NoteDescriptionService {
 	
 	boolean save(NoteDescription notedesc);
+	
+
 
 	NoteDescription findById(int id);
 
@@ -15,4 +17,10 @@ public interface NoteDescriptionService {
 	boolean update(NoteDescription contacts);
 
 	List<NoteDescription> findAll();
+	
+	boolean updatetwo(NoteDescription contacts);
+
+	boolean updatethere(NoteDescription contacts);
+
+	boolean updatefore(NoteDescription contacts);
 }

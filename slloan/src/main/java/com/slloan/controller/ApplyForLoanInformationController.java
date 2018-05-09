@@ -49,19 +49,23 @@ public class ApplyForLoanInformationController {
 	@ResponseBody
 	public Json save(HttpServletRequest req) {
 
+		
+
+		
+		
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 		String amount = obj.getString("amount"); // 金额
-		String time_Limit = obj.getString("deadline"); // 期限
+		String time_Limit = obj.getString("term"); // 期限
 		String time_Limits = obj.getString("unit"); // 期限
 		String borrowing_Variety = obj.getString("variety"); // 借款品种,赎楼
-		String repayment = obj.getString("manner"); // 还款方式 0到期一次性还本付息1按月付息，到期还本
-		String receiving_Bank_Name = obj.getString("bank"); // 收款银行名称
-		String receiving_Account_Name = obj.getString("accountName"); // 收款账户名
-		String receiving_Account = obj.getString("account"); // 收款账号
-		String repayment_Bank_Name = obj.getString("repayBank"); // 还款银行名称
-		String repayment_Account_Name = obj.getString("repayCcount"); // 还款账户名
-		String repayment_Account_Number = obj.getString("reapyAccountbank"); // 还款账号
+		String repayment = obj.getString("repayment"); // 还款方式 0到期一次性还本付息1按月付息，到期还本
+		String receiving_Bank_Name = obj.getString("beneficiarybank"); // 收款银行名称
+		String receiving_Account_Name = obj.getString("bankaccount"); // 收款账户名
+		String receiving_Account = obj.getString("receivingAccount"); // 收款账号
+		String repayment_Bank_Name = obj.getString("repaymenBtank"); // 还款银行名称
+		String repayment_Account_Name = obj.getString("repaymentAccount"); // 还款账户名
+		String repayment_Account_Number = obj.getString("accountNumber"); // 还款账号
 		String state = obj.getString("state");// 状态0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));// 日期
 		String username = obj.getString("username");
@@ -107,6 +111,43 @@ public class ApplyForLoanInformationController {
 	 * 
 	 * @return
 	 */
+	@RequestMapping(value = "/modifyusersjfo", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateUsere(HttpServletRequest req) {
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String amount = json.getString("amount");
+		String time_Limit = json.getString("term");
+		String time_Limits = json.getString("unit");
+		String borrowing_Variety = json.getString("variety");
+		String repayment = json.getString("repayment");
+		String receiving_Bank_Name = json.getString("beneficiarybank");
+		String receiving_Account_Name = json.getString("bankaccount");
+		String receiving_Account = json.getString("receivingAccount");
+		String repayment_Bank_Name = json.getString("repaymenBtank");
+		String repayment_Account_Name = json.getString("repaymentAccount");
+		String repayment_Account_Number = json.getString("accountNumber");
+		String state = json.getString("state");
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		ApplyForLoanInformation ap = new ApplyForLoanInformation(id, amount, time_Limit, time_Limits, borrowing_Variety,
+				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
+				repayment_Account_Name, repayment_Account_Number, state, ctime);
+		boolean isResult = applyForLoanInformationservice.appUpdate(ap);
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true, "success", isResult);
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false, "fail", isResult);
+		}
+	}
+
+	/**
+	 * 修改用户保存
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyuser", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Json updateUser(HttpServletRequest req) {
@@ -125,7 +166,7 @@ public class ApplyForLoanInformationController {
 		String repayment_Account_Name = json.getString("repaymentAccount");
 		String repayment_Account_Number = json.getString("accountNumber");
 		String state = json.getString("state");
-		String ctime = json.getString("ctime");
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(id, amount, time_Limit, time_Limits, borrowing_Variety,
 				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
 				repayment_Account_Name, repayment_Account_Number, state, ctime);
@@ -162,7 +203,7 @@ public class ApplyForLoanInformationController {
 		String repayment_Account_Name = json.getString("repaymentAccount");
 		String repayment_Account_Number = json.getString("accountNumber");
 		String state = json.getString("state");
-		String ctime = json.getString("ctime");
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
 		ApplyForLoanInformation ap = new ApplyForLoanInformation(id, amount, time_Limit, time_Limits, borrowing_Variety,
 				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
 				repayment_Account_Name, repayment_Account_Number, state, ctime);

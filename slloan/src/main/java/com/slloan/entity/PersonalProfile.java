@@ -61,12 +61,40 @@ public class PersonalProfile implements Serializable {
 	private String ParentnodeId;//存入登录用户名ID
 	private String city;//城市
 	private String rolename;//角色名
+	private String applicationnumber;
 	
 	private List<CircuLationRecord> notes;
 
 	private List<ApplyForLoanInformation> applyfor;
 	
 	public PersonalProfile(){}
+
+	
+	
+	public PersonalProfile(String username, String city, String rolename,  String parentnodeId,String name) {
+		super();
+		this.username = username;
+		this.city = city;
+		this.rolename = rolename;
+		ParentnodeId = parentnodeId;
+		this.name = name;
+		
+		
+	}
+
+
+
+	public String getApplicationnumber() {
+		return applicationnumber;
+	}
+
+
+
+	public void setApplicationnumber(String applicationnumber) {
+		this.applicationnumber = applicationnumber;
+	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -540,7 +568,7 @@ public class PersonalProfile implements Serializable {
 			double revenue_previous_year, String asset_scale, String unit_phone, String postCode, String job_category,
 			String seniority, String former_unit_name, String former_seniority, String source_of_income,
 			double monthly_income, double income_from_investment, double supportPeople, double other_income,
-			String family_number, double monthly_expenditure, String postal_address, String state, String ctime) {
+			String family_number, double monthly_expenditure, String postal_address, String state, String ctime,String applicationnumber) {
 		super();
 		this.product_Number = product_Number;
 		this.name = name;
@@ -585,6 +613,7 @@ public class PersonalProfile implements Serializable {
 		this.postal_address = postal_address;
 		this.state = state;
 		this.ctime = ctime;
+		this.applicationnumber = applicationnumber;
 	}
 
 	
@@ -598,7 +627,7 @@ public class PersonalProfile implements Serializable {
 			String seniority, String former_unit_name, String former_seniority, String source_of_income,
 			double monthly_income, double income_from_investment, double supportPeople, double other_income,
 			String family_number, double monthly_expenditure, String postal_address, String state, String ctime,
-			String username, String parentnodeId, String city,String rolename) {
+			String username, String parentnodeId, String city,String rolename,String applicationnumber) {
 		super();
 		this.product_Number = product_Number;
 		this.name = name;
@@ -647,29 +676,35 @@ public class PersonalProfile implements Serializable {
 		ParentnodeId = parentnodeId;
 		this.city = city;
 		this.rolename = rolename;
+		this.applicationnumber = applicationnumber;
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "PersonalProfile [product_Number=" + product_Number + ", name=" + name + ", phoneticize=" + phoneticize
-				+ ", id_type=" + id_type + ", Other_identity_types=" + Other_identity_types + ", id_number=" + id_number
-				+ ", country_and_region=" + country_and_region + ", other_Countries=" + other_Countries + ", sex=" + sex
-				+ ", Local_domicile=" + Local_domicile + ", household_registration=" + household_registration
-				+ ", marital_status=" + marital_status + ", housing_condition_now=" + housing_condition_now
-				+ ", otherCensus=" + otherCensus + ", birthday=" + birthday + ", home_address_now=" + home_address_now
-				+ ", home_phone=" + home_phone + ", mobile_phone=" + mobile_phone + ", email=" + email
-				+ ", present_address_zip_code=" + present_address_zip_code + ", vocation=" + vocation
-				+ ", unit_industry=" + unit_industry + ", uni_name=" + uni_name + ", unit_address=" + unit_address
-				+ ", enterprise_scale=" + enterprise_scale + ", Revenue_previous_year=" + Revenue_previous_year
-				+ ", asset_scale=" + asset_scale + ", unit_phone=" + unit_phone + ", postCode=" + postCode
-				+ ", job_category=" + job_category + ", seniority=" + seniority + ", former_unit_name="
-				+ former_unit_name + ", former_seniority=" + former_seniority + ", source_of_income=" + source_of_income
-				+ ", monthly_income=" + monthly_income + ", Income_from_investment=" + Income_from_investment
-				+ ", supportPeople=" + supportPeople + ", Other_income=" + Other_income + ", family_number="
-				+ family_number + ", monthly_expenditure=" + monthly_expenditure + ", postal_address=" + postal_address
-				+ ", state=" + state + ", ctime=" + ctime + ", username=" + username + ", ParentnodeId=" + ParentnodeId
-				+ ", city=" + city + ", rolename=" + rolename + "]";
+		return "PersonalProfile [id=" + id + ", product_Number=" + product_Number + ", name=" + name + ", phoneticize="
+				+ phoneticize + ", id_type=" + id_type + ", Other_identity_types=" + Other_identity_types
+				+ ", id_number=" + id_number + ", country_and_region=" + country_and_region + ", other_Countries="
+				+ other_Countries + ", sex=" + sex + ", Local_domicile=" + Local_domicile + ", household_registration="
+				+ household_registration + ", marital_status=" + marital_status + ", housing_condition_now="
+				+ housing_condition_now + ", otherCensus=" + otherCensus + ", birthday=" + birthday
+				+ ", home_address_now=" + home_address_now + ", home_phone=" + home_phone + ", mobile_phone="
+				+ mobile_phone + ", email=" + email + ", present_address_zip_code=" + present_address_zip_code
+				+ ", vocation=" + vocation + ", unit_industry=" + unit_industry + ", uni_name=" + uni_name
+				+ ", unit_address=" + unit_address + ", enterprise_scale=" + enterprise_scale
+				+ ", Revenue_previous_year=" + Revenue_previous_year + ", asset_scale=" + asset_scale + ", unit_phone="
+				+ unit_phone + ", postCode=" + postCode + ", job_category=" + job_category + ", seniority=" + seniority
+				+ ", former_unit_name=" + former_unit_name + ", former_seniority=" + former_seniority
+				+ ", source_of_income=" + source_of_income + ", monthly_income=" + monthly_income
+				+ ", Income_from_investment=" + Income_from_investment + ", supportPeople=" + supportPeople
+				+ ", Other_income=" + Other_income + ", family_number=" + family_number + ", monthly_expenditure="
+				+ monthly_expenditure + ", postal_address=" + postal_address + ", state=" + state + ", ctime=" + ctime
+				+ ", username=" + username + ", ParentnodeId=" + ParentnodeId + ", city=" + city + ", rolename="
+				+ rolename + ", applicationnumber=" + applicationnumber + ", notes=" + notes + ", applyfor=" + applyfor
+				+ "]";
 	}
+
 
 
 

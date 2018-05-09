@@ -100,6 +100,8 @@ var collectData = function() {
    data.note = e('.role-note').value
    // data.setPurview = document.querySelector('.role-power').value
    data.setPurview = getEachData(powerShow, Opower)
+   data.parentid = localStorage.roleUseID
+   data.username = localStorage.purusername
    return data
 }
 
@@ -166,7 +168,6 @@ var obtainAjax = function(method, url, datas) {
         var evs = document.querySelector('.role-city')
         var datas = data
         var len = datas.length
-        evs.appendChild(initOptions)
         for(var i = 0; i < len; i++) {
           var options = document.createElement('option')
           options.value = datas[i].name

@@ -66,6 +66,10 @@ var searchData = function() {
 	var method = ''
 	var url = ''
 	var data = {}
+	 data.rolename = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.parentnodeId = localStorage.purid
 	if(url) {
 		searchAajx(method, url, data)
 	}

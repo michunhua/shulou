@@ -172,11 +172,13 @@ var currpages = function() {
 
 currpages()
 
-// 获取页面数据
+// 默认获取页面数据
 var getPageData = function() {
   var method = 'GET'
   var url = '/slloan/user/userlist?page=' + init.pages + '&limit=' + init.limit
   var datas = {}
+  datas.parentid = localStorage.roleUseID
+  datas.username = localStorage.purusername
   sendAjax(method, url, datas, null)
 }
 

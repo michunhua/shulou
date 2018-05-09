@@ -39,14 +39,15 @@ var obtainRoleAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
+    	  console.log(data.obj[0].id)
         log('join role---')
         var envs = e('.role')
         var datas = data
-        var len = datas.length
+        var len = datas.obj.length
         for(var i = 0; i < len; i++) {
           var options = document.createElement('option')
-          options.value = datas[i].id + '&' + datas[i].roleName
-          options.innerText = datas[i].roleName
+          options.value = datas.obj[i].id + '&' + datas.obj[i].roleName
+          options.innerText = datas.obj[i].roleName
           envs.appendChild(options)
         }
         renderForm()
@@ -73,8 +74,8 @@ var obtainCityAjax = function(method, url, datas) {
         for(var i = 0; i < len; i++) {
           envs.innerHTML = ''
           var options = document.createElement('option')
-          options.value = datas.belongs_City
-          options.innerText = datas.belongs_City
+          options.value = datas.obj.belongs_City
+          options.innerText = datas.obj.belongs_City
           envs.appendChild(options)
         }
         renderForm()
@@ -94,6 +95,8 @@ var obtainRole = function(element) {
   var method = 'GET'
   var url = '/slloan/role/initrole'
   var datas = {}
+  datas.parentid = localStorage.roleUseID
+  datas.username = localStorage.purusername
   obtainRoleAjax(method, url, datas, null)
 }
 
@@ -112,15 +115,18 @@ var linkRoleCity = function() {
 });
 }
 
-linkRoleCity()
+//linkRoleCity()
 
 
 // 获取城市
 var obtainCtiy = function(element) {
+	console.log("获取想对应的城市")
   var envs = document.querySelector(element)
   var method = 'GET'
-  var url = '/slloan/role/initcity'
+  var url = '/slloan/user/selectrolecity'
   var datas = {}
+  datas.parentid = localStorage.roleUseID
+  datas.username = localStorage.purusername
   obtainCityAjax(method, url, datas)
 }
 
@@ -133,6 +139,7 @@ var colect = function() {
   data.role = e('.role').value.split('&')[1]
   data.city = e('.city').value
   data.note = e('.text-note').value
+  data.parentid = localStorage.roleUseID
   return data
 }
 
@@ -165,6 +172,7 @@ var cancelBtn = function(element) {
 
 // 执行函数
 var __main = function() {
+  obtainCtiy()
   sendData()
   cancelBtn('#cancel')
 }

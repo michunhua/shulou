@@ -1,22 +1,36 @@
 package com.slloan.controller;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.jfree.data.DataUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.entity.CircuLationRecord;
+import com.slloan.entity.CoborrowerSpouse;
+import com.slloan.entity.Contacts;
+import com.slloan.entity.JointApplicant;
+import com.slloan.entity.ObjectSeq;
 import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.ResultList;
+import com.slloan.service.inter.CircuLationRecordSubmitService;
+import com.slloan.service.inter.ImagedataService;
+import com.slloan.service.inter.JointApplicantService;
 import com.slloan.service.inter.PersonalProfileService;
+import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
@@ -35,10 +49,19 @@ public class PersonalProfileController {
 
 	@Autowired
 	private PersonalProfileService personalprofileservice;
+	
+	@Autowired
+	private ImagedataService imagedataservice;
+	
+	@Autowired
+	private CircuLationRecordSubmitService recordSubmitService;
+	
+	@Autowired
+	private	PersonalProfileService personalproFileService;
 
 	@ResponseBody
 	@RequestMapping("/loanApplypersonaldata")
-	public Json save(HttpServletRequest req) {
+	public Json save(HttpServletRequest req, String spare1) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -85,19 +108,14 @@ public class PersonalProfileController {
 		String postal_address=obj.getString("communication"); // 通讯地址
 		String state=obj.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
-		String ctime=obj.getString("ctime"); // 日期
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 		String username = obj.getString("username"); //用户名
 		 String parentnodeId = obj.getString("parentnodeId"); //用户名id
 		 String city = obj.getString("city"); //城市
 		String rolename = obj.getString("rolename"); //角色
-//		 PersonalProfile p = new PersonalProfile();
-//		 	p.setUsername("张三");
-//		 	p.setParentnodeId("27");
-//		 	p.setCity("北京");
-//		 	String username ="张三";
-//			 String parentnodeId = "27";
-//			 String city ="北京";
-//			 String rolename ="按揭员";
+		
+		
+		
 		Double Revenue_previous_year = 0.0;
 		if (lastyearIncome.length() > 0) {
 			Revenue_previous_year = Double.parseDouble(lastyearIncome);
@@ -122,27 +140,47 @@ public class PersonalProfileController {
 		if (expenses.length() > 0) {
 			monthly_expenditure = Double.parseDouble(expenses);
 		}
-
-		PersonalProfile person = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
-				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
-				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
-				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
-				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
-				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,username,parentnodeId,city,rolename);
-		boolean pe = personalprofileservice.save(person);// 插入角色
-
-		
-//	 	p.setParentnodeId("27");
-//	 	p.setCity("北京");
-		
-		if (pe == true) {
-			logger.info("数据插入成功!");
-			return new Json(true, "success", pe);
-		} else {
-			logger.info("数据插入失败!");
-			return new Json(false, "fail", pe);
+		ObjectSeq objd = new ObjectSeq();
+		ObjectSeq addSeq = imagedataservice.addSeq();
+		System.out.println(addSeq);
+			ObjectSeq seq = imagedataservice.listSeq();
+			System.out.println(seq.getStart_value());
+			int idseq= seq.getStart_value();
+			System.out.println(idseq);
+			Long l = (long) seq.getStart_value();
+			String seqid = String.valueOf(idseq);
+			System.out.println(seqid);
+			String applicationnumber = caseNo(l);
+//			String applicationnumber = DateUtils.getInDateTime(new Date());
+			
+		    		PersonalProfile person = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
+		    				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+		    				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+		    				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+		    				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+		    				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+		    				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,username,parentnodeId,city,rolename,applicationnumber);
+		    		
+		    		boolean pe = personalprofileservice.save(person);// 插入角色
+		    		String fallbackname = "创建贷款完成";
+//		    		String spare1 = obj.getString("note");//备注
+		    		int stateid =0;
+		    		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		    		PersonalProfile param = new PersonalProfile(username,city,rolename,parentnodeId,name);
+		    		PersonalProfile p =personalproFileService.getSelectById(param);
+		    		int pid = p.getId();
+		    		String submit = String.valueOf(pid);
+		    	
+					CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,spare1,createDate,username,parentnodeId,city,rolename);
+		    		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
+		    		if (pe == true) {
+		    			logger.info("数据插入成功!");
+		    			return new Json(true, "success", pe,submit);
+		    		} else {
+		    			logger.info("数据插入失败!");
+		    			return new Json(false, "fail",pe , submit);
 		}
+	
 
 	}
 
@@ -335,7 +373,9 @@ public class PersonalProfileController {
 		String state=json.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
 		String ctime=json.getString("ctime"); // 日期
-
+		
+//		String datatime = DateUtils.getToDateTime((new Date()));
+//		String appnumber = applicationnumber+seqid;
 		Double Revenue_previous_year = 0.0;
 		if (lastyearIncome.length() > 0) {
 			Revenue_previous_year = Double.parseDouble(lastyearIncome);
@@ -383,52 +423,530 @@ public class PersonalProfileController {
 	 */
 	@RequestMapping(value = "/vaguelikeselectcreate", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public String vaguelikeselectcreate(HttpServletRequest req) {
-		 ResultList  resultlist = new  ResultList ();
-		String name = req.getParameter("name");
-		String idnumber = req.getParameter("idnumber");
-		String mobilephone = req.getParameter("mobilephone");
-		String ctim1 = req.getParameter("ctime");
-		String ctim2 = req.getParameter("ctime2");
-		String amount = req.getParameter("amount");
-		String amount2 = req.getParameter("amount2");
-//		String state = req.getParameter("state");
+	public ResultList<PersonalProfile> vaguelikeselectcreate(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
-		map.put("id_number", idnumber);//手机号码
-		map.put("mobile_phone", mobilephone);//证件号码
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
 		map.put("ctime", ctim1);//申请时间1
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
 //		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
 //		map.put("state", state);//状态
 //		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
 //		resultlist.setLists(result);
-		return JSON.toJSONString(personalprofileservice.vaguelikeSelectCreatetwo(map));
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
 	}
 	
-//	/**
-//	 * 贷款按揭员列表
-//	 * 
-//	 * @return json
-//	 */
-//	@RequestMapping(value = "/rolemanagement", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-//	@ResponseBody
-//	public String rolemanagements(HttpServletRequest req) {
-//		String page = req.getParameter("page");
-//		String limit = req.getParameter("limit");
-//		int startPos = Integer.parseInt(page);
-//		int pageSize = Integer.parseInt(limit);
-//		System.out.println(page);
-//		System.out.println(limit);// startPos, int pageSize
-//		// roleAddService.getRolePage(startPos);
-//		// JSON.toJSONString(user)
-//		return JSON.toJSONString(personalprofileservice.getPersonalProfilePage(startPos));
-//	}
+	/**
+	 * 初审列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/firsttriallikeselect", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> cs(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	
+	/**
+	 * 终审列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/finalreviewselect", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> finalreview(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
 
 	
+	/**
+	 * 财务列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/financeselect", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> financeselect(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	
+	/**
+	 * 转账凭证列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/transferdocument", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> transferdocument(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	
+	/**
+	 * 取证凭证列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/forensicdocuments", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> forensicdocuments(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
 
+	
+	/**
+	 * 解押凭证列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/revocationcertificate", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> revocationcertificate(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	/**
+	 * 进押凭证列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/receivingcertificate", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> receivingcertificate(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	/**
+	 * 回款确认列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/refundconfirmation", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> refundconfirmation(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	
+	
+	/**
+	 * 结算凭证列表模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/settlementdocument", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> settlementdocument(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	
+	
+	/**
+	 * 贷款信息模糊查询
+	 * @return json
+	 */
+	@RequestMapping(value = "/loaninformation", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public ResultList<PersonalProfile> loaninformation(HttpServletRequest req) {
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		 String data = req.getParameter("data");
+		 JSONObject obj = new JSONObject().fromObject(data);
+		String name = obj.getString("userName");
+		String mobilephone = obj.getString("iphone");
+		String idnumber = obj.getString("IDcard");
+		String numbering = obj.getString("numbering");
+		String ctim1 = obj.getString("date");
+		String ctim2 = obj.getString("end");
+		String amount = obj.getString("min");
+		String amount2 = obj.getString("max");
+		String statu = obj.getString("statu");
+		String state = req.getParameter("state");
+		String rolename = req.getParameter("rolename");
+		String username = req.getParameter("username");
+		String city = req.getParameter("city");
+		String parentnodeId = req.getParameter("parentnodeId");
+		
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		map.put("name", name);//姓名
+		map.put("mobile_phone", mobilephone);//手机号码
+		map.put("id_number", idnumber);//证件号码
+		map.put("applicationnumber", numbering);
+		map.put("ctime", ctim1);//申请时间1
+		map.put("ctime2", ctim2);//申请时间2
+		map.put("amount", amount);//金额
+		map.put("amount2", amount2);//金额2
+		map.put("state", statu);//金额2
+		map.put("rolename", rolename);//申请时间2
+		map.put("username", username);//金额
+		map.put("city", city);//金额2
+		map.put("parentnodeId", parentnodeId);//金额2
+//		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount+" g: "+amount2);
+//		map.put("state", state);//状态
+//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
+//		resultlist.setLists(result);
+		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
+		 resulit.setLists(p);
+		return resulit;
+	}
+	
 	/**
 	 * 申请人资料
 	 * 
@@ -461,4 +979,18 @@ public class PersonalProfileController {
 		System.out.println("--------------------------");
 		return "loanfinal/loanerInfo";
 	}
+	 private String caseNo(Long id) {
+	        String strId = id.toString();
+	        int idLenth = 9 - strId.length();
+	        StringBuilder builder = new StringBuilder();
+//	        Calendar cal = Calendar.getInstance();
+	        builder.append("(").append(DateUtils.getToDateTime((new Date()))).append(")");
+	        builder.append("赎楼第");
+	        for (int i = 0; i < idLenth; i++) {
+	            builder.append("0");
+	        }
+	        builder.append(id);
+	        builder.append("号");
+	        return builder.toString();
+	    }
 }

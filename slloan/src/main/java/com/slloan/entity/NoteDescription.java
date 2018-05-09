@@ -6,12 +6,88 @@ public class NoteDescription {
 	private String note_Description1;
 	private String note_Description2;
 	private String note_Description3;
+	private String note_Description4;
 	private String state;
 	private String ctime;
 	private String username;//存入用户名
 	private String ParentnodeId;//存入登录用户名ID
 	private String city;//城市
 	private String rolename;//角色名
+	private String submit;
+	
+	public NoteDescription()   {  
+		  
+	}  
+	
+	
+	
+
+	public NoteDescription(String note_Description1, String note_Description2, String note_Description3, String note_Description4,String state,
+			String ctime, String username, String parentnodeId, String city, String rolename, String submit) {
+		super();
+		this.note_Description1 = note_Description1;
+		this.note_Description2 = note_Description2;
+		this.note_Description3 = note_Description3;
+		this.note_Description4 = note_Description4;
+		this.state = state;
+		this.ctime = ctime;
+		this.username = username;
+		ParentnodeId = parentnodeId;
+		this.city = city;
+		this.rolename = rolename;
+		this.submit = submit;
+	}
+
+
+
+
+	public NoteDescription(Integer id, String note_Description1, String note_Description2, String note_Description3,String note_Description4,
+			String state, String ctime) {
+		super();
+		this.id = id;
+		this.note_Description1 = note_Description1;
+		this.note_Description2 = note_Description2;
+		this.note_Description3 = note_Description3;
+		this.note_Description4 = note_Description4;
+		this.state = state;
+		this.ctime = ctime;
+	}
+	
+	
+	public NoteDescription(String note_Description1, String state, String ctime, String username, String parentnodeId,
+			String city, String rolename, String submit) {
+		super();
+		this.note_Description1 = note_Description1;
+		this.state = state;
+		this.ctime = ctime;
+		this.username = username;
+		ParentnodeId = parentnodeId;
+		this.city = city;
+		this.rolename = rolename;
+		this.submit = submit;
+	}
+
+
+	public String getNote_Description4() {
+		return note_Description4;
+	}
+
+
+
+
+	public void setNote_Description4(String note_Description4) {
+		this.note_Description4 = note_Description4;
+	}
+
+
+
+
+	public String getSubmit() {
+		return submit;
+	}
+	public void setSubmit(String submit) {
+		this.submit = submit;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -76,66 +152,15 @@ public class NoteDescription {
 	}
 	
 
+
 	@Override
 	public String toString() {
 		return "NoteDescription [id=" + id + ", note_Description1=" + note_Description1 + ", note_Description2="
 				+ note_Description2 + ", note_Description3=" + note_Description3 + ", state=" + state + ", ctime="
 				+ ctime + ", username=" + username + ", ParentnodeId=" + ParentnodeId + ", city=" + city + ", rolename="
-				+ rolename + "]";
-	}
-	public NoteDescription(String note_Description1,String state,
-			String ctime) {
-		super();
-		this.note_Description1 = note_Description1;
-		this.state = state;
-		this.ctime = ctime;
-	}
-	public NoteDescription(String note_Description1, String note_Description2, String note_Description3, String state,
-			String ctime, String username, String parentnodeId, String city,String rolename) {
-		super();
-		this.note_Description1 = note_Description1;
-		this.note_Description2 = note_Description2;
-		this.note_Description3 = note_Description3;
-		this.state = state;
-		this.ctime = ctime;
-		this.username = username;
-		ParentnodeId = parentnodeId;
-		this.city = city;
-		this.rolename = rolename;
+				+ rolename + ", submit=" + submit + "]";
 	}
 	
-	public NoteDescription(String note_Description1, String note_Description2, String state,
-			String ctime) {
-		super();
-		this.note_Description1 = note_Description1;
-		this.note_Description2 = note_Description2;
-		this.state = state;
-		this.ctime = ctime;
-	}
-	
-	public NoteDescription(String note_Description1, String note_Description2,String note_Description3, String state,
-			String ctime) {
-		super();
-		this.note_Description1 = note_Description1;
-		this.note_Description2 = note_Description2;
-		this.note_Description2 = note_Description3;
-		this.state = state;
-		this.ctime = ctime;
-	}
-	
-	public NoteDescription(){
-		
-	}
-	public NoteDescription(Integer id, String note_Description1, String note_Description2, String note_Description3,
-			String state, String ctime) {
-		super();
-		this.id = id;
-		this.note_Description1 = note_Description1;
-		this.note_Description2 = note_Description2;
-		this.note_Description3 = note_Description3;
-		this.state = state;
-		this.ctime = ctime;
-	}
 	
 	
 }

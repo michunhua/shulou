@@ -47,14 +47,16 @@ public class SpousesOfBorrowersController {
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 
+		
+		
 		  String name = obj.getString("cname"); // 共同借款人配偶姓名戦
-			String id_Type = obj.getString("paperwork"); //身份证件类型
-			String id_Other = obj.getString("paperother"); //其他
-			String id_Number =obj.getString("paperNumb"); // 身份证件号码
-			String uni_Name = obj.getString("unitName"); // 工作单位名称
-			String unit_Phone =obj.getString("residencePhone");// 单位电话
-			String home_Phone =obj.getString("unitPhone"); // 住宅电话
-			String mobile_Phone = obj.getString("mobiePhone"); // 移动电话
+			String id_Type = obj.getString("certificate"); //身份证件类型
+			String id_Other = obj.getString("certificateType"); //其他
+			String id_Number =obj.getString("document"); // 身份证件号码
+			String uni_Name = obj.getString("untilName"); // 工作单位名称
+			String unit_Phone =obj.getString("untilPhone");// 单位电话
+			String home_Phone =obj.getString("residence"); // 住宅电话
+			String mobile_Phone = obj.getString("mobile"); // 移动电话
 			String salary =obj.getString("salary");// 月薪（人民币）
 		String state = obj.getString("state");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
@@ -102,6 +104,44 @@ public class SpousesOfBorrowersController {
 	
 	
 	/**
+	 * 创建修改用户保存
+	 * @return
+	 */
+	@RequestMapping(value="/spoupdatea",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json spoupdatee(HttpServletRequest req){
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String name = json.getString("cname");  // 共同借款人配偶姓名戦
+		String id_Type =  json.getString("certificate"); //身份证件类型
+		String id_Other = json.getString("certificateType");
+		String id_Number =json.getString("document");  // 身份证件号码
+		String uni_Name =  json.getString("untilName"); // 工作单位名称
+		String unit_Phone =json.getString("untilPhone"); // 单位电话
+		String home_Phone =json.getString("residence"); // 住宅电话
+		String mobile_Phone = json.getString("mobile"); // 移动电话
+		String salary =json.getString("salary"); // 月薪（人民币）
+		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
+		Double monthly_Income = 0.0;
+		if (salary.length() > 0) {
+			monthly_Income = Double.parseDouble(salary);
+		}
+
+		SpousesOfBorrowers coborrow = new SpousesOfBorrowers(id,name, id_Type,id_Other, id_Number, uni_Name,
+				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
+		boolean isResult =spousesofborrowers.spoupdate(coborrow);
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
+		}
+	} 
+	
+	/**
 	 * 初审修改用户保存
 	 * @return
 	 */
@@ -121,7 +161,7 @@ public class SpousesOfBorrowersController {
 		String mobile_Phone = json.getString("mobile"); // 移动电话
 		String salary =json.getString("salary"); // 月薪（人民币）
 		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime=json.getString("ctime");
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 		Double monthly_Income = 0.0;
 		if (salary.length() > 0) {
 			monthly_Income = Double.parseDouble(salary);
@@ -159,7 +199,7 @@ public class SpousesOfBorrowersController {
 		String mobile_Phone = json.getString("mobile"); // 移动电话
 		String salary =json.getString("salary"); // 月薪（人民币）
 		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime=json.getString("ctime");
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 		Double monthly_Income = 0.0;
 		if (salary.length() > 0) {
 			monthly_Income = Double.parseDouble(salary);

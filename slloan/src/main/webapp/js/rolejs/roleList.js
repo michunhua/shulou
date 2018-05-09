@@ -129,6 +129,8 @@ var firtLoadlist = function() {
     console.log('firtLoadlist', init.pages, init.limit)
     // var getData = collectData()
     var data = {}
+    data.parentid = localStorage.roleUseID
+    data.username = localStorage.purusername
     var method = 'GET'
     var url = '/slloan/role/rolemanagement?page='+init.pages+'&limit='+ init.limit
     sendAjax(method, url, data)
@@ -154,6 +156,7 @@ var singlesendAjax = function(method, url, datas, callback) {
     	if(data.msg == 'success') {
     		alert('删除成功')
     		callback()
+    		result = []
     	}
     },
     error: function(){

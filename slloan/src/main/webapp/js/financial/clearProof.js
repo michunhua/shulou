@@ -78,6 +78,7 @@ var addTable = function(data) {
       var td9 = document.createElement('td')
       var span1 = document.createElement('a')
    	  var span2 = document.createElement('a')
+   	  var applicationnumber = myFilter(datas.lists[i].applicationnumber)
    	  var ID = myFilter(data.lists[i].notes[0].id)
 		var userid = myFilter(datas.lists[i].name)
 		var userName = myFilter(datas.lists[i].applyfor[0].amount)
@@ -91,7 +92,7 @@ var addTable = function(data) {
 
 		a.classList.add('mark')
 		a.href = '#'
-		a.innerText = '201802241931'
+		a.innerText = applicationnumber
 		td1.classList.add('flag')
 		td1a.innerText = ID
 		td1.innerText = userid
@@ -99,6 +100,7 @@ var addTable = function(data) {
 		td3.innerText = phone
 		td4.innerText = number
 		td5.innerText = limit
+		td6.classList.add("state")
 		td6.innerText = state
 		td7.innerText = address
 		td8.innerText = time
@@ -109,6 +111,7 @@ var addTable = function(data) {
       span2.classList.add('record')
       span2.href = '#'  
       span2.innerText = '[ 流转记录   ]'
+    	  
       td9.classList.add(ID)
       td9.appendChild(span1)
       td9.appendChild(span2)
@@ -144,6 +147,9 @@ console.log(' send data ajax')
    data: {data:JSON.stringify(datas)},
    success: function(data) {
      addTable(data)
+   }, 
+   error: function() {
+	   alert('服务器加载数据错误')
    }
  })
 }
@@ -154,6 +160,10 @@ var initData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanjslist?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
+	 datas.rolename = localStorage.purrole
+	  datas.username = localStorage.purusername
+	  datas.city = localStorage.purcity
+	  datas.parentnodeId = localStorage.purid
 		console.log('初始化加载数据233')
 	sendAjax(method, url, datas)
 	console.log('执行没有？')
@@ -161,42 +171,50 @@ var initData = function() {
 
 //收集数据
 var collectData = function() {
- var data = {}
- data.userName = e('.username').value
- data.iphone = e('.iphone').value
- data.IDcard = e('.Idcard').value
- data.numbering = e('.application').value
- data.date = e('.start').value
- data.end = e('.end').value
- data.statu = e('.state').value
- data.min = e('.min').value
- data.max = e('.max').value
- return data
+    var data = {}
+    data.userName = e('.username').value
+    data.iphone = e('.iphone').value
+    data.IDcard = e('.Idcard').value
+    data.numbering = e('.application').value
+    data.start = e('.start').value
+    data.end = e('.end').value
+    data.min = e('.min').value
+    data.max = e('.max').value
+    return data
 }
 
 //查询方法
 var inquireAjax = function(method, url, datas) {
-console.log(' send data ajax')
- $.ajax({
-   type: method,
-   url: url,
-   data: {data:JSON.stringify(datas)},
-   success: function(data) {
-     console.log(data)
-   }
- })
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+        addTable(data)
+      },
+      error: function() {
+    	  alert("服务器错误")
+      }
+    })
 }
 
-//事件响应
+// 事件响应
 var envs = function(element) {
-var ens = e(element)
-ens.addEventListener('click', function() {
- console.log('running', datas)
- var method = 'GET'
- var url = ''
- var datas = collectData()
- inquireAjax(method, url, datas)
-})
+  var ens = e(element)
+  ens.addEventListener('click', function() {
+    console.log('running', datas)
+    var method = 'GET'
+    var url = '/slloan/loan/financeselect'
+    var datas = collectData()
+    datas.state = es('.state')[0].innerText
+    datas.rolename = localStorage.purrole
+    datas.username = localStorage.purusername
+    datas.city = localStorage.purcity
+    datas.parentnodeId = localStorage.purid
+    inquireAjax(method, url, datas)
+  })
 }
 
 
@@ -216,6 +234,54 @@ var numberSearch = function() {
 			console.log(event.target.innerText)
 		})
 	}
+}
+
+//收集数据
+var collectData = function() {
+    var data = {}
+    data.userName = e('.username').value
+    data.iphone = e('.iphone').value
+    data.IDcard = e('.Idcard').value
+    data.numbering = e('.application').value
+    data.start = e('.start').value
+    data.end = e('.end').value
+    data.min = e('.min').value
+    data.max = e('.max').value
+    return data
+}
+
+//查询方法
+var inquireAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+        addTable(data)
+      },
+      error: function() {
+    	  alert('服务器错误')
+      }
+    })
+}
+
+// 事件响应
+var envs = function(element) {
+  var ens = e(element)
+  ens.addEventListener('click', function() {
+    console.log('running', datas)
+    var method = 'GET'
+    var url = '/slloan/loan/settlementdocument'
+    var datas = collectData()
+    datas.state = es('.state')[0].innerText
+     datas.rolename = localStorage.purrole
+    datas.username = localStorage.purusername
+    datas.city = localStorage.purcity
+    datas.parentnodeId = localStorage.purid
+    inquireAjax(method, url, datas)
+  })
 }
 
 //分页接口 user/userlist
@@ -357,11 +423,51 @@ function uuuu(udata){
 alert(udata)
 }
 
+//流转记录查询
+var hang_cirulationAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+      }, 
+      error: function() {
+    	  layer.msg('服务器错误')
+      }
+    })
+}
+
+//挂起&流转记录位置
+var Hang_cirulation = function(element) {
+	var intent = e(element)
+	intent.addEventListener('click', function(event) {
+		if(event.target.classList.contains("upload")) {   
+			console.log('挂起')
+		} else if(event.target.classList.contains("record")) {
+			console.log('流转记录')
+			var method = "GET"
+		    var url = "/slloan/sumiteregresses/selectwhole"
+		    var datas = {}
+			datas.state = 0
+			datas.id = event.target.parentNode.classList.value
+		    datas.username = localStorage.purusername
+		    datas.city = localStorage.purcity
+			datas.parentnodeId = localStorage.purid
+			hang_cirulationAjax(method, url, datas)
+		}
+	})
+}
+
+
 var __main = function() {
 initData()
 numberSearch()
 envs('#save-data')
 uploadCertificate(".tab-data")
+Hang_cirulation('.tab-data')
+
 }
 
 __main()

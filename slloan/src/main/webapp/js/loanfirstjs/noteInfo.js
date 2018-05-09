@@ -5,11 +5,9 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.note = e('.record-note').value
-  data.firstTrial = e('.first-trial').value
-  data.rolename = localStorage.purrole
-  data.username = localStorage.purusername
-  data.city = localStorage.purcity
-  data.parentnodeId = localStorage.purid
+  data.recordFirst = e('.first-trial').value
+  data.recorFinal = ''
+	  data.recorfore = ''
   data.state = ''
   data.ctime = ''
   return data
@@ -28,7 +26,7 @@ var sendAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
-  				window.location.href = '../../slloan/loan/loancreas'
+  				window.location.href = "/slloan/loan/loancreas"
   			});
     	} else {
     		alert('服务器错误')
@@ -41,17 +39,25 @@ var sendAjax = function(method, url, datas) {
 }
 
 
-// 发送数据
+// 修改发送数据
 var sendData = function(element) {
   log('send data to server')
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.id = localStorage.firstID
+    data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
+    data.temporaryId = '1'
     var method = 'POST'
-    var url = '/slloan/loan/notedescriptionassc'
+    var url = '/slloan/loan/updatenotetwo'
     log(data)
-    sendAjax(method, url, data)
+    if(data.id) {
+        sendAjax(method, url, data)
+    }
   })
 }
 
@@ -59,7 +65,7 @@ var sendData = function(element) {
 var searchExport = function(back) {
 	recordNote = e('.record-note')
 	
-	recordNote.value = back.spare1
+	recordNote.value = back.note_Description1
 }
 
 //查询
@@ -73,7 +79,7 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
+			console.log('返回数据', data.obj)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -92,13 +98,13 @@ var searchData = function() {
 	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = localStorage.firstID
-	  data.rolename = localStorage.purrole
-	  data.username = localStorage.purusername
+	data.rolename = localStorage.purrole
+	  data.userName = localStorage.purusername
 	  data.city = localStorage.purcity
 	  data.parentnodeId = localStorage.purid
-//	if(data.id) {
+	if(data.id) {
 		searchAjax(method, url, data)	
-//	}
+	}
 }
 
 
@@ -108,7 +114,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreas"
   })
 }
 
@@ -126,7 +132,7 @@ var submitAjax = function(method, url, datas) {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
-	  				window.location.href = '../../slloan/loan/loancreas'
+	  				window.location.href = "/slloan/loan/loancreas"
 	  			});
 	    	} else {
 	    		alert('服务器错误')
@@ -166,11 +172,11 @@ var backAjax = function(method, url, datas) {
 	    data: {data:JSON.stringify(datas)},
 	    success: function(data) {
 	    	if(data.msg == 'success') {
-	    		layer.msg('保存成功', {
+	    		layer.msg('回退成功', {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
-	  				window.location.href = '../../slloan/loan/loancreas'
+	  				window.location.href = "/slloan/loan/loancreas"
 	  			});
 	    	} else {
 	    		alert('服务器错误')
@@ -189,6 +195,11 @@ var backBtn = function(element) {
 			    var method = 'GET'
 				var url = '/slloan/loan/loannotFallback'
 				var data = collectData()
+					data.id = localStorage.firstID
+			data.rolename = localStorage.purrole
+		    data.username = localStorage.purusername
+		    data.city = localStorage.purcity
+			data.parentnodeId = localStorage.purid
 				submitAjax(method, url, data)
 			  layer.close(index);
 			});

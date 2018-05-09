@@ -13,27 +13,20 @@ var collectData = function() {
   data.repaymenBtank = e('.repayment-bank').value
   data.repaymentAccount = e('.repayment-account').value
   data.accountNumber = e('.account-number').value
-	data.id = localStorage.finalID
-	data.state = ''
-		data.ctime = ''
+  data.id = 2
   return data
 }
 
 
 // 发送数据方法
-var sendAjax = function(method, url, datas) {
+var sendAjax = function(method, url, datas, callback) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function(data) {
-    	console.log('返回数据')
-		if (data.msg == 'success') {
-			
-		} else {
-			alert('服务器错误') 
-		}
+    success: function() {
+    	callback()
     },
     error: function(){
         alert('服务器错误')
@@ -49,8 +42,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/modifyusers'
+    var method = ''
+    var url = ''
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -134,7 +127,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreass"
   })
 }
 

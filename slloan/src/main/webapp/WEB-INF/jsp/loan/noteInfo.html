@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="renderer" content="webkit"> 
      <link rel="stylesheet" href="../public/layui/css/layui.css">
     <link rel="stylesheet" href="../public/css/navigate.css">
     <link rel="stylesheet" href="../public/css/main.css">
@@ -13,7 +14,7 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">logo 后台布局</div>
+        <div class="layui-logo">赎楼业务系统</div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
@@ -45,31 +46,13 @@
                     <li class="layui-nav-item " id = 'tree-trival'>
                         <a href="javascript:;">贷款初审</a>
                         <dl class="layui-nav-child">
-                         <dd><a href="../../slloan/loan/loancreas">贷款创建列表</a></dd>
-                            <dd><a href="../../slloan/loan/loanjoins">借款申请人个人资料</a></dd>
-                            <dd><a href="../../slloan/loan/loancoms">共同申请人个人资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanermas">借款申请人配偶</a></dd>
-                            <dd><a href="../../slloan/loan/loancomms">共同申请人配偶</a></dd>
-                            <dd><a href="../../slloan/loan/loanapplys">申请借款信息</a></dd>
-                            <dd><a href="../../slloan/loan/loanestas">房产资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanimags">影像资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanlinks">联系人信息</a></dd>
-                            <dd><a href="../../slloan/loan/loannotes">备注说明</a></dd>
+                         <dd><a href="../../slloan/loan/loancreas">待初审列表</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item " id = 'tree-final'>
                         <a href="javascript:;">贷款终审</a>
                         <dl class="layui-nav-child">
-                         <dd><a href="../../slloan/loan/loancreass">贷款创建列表</a></dd>
-                            <dd><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></dd>
-                            <dd><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanermass">借款申请人配偶</a></dd>
-                            <dd><a href="../../slloan/loan/loancommss">共同申请人配偶</a></dd>
-                            <dd><a href="../../slloan/loan/loanapplyss">申请借款信息</a></dd>
-                            <dd><a href="../../slloan/loan/loanestass">房产资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanimagss">影像资料</a></dd>
-                            <dd><a href="../../slloan/loan/loanlinkss">联系人信息</a></dd>
-                            <dd><a href="../../slloan/loan/loannotess">备注说明</a></dd>
+                         <dd><a href="../../slloan/loan/loancreass">待终审列表</a></dd>
                         </dl>
                     </li>
                      <li class="layui-nav-item " id = 'tree-read'>
@@ -97,17 +80,17 @@
               <h2 class="layui-colla-title">财务管理</h2>
               <div class="layui-colla-content">
                 <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item" id = "navfinance-list">
                         <a href="javascript:;">财务审批</a>
                         <dl class="layui-nav-child">
                              <dd><a href="../financial/financeapproval">审批列表</a></dd>
                             <dd><a href="../financial/financenote">财务备注</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item" id ="navfinance-trans">
                         <a href="../financial/transfervoucher">转账凭证</a>
                     </li>
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item" id = "navfinance-clear">
                         <a href="../financial/settlementvoucher">结算凭证</a>
                     </li>
                 </ul>
@@ -117,10 +100,10 @@
               <h2 class="layui-colla-title">个人信息</h2>
               <div class="layui-colla-content">
                 <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                    <li class="layui-nav-item">
+                   <li class="layui-nav-item" id = "navuserInfo-update">
                         <a href="../user/userinfo/updateuserInfo">个人信息修改</a>
                     </li>
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item" id = "navuserInfo-password">
                         <a href="../user/userinfo/updatepassword">密码修改</a>
                     </li>
                 </ul>
@@ -130,22 +113,16 @@
               <h2 class="layui-colla-title">用户管理</h2>
               <div class="layui-colla-content">
                 <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item" id = "navuserManagement-user">
                         <a href="javascript:;">用户</a>
                         <dl class="layui-nav-child">
                            <dd><a href="../user/ulist">用户列表</a></dd>
-                            <dd><a href="../user/addu">添加用户</a></dd>
-                            <dd><a href="../user/allotuser">分配角色</a></dd>
-                            <dd><a href="../user/delu">删除用户</a></dd>
-                            <dd><a href="../user/updateuser">修改用户信息</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item" id = "navuserManagement-role">
                         <a href="javascript:;">角色</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="../role/rolelist">角色列表</a></dd>
-                            <dd><a href="../role/roleadd">添加角色</a></dd>
-                            <dd><a href="../role/updaterole">修改角色权限</a></dd>
+                             <dd><a href="../role/rolelist">角色列表</a></dd>
                         </dl>
                     </li>
                 </ul>

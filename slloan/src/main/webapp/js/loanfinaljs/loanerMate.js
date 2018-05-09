@@ -11,9 +11,7 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = localStorage.finalID
-  data.state = ''
-	  data.ctime = ''
+  data.id = 1
   return data
 }
 
@@ -118,7 +116,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreass"
   })
 }
 

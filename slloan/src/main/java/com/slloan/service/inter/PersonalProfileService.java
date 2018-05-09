@@ -168,5 +168,7 @@ public interface PersonalProfileService {
 
 //			int getPersonalProfilePage();
 		 	
+		 	public PersonalProfile getSelectById(PersonalProfile param);
+		 	
 			
 }

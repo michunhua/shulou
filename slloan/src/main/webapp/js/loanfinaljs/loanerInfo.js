@@ -52,10 +52,10 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
-  data.state = ''
-  data.ctime =''
+  data.state = 'c'
+  data.ctime ='d'
   data.hi = 'hi'
-	  data.id = localStorage.finalID	  
+  data.id = 2	  
   return data
 }
 
@@ -234,7 +234,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreass"
   })
 }
 

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="renderer" content="webkit"> 
+    <link rel="stylesheet" href="../public/layui/css/layui.css">
+    <link rel="stylesheet" href="../public/css/navigate.css">
+    <link rel="stylesheet" href="../public/css/main.css">
+    <title>贷款管理/ 贷款信息查看/ 终审备注</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">赎楼业务系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span id = 'username'>admin</span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll" id = 'nav'>
+          <!-- 导航内容 -->
+          <div class="layui-collapse">
+            <div class="layui-colla-item" id = 'navloan'>
+              <h2 class="layui-colla-title">贷款管理</h2>
+              <div class="layui-colla-content layui-show">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item " id = 'tree-create'>
+                        <a href="javascript:;">贷款创建</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-trival'>
+                        <a href="javascript:;">贷款初审</a>
+                        <dl class="layui-nav-child">
+                          <dd><a href="../../slloan/loan/loancreas">待初审列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed" id = 'tree-final'>
+                        <a href="javascript:;">贷款终审</a>
+                        <dl class="layui-nav-child">
+                          <dd><a href="../../slloan/loan/loancreass">待终审列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-read'>
+                        <a href="../../slloan/loan/anin">贷款信息查看</a>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-confirm'>
+                        <a href="../../slloan/loan/repa">回款确认</a>
+                      </dl>
+                    </li>
+                    <li class="layui-nav-item" id = 'tree-gain'>
+                        <a href="../../slloan/loan/gain">取证凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-relief'>
+                        <a href="../../slloan/loan/reli">解押凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id = 'tree-incare'>
+                        <a href="../../slloan/loan/inca">进押凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navfinance'>
+              <h2 class="layui-colla-title">财务管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item" id = "navfinance-list">
+                        <a href="javascript:;">财务审批</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../financial/financeapproval">审批列表</a></dd>
+                            <dd><a href="../financial/financenote">财务备注</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id ="navfinance-trans">
+                        <a href="../financial/transfervoucher">转账凭证</a>
+                    </li>
+                    <li class="layui-nav-item" id = "navfinance-clear">
+                        <a href="../financial/settlementvoucher">结算凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserInfo'>
+              <h2 class="layui-colla-title">个人信息</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item" id = "navuserInfo-update">
+                        <a href="../user/userinfo/updateuserInfo">个人信息修改</a>
+                    </li>
+                    <li class="layui-nav-item" id = "navuserInfo-password">
+                        <a href="../user/userinfo/updatepassword">密码修改</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserManagement'>
+              <h2 class="layui-colla-title">用户管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item" id = "navuserManagement-user">
+                        <a href="javascript:;">用户</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../user/ulist">用户列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id = "navuserManagement-role">
+                        <a href="javascript:;">角色</a>
+                        <dl class="layui-nav-child">
+                           <dd><a href="../role/rolelist">角色列表</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <!-- 头部导航 -->
+        <ul class="layui-nav" lay-filter="">
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loannotess">终审备注</a></li>
+        </ul>
+        <div class="container">
+          <!-- 具体页面导航 -->
+          <span class="layui-breadcrumb nav-title">
+            <a href="">贷款管理</a>
+            <a href="">贷款终审</a>
+            <a href="">终审备注</a>
+          </span>
+          <hr>
+          <!-- 内容区域页面 -->
+          <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item layui-form-text">
+              <label class="layui-form-label">录单备注</label>
+              <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea note"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+              <label class="layui-form-label">初审备注</label>
+              <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea first-trial"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+              <label class="layui-form-label">终审备注</label>
+              <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea final-trial"></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <button type="reset" class="layui-btn layui-btn-primary" id = "cancel">返回</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 版权所有
+    </div>
+</div>
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
+<script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/loanfinaljs/noteInfo.js"></script>
+</body>
+</html>

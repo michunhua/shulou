@@ -1,5 +1,40 @@
 console.log('这是新增加的页面js')
 
+//重新渲染表单
+function renderForm(){
+	log("重新渲染表单")
+layui.use('form', function(){
+var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+form.render('select');
+});
+}
+
+
+//角色加入
+var obtainRoleAjax = function(method, url, datas) {
+ $.ajax({
+   type: method,
+   url: url,
+   data: {data:JSON.stringify(datas)},
+   success: function(data) {
+     log('join role---')
+     var envs = document.querySelector('.role')
+     var datas = data
+     var len = datas.length
+     for(var i = 0; i < len; i++) {
+       var options = document.createElement('option')
+       options.value = datas[i].id + '&' + datas[i].roleName
+       options.innerText = datas[i].roleName
+       envs.appendChild(options)
+     }
+     renderForm()
+   },
+   error: function(){
+       alert('服务器出错')
+   }
+ })
+}
+
 
 //默认加载数据
 var editorAjax = function(method, url, datas) {
@@ -22,14 +57,30 @@ var editorAjax = function(method, url, datas) {
 			option0.innerText = data.distribution_Role
 			option1.innerText = data.belongs_City
 			
-			console.log(option0)
 			
 			username.value = data.userName
 			pwd.value = data.passWord
 			name.value  = data.employeeis_Name
-			role.appendChild(option0)
-			city.appendChild(option1)
 			note.value  = data.note
+			
+			// 设置角色和城市
+//			role.appendChild(option0)
+			var Identification = data.distribution_Role
+    		var intent = e(".role")
+    		var len = intent.length
+    		for(var citys = 0; citys < len; citys++) {
+    			log(intent[citys].innerText)
+    			if(intent[citys].innerText == Identification) {
+    				console.log('相等吗？')
+    				console.log(citys)
+    				intent[citys].selected = true
+    			}
+    		}
+			
+			// 设置城市
+			city.appendChild(option1)
+			
+			renderForm()
 		},
 		error: function(){
 	          alert('服务器错误')
@@ -37,9 +88,9 @@ var editorAjax = function(method, url, datas) {
 	})
 }
 
-
-window.onload = function() {
-	if (localStorage.editorUserName != null) {
+//默认加载用户数据
+var onloadUser = function() {
+	if (localStorage.editorUserName) {
 		var method = 'GET'
 		var url = '/slloan/user/modifselect'
 		var data = {}
@@ -47,6 +98,8 @@ window.onload = function() {
 		editorAjax(method, url, data)
 	}
 }
+
+
 
 // 保存数据方法
 var saveAjax = function(method, url, datas){
@@ -119,39 +172,6 @@ var sendAjax = function(method, url, datas) {
  })
 }
 
-//重新渲染表单
-function renderForm(){
-layui.use('form', function(){
-var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
-form.render();
-});
-}
-
-//角色加入
-var obtainRoleAjax = function(method, url, datas) {
- $.ajax({
-   type: method,
-   url: url,
-   data: {data:JSON.stringify(datas)},
-   success: function(data) {
-     log('join role---')
-     var envs = document.querySelector('.role')
-     var datas = data
-     var len = datas.length
-     for(var i = 0; i < len; i++) {
-       var options = document.createElement('option')
-       options.value = datas[i].id + '&' + datas[i].roleName
-       options.innerText = datas[i].roleName
-       envs.appendChild(options)
-     }
-     renderForm()
-   },
-   error: function(){
-       alert('服务器出错')
-   }
- })
-}
-
 //城市加入
 var obtainCityAjax = function(method, url, datas) {
  $.ajax({
@@ -192,7 +212,7 @@ var datas = {}
 obtainRoleAjax(method, url, datas, null)
 }
 
-window.onload = obtainRole()
+
 
 //根据角色确定城市
 var linkRoleCity = function() {
@@ -207,7 +227,7 @@ obtainCityAjax(method, url, datas)
 });
 }
 
-linkRoleCity()
+
 
 
 //获取城市
@@ -222,8 +242,11 @@ obtainCityAjax(method, url, datas)
 
 
 var _main = function() {
-	saveData()
-	cancelData()
+	obtainRole()		   // 默认载入角色
+	onloadUser()          // 默认加载用户数据
+	saveData()			  // 保存修改数据
+	cancelData()		  // 取消按钮
+	//linkRoleCity()		  // 获取角色城市
 }
 
 _main()

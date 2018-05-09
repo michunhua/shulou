@@ -88,16 +88,17 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/notedescripti'
+	var url = '/slloan/loan/select'
 	var data = {}
 	data.id = localStorage.finalID
-	data.rolename = localStorage.purrole
-	data.username = localStorage.purusername
-	data.city = localStorage.purcity
-    data.parentnodeId = localStorage.purid
-//	if(data.id) {
+	  data.rolename = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.parentnodeId = localStorage.purid
+	
+	if(data.id) {
 		searchAjax(method, url, data)
-//	}
+	}
 }
 
 //取消按钮事件
@@ -106,7 +107,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreass"
   })
 }
 
@@ -123,7 +124,7 @@ var submitAjax = function(method, url, datas) {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
-	  				window.location.href = '../../slloan/loan/loancreas'
+	  				 window.location.href = "/slloan/loan/loancreass"
 	  			});
 	    	} else {
 	    		alert('服务器错误')
@@ -162,11 +163,11 @@ var backAjax = function(method, url, datas) {
 	    data: {data:JSON.stringify(datas)},
 	    success: function(data) {
 	    	if(data.msg == 'success') {
-	    		layer.msg('保存成功', {
+	    		layer.msg('回退成功', {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
-	  				window.location.href = '../../slloan/loan/loancreas'
+	  				 window.location.href = "/slloan/loan/loancreass"
 	  			});
 	    	} else {
 	    		alert('服务器错误')
@@ -185,6 +186,7 @@ var backBtn = function(element) {
 			    var method = 'GET'
 				var url = '/slloan/loan/loannotllback'
 				var data = collectData()
+				data.id=localStorage.finalID
 				submitAjax(method, url, data)
 			  layer.close(index);
 			});

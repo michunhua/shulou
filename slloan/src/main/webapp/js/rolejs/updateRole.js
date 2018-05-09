@@ -178,7 +178,7 @@ var cancelBtn = function(element) {
 
 // 重新渲染表单
 function renderForm(){
-	console.log('重新渲染表单')
+//	console.log('重新渲染表单')
   layui.use('form', function(){
    var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
    form.render();
@@ -229,7 +229,7 @@ var updatesendAjax = function(method, url, datas, callback) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		console.log('获取数据成功')
+//    		console.log('获取数据成功')
     		powerShow.length = 0
     		var name = e('.role-name')
     		var description = e('.role-description')
@@ -245,27 +245,53 @@ var updatesendAjax = function(method, url, datas, callback) {
     		var flag = Object.keys(yii)
     		var content = document.querySelector(".role-power")
     		var selected = document.querySelectorAll('.layui-form-checkbox')
+    		// 置空权限
+    		powerShow = []
+    		
     		//有选中的情况下就删除
     		for(var k = 0; k < selected.length; k++) {
+    			
     			if(selected[k].classList.contains('layui-form-checked')) {
     				selected[k].classList.remove('layui-form-checked')
     			}
     		}
     			
-    			
     		for(var m = 0; m < selected.length; m++) {
+//    			log("----------------------选中")
     			if(yii[flag[m]] > 0) {
+//    				log("+++++++++++++++++这里执行")
     				selected[yii[flag[m]] - 1].classList.add('layui-form-checked')
     			}
     		}
     		
+    		// 添加权限
     		for(var i = 0; i < flag.length; i++) {
     				powerShow.push(updateOpower[yii[flag[i]]])
     		}
     		
     		addPower(powerShow)
     		
-    		console.log(powerShow)
+//    		console.log(powerShow)
+    		// 设置获取城市
+    		console.log(data.obj.belongs_City)
+    		var Identification = data.obj.belongs_City
+    		var intent = e(".role-city")
+    		var len = intent.length
+    		for(var city = 0; city < len; city++) {
+    			log(intent[city].value)
+    			if(intent[city].value == Identification) {
+    				console.log('相等吗？')
+    				console.log(city)
+    				intent[city].selected = true
+    				
+    				// 显示设置的城市
+    				layui.use('form', function(){
+    					  var form = layui.form;
+    					  
+    					  form.render('select')
+    					})
+    			}
+    		}
     	}
     }
   })
@@ -280,8 +306,6 @@ var foo = function() {
   updatesendAjax(method, url, data, null)
 }
 
-foo()
-
 
 var __main = function() {
   obtainCity()                        // 获取并渲染城市
@@ -293,6 +317,7 @@ var __main = function() {
   removeSelectPower('.role-manage')   // 用户管理 按钮
   sendForm()                          // 保存按钮点击发送&数据
   cancelBtn('#cancel')                // 取消按钮点击重置表单
+  foo()                               // 加载默认表单数据
 }
 
 __main()

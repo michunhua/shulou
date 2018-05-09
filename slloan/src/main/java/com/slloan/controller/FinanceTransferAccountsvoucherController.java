@@ -205,7 +205,7 @@ public class FinanceTransferAccountsvoucherController {
 		          	        	  
 		          	          }else{
 		          	        	  System.err.println("上传失败！"); 
-		          	        	  return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+		          	        	  return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpeg,bmp,png");
 		          	          }
 		         	 		}
 	                         	
@@ -288,7 +288,7 @@ public class FinanceTransferAccountsvoucherController {
 		          	        	  
 		          	          }else{
 		          	        	  System.err.println("上传失败！"); 
-		          	        	  return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+		          	        	  return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpeg,bmp,png");
 		          	          }
 		         	 		}
 	                     	}
@@ -296,7 +296,7 @@ public class FinanceTransferAccountsvoucherController {
 	         	 			}
 	         	 			
 	         	 		}else{
-	         	 			 return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	         	 			 return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpeg,bmp,png");
 	         	 		}
 	     	            
 	         	 		
@@ -438,7 +438,7 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
 	                  	          }
 	                 	 		}else{
 	            					System.out.println("FTP连接失败");
@@ -506,7 +506,7 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
 	                  	          }
 	                 	 		}else{
 	            					System.out.println("FTP连接失败");
@@ -575,7 +575,7 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
 	                  	          }
 	                 	 		}else{
 	            					System.out.println("FTP连接失败");
@@ -644,7 +644,7 @@ public class FinanceTransferAccountsvoucherController {
                   	        	  
                   	          }else{
                   	        	  System.err.println("上传失败！"); 
-                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpge,bmp,png");
+                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
                   	          }
                  	 		}else{
             					System.out.println("FTP连接失败");
@@ -653,7 +653,7 @@ public class FinanceTransferAccountsvoucherController {
 							
 						}
 					}else{
-        	 			 return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+        	 			 return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpeg,bmp,png");
         	 		}
 					
 				}
@@ -771,12 +771,12 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json loaninalreviewbatch(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	JSONObject jsonobj = new JSONObject().fromObject(items);
 	    	List<String> loanFinalRefuse = new ArrayList<String>();
-//	    	String id = jsonobj.getString("id");
-	    	String[] split= items.split(",");
+	    	String id = jsonobj.getString("id");
+	    	String[] split= id.split(",");
 	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
+	    		String str = s.replace("[", " ").replace("]", " ").trim();
 	    		loanFinalRefuse.add(str);
 	    	}
 	    	boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
@@ -797,17 +797,15 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json loaninalreviewbatchpast(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-//	    	String item = "[2,3,4]";
-//	    	JSONObject jsonobject = new JSONObject().fromObject(item);
-//	    	String id = jsonobject.getString("id");
-	    	List<String> loanFinal = new ArrayList<String>();
-	    	String [] split = items.split(",");
-	    	for(String s : split){
-	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
-	    		System.out.println(streplacee);
-	    		loanFinal.add(streplacee);
+	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	List<String> loanFinalRefuse = new ArrayList<String>();
+	    	String id = jsonobj.getString("id");
+	    	String[] split= id.split(",");
+	    	for(String s:split){
+	    		String str = s.replace("[", " ").replace("]", " ").trim();
+	    		loanFinalRefuse.add(str);
 	    	}
-	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
+	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinalRefuse);
 	    	if(isResult == true){
 	    		return new Json(true,"success",isResult,"终审到待出账确认成功");
 	    	}else{
@@ -825,13 +823,12 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json batchRefuse(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-//	    	String items = "[2,3,4]";
-//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	JSONObject jsonobj = new JSONObject().fromObject(items);
 	    	List<String> batchRefuse = new ArrayList<String>();
-//	    	String id = jsonobj.getString("id");
-	    	String[] split= items.split(",");
+	    	String id = jsonobj.getString("id");
+	    	String[] split= id.split(",");
 	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
+	    		String str = s.replace("[", " ").replace("]", " ").trim();
 	    		batchRefuse.add(str);
 	    	}
 	    	boolean isResult = imagedataservice.FirsttrialbatchRefuse(batchRefuse);
@@ -851,10 +848,12 @@ public class FinanceTransferAccountsvoucherController {
 	    @RequestMapping(value="/pastgobackfinalreview",method=RequestMethod.POST)
 	    public Json batchPast(HttpServletRequest request,HttpServletResponse response){
 	    	String item = request.getParameter("data");
+	    	JSONObject jsonobject = new JSONObject().fromObject(item);
+	    	String id = jsonobject.getString("id");
 	    	List<String> batchPast = new ArrayList<String>();
-	    	String [] split = item.split(",");
+	    	String [] split = id.split(",");
 	    	for(String s : split){
-	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
+	    		String streplacee = s.replace("[", " ").replace("]", " ").trim();
 	    		batchPast.add(streplacee);
 	    	}
 	    	boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
@@ -876,10 +875,19 @@ public class FinanceTransferAccountsvoucherController {
 		@ResponseBody
 		public Json batchUpdateStudent(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	String [] split = items.split(",");
+	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	System.out.println(obj);
+	    	String id = obj.getString("id");
+	    	
+//	    	String id = request.getParameter("id");
+//	    	String dt = id.replace("[[\"", " ").replace("\"]]", " ").replace("\"", "");
+//	    	System.out.println(dt);
+	    	String [] split = id.split(",");
+//	    	String  split = id;
 	    	List<String> updatelist = new ArrayList<String>();
 	    	for(String s:split){
-	    		String dt = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
+	    		String dt = s.replace("[", " ").replace("]", " ").trim();
+//	    		System.out.println(dt);
 	    		updatelist.add(dt);
 	    	}
 	    	
@@ -916,7 +924,7 @@ public class FinanceTransferAccountsvoucherController {
 	    	List<String> updatelist = new ArrayList<String>();
 	    	String[] splist = id.split(",");
 	    	for(String s :splist){
-	    		String dt = s.replace("["," ").replace("]"," ").replace("\"", " ").trim();
+	    		String dt = s.replace("["," ").replace("]"," ").trim();
 	    		updatelist.add(dt);
 	    	}
 	    	boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
@@ -933,7 +941,7 @@ public class FinanceTransferAccountsvoucherController {
 	  /**
 	   * 文件类型
 	   * @param str 文件类型
-	   * @return jpg,png,jpge,png,bmp
+	   * @return jpg,png,jpeg,png,bmp
 	   */
 	  private boolean filetype(String str) {
 	    	if(str.contains("jpg")|| str.contains("png") || str.contains("jpeg")
@@ -954,5 +962,10 @@ public class FinanceTransferAccountsvoucherController {
 	        String extension = fileName.substring(fileName.lastIndexOf(".")+1); // 文件后缀
 	 
 	        return formatDate + random+"_"+city+"_"+fileName;
+	    }
+	    
+	    @RequestMapping(value="/jstc")
+	    public String ddd(){
+	    	return "fileupdate/jstc";
 	    }
 }

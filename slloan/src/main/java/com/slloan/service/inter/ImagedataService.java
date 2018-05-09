@@ -33,7 +33,7 @@ public interface ImagedataService {
 	 * @param param
 	 * @return
 	 */
-	public List<ImageDataUpdate> selectUploadsUpdateType(ImageDataUpdate param);
+	public List<ImageDataUpdate> selectUploadsUpdateType(ImageDataUpdate param)throws Exception ;
 	
 	/**
 	 * 转账凭证&结算凭证上传文件上传改为已传 
@@ -41,6 +41,7 @@ public interface ImagedataService {
 	 * @return
 	 */
 	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param);
+	public List<ImageDataUpdate> financevoucherSelectToupload2(ImageDataUpdate param);
 	
 	/**
 	 * 财务批量修改审核通过
@@ -69,4 +70,6 @@ public interface ImagedataService {
 		 boolean tobedetained(int id);//待进押
 		 boolean pendingconfirmation(int id);//待确认回款
 		 boolean loanClearing(int id);//待结算
+		 
+		  ObjectSeq addSeq();
 }

@@ -40,20 +40,22 @@ public class ContactsController {
 	@RequestMapping("/contactinformation")
 	public Json save(HttpServletRequest req) {
 		
+	
+		
 		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 		
-		String contacts = obj.getString("contacts"); // 共同借款人配偶姓名戦
-		String contacts1 = obj.getString("contacts1"); //身份证件类型
-		String contacts2 =obj.getString("contacts2"); // 身份证件号码
-		String relationship = obj.getString("relationship"); // 工作单位名称
-		String relationship1 =obj.getString("relationship1");// 单位电话
-		String relationship2 =obj.getString("relationship2"); // 住宅电话
-		String c_Telephone = obj.getString("c_Telephone"); // 移动电话
-		String c_Telephone1 =obj.getString("c_Telephone1");// 月薪（人民币）
-		String c_Telephone2= obj.getString("c_Telephone2");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String contacts = obj.getString("linkf"); // 共同借款人配偶姓名戦
+		String contacts1 = obj.getString("links"); //身份证件类型
+		String contacts2 =obj.getString("linkt"); // 身份证件号码
+		String relationship = obj.getString("linkfMate"); // 工作单位名称
+		String relationship1 =obj.getString("linksMate");// 单位电话
+		String relationship2 =obj.getString("linktMate"); // 住宅电话
+		String c_Telephone = obj.getString("linkfPhone"); // 移动电话
+		String c_Telephone1 =obj.getString("linksPhone");// 月薪（人民币）
+		String c_Telephone2= obj.getString("linktPhone");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String state = obj.getString("state");
-		String ctime = obj.getString("ctime");//日期
+		String ctime = DateUtils.getInDateTime((new Date()));//日期
 
 		Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean coan = contactsservice.save(coa);// 鎻掑叆瑙掕壊
@@ -96,6 +98,40 @@ public class ContactsController {
 			return new Json(false,"fail",isResult); 
 	}
 	
+	/**
+	 * 创建修改用户保存
+	 * @return
+	 */
+	@RequestMapping(value="/modifyuseraaase",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json updateUsere(HttpServletRequest req){
+		
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Integer id = json.getInt("id");
+		String contacts = json.getString("linkf"); //联系人姓名
+		String contacts1=json.getString("links");//联系人姓名
+		String contacts2=json.getString("linkt");//联系人姓名
+		String relationship=json.getString("linkfMate");//联系人关系
+		String relationship1=json.getString("linksMate");//联系人关系
+		String relationship2=json.getString("linktMate");//联系人关系
+		String c_Telephone=json.getString("linkfPhone");//联系人电话
+		String c_Telephone1=json.getString("linksPhone");//联系人电话
+		String c_Telephone2=json.getString("linktPhone");//联系人电话
+		String state=json.getString("state");
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
+		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
+		boolean isResult =contactsservice.updateadd(contact);
+		
+		if (isResult == true) {
+			logger.info("数据插入成功!");
+			return new Json(true,"success",isResult ); 
+		} else {
+			logger.info("数据插入失败!");
+			return new Json(false,"fail",isResult); 
+		}
+		
+	}
 
 	/**
 	 * 初审修改用户保存
@@ -118,7 +154,7 @@ public class ContactsController {
 		String c_Telephone1=json.getString("linksPhone");//联系人电话
 		String c_Telephone2=json.getString("linktPhone");//联系人电话
 		String state=json.getString("state");
-		String ctime=json.getString("ctime");
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
 		
@@ -153,7 +189,7 @@ public class ContactsController {
 		String c_Telephone1=json.getString("linksPhone");//联系人电话
 		String c_Telephone2=json.getString("linktPhone");//联系人电话
 		String state=json.getString("state");
-		String ctime=json.getString("ctime");
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		boolean isResult =contactsservice.updateadd(contact);
 		

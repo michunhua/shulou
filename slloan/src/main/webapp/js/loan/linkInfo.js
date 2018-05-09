@@ -21,17 +21,17 @@ layui.use('laydate', function(){
 var collectData = function() {
   log('收集数据')
   var data = {}
-  data.contacts = e('.linkf-name').value
-  data.relationship = e('.linkf-relationship').value
-  data.c_Telephone = e('.linkf-phone').value
-  data.contacts1 = e('.links-name').value
-  data.relationship1 = e('.links-relationship').value
-  data.c_Telephone1 = e('.links-phone').value
-  data.contacts2 = e('.linkt-name').value
-  data.relationship2 = e('.linkt-relationship').value
-  data.c_Telephone2 = e('.linkt-phone').value
+  data.linkf = e('.linkf-name').value
+  data.linkfMate = e('.linkf-relationship').value
+  data.linkfPhone = e('.linkf-phone').value
+  data.links = e('.links-name').value
+  data.linksMate = e('.links-relationship').value
+  data.linksPhone = e('.links-phone').value
+  data.linkt = e('.linkt-name').value
+  data.linktMate = e('.linkt-relationship').value
+  data.linktPhone = e('.linkt-phone').value
   data.state = 'a'
-	 data.ctime = 'b'
+  data.ctime = 'b'
   return data
 }
 
@@ -69,10 +69,14 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.temporaryId = localStorage.createTemporaryId
+    data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/contactinformation'
     log(data)
-    sendAjax(method, url, data)
+    if(!data.mark) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -82,7 +86,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -147,12 +151,30 @@ var searchData = function() {
 	}
 }
 
+//修改数据保存
+var updateData = function() {
+  log('send data to server')
+  var evs = e('#save-loaner')
+  evs.addEventListener('click', function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/modifyuseraaase'
+    log(data)
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+  })
+}
+
 //
 var __main = function() {
   log( "run")
   sendData()
   cancelBtn('#cancel')
   searchData()
+  updateData()
 }
 
 __main()

@@ -13,9 +13,10 @@ var collectData = function() {
   data.linkt = e('.linkt').value
   data.linktMate = e('.linkt-mate').value
   data.linktPhone = e('.linkt-phone').value
-	  data.state = ''
-	  data.ctime = ''
-		  data.id = localStorage.finalID
+	  data.state = 'b'
+	  data.ctime = 'c'
+	
+  data.id = 2
   return data
 }
 
@@ -130,7 +131,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreass"
   })
 }
 

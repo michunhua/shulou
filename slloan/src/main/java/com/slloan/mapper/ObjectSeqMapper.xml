@@ -14,7 +14,7 @@ select start_value from emp_seq
 <!-- select nextval('empno') from dual -->
 </select>
 
-<!-- <insert id="addSeq" parameterType="com.slloan.entity.ObjectSeq"> -->
-<!-- 	select nextval('empno') from dual -->
-<!-- </insert> -->
+<select id="addSeq" resultType="com.slloan.entity.ObjectSeq">
+	select nextval('empno') from dual
+</select>
 </mapper>

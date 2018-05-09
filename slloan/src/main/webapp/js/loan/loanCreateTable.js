@@ -131,7 +131,8 @@ var addTable = function(data) {
 		var td7 = document.createElement('td')
 		var td8 = document.createElement('td')
 		var td9 = document.createElement('td')
-		var td10 = document.createElement('td')
+		var td10 = document.createElement('a')
+		var applicationnumber = myFilter(datas.lists[i].applicationnumber)
 		var ID = myFilter(datas.lists[i].notes[0].id)
 		var userid = myFilter(datas.lists[i].name)
 		var userName = myFilter(datas.lists[i].applyfor[0].amount)
@@ -145,7 +146,7 @@ var addTable = function(data) {
 
 		a.classList.add('mark')
 		a.href = '#'
-		a.innerText = '201802241931'
+		a.innerText = applicationnumber
 		td1.classList.add('flag')
 		td1a.innerText = ID
 		td1.innerText = userid
@@ -156,7 +157,11 @@ var addTable = function(data) {
 		td6.innerText = state
 		td7.innerText = address
 		td8.innerText = time
-	      td9.innerText = 9
+		  td10.classList.add('record')
+		  td10.href = "#"
+		  td10.innerText = "[ 流转记录 ]"
+		  td9.classList.add(ID)
+	      td9.appendChild(td10)
 	      td0.appendChild(a)
 	      tr.appendChild(td0)
 	      tr.appendChild(td1a)
@@ -173,11 +178,11 @@ var addTable = function(data) {
     }
 }
 
-var testData = {
-		test: '233',
-		lists: [1, 2, 3, 4]
-}
-
+//var testData = {
+//		test: '233',
+//		lists: [1, 2, 3, 4]
+//}
+//
 // addTable(testData)
 
 
@@ -204,7 +209,7 @@ var initData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/rolemanagement?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
-    datas.role = localStorage.purrole
+    datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
 	datas.parentnodeId = localStorage.purid
@@ -225,9 +230,9 @@ var collectData = function() {
     data.iphone = e('.iphone').value
     data.IDcard = e('.IDcard').value
     data.numbering = e('.numbering').value
-    data.date = e('#date').value
+    data.start = e('#date').value
     data.end = e('#end').value
-    data.statu = e('.statu').value
+    data.state = e('.statu').value
     data.min = e('.min').value
     data.max = e('.max').value
     return data
@@ -242,6 +247,10 @@ var sendAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
         console.log(data)
+        addTable(data)
+      },
+      error: function() {
+    	  alert("服务器错误")
       }
     })
 }
@@ -254,6 +263,10 @@ var envs = function(element) {
     var method = 'GET'
     var url = '/slloan/loan/vaguelikeselectcreate'
     var datas = collectData()
+     datas.rolename = localStorage.purrole
+  datas.username = localStorage.purusername
+  datas.city = localStorage.purcity
+  datas.parentnodeId = localStorage.purid
     sendAjax(method, url, datas)
   })
 }
@@ -333,11 +346,49 @@ var previoupage = function() {
 
 previoupage()
 
+//流转记录查询
+var hang_cirulationAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+      }, 
+      error: function() {
+    	  layer.msg('服务器错误')
+      }
+    })
+}
+
+//挂起&流转记录位置
+var Hang_cirulation = function(element) {
+	var intent = e(element)
+	intent.addEventListener('click', function(event) {
+		if(event.target.classList.contains("upload")) {   
+			console.log('挂起')
+		} else if(event.target.classList.contains("record")) {
+			console.log('流转记录')
+			var method = "GET"
+		    var url = "/slloan/sumiteregresses/selectwhole"
+		    var datas = {}
+			datas.state = 0
+			datas.id = event.target.parentNode.classList.value
+		    datas.username = localStorage.purusername
+		    datas.city = localStorage.purcity
+			datas.parentnodeId = localStorage.purid
+			hang_cirulationAjax(method, url, datas)
+		}
+	})
+}
+
 var __main = function() {
   envs('#save-data')
   createBtn()
   initData()
   numberSearch('.tab-data')
+  Hang_cirulation('.tab-data')
 }
 
 __main()

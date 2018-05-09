@@ -187,7 +187,7 @@ public class UpdateFTPController{
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
 //                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.119:"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
@@ -213,7 +213,7 @@ public class UpdateFTPController{
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
 //                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.119:"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
@@ -237,7 +237,7 @@ public class UpdateFTPController{
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
 //                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.119:"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
@@ -262,7 +262,7 @@ public class UpdateFTPController{
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
 //                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.119:"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+tdf+"/"+"pishi_image/"+str.trim());
 //                         	imagedata.setFilepath("");
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
@@ -288,7 +288,7 @@ public class UpdateFTPController{
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
 //                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.119:"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
 //                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                          	imagedata.setUploads(note);//上传者
                          	imagedata.setUploadtype(upload_type);//上传类型
@@ -312,7 +312,7 @@ public class UpdateFTPController{
                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
 //                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://192.168.0.66:"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
+                         	imagedata.setFilepath("http://192.168.0.119:"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
                          	readerZipFile(tmpFileName.trim());
 //                         	imagedata.setFilepath("");
                          	imagedata.setUploads(note);//上传者
@@ -374,7 +374,7 @@ public class UpdateFTPController{
                     	}
           	          }else{
           	        	  System.err.println("上传失败！"); 
-          	        	  return new Json(false,"fail",pageBean,"请选择上传文件类型jpg,png,jpge,bmp,png");
+          	        	  return new Json(false,"fail",pageBean,"请选择上传文件类型jpg,png,jpeg,bmp,png");
           	          }
          	 		}
 //	     	         getPhont(origFileName);

@@ -12,6 +12,7 @@
 		<result column="parentnodeId" property="ParentnodeId" />
 		<result column="city" property="city" />
 		<result column="rolename" property="rolename" />
+		<result column="updatedate" property="updatedate" />
 	</resultMap>
 
 	<!-- 回退保存一条流转记录 -->
@@ -110,8 +111,8 @@
 			update recordsubmit_table 
 				<set>
 					<if test="fallbackname !=null and fallbackname !=''">fallbackname = #{fallbackname},</if>
-<!-- 					<if test="submit !=null and submit !=''">submit = #{submit},</if> -->
-					<if test="state !=null and state !=''">state = #{state},</if>
+					<if test="state  &gt;= 0">state = #{state},</if>
+					<if test="updatedate !='' and  updatedate !=null">updatedate = #{updatedate},</if>
 <!-- 					<if test="spare1  !=null and spare1 !=''">spare1 = #{spare1},</if> -->
 <!-- 					<if test="createDate  !=null and createDate !=''">createDate = #{createDate},</if> -->
 <!-- 					<if test="username  !=null and username !=''">username = #{username},</if> -->
@@ -119,15 +120,21 @@
 <!-- 					<if test="city !=null and city !=''">city = #{city},</if> -->
 <!-- 					<if test="rolename !=null and rolename !=''">rolename = #{rolename},</if> -->
 				</set>
-					 WHERE id = #{id}
+					 WHERE submit = #{id}
     </update>
     
-     <!-- 根据ID查记录 -->
+  <!--     根据ID查记录 
 		<select id="findById" parameterType="int"  resultType="com.slloan.entity.CircuLationRecord">
-				select * from recordsubmit_table where id = #{id}
-		</select>
+				select * from recordsubmit_table 
+					<where>
+						<if test="city !=null"> city=#{city}</if>
+						<if test="ParentnodeId !=null">and ParentnodeId=#{ParentnodeId}</if>
+						<if test="username !=null">and username=#{username}</if>
+					</where>
+				and submit = #{id} 
+		</select> -->
 		
-		<select id="selectByid" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
-				select spare1 from recordsubmit_table where city=#{city} and rolename=#{rolename} and username= #{username} and parentnodeId = #{parentnodeId} 
-		</select>
+		<select id="findById" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
+		SELECT * FROM recordsubmit_table where submit=#{submit} and  city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username} and state=#{state}
+	</select>
 </mapper>

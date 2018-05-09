@@ -10,6 +10,7 @@ import com.slloan.entity.Contacts;
 import com.slloan.entity.Firstfilla;
 import com.slloan.entity.NoteExplain;
 import com.slloan.entity.PropertyInformation;
+import com.slloan.entity.circulation;
 
 /**
  * 提交&回退DAO
@@ -41,5 +42,6 @@ public interface CircuLationRecordSubmitDao {
 	public boolean fallbackinserts(CircuLationRecord circuLationRecord);
 	CircuLationRecord findById(int id);
 	
-	public List<CircuLationRecord> selectByid(Map<String,Object>param);
+	List<CircuLationRecord> findById2(Map<String,Object>param);
+	
 }

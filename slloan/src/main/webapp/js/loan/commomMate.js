@@ -22,16 +22,16 @@ var collectData = function() {
 	var data = {}
 	// 固定值
 	data.cname = e('.ch-name').value
-	data.paperwork = e('.paperwork-type').value
-	data.paperNumb = e('.paperwork-numb').value
-	data.mobilePhone = e('.mobile-phone').value
-	data.unitName = e('.unit-name').value
-	data.unitPhone = e('.unit-phone').value
-	data.housePhone = e('.house-phone').value
+	data.certificate = e('.paperwork-type').value
+	data.certificateType = e('.paperwork-numb').value
+	data.document = e('.document-number').value
+	data.mobile = e('.mobile-phone').value
+	data.untilName = e('.unit-name').value
+	data.untilPhone = e('.unit-phone').value
+	data.residence = e('.house-phone').value
 	data.salary = e('.salary').value
 	data.state = 'a'
-	data.catime = 'b'
-	data.other = e('.document-number').value
+	data.ctime = 'b'
 	return data
 }
 
@@ -67,10 +67,14 @@ var sendData = function(element) {
 	var evs = e(element)
 	evs.addEventListener('click', function() {
 		var data = collectData()
+		data.temporaryId = localStorage.createTemporaryId
+		data.mark = localStorage.createID
 		var method = 'POST'
 		var url = '/slloan/loan/commonApplyspouse'
 		log(data)
-		sendAjax(method, url, data)
+		if(!data.mark) {
+			sendAjax(method, url, data)	
+		}
 	})
 }
 
@@ -80,7 +84,7 @@ var cancelBtn = function(element) {
 	var evs = e(element)
 	evs.addEventListener('click', function() {
 		forms.reset()
-		window.history.back()
+		window.location.href = "/slloan/loan/loancrea"
 	})
 }
 
@@ -88,8 +92,8 @@ var cancelBtn = function(element) {
 var searchExport = function(back) {
 	  cname = e('.ch-name')
 	  certificate = e('.paperwork-type')
-	  document = e('.document-number')
 	  certificateType = e('.paperwork-numb')
+	  document = e('.document-number')
 	  mobile = e('.mobile-phone')
 	  untilName = e('.unit-name')
 	  untilPhone = e('.unit-phone')
@@ -137,6 +141,7 @@ log('send data method')
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/coborrowers'
@@ -147,11 +152,27 @@ var searchData = function() {
 	}
 }
 
+//  修改数据保存
+var updateData = function(element) {
+	var evs = e(element)
+	evs.addEventListener('click', function() {
+		var data = collectData()
+	    data.id = localStorage.createID		
+		var method = 'POST'
+		var url = '/slloan/loan/cobupdatesaad'
+		log(data)
+		if(data.id) {
+			sendAjax(method, url, data)
+		}
+	})
+}
+
 //
 var __main = function() {
 	sendData('#save-coMate')
 	cancelBtn('#cancel')
 	searchData()
+	updateData('#save-coMate')
 }
 
 __main()

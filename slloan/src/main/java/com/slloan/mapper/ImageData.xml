@@ -21,8 +21,8 @@
 	delete from imagedata where id=#{id}
 </delete>
 <insert id="imageDataAdd" parameterType="com.slloan.entity.ImageDataUpdate">
-	insert into imagedata(id,filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city,spare,sparetwo)
-	values(nextval('empno'),#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city},#{spare},#{sparetwo})
+	insert into imagedata(filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city,spare,sparetwo)
+	values(#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city},#{spare},#{sparetwo})
 </insert>
 <!-- 展示所有 -->
 <select id="list" resultType="com.slloan.entity.ImageDataUpdate">
@@ -51,23 +51,32 @@
 <!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
 <select id="financevoucherSelectToupload"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
 		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where city =#{city}
-		<if test="Parentnode !=null and Parentnode !='' ">and Parentnode =#{parentnode}</if>
-		<if test="spare !=null and spare !='' ">and spare =#{spare1}</if>
-		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo2}</if>
+		<if test="Parentnode !=null and Parentnode !='' ">and parentnode =#{parentnode}</if>
+		<if test="spare !=null and spare !='' ">and spare =#{spare}</if>
+		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo}</if>
 		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
-	ORDER BY id desc
+		and createdata BETWEEN #{createData} and #{createData2}
+</select>
+<!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
+<select id="financevoucherSelectToupload2"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
+		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where city =#{city}
+		<if test="Parentnode !=null and Parentnode !='' ">and parentnode =#{parentnode}</if>
+		<if test="spare !=null and spare !='' ">and spare =#{spare}</if>
+		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo}</if>
+		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
+		<if test="createdata !=null and createdata !=''">and createdata=#{createdata}</if>
 </select>
 <!--贷款终审列表审批是否通过  -->
 <update id="loanFinalReviewRefuse" parameterType="java.util.List">
 	update recordsubmit_table set fallbackname  = '待初审审批中'  , state = '1'
-	where id in
+	where submit in
 	<foreach collection ="list" item="item" index="index" open="(" separator="," close=")">
 		#{item}
 	</foreach>
 </update>
 <update id="loanFinalReviewPast" parameterType="java.util.List">
 	update 	recordsubmit_table set fallbackname  = '待出账确认'  , state = '3'
-	where id in 
+	where submit in 
 	<foreach collection ="list" item="item" index="index" open="(" separator="," close=")">
 		#{item}
 	</foreach>
@@ -76,7 +85,7 @@
 <!--贷款初审列表审批是否通过  -->
 <update id="FirsttrialbatchRefuse" parameterType="java.util.List">
 	update recordsubmit_table set fallbackname  = '初审审批回退'  , state = '0'
-	where id in
+	where submit in
 	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 		#{item}
 	</foreach>
@@ -84,40 +93,40 @@
 
 <update id="FirsttrialbatchPast" parameterType="java.util.List">
 	update recordsubmit_table set fallbackname  = '待终审审批中'  , state = '2'
-	where id in
+	where submit in
 	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 		#{item}
 	</foreach>
 </update>
 
 <update id="tobesettled" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '已结清'  , state = '10' where id=#{id}
+	update recordsubmit_table set fallbackname  = '已结清'  , state = '10' where submit=#{id}
 </update> 
 
 <update id="WaitForensics" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待解押'  , state = '6' where id=#{id}
+	update recordsubmit_table set fallbackname  = '待解押'  , state = '6' where submit=#{id}
 </update> 
 
 <update id="tobedetained" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待进押'  , state = '7' where id=#{id}
+	update recordsubmit_table set fallbackname  = '待进押'  , state = '7' where submit=#{id}
 </update>
 <update id="tobeforensics" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待取证'  , state = '5' where id=#{id}
+	update recordsubmit_table set fallbackname  = '待取证'  , state = '5' where submit=#{id}
 </update>
 
 <update id="pendingconfirmation" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待确认回款'  , state = '8' where id=#{id}
+	update recordsubmit_table set fallbackname  = '待确认回款'  , state = '8' where submit=#{id}
 </update>
 
 <update id="loanClearing" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待结算'  , state = '9' where id=#{id}
+	update recordsubmit_table set fallbackname  = '待结算'  , state = '9' where submit=#{id}
 </update>
 <!--
 财务列表审批是否通过 
  财务审核通过待放款 -->
 <update id="batchUpdateStudent"  parameterType="java.util.List">
 	update recordsubmit_table  set fallbackname = '待放款' , state = '4'
-	where id in					   
+	where submit in					   
 <!-- 	<if test="id !=null"> -->
 		<foreach collection="list"  item="item" index="index" open="(" separator="," close=")">
 			#{item}
@@ -131,7 +140,7 @@
 <!-- 财务批量审核拒绝退回到终审 -->
 <update id="batchUpdateadopt"  parameterType="java.util.List">
 	update recordsubmit_table   set fallbackname='待终审审批中' ,state = '2'
-	where id in
+	where submit in
 		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")">
 			#{item}
 		</foreach>

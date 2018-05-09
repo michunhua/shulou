@@ -53,7 +53,9 @@ var addTable = function(data) {
           var td7 = document.createElement('td')
           var td8 = document.createElement('td')
           var td9 = document.createElement('td')
-          var td10 = document.createElement('td')
+          var td10 = document.createElement('a')
+          var td10a = document.createElement('a')
+          var applicationnumber = myFilter(datas.lists[i].applicationnumber)
           var ID = myFilter(datas.lists[i].notes[0].id)
           var userid = myFilter(datas.lists[i].name)
           var userName = myFilter(datas.lists[i].applyfor[0].amount)
@@ -68,18 +70,25 @@ var addTable = function(data) {
           input.classList.add('indicate')
           a.classList.add('mark')
           a.href = '#'
-          a.innerText = '201802241931'
+          a.innerText = applicationnumber
           td1a.classList.add('flag')
           td1a.innerText = ID
           td1.innerText = userid
-          td2.innerText = userName
-          td3.innerText = phone
-          td4.innerText = number
-          td5.innerText = limit
-          td6.innerText = state
-          td7.innerText = address
-          td8.innerText = time
-          td9.innerText = 9
+		  td2.innerText = userName
+		  td3.innerText = phone
+		  td4.innerText = number
+		  td5.innerText = limit
+		  td6.innerText = state
+		  td7.innerText = address
+		  td8.innerText = time
+  		  td10.classList.add('up')
+		  td10.href = "#"
+		  td10.innerText = '[ 挂起  ]'
+		  td10a.classList.add('record')
+		  td10a.href = "#"
+		  td10a.innerText = '[ 流转记录  ]'
+          td9.appendChild(td10)
+          td9.appendChild(td10a)
           td.appendChild(input)
           td0.appendChild(a)
           tr.appendChild(td)
@@ -99,10 +108,11 @@ var addTable = function(data) {
     }
 }
 
-var testData = {
-		test: '233'
-}
-
+//var testData = {
+//		test: '233',
+//		lists: [1, 2, 3, 4, 5]
+//}
+//
 //addTable(testData)
 //发送数据方法
 var initAjax = function(method, url, datas, callback) {
@@ -126,7 +136,7 @@ var initData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanfinalreviewlist?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
-    datas.role = localStorage.purrole
+    datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
 	datas.parentnodeId = localStorage.purid
@@ -139,10 +149,10 @@ var initData = function() {
 var collectData = function() {
   log('收集数据')
   var data = {}
-  data.name = e('.username').value
+  data.userName = e('.username').value
   data.iphone = e('.iphone').value
-  data.Idcard = e('.Idcard').value
-  data.application = e('.application').value
+  data.IDcard = e('.Idcard').value
+  data.numbering = e('.application').value
   data.start = e('.start').value
   data.end = e('.end').value
   data.min = e('.min').value
@@ -160,6 +170,7 @@ var sendAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	console.log(data)
+    	addTable(data)
     },
     error: function(){
         alert('服务器错误')
@@ -174,9 +185,13 @@ var sendData = function(element) {
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
-    var method = 'POST'
-    var url = ''
+    var method = 'GET'
+    var url = '/slloan/loan/finalreviewselect'
     var data = collectData()
+      data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+	data.parentnodeId = localStorage.purid
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -195,6 +210,7 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
+				
 			} else {
 				alert('服务器错误')
 			}
@@ -280,41 +296,6 @@ var previoupage = function() {
 
 previoupage()
 
-////全部数据选中
-//var fullDataCheck = function(elements) {
-//	var tent = es(elements)
-//	var len = tent.length
-//	console.log('fullcheck', tent, len)
-//	for(var i = 0; i < len; i++) {
-//		tent[i].checked = true
-//	}
-//}
-//
-////全部数据不选中
-//var fullDataUncheck = function(elements) {
-//	var tent = es(elements)
-//	var len = tent.length
-//	console.log('fullUncheck', tent, len)	
-//	for(var i = 0; i < len; i++) {
-//		tent[i].checked = false
-//	}
-//}
-//
-//// 全选按钮
-//var fullSelection = function(element) {
-//	var intent = e(element)
-//	intent.addEventListener('change', function() {
-//		if(intent.checked) {
-//			intent.checked = false
-//			fullDataUncheck('.indicate')
-//		} else {
-//			intent.checked = true
-//			fullDataCheck('.indicate')
-//		}
-//	})
-//}
-
-
 // 存储要发送的数据
 var saveSend = []
 
@@ -324,16 +305,16 @@ var findSave = function() {
 	var definite = parentElement.querySelectorAll('.indicate')
 	var flags = es('.flag')
 	console.log(definite.length)
-//	console.log(flags[1].innerText)
-	for(var i = 0; i < definite.length; i++) {
-		if(definite[i].checked == true) {
+	// console.log(flags[1].innerText)
+	for (var i = 0; i < definite.length; i++) {
+		if (definite[i].checked == true) {
 			if(!saveSend.includes(flags[i].innerText)) {
 				saveSend.push(flags[i].innerText)	
 			}
 		} else {
-			if(saveSend.includes(flags[i].innerText)) {
-				for(var j = 0; j < saveSend.length; j++) {
-					if(saveSend[j] ==  flags[i].innerText) {
+			if (saveSend.includes(flags[i].innerText)) {
+				for (var j = 0; j < saveSend.length; j++) {
+					if (saveSend[j] == flags[i].innerText) {
 						saveSend.splice(j, 1)
 					}
 				}
@@ -343,23 +324,23 @@ var findSave = function() {
 	console.log(saveSend)
 }
 
-//全部数据选中
+// 全部数据选中
 var fullDataCheck = function(elements) {
 	var tent = es(elements)
 	var len = tent.length
 	console.log('fullcheck', tent, len)
-	for(var i = 0; i < len; i++) {
+	for (var i = 0; i < len; i++) {
 		tent[i].checked = true
 	}
 	findSave()
 }
 
-//全部数据不选中
+// 全部数据不选中
 var fullDataUncheck = function(elements) {
 	var tent = es(elements)
 	var len = tent.length
 	console.log('fullUncheck', tent, len)
-	for(var i = 0; i < len; i++) {
+	for (var i = 0; i < len; i++) {
 		tent[i].checked = false
 	}
 	findSave()
@@ -369,7 +350,7 @@ var fullDataUncheck = function(elements) {
 var fullSelection = function(element) {
 	var intent = e(element)
 	intent.addEventListener('change', function() {
-		if(intent.checked) {
+		if (intent.checked) {
 			intent.checked = false
 			fullDataUncheck('.indicate')
 		} else {
@@ -384,10 +365,26 @@ var single = function() {
 	var parentElement = e('.tab-data')
 	parentElement.addEventListener('click', function(event) {
 		console.log('单击')
-		if(event.target.classList.contains('indicate')) {
+		if (event.target.classList.contains('indicate')) {
 			findSave()
 		}
 	})
+}
+
+//监听选中的个数等于全部时全选按钮为选中状态
+var listenSingle = function(select, element, arr) {
+	console.log('监听全部的选择')
+	var flag = arr.length
+	var intent = es(element)
+	var mark = intent.length
+	console.log(flag, mark, "长度相等吗？？")
+	if(flag == mark) {
+		console.log('相等执行 true')
+		e(select).checked = true
+	} else {
+		console.log('不相等执行 false')
+		e(select).checked = false
+	}
 }
 
 // 一个个选中直到全部选中
@@ -399,16 +396,45 @@ var singleAdd = function() {
 	console.log('一个接一个的点击')
 	parentElement.addEventListener('click', function() {
 		console.log('执行到这', definite.length)
-		for(var i = 0; i < definite.length; i++) {
+		listenSingle('#alls', '.indicate', saveSend) 
+		for (var i = 0; i < definite.length; i++) {
 			console.log('有没有选中的')
-			if(!definite[i].checked) {
+			if (!definite[i].checked) {
 				result.push('1')
 			}
 		}
-		if(result.length == definite.length) {
+		if (result.length == definite.length) {
 			intent.checked = true
 		} else {
 			intent.checked = false
+		}
+	})
+}
+
+//全选按钮的状态
+var listenAllSel = function(item, index, element) {
+	console.log('这能执行吗？')
+	var intent = e(item)
+	var flag = e(index)
+	intent.addEventListener('click', function() {
+		var run = es(element)
+		var mark = flag.checked
+//		console.log("响应事件")
+//		console.log(mark, '这到底如何')
+		if(mark) {
+//			console.log("有选中的时间执行")
+//			console.log('执行选中几个', run)
+			for(var i = 0; i < run.length; i++) {
+				run[i].checked = true
+			}
+			findSave()
+		} else {
+//			console.log("不选中的时候只想")
+//			console.log('执行bu选中几个', run)
+			for(var i = 0; i < run.length; i++) {
+				run[i].checked = false
+			}
+			findSave()
 		}
 	})
 }
@@ -492,18 +518,83 @@ var batchPass = function(element) {
 	})
 }
 
+//流转记录查询
+var hang_cirulationAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+      }, 
+      error: function() {
+    	  layer.msg('服务器错误')
+      }
+    })
+}
+
+//挂起方法
+var HangAjax = function(method, url, datas) {
+  console.log(' send data ajax')
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        console.log(data)
+      }, 
+      error: function() {
+    	  layer.msg('服务器错误')
+      }
+    })
+}
+
+//挂起&流转记录位置
+var Hang_cirulation = function(element) {
+	var intent = e(element)
+	intent.addEventListener('click', function(event) {
+		if(event.target.classList.contains("up")) {   
+			console.log('挂起')
+			var method = "GET"
+		    var url = "/slloan/sumiteregresses/selectwhole"
+		    var datas = {}
+			datas.state = 0
+			datas.id = event.target.parentNode.classList.value
+			datas.rolename = localStorage.purrole
+			datas.username = localStorage.purusername
+			datas.city = localStorage.purcity
+			datas.parentnodeId = localStorage.purid
+			HangAjax(method, url, datas)
+		} else if(event.target.classList.contains("record")) {
+			console.log('流转记录')
+			var method = "GET"
+		    var url = "/slloan/sumiteregresses/selectwhole"
+		    var datas = {}
+			datas.state = 0
+			datas.id = event.target.parentNode.classList.value
+			datas.rolename = localStorage.purrole
+			datas.username = localStorage.purusername
+			datas.city = localStorage.purcity
+			datas.parentnodeId = localStorage.purid
+			hang_cirulationAjax(method, url, datas)
+		}
+	})
+}
 
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
   initData()
-  fullSelection('#full')
+//  fullSelection('#full')
+  listenAllSel('#full', "#alls", '.indicate')
   numberSearch('.tab-data')
   single()
-	singleAdd()
+  singleAdd()
   batchPass("#batch-pass")
   batchRefuse("#batch-refuse")
+  Hang_cirulation('.tab-data')
 }
 
 __main()

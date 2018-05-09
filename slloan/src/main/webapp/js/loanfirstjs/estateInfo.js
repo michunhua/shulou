@@ -24,9 +24,8 @@ var collectData = function() {
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
   data.name= ""
-  data.id = localStorage.firstID
-  data.state= ''
-  data.ctime = ''
+  data.state= 'a'
+  data.ctime = 'b'
   return data
 }
 
@@ -63,10 +62,13 @@ var sendData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.id = localStorage.firstID
     var method = 'POST'
     var url = '/slloan/loan/proupdate'
     log(data)
-    sendAjax(method, url, data)
+    if(data.id) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -121,6 +123,9 @@ var searchExport = function(back) {
 			});
 }
 
+var initback = {
+		id: '20'
+}
 
 //searchExport(initback)
 
@@ -165,7 +170,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancreas"
   })
 }
 

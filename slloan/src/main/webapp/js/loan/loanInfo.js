@@ -22,22 +22,18 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.amount = e('.amount').value
-  data.deadline = e('.deadline').value
+  data.term = e('.deadline').value
   data.unit = e('.unit').value
   data.variety = e('.variety').value
-  data.manner = e('.manner').value
-  data.bank = e('.bank').value
-  data.accountName = e('.account-name').value
-  data.account = e('.account').value
-  data.repayBank = e('.repay-bank').value
-  data.repayCcount = e('.repay-ccount').value
-  data.reapyAccountbank = e('.reapy-accountbank').value
+  data.repayment = e('.manner').value
+  data.beneficiarybank = e('.bank').value
+  data.bankaccount = e('.account-name').value
+  data.receivingAccount = e('.account').value
+  data.repaymenBtank = e('.repay-bank').value
+  data.repaymentAccount = e('.repay-ccount').value
+  data.accountNumber = e('.reapy-accountbank').value
   data.state = 'a'
   data.ctime = 'b'
-  data.rolename = localStorage.purrole
-  data.username = localStorage.purusername
-  data.city = localStorage.purcity
-  data.parentnodeId = localStorage.purid
   return data
 }
 	
@@ -74,10 +70,18 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
+    data.mark = localStorage.createID
+    data.temporaryId = localStorage.createTemporaryId	
     var method = 'POST'
     var url = '/slloan/loan/ApplyLoaninformations'
-    log(data)	
-    sendAjax(method, url, data)
+    log(data)
+    if(!data.mark) {
+        sendAjax(method, url, data)
+    }
   })
 }
 
@@ -87,7 +91,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -158,12 +162,30 @@ var searchData = function() {
 	}
 }
 
+//修改数据保存
+var updateData = function(element) {
+  log('send data to server')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/modifyusersjfo'
+    log(data)	
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+  })
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-loaner')
   cancelBtn('#cancel')
   searchData()
+  updateData('#save-loaner')
 }
 
 __main()

@@ -22,13 +22,13 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.cname = e('.ch-name').value
-  data.paperwork = e('.paperwork-type').value
-  data.paperother = e('.document-number').value
-  data.paperNumb = e('.paperwork-numb').value
-  data.unitName = e('.unit-name').value
-  data.residencePhone = e('.residence-phone').value
-  data.unitPhone = e('.unit-phone').value
-  data.mobiePhone = e('.mobie-phone').value
+  data.certificate = e('.paperwork-type').value
+  data.certificateType = e('.document-number').value
+  data.document = e('.paperwork-numb').value
+  data.untilName = e('.unit-name').value
+  data.residence = e('.residence-phone').value
+  data.untilPhone = e('.unit-phone').value
+  data.mobile = e('.mobie-phone').value
   data.salary = e('.salary').value
   data.state = 'a'
   data.ctime = 'b'
@@ -68,10 +68,14 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.temporaryId = localStorage.createTemporaryId	
+	data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/loanApplyspouse'
     log(data)
-    sendAjax(method, url, data)
+    if(!data.mark) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -81,7 +85,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -138,6 +142,8 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+
+
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
@@ -149,12 +155,30 @@ var searchData = function() {
 	}
 }
 
+//修改数据保存
+var updateData = function(element) {
+  log('send data to server')
+  var evs = e(element)
+  evs.addEventListener('click', function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/spoupdatea'
+    log(data)
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+  })
+}
+
 //
 var __main = function() {
   log( "run")
   sendData('#save-data')
   cancelBtn('#cancel')
   searchData()
+  updateData('#save-data')
 }
 
 __main()

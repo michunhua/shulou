@@ -189,7 +189,7 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/LoanInformation?page=1&limit=10'
+    var url = '/slloan/loan/LoanInformation?page=' + init.pages + '&limit='+ init.limit
     var datas = collectData()
     inquireAjax(method, url, datas)
   })

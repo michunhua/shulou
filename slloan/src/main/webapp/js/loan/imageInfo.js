@@ -121,7 +121,7 @@ var loadImageAjax = function(method, url, datas) {
 // 执行加载图片
 window.onload = function() {
 	var method = 'GET'
-	var url = 'slloan/updateftpimage/selectfiletype'
+	var url = '../updateftpimage/selectfiletype'
 	var data = {}
 	data.usernameid = localStorage.purid
 	data.city = localStorage.purcity

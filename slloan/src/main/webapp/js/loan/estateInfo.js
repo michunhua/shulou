@@ -75,10 +75,14 @@ var sendData = function() {
   var evs = e('#save-loaner')
   evs.addEventListener('click', function() {
     var data = collectData()
+    data.temporaryId = localStorage.createTemporaryId
+    data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/housepropertydata'
     log(data)
-    sendAjax(method, url, data)
+    if(!data.mark) {
+        sendAjax(method, url, data)	
+    }
   })
 }
 
@@ -88,7 +92,7 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-    window.history.back()
+    window.location.href = "/slloan/loan/loancrea"
   })
 }
 
@@ -166,6 +170,7 @@ log('send data method')
 	})
 }
 
+// 查询数据
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/pper'
@@ -176,11 +181,27 @@ var searchData = function() {
 	}
 }
 
+// 保存修改数据
+var updateData = function() {
+  var evs = e('#save-loaner')
+  evs.addEventListener('click', function() {
+    var data = collectData()
+    data.id = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/proupdatee'
+    log(data)
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+  })
+}
+
 //
 var __main = function() {
   sendData()
   cancelBtn('#cancel')
   searchData()
+  updateData()
 }
 
 __main()
