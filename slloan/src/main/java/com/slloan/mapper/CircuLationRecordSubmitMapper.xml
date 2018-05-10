@@ -123,7 +123,7 @@
 					 WHERE submit = #{id}
     </update>
     
-  <!--     根据ID查记录 
+     <!-- 根据ID查记录 -->
 		<select id="findById" parameterType="int"  resultType="com.slloan.entity.CircuLationRecord">
 				select * from recordsubmit_table 
 					<where>
@@ -132,9 +132,9 @@
 						<if test="username !=null">and username=#{username}</if>
 					</where>
 				and submit = #{id} 
-		</select> -->
+		</select>
 		
-		<select id="findById" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
+		<select id="findById2" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
 		SELECT * FROM recordsubmit_table where submit=#{submit} and  city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username} and state=#{state}
 	</select>
 </mapper>

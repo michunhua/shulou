@@ -367,7 +367,7 @@ public class JointApplicantController {
 		int id = Integer.parseInt(uid);
 		JointApplicant isResult = jointapplicant.SelectById(id);
 
-		if (isResult == null) {
+		if (isResult != null) {
 			return new Json(true, "success", isResult);
 		} else
 			return new Json(false, "fail", isResult);

@@ -78,7 +78,8 @@ public class RoleAddServiceImpl implements RoleAddService{
 		String note = addrole.getNote();
 		String createDate = addrole.getCreateDate();
 		String configuration = addrole.getConfiguration();
-		AddRole addrolee = new AddRole(roleName,descriPtion,note,createDate,belongs_City,configuration);
+		String parentid = addrole.getParentid();
+		AddRole addrolee = new AddRole(roleName,descriPtion,note,createDate,belongs_City,configuration,parentid);
 		return roleAddDao.addRoleUser(addrolee);
 	}
 
@@ -126,6 +127,32 @@ public class RoleAddServiceImpl implements RoleAddService{
 	}
 	
 	@Override
+	public Page<AddRole> getRolePage(int currentPage,String parentid,String username) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<AddRole> pageBean = new Page<AddRole>();
+		//封装当前页数
+		pageBean.setCurrPage(currentPage);
+		//每页显示的数据
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		//封装总记录数
+		int totalCount = roleAddDao.getRoleCount();
+		pageBean.setTotalCount(totalCount);
+		//封装总页数
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);//向上取整
+		pageBean.setTotalPage(num.intValue());
+		map.put("parentid",parentid);
+		map.put("username",username);
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		//封装每页显示的数据
+		List<AddRole> lists = roleAddDao.getRolePage(map);
+		pageBean.setLists(lists);
+			return pageBean;
+	}
+
+	@Override
 	public Page<AddRole> getRolePage(int currentPage) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<AddRole> pageBean = new Page<AddRole>();
@@ -141,14 +168,15 @@ public class RoleAddServiceImpl implements RoleAddService{
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);//向上取整
 		pageBean.setTotalPage(num.intValue());
+//		map.put("parentid",parentid);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
-		List<AddRole> lists = roleAddDao.getRolePage(map);
+		List<AddRole> lists = roleAddDao.getRolePage2(map);
 		pageBean.setLists(lists);
 			return pageBean;
 	}
-
+	
 	@Override
 	public List<AddRole> find(AddRole map) {
 		Map<String, Object> param = new HashMap<String,Object>();
@@ -191,5 +219,13 @@ public class RoleAddServiceImpl implements RoleAddService{
 		return roleAddDao.selectroleRoleName(param);
 	}
 
+	@Override
+	public List<AddRole> getselectByid(String parentid) {
+		return roleAddDao.getselectByid(parentid);
+	}
 
+	@Override
+	public AddRole getselectByid2(String parentid) {
+		return roleAddDao.getselectByid2(parentid);
+	}
 }

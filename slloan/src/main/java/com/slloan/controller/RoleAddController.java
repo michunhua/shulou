@@ -89,31 +89,21 @@ public class RoleAddController {
 	@RequestMapping(value="/rolemanagement",method = RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String rolemanagement(HttpServletRequest req){
+		String json = req.getParameter("data");
+		JSONObject jsonobj = new JSONObject().fromObject(json);
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
+		String parentid = jsonobj.getString("parentid");
+		String username = jsonobj.getString("username");
 		int startPos= Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
-		System.out.println(page);
-		System.out.println(limit);//startPos, int pageSize
-//		roleAddService.getRolePage(startPos);
-		//JSON.toJSONString(user)
-		return JSON.toJSONString(roleAddService.getRolePage(startPos));
+			if(username.contains("admin")){
+				return JSON.toJSONString(roleAddService.getRolePage(startPos));
+			}else{
+				return JSON.toJSONString(roleAddService.getRolePage(startPos,parentid,username));//这个只能查自己所创建的数据
+			}
+		
 	}
-	/**
-	 * 添加角色
-	 * @param addRole 参数	
-	 * @return json
-	 *//*
-	@RequestMapping(value="/addrole")
-	public Json addrolethe(AddRole addRole){
-		boolean rt = roleAddService.addRoleUser(addRole);
-		if(rt ==true){
-			
-			return new Json(true,"success",rt);
-		}else{
-			return new Json(false,"fail",null);
-		}
-	}*/
 	
 	/**
 	 * 批量删除角色
@@ -182,13 +172,13 @@ public class RoleAddController {
 		int idint = Integer.parseInt(id);
 		String updatedate = DateUtils.getInDateTime((new Date()));//日期
 		AddRole addrole = new AddRole(username,descriPtion,city,note,configuration,updatedate,idint);
-		Map<Object,Object> map = new HashMap<Object,Object>();
-		map.put("rolename", username);
-//		map.put("belongscity", city);
-		AddRole role= roleAddService.selectroleRoleName(map);
-			if(role !=null){
-				return  new  Json(false,"fail",role,"同城同名的角色有修改失败");//new Json(false,"fail",role,"角色名已存在插入失败");
-			}else{
+		List<String> updateadd = new ArrayList<String>();
+//		Map<Object,Object> map = new HashMap<Object,Object>();
+//		map.put("rolename", username);
+//		AddRole role= roleAddService.selectroleRoleName(map);
+//			if(role !=null){
+//				return JSON.toJSONString("修改保存角色名已存在插入失败");//new Json(false,"fail",role,"角色名已存在插入失败");
+//			}else{
 					
 				 boolean isResult = roleAddService.updateRole(addrole);
 				 boolean result = false;
@@ -213,7 +203,7 @@ public class RoleAddController {
 				 }else{
 					 return new Json(true,"success",isResult,"修改角色权限保存失败");
 				 }
-			}
+//			}
 		
 	}
 	
@@ -222,6 +212,7 @@ public class RoleAddController {
 		return "test002";
 		
 	}
+//	3
 	/**
 	 * 添加权限
 	 * @return
@@ -242,20 +233,22 @@ public class RoleAddController {
 		String note = obj.getString("note");//备注
 		String createDate = DateUtils.getInDateTime((new Date()));//日期
 		String configuration = obj.getString("setPurview");//权限配置
+		String parentid = obj.getString("parentid");
 		System.out.println("权限配置: "+configuration);
 		List<String> ll = new ArrayList<String>();
 		
 		//先查询roleName权限表是否有同名否则插入失败
 		
 //		String rolenamee = req.getParameter("name");//查询角色名
+//		String city = req.getParameter("city");
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("rolename", roleName);
-		map.put("belongscity", belongs_City);
+		map.put("belongs_City", belongs_City);
 		AddRole role= roleAddService.selectroleRoleName(map);
 			if(role !=null){
-				return new Json(false,"fail",role,"同城同名的角色和城市已存在插入角色失败");
+				return new Json(false,"fail",role,"角色名和城市已存在插入失败");
 			}else{
-				AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate);
+				AddRole addrole = new AddRole(roleName,descriPtion,belongs_City,note,configuration,createDate,parentid);
 				boolean rt = roleAddService.addRoleUser(addrole);//插入角色
 				AddRole add = new AddRole();
 				add.setRoleName(roleName);//角色
@@ -333,6 +326,37 @@ public class RoleAddController {
 	 */
 	@RequestMapping(value="/initrole",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
+	private Json initrolecs(HttpServletRequest req) {
+		String paramdata = req.getParameter("data");
+		JSONObject jsonObject = new JSONObject().fromObject(paramdata);
+		String parentid  = jsonObject.getString("parentid");
+		String username = jsonObject.getString("username");
+		Map<String,Object> map = new HashMap<String,Object>();
+			
+			if(username.contains("admin")){
+				List<AddRole> add = roleAddService.list();
+				if(add !=null){
+					return new Json(true,"success",add,"");//JSON.toJSONString(add);
+				}else{
+					return new Json(false,"fail",add,"");//JSON.toJSONString("fail");
+				}
+			}else{
+				List<AddRole> add = roleAddService.getselectByid(parentid);
+				if(add !=null){
+					return new Json(true,"true",add,"");//JSON.toJSONString(add);
+				}else{
+					return new Json(false,"fail","","");//JSON.toJSONString("fail");
+				}
+			}
+		
+	}
+	
+	/**
+	 * 查询角色传值到用户
+	 * 
+	 *//*
+	 /*@RequestMapping(value="/initrole",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
 	private String initrolecs() {
 		List<AddRole> add = roleAddService.list();
 		if(add !=null){
@@ -340,9 +364,7 @@ public class RoleAddController {
 		}else{
 			return JSON.toJSONString("fail");
 		}
-		
-	
-	}
+	}*/
 	
 	/**
 	 * 查询城市传值到用户

@@ -80,7 +80,20 @@ public interface UserService {
      * @param map
      * @return
      */
+ 	Page<UserLogin> getUserByPage(int currentPage,String parentid);
+ 	/**
+     * 分页操作，调用getRolePage limit分页方法
+     * @param map
+     * @return
+     */
  	Page<UserLogin> getUserByPage(int currentPage);
+ 	
+ 	/**
+     * 系统管理员分页操作，调用getRolePage limit分页方法
+     * @param map
+     * @return
+     */
+// 	Page<UserLogin> getUserByPage(int currentPage,String parentid);
  	
  	/**
      * 查询用户记录总数

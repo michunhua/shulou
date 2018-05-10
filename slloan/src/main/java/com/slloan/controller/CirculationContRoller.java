@@ -1,7 +1,9 @@
 package com.slloan.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.slloan.entity.Contacts;
+import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.circulation;
+import com.slloan.service.inter.CircuLationRecordSubmitService;
+import com.slloan.service.inter.PersonalProfileService;
 import com.slloan.service.inter.circulationService;
 import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
@@ -30,7 +34,11 @@ public class CirculationContRoller {
 
 	@Autowired
 	private circulationService circulationservice;
-
+	@Autowired 
+	private CircuLationRecordSubmitService circuLationRecordSubmitService;
+	
+	@Autowired
+	private	PersonalProfileService personalproFileService;
 	/**
 	 * 提交插入一条记录
 	 * @param req
@@ -62,7 +70,7 @@ public class CirculationContRoller {
 		record.setRolename(rolename);
 		record.setParentnodeId(parentnodeId);
 		record.setUsername(username);
-		record.setCtime(ctime);
+		record.setCreatedata(ctime);
 		record.setState(state);
 //		record.setCirculation("------"+username+"------------>"+"贷款创建提交到贷款初审");
 		boolean coan = circulationservice.save(record);// 鎻掑叆瑙掕壊
@@ -107,7 +115,7 @@ public class CirculationContRoller {
 		record.setRolename(rolename);
 		record.setParentnodeId(parentnodeId);
 		record.setUsername(username);
-		record.setCtime(ctime);
+		record.setCreatedata(ctime);
 		record.setState(state);
 		record.setCirculation("----------"+username+"-------->"+"初审回退创建提交");
 		boolean coan = circulationservice.save2(record);// 鎻掑叆瑙掕壊
@@ -130,8 +138,8 @@ public class CirculationContRoller {
 	@RequestMapping(value="/selectwhole",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	public Json selectwhole(HttpServletRequest req) {
 
-//		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
-//		JSONObject obj = new JSONObject().fromObject(role_constant);
+		String role_constant = req.getParameter("data"); // 渚嬪鎸夋彮鍛樺悕
+		JSONObject obj = new JSONObject().fromObject(role_constant);
 //		Integer id = obj.getInt("");
 //		String state = obj.getString("");
 //		String circulation = obj.getString("");
@@ -142,25 +150,44 @@ public class CirculationContRoller {
 //		String circulation = req.getParameter("circulation");
 //		String ctime = DateUtils.getInDateTime2((new Date()));//日期
 //		String ctime = DateUtils.getInDateTime2((new Date()));//日期
-		String city= req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
-		String username = req.getParameter("username");
-//		String rolename = req.getParameter("rolename");
+		
+//				datas.state = event.target.name
+//				datas.id = event.target.parentNode.classList.value
+//			    datas.username = localStorage.purusername
+//			    datas.city = localStorage.purcity
+//				datas.parentnodeId = localStorage.purid
+//		
+		
+		String city= obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
+		String username = obj.getString("username");
+		String state = obj.getString("state");
+		String id = obj.getString("id");//根据一条记录的ID查一条记录流转记录状态
+		int uid = Integer.parseInt(id);
+		int stateid = Integer.parseInt(state);
+		
 		
 //		circulation record = new  circulation( state,circulation,ctime,username, parentnodeId,city,rolename);
 		circulation record = new  circulation();
+		record.setSpare(id);
 		record.setCity(city);
 		record.setParentnodeId(parentnodeId);
 		record.setUsername(username);
-//		record.setCtime(ctime);
+		record.setId(uid);
+		record.setState(state);
 //		record.setCirculation("----------"+username+"-------->"+"初审回退创建提交");
 		List<circulation> coan = circulationservice.findById(record);// 鎻掑叆瑙掕壊
+		PersonalProfile param = new PersonalProfile(uid,username,city,"",parentnodeId,"");
+		PersonalProfile p =personalproFileService.getSelectById(param);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("a", coan);
+		map.put("b", p);
 		if (coan !=null) {
 			logger.info("查询成功!");
-			return new Json(true, "success", coan);
+			return new Json(true, "success", map);
 		} else {
 			logger.info("查询失败!");
-			return new Json(false, "fail", coan);
+			return new Json(false, "fail", map);
 		}
 
 	}

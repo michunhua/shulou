@@ -273,25 +273,26 @@ var updatesendAjax = function(method, url, datas, callback) {
     		
 //    		console.log(powerShow)
     		// 设置获取城市
-    		console.log(data.obj.belongs_City)
+//    		console.log(data.obj.belongs_City)
     		var Identification = data.obj.belongs_City
     		var intent = e(".role-city")
     		var len = intent.length
-    		for(var city = 0; city < len; city++) {
-    			log(intent[city].value)
-    			if(intent[city].value == Identification) {
-    				console.log('相等吗？')
-    				console.log(city)
-    				intent[city].selected = true
-    				
+//    		for(var p = 0; p < len; city++) {
+//    			log(intent[p].value)
+//    			log('Identification', Identification)
+//    			if(intent[p].value == Identification) {
+//    				console.log('相等吗？')
+//    				console.log(p)
+//    				intent[p].selected = true
+//    				
     				// 显示设置的城市
     				layui.use('form', function(){
     					  var form = layui.form;
     					  
     					  form.render('select')
     					})
-    			}
-    		}
+//    			}
+//    		}
     	}
     }
   })

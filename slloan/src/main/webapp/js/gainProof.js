@@ -108,6 +108,7 @@ var addTable = function(data) {
       span1.href = '#'
       span1.innerText = '[   上传     ]'
       span2.classList.add('record')
+      span2.name = state
       span2.href = '#'  
       span2.innerText = '[ 流转记录   ]'
       td9.classList.add(ID)
@@ -367,7 +368,27 @@ var hang_cirulationAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
+          console.log(data.obj.a.length)
+          var content = data.obj.b.applicationnumber
+          console.log(content)
+          var tableString = ''
+          if(data.obj.a.length) {
+          	var flag = data.obj.a.length
+          	for(var i = 0; i < flag; i++) {
+                  var rolename = data.obj.a[i].rolename
+                  var username = data.obj.a[i].username
+                  var circulation = data.obj.a[i].circulation
+                  var updatedata = data.obj.a[i].updatedata
+                  tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
+                  
+          	}
+          }
+  		layer.open({
+  			  title: '流转记录',
+  			  area: ['830px', '560px'],
+  			  content: "<table border='1'><tr><th>申请编号</th><th>状态</th><th>负责角色</th><th>负责人</th><th>处理时间</th></tr>" +
+  			  		 tableString + "</table>",
+  			});
       }, 
       error: function() {
     	  layer.msg('服务器错误')
@@ -386,7 +407,7 @@ var Hang_cirulation = function(element) {
 			var method = "GET"
 		    var url = "/slloan/sumiteregresses/selectwhole"
 		    var datas = {}
-			datas.state = 0
+			datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value
 		    datas.username = localStorage.purusername
 		    datas.city = localStorage.purcity

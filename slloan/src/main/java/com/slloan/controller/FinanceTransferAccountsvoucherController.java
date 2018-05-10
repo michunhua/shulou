@@ -34,11 +34,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.ImageDataUpdate;
 import com.slloan.entity.ResultList;
+import com.slloan.entity.circulation;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
 import com.slloan.service.inter.ImagedataService;
+import com.slloan.service.inter.circulationService;
 import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
 
@@ -77,6 +83,7 @@ public class FinanceTransferAccountsvoucherController {
 	 String filename2;
 	 static int reply;
 	 private long maxSize;
+	 InputStream input;
 	Set<String> setlist = new TreeSet<String>();
 	ResultList<Object> resultList = new ResultList<Object>();
 	List<Object> list = new ArrayList<Object>();
@@ -85,6 +92,12 @@ public class FinanceTransferAccountsvoucherController {
 	
 	@Autowired
 	private CircuLationRecordSubmitService recordSubmitService;
+	
+	@Autowired
+	private circulationService cService;
+	
+	@Autowired
+	private circulationService circulationservice;
 	
 	/**
 	 * 转账凭证上传到FTP
@@ -107,22 +120,43 @@ public class FinanceTransferAccountsvoucherController {
 	    	String usernameid = req.getParameter("usernameid");
 			String username = req.getParameter("username");
 			String roleName = req.getParameter("rolename");
+			String t = req.getParameter("id");
 			String createDate = DateUtils.getInDateTime((new Date()));//日期
 	    	String targetFileName = "";
+	    	Session session = null;
+			Channel channel = null;
 	    	for(final MultipartFile f:tmpfile){
-	    	        FTPClient ftp = new FTPClient();
+//	    	        FTPClient ftp = new FTPClient();
+	    	        JSch jsch = new JSch();
 	    	        try {
-	    	       
-	    	            ftp.connect(ftpIp);// 连接FTP服务器
-	    	            // 如果采用默认端口，可以使用ftp.connect(url)的方式直接连接FTP服务器
-	    	         boolean ftpfalse=   ftp.login(ftpUser, ftpPwd);// 登录
-	    	         if(ftpfalse == true){
+	    	        	if(22<= 0){
+    	    	        	session = jsch.getSession(ftpUser, ftpIp);
+    		        	}else{
+    		        		session = jsch.getSession(ftpUser, ftpIp,22);
+    		        	}
+    	        	
+    	        	//如果服务器连接不上，则抛出异常
+    	     		if (session == null) {
+    	     			throw new Exception("session is null");
+    	     		}
+    	     		//设置登陆主机的密码
+    	    		session.setPassword("Dt20180503");//设置密码   
+    	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+    	    		session.setConfig("StrictHostKeyChecking", "no");
+    	    		//设置登陆超时时间   
+    	    		session.connect(30000);
+    	    		
+    	    		//创建sftp通信通道
+    				channel = (Channel) session.openChannel("sftp");
+    				channel.connect(1000);
+    				ChannelSftp sftp = (ChannelSftp) channel;
+	    	         if(session !=null){
 	    	        	 System.err.println("FTP站点连接成功！");
-	    	        	 reply = ftp.getReplyCode();
+//	    	        	 reply = ftp.getReplyCode();
 	     	            if (!FTPReply.isPositiveCompletion(reply)) {
 	     	                ftp.disconnect();
 	     	            }
-	     	            ftp.enterLocalPassiveMode();
+//	     	            ftp.enterLocalPassiveMode();
 	     	            final String tmpFileName = f.getOriginalFilename();
 	         	   	 	final int dot = tmpFileName.lastIndexOf(".");
 	         	   	 String ext = "" ;//文件名后缀
@@ -143,25 +177,25 @@ public class FinanceTransferAccountsvoucherController {
 	             	 			System.out.println("aaaa------------:  "+requestsize);
 	         	 			  
 	         	 			 if(upload_type.equals("转账凭证") && requestsize >0 ){
-	         	 				if (!ftp.changeWorkingDirectory("transfer_accounts_image")) {
-	             	                ftp.makeDirectory("transfer_accounts_image");//创建目录
-	             	                ftp.changeWorkingDirectory("transfer_accounts_image");//跳转目录(可根据项目需求选择创建目录的多少)
-	             	            }
 	                     		System.out.println("转账凭证");
 	                     		imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/transfer_accounts_image/"+targetFileName.trim());
+//	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/transfer_accounts_image/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
+	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/transfer_accounts_image/"+targetFileName.trim());
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
 	                         	imagedata.setUploadtype(upload_type);//上传类型
 	                         	imagedata.setCity(city);
 	                         	imagedata.setSubnode("已传");
+	                         	imagedata.setParentnode(usernameid);//用户名ID
+	                         	imagedata.setSpare(username);//用户名
+	                         	imagedata.setSparetwo(roleName);//角色名
 	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	                         	imagedata.setCreateData(createData);
 	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-	                         	
+	                         	sftp.cd("/usr/local/FTP/transfer_accounts_image");
 	                         	String sid = reqid;
 	                	    	int id = Integer.parseInt(sid);
 	                	    boolean listimg= imagedataservice.tobeforensics(id);//待取证
@@ -173,19 +207,20 @@ public class FinanceTransferAccountsvoucherController {
 //		         	 			System.out.println(maxSize);
 		         	 			long requestsize2 = ctx.contentLength();
 		         	 			System.out.println(requestsize);
-		         	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 //		          	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
-		          	            InputStream input = f.getInputStream();
+		          	             input = f.getInputStream();
 		          	            System.out.println(input);
 //		          	            readStream(input);
 //		          	          boolean isResult =  ftp.storeFile(targetFileName, input);
-		          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-		          	          if(isResult ==  true){
+		          	            
+//		          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
+		          	      if(tmpFileName !="" || tmpFileName !=null && dot>=0){
 		          	        	 System.err.println("上传成功");
-		          	        	 list.add(isResult);
-		          	        	resultList.setLists(list);
-		          	        	  input.close();
-		          	        	  ftp.logout();
+		          	        	sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件
+//		          	        	 list.add(isResult);
+//		          	        	resultList.setLists(list);
+//		          	        	  input.close();
+//		          	        	  ftp.logout();
 		          	        	String filepath =targetFileName;//原文件名
 		                    	String parentnode =city;
 		                    	String uploadtype = upload_type;
@@ -194,11 +229,14 @@ public class FinanceTransferAccountsvoucherController {
 		                    	String sparetwo = roleName;
 		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
 		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
-		                        if(listimg2.size()> 0 && listimg ==true){
+		            			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+		                        circulation record = new  circulation("5","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+		                    	boolean coan = circulationservice.save(record);
+		                        if(listimg2.size()> 0 && listimg ==true && coan== true){
 		                    		//return new Json(true,"success",listimg);
 		                    		  return new Json(true,"success",listimg2,"上传成功 -待放款确认");
 		                    	}else{
-		                    		return new Json(false,"fail",listimg2,"请选择城市或上海类型-待放款确认失败");
+		                    		return new Json(false,"fail",listimg2,"请选择城市或上传类型-待放款确认失败");
 		                    	}
 //		          	        	  return new Json(true,"success",resultList,"上传成功");
 		          	        	  
@@ -227,25 +265,25 @@ public class FinanceTransferAccountsvoucherController {
 	                     	}
 	         	 			if(upload_type.equals("结算凭证")&& requestsize >0 ){
 	                     		System.out.println("结算凭证");
-	                     		if (!ftp.changeWorkingDirectory("settlement_voucher_image")) {
-	             	                ftp.makeDirectory("settlement_voucher_image");//创建目录
-	             	                ftp.changeWorkingDirectory("settlement_voucher_image");//跳转目录(可根据项目需求选择创建目录的多少)
-	             	            }
 //	                     		 ZipUtil1.unZip(shenfenzheng_image+"/"+targetFileName);
 	                     		imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/settlement_voucher_image/"+targetFileName.trim());
+//	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/settlement_voucher_image/"+targetFileName.trim());
+	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/settlement_voucher_image/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
 	                         	imagedata.setUploadtype(upload_type);//上传类型
 	                         	imagedata.setCity(city);
 	                         	imagedata.setSubnode("已传");
+	                         	imagedata.setParentnode(usernameid);//用户名ID
+	                         	imagedata.setSpare(username);//用户名
+	                         	imagedata.setSparetwo(roleName);//角色名
 	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	                         	imagedata.setCreateData(createData);
 	                         	imagedataservice.imageDataAdd(imagedata);
-	                         	
+	                         	sftp.cd("/usr/local/FTP/settlement_voucher_image");
 	                        	String sid = reqid;
 	                	    	int id = Integer.parseInt(sid);
 	                	    boolean listimg= imagedataservice.tobesettled(id);
@@ -257,19 +295,19 @@ public class FinanceTransferAccountsvoucherController {
 //		         	 			System.out.println(maxSize);
 		         	 			long requestsize2 = ctx.contentLength();
 		         	 			System.out.println(requestsize);
-		         	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//		         	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 //		          	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
 		          	            InputStream input = f.getInputStream();
 		          	            System.out.println(input);
 //		          	            readStream(input);
 //		          	          boolean isResult =  ftp.storeFile(targetFileName, input);
-		          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-		          	          if(isResult ==  true){
+		          	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件
+		          	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 		          	        	 System.err.println("上传成功");
-		          	        	 list.add(isResult);
-		          	        	resultList.setLists(list);
-		          	        	  input.close();
-		          	        	  ftp.logout();
+//		          	        	 list.add(isResult);
+//		          	        	resultList.setLists(list);
+//		          	        	  input.close();
+//		          	        	  ftp.logout();
 		          	        	String filepath =targetFileName;//原文件名
 		                    	String parentnode =city;
 		                    	String uploadtype = upload_type;
@@ -277,8 +315,11 @@ public class FinanceTransferAccountsvoucherController {
 		                    	String spare = username;
 		                    	String sparetwo = roleName;
 		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
-		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
-		                        if(listimg2.size()> 0 && listimg ==true){
+		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload2(imagedata2);
+		                        String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+		                        circulation record = new  circulation("10","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+		                        boolean coan = circulationservice.save(record);
+		                        if(listimg2.size()> 0 && listimg ==true && coan == true){
 		                    		//return new Json(true,"success",listimg);
 		                    		  return new Json(true,"success",listimg2,"上传成功 -已结清");
 		                    	}else{
@@ -307,11 +348,11 @@ public class FinanceTransferAccountsvoucherController {
 	    	        	 String str = "FTP连接失败";
 	    	        	 list.add(str);
 	    	        	 resultList.setLists(list);
-//	    	        	 return new Json(false,"fail"resultList,"");
+	    	        	 return new Json(false,"fail","","FTP连接失败");
 	    	         }
 	    	            
 //	    	            
-	    	        } catch (IOException e) {
+	    	        } catch (Exception e) {
 //	    	            e.printStackTrace();
 	    	            return new Json(false,"fail",e.getMessage(),"连接异常");
 	    	        } finally {
@@ -323,6 +364,10 @@ public class FinanceTransferAccountsvoucherController {
 	    	                }
 	    	            }
 	    	        }
+	    	        session.disconnect();
+	    			channel.disconnect();
+	    			 input.close();
+	 	        	  ftp.logout();
 	    	    }
 			return null;
 	  }
@@ -347,14 +392,36 @@ public class FinanceTransferAccountsvoucherController {
 		  String createDate = DateUtils.getInDateTime((new Date()));//日期
 //		  String filepath = req.getParameter("filepath");
 		  String city = req.getParameter("city");
+		  String t = req.getParameter("id");
 		  String targetFileName = "";
 		  String reqid= req.getParameter("state");
+		  Session session = null;
+			Channel channel = null;
 		  for(MultipartFile f:tmpfile){
-			  FTPClient ftp = new FTPClient();
+			  JSch jsch = new JSch();
 			  try {
-				ftp.connect(ftpIp);
-				boolean ftpfalse = ftp.login(ftpUser, ftpPwd);//登录
-				if(ftpfalse == true){
+				  if(22<= 0){
+	    	        	session = jsch.getSession(ftpUser, ftpIp);
+		        	}else{
+		        		session = jsch.getSession(ftpUser, ftpIp,22);
+		        	}
+	        	
+	        	//如果服务器连接不上，则抛出异常
+	     		if (session == null) {
+	     			throw new Exception("session is null");
+	     		}
+	     		//设置登陆主机的密码
+	    		session.setPassword("Dt20180503");//设置密码   
+	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+	    		session.setConfig("StrictHostKeyChecking", "no");
+	    		//设置登陆超时时间   
+	    		session.connect(30000);
+	    		
+	    		//创建sftp通信通道
+				channel = (Channel) session.openChannel("sftp");
+				channel.connect(1000);
+				ChannelSftp sftp = (ChannelSftp) channel;
+				if(session !=null){
 					System.err.println("FTP站点连接成功");
 					reply = ftp.getReplyCode();
 					if(!FTPReply.isPositiveCompletion(reply)){
@@ -377,25 +444,25 @@ public class FinanceTransferAccountsvoucherController {
 							long requestsize = ctx.contentLength();
 							System.out.println("上传文件大小: "+requestsize);
 							if(upload_type.equals("回款确认") && requestsize>0){
-								if(!ftp.changeWorkingDirectory("return_confirmation")){
-									ftp.makeDirectory("return_confirmation");
-									ftp.changeWorkingDirectory("return_confirmation");
-								}
 								System.out.println("回款确认");
 								imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/return_confirmation/"+targetFileName.trim());
+//	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/return_confirmation/"+targetFileName.trim());
+	                        	imagedata.setFilepath("http://120.79.252.173:8080/ftp/return_confirmation/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
 	                         	imagedata.setUploadtype(upload_type);//上传类型
 	                         	imagedata.setCity(city);
 	                         	imagedata.setSubnode("己传");
+	                         	imagedata.setParentnode(usernameid);//用户名ID
+	                         	imagedata.setSpare(username);//用户名
+	                         	imagedata.setSparetwo(roleName);//角色名
 	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	                         	imagedata.setCreateData(createData);
 	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-	                         	
+	                         	sftp.cd("/usr/local/FTP/return_confirmation");
 
 	                  	          String sid = reqid;
 		                	    	int id = Integer.parseInt(sid);
@@ -408,7 +475,6 @@ public class FinanceTransferAccountsvoucherController {
 //	                 	 			System.out.println(maxSize);
 	                 	 			long requestsize2 = ctx2.contentLength();
 	                 	 			System.out.println(requestsize2);
-	                 	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 //	                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
 	                  	            InputStream input = f.getInputStream();
 	                  	            System.out.println(input);
@@ -416,11 +482,12 @@ public class FinanceTransferAccountsvoucherController {
 //	                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
 	                  	       
 		                	    
-	                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-	                  	          if(isResult ==  true){
+//	                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
+	                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+	                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 	                  	        	 System.err.println("上传成功");
-	                  	        	  input.close();
-	                  	        	  ftp.logout();
+//	                  	        	  input.close();
+//	                  	        	  ftp.logout();
 	                  	        	String filepath =targetFileName;//原文件名
 	                            	String parentnode =city;
 	                            	String uploadtype = upload_type;
@@ -429,7 +496,10 @@ public class FinanceTransferAccountsvoucherController {
 	                            	String sparetwo = roleName;
 	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
 	                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
-	                  	        	if(listimg2.size()> 0 && listimg == true){
+	                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+		                        circulation record = new  circulation("9","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+		                        boolean coan = circulationservice.save(record);	
+	                            if(listimg2.size()> 0 && listimg == true){
 	                            		//return new Json(true,"success",listimg);
 	                            		  return new Json(true,"success",listimg2,"上传成功-- 待结算审核");
 	                            	}else{
@@ -438,33 +508,33 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
+	                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpeg,bmp,png");
 	                  	          }
 	                 	 		}else{
-	            					System.out.println("FTP连接失败");
+//	            					System.out.println("FTP连接失败");
+	            					 return new Json(false,"fail","","FTP连接失败");
 	            				}
 	                         	
 							}if(upload_type.equals("取证凭证")&& requestsize > 0){
 								System.out.println("取证凭证");
-								if(!ftp.changeWorkingDirectory("obtain_evidence")){
-									ftp.makeDirectory("obtain_evidence");
-									ftp.changeWorkingDirectory("obtain_evidence");
-								}
-								System.out.println("取证凭证");
 								imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/obtain_evidence/"+targetFileName.trim());
+//	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/obtain_evidence/"+targetFileName.trim());
+	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/obtain_evidence/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
 	                         	imagedata.setUploadtype(upload_type);//上传类型
 	                         	imagedata.setCity(city);
 	                         	imagedata.setSubnode("己传");
+	                         	imagedata.setParentnode(usernameid);//用户名ID
+	                         	imagedata.setSpare(username);//用户名
+	                         	imagedata.setSparetwo(roleName);//角色名
 	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	                         	imagedata.setCreateData(createData);
 	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-
+	                         	sftp.cd("/usr/local/FTP/obtain_evidence");
 	                  	          String sid = reqid;
 		                	    	int id = Integer.parseInt(sid);
 		                	    boolean listimg= imagedataservice.WaitForensics(id);//待解压
@@ -476,7 +546,6 @@ public class FinanceTransferAccountsvoucherController {
 //	                 	 			System.out.println(maxSize);
 	                 	 			long requestsize2 = ctx2.contentLength();
 	                 	 			System.out.println(requestsize2);
-	                 	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 //	                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
 	                  	            InputStream input = f.getInputStream();
 	                  	            System.out.println(input);
@@ -484,11 +553,11 @@ public class FinanceTransferAccountsvoucherController {
 //	                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
 	                  	       
 		                	    
-	                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-	                  	          if(isResult ==  true){
+	                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+	                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 	                  	        	 System.err.println("上传成功");
-	                  	        	  input.close();
-	                  	        	  ftp.logout();
+//	                  	        	  input.close();
+//	                  	        	  ftp.logout();
 	                  	        	String filepath =targetFileName;//原文件名
 	                            	String parentnode =city;
 	                            	String uploadtype = upload_type;
@@ -497,7 +566,10 @@ public class FinanceTransferAccountsvoucherController {
 	                            	String sparetwo = roleName;
 	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
 	                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
-	                  	        	if(listimg2.size()> 0 && listimg == true){
+	                			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+	                            circulation record = new  circulation("6","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+	                			boolean coan = circulationservice.save(record);	
+	                            if(listimg2.size()> 0 && listimg == true && coan == true){
 	                            		//return new Json(true,"success",listimg);
 	                            		  return new Json(true,"success",listimg2,"上传成功-- 待进解压凭证审核");
 	                            	}else{
@@ -506,7 +578,7 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
+	                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpeg,bmp,png");
 	                  	          }
 	                 	 		}else{
 	            					System.out.println("FTP连接失败");
@@ -514,26 +586,24 @@ public class FinanceTransferAccountsvoucherController {
 	                         	
 							}if(upload_type.equals("解押凭证")&& requestsize>0){
 								System.out.println("解押凭证");
-								if(!ftp.changeWorkingDirectory("solutionvoucher")){
-									ftp.makeDirectory("solutionvoucher");
-									ftp.changeWorkingDirectory("solutionvoucher");
-								}
-								System.out.println("解押凭证");
 								imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/solutionvoucher/"+targetFileName.trim());
+//	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/solutionvoucher/"+targetFileName.trim());
+	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/solutionvoucher/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
 	                         	imagedata.setUploadtype(upload_type);//上传类型
 	                         	imagedata.setCity(city);
 	                         	imagedata.setSubnode("己传");
+	                         	imagedata.setParentnode(usernameid);//用户名ID
+	                         	imagedata.setSpare(username);//用户名
+	                         	imagedata.setSparetwo(roleName);//角色名
 	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	                         	imagedata.setCreateData(createData);
 	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-	                         	
-	                            
+	                         	sftp.cd("/usr/local/FTP/solutionvoucher");
 	                  	          String sid = reqid;
 		                	    	int id = Integer.parseInt(sid);
 		                	    boolean listimg= imagedataservice.tobedetained(id);//待进压
@@ -545,7 +615,6 @@ public class FinanceTransferAccountsvoucherController {
 //	                 	 			System.out.println(maxSize);
 	                 	 			long requestsize2 = ctx2.contentLength();
 	                 	 			System.out.println(requestsize2);
-	                 	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 //	                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
 	                  	            InputStream input = f.getInputStream();
 	                  	            System.out.println(input);
@@ -553,11 +622,11 @@ public class FinanceTransferAccountsvoucherController {
 //	                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
 	                  	       
 		                	    
-	                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-	                  	          if(isResult ==  true){
+	                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+	                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 	                  	        	 System.err.println("上传成功");
-	                  	        	  input.close();
-	                  	        	  ftp.logout();
+//	                  	        	  input.close();
+//	                  	        	  ftp.logout();
 	                  	        	String filepath =targetFileName;//原文件名
 	                            	String parentnode =city;
 	                            	String uploadtype = upload_type;
@@ -566,7 +635,11 @@ public class FinanceTransferAccountsvoucherController {
 	                            	String sparetwo = roleName;
 	                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
 	                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
-	                  	        	if(listimg2.size()> 0 && listimg == true){
+	                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+	                            circulation record = new  circulation("7","待解押",createDate,username,t,city,sparetwo,updatedata,reqid);
+	                			boolean coan = circulationservice.save(record);	
+	                			
+	                            if(listimg2.size()> 0 && listimg == true && coan == true){
 	                            		//return new Json(true,"success",listimg);
 	                            		  return new Json(true,"success",listimg2,"上传成功-- 待进押凭证审核");
 	                            	}else{
@@ -575,7 +648,7 @@ public class FinanceTransferAccountsvoucherController {
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
+	                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpeg,bmp,png");
 	                  	          }
 	                 	 		}else{
 	            					System.out.println("FTP连接失败");
@@ -584,24 +657,24 @@ public class FinanceTransferAccountsvoucherController {
 	                         	
 							}if(upload_type.equals("进押凭证")&& requestsize>0){
 								System.out.println("进押凭证");
-								if(!ftp.changeWorkingDirectory("entervoucher")){
-									ftp.makeDirectory("entervoucher");
-									ftp.changeWorkingDirectory("entervoucher");
-								}
-								System.out.println("进押凭证");
 								imagedata.setNote(note);//备注
 	                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/entervoucher/"+targetFileName.trim());
+//	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/entervoucher/"+targetFileName.trim());
+	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/entervoucher/"+targetFileName.trim());
 //	                         	imagedata.setFilepath("");
 //	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
 	                         	imagedata.setUploads(note);//上传者
 	                         	imagedata.setUploadtype(upload_type);//上传类型
 	                         	imagedata.setCity(city);
 	                         	imagedata.setSubnode("己传");
+	                         	imagedata.setParentnode(usernameid);//用户名ID
+	                         	imagedata.setSpare(username);//用户名
+	                         	imagedata.setSparetwo(roleName);//角色名
 	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	                         	imagedata.setCreateData(createData);
 	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+	                         	sftp.cd("/usr/local/FTP/entervoucher");
 	                         	
 	                         	String sid = reqid;
 	                	    	int id = Integer.parseInt(sid);
@@ -614,7 +687,6 @@ public class FinanceTransferAccountsvoucherController {
 //                 	 			System.out.println(maxSize);
                  	 			long requestsize2 = ctx2.contentLength();
                  	 			System.out.println(requestsize2);
-                 	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
 //                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
                   	            InputStream input = f.getInputStream();
                   	            System.out.println(input);
@@ -622,11 +694,9 @@ public class FinanceTransferAccountsvoucherController {
 //                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
                   	       
 	                	    
-                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-                  	          if(isResult ==  true){
+                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件 
+                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
                   	        	 System.err.println("上传成功");
-                  	        	  input.close();
-                  	        	  ftp.logout();
                   	        	String filepath =targetFileName;//原文件名
                             	String parentnode =city;
                             	String uploadtype = upload_type;
@@ -635,7 +705,10 @@ public class FinanceTransferAccountsvoucherController {
                             	String sparetwo = roleName;
                             	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
                             List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
-                  	        	if(listimg2.size()> 0 && listimg == true){
+                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+                            circulation record = new  circulation("8","待进押",createDate,username,t,city,sparetwo,updatedata,reqid);
+                			boolean coan = circulationservice.save(record);		
+                            if(listimg2.size()> 0 && listimg == true && coan == true){
                             		//return new Json(true,"success",listimg);
                             		  return new Json(true,"success",listimg2,"上传成功-- 待确认回款审核");
                             	}else{
@@ -644,7 +717,7 @@ public class FinanceTransferAccountsvoucherController {
                   	        	  
                   	          }else{
                   	        	  System.err.println("上传失败！"); 
-                  	        	  return new Json(false,"fail",isResult,"请选择上传文件类型jpg,png,jpeg,bmp,png");
+                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpeg,bmp,png");
                   	          }
                  	 		}else{
             					System.out.println("FTP连接失败");
@@ -771,16 +844,51 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json loaninalreviewbatch(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
 	    	List<String> loanFinalRefuse = new ArrayList<String>();
-	    	String id = jsonobj.getString("id");
-	    	String[] split= id.split(",");
+//	    	String id = jsonobj.getString("id");
+	    	String[] split= items.split(",");
+	    	String sid = null;
 	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").trim();
-	    		loanFinalRefuse.add(str);
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			loanFinalRefuse.add(streplacee);
+	    		}
+	    		
 	    	}
+	    	String t = null;
+			for(String str: loanFinalRefuse){
+				System.out.println(str);
+				t= str;
+				
+			}
+	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 	    	boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
-	    	if(isResult == true){
+			circulation record = new  circulation("1","待终回退到初审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+			boolean coan = circulationservice.save2(record);
+	    	if(isResult == true && coan){
 	    		return new Json(true,"success",isResult,"待终回退到初审审批中成功");
 	    	}else{
 	    		return new Json(false,"fail",isResult,"待终回退到初审审批中失败");
@@ -797,16 +905,56 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json loaninalreviewbatchpast(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject jsonobj = new JSONObject().fromObject(items);
-	    	List<String> loanFinalRefuse = new ArrayList<String>();
-	    	String id = jsonobj.getString("id");
-	    	String[] split= id.split(",");
-	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").trim();
-	    		loanFinalRefuse.add(str);
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	String item = "[2,3,4]";
+//	    	JSONObject jsonobject = new JSONObject().fromObject(item);
+//	    	String id = jsonobject.getString("id");
+	    	List<String> loanFinal = new ArrayList<String>();
+	    	String [] split = items.split(",");
+	    	String sid = null;
+	    	for(String s : split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			loanFinal.add(streplacee);
+	    		}
+	    		
+	    		System.out.println(streplacee);
 	    	}
-	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinalRefuse);
-	    	if(isResult == true){
+	    	
+	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
+	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+			String t = null;
+			boolean coan = false;
+			for(String str: loanFinal){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("3","终审审批通过待出账确认",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				 coan = circulationservice.save(record);
+			}
+		
+	    	if(isResult == true && coan== true){
 	    		return new Json(true,"success",isResult,"终审到待出账确认成功");
 	    	}else{
 	    		return new Json(false,"fail",isResult,"终审到待出账确认失败");
@@ -823,16 +971,54 @@ public class FinanceTransferAccountsvoucherController {
 	    @ResponseBody
 	    public Json batchRefuse(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	String items = "[2,3,4]";
+//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
 	    	List<String> batchRefuse = new ArrayList<String>();
-	    	String id = jsonobj.getString("id");
-	    	String[] split= id.split(",");
+//	    	String id = jsonobj.getString("id");
+	    	String[] split= items.split(",");
+	    	String sid = null;
 	    	for(String s:split){
-	    		String str = s.replace("[", " ").replace("]", " ").trim();
-	    		batchRefuse.add(str);
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			batchRefuse.add(streplacee);
+	    		}
+	    		
 	    	}
+	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    	String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+//			circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,updatedata,spare);
+	    	String t = null;
+	    	boolean coan = false;
+			for(String str: batchRefuse){
+				System.out.println(str);
+				t= str;
+		    	circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				coan = cService.save2(record);
+			}
 	    	boolean isResult = imagedataservice.FirsttrialbatchRefuse(batchRefuse);
-	    	if(isResult == true){
+	    	
+	    	if(isResult == true && coan == true){
 	    		return new Json(true,"success",isResult,"初审审批回退成功");
 	    	}else{
 	    		return new Json(false,"fail",isResult,"初审审批回退失败");
@@ -846,19 +1032,57 @@ public class FinanceTransferAccountsvoucherController {
 	     * @return
 	     */
 	    @RequestMapping(value="/pastgobackfinalreview",method=RequestMethod.POST)
+	    @ResponseBody
 	    public Json batchPast(HttpServletRequest request,HttpServletResponse response){
 	    	String item = request.getParameter("data");
-	    	JSONObject jsonobject = new JSONObject().fromObject(item);
-	    	String id = jsonobject.getString("id");
+//	    	JSONObject jsonobj = new JSONObject().fromObject(item);
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
 	    	List<String> batchPast = new ArrayList<String>();
-	    	String [] split = id.split(",");
+	    	String [] split = item.split(",");
+	    	String sid = null;
 	    	for(String s : split){
-	    		String streplacee = s.replace("[", " ").replace("]", " ").trim();
-	    		batchPast.add(streplacee);
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			batchPast.add(streplacee);
+	    		}
+	    		
 	    	}
 	    	boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
-			    	if(isResult == true){
-			    		return new Json(true,"success",isResult,"初审批通过待终审审批成功");
+			String createDate =  DateUtils.getInDateTime((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+//	    	circulation record = new  circulation("2","待终审审批中",createDate,"","","","");
+			String t = null;
+			boolean coan =false;
+			for(String str: batchPast){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("2","待终审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				coan = circulationservice.save(record);
+
+			}
+			    	if(isResult == true && coan == true){
+			    		return new Json(true,"success",isResult,"初审批通过待终审审批");
 			    	}else{
 			    		return new Json(false,"fail",isResult,"初审批通过待终审审批失败");
 			    	}
@@ -875,24 +1099,50 @@ public class FinanceTransferAccountsvoucherController {
 		@ResponseBody
 		public Json batchUpdateStudent(HttpServletRequest request,HttpServletResponse response){
 	    	String items = request.getParameter("data");
-	    	JSONObject obj = new JSONObject().fromObject(items);
-//	    	System.out.println(obj);
-	    	String id = obj.getString("id");
-	    	
-//	    	String id = request.getParameter("id");
-//	    	String dt = id.replace("[[\"", " ").replace("\"]]", " ").replace("\"", "");
-//	    	System.out.println(dt);
-	    	String [] split = id.split(",");
-//	    	String  split = id;
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+	    	String [] split = items.split(",");
+	    	String sid = null;
 	    	List<String> updatelist = new ArrayList<String>();
 	    	for(String s:split){
-	    		String dt = s.replace("[", " ").replace("]", " ").trim();
-//	    		System.out.println(dt);
-	    		updatelist.add(dt);
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			updatelist.add(streplacee);
+	    		}
+	    		
 	    	}
-	    	
+	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+			String t = null;
+			boolean coan = false;
+			for(String str: updatelist){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("4","待出账确认成功",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				 coan = circulationservice.save(record);
+			}
 	    	boolean isResult = imagedataservice.batchUpdateStudent(updatelist);
-	    	if(isResult == true){
+			
+			if(isResult == true && coan == true){
 	    		return new Json(true,"success",isResult,"待出账确认成功");
 	    	}else{
 	    		return new Json(false,"fail",isResult,"待出账确认失败");
@@ -919,16 +1169,52 @@ public class FinanceTransferAccountsvoucherController {
 //	    		adoptlist.add(s);
 //	    	}
 	    	String items = request.getParameter("data");
-	    	JSONObject obj = new JSONObject().fromObject(items);
-	    	String id = obj.getString("id");
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	String id = obj.getString("id");
 	    	List<String> updatelist = new ArrayList<String>();
-	    	String[] splist = id.split(",");
+	    	String[] splist = items.split(",");
+	    	String sid = null;
 	    	for(String s :splist){
-	    		String dt = s.replace("["," ").replace("]"," ").trim();
-	    		updatelist.add(dt);
+	    		String streplacee = s.replace("["," ").replace("]"," ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			updatelist.add(streplacee);
+	    		}
+	    		
 	    	}
+	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 	    	boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
-	    	if(isResult == true){
+	    	String t = null;
+	    	boolean coan = false;
+			for(String str: updatelist){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("2","回退到终审成功",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				 coan = circulationservice.save2(record);
+			}
+			
+	    	if(isResult == true&& coan == true){
 	    		return new Json(true,"success",isResult,"回退到终审成功");
 	    	}else{
 	    		return new Json(false,"fail",isResult,"回退到终审失败");
@@ -962,10 +1248,5 @@ public class FinanceTransferAccountsvoucherController {
 	        String extension = fileName.substring(fileName.lastIndexOf(".")+1); // 文件后缀
 	 
 	        return formatDate + random+"_"+city+"_"+fileName;
-	    }
-	    
-	    @RequestMapping(value="/jstc")
-	    public String ddd(){
-	    	return "fileupdate/jstc";
 	    }
 }

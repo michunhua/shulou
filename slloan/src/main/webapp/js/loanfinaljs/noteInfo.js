@@ -3,9 +3,11 @@
 var collectData = function() {
   log('收集数据')
   var data = {}
-  data.note = e('.note')
-  data.recordFirst = e('.first-trial')
+  data.note = e('.note').value
+  data.recordFirst = e('.first-trial').value
   data.recorFinal = e('.final-trial').value
+  data.recorfore = ""
+	  
   data.rolename = localStorage.purrole
   data.username = localStorage.purusername
   data.city = localStorage.purcity
@@ -48,9 +50,11 @@ var sendData = function(element) {
 var searchExport = function(back) {
 	recordNote = e('.note')
 	recordFirst = e('.first-trial')
+	recorFinal = e('.final-trial')
 	
-	recordNote.value = back.id
-	recordFirst.value = back.id
+	recordNote.value = back.note_Description1
+	recordFirst.value = back.note_Description2
+	recorFinal.value = back.note_Description3
 }
 
 var initback = {
@@ -74,7 +78,7 @@ var searchAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
-
+				searchExport(data.obj)
 			} else {
 				alert('服务器错误')
 			}
@@ -95,7 +99,6 @@ var searchData = function() {
 	  data.username = localStorage.purusername
 	  data.city = localStorage.purcity
 	  data.parentnodeId = localStorage.purid
-	
 	if(data.id) {
 		searchAjax(method, url, data)
 	}

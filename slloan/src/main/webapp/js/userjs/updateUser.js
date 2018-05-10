@@ -1,8 +1,5 @@
-console.log('这是新增加的页面js')
-
 //重新渲染表单
 function renderForm(){
-	log("重新渲染表单")
 layui.use('form', function(){
 var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
 form.render('select');
@@ -17,17 +14,19 @@ var obtainRoleAjax = function(method, url, datas) {
    url: url,
    data: {data:JSON.stringify(datas)},
    success: function(data) {
-     log('join role---')
      var envs = document.querySelector('.role')
      var datas = data
-     var len = datas.length
-     for(var i = 0; i < len; i++) {
-       var options = document.createElement('option')
-       options.value = datas[i].id + '&' + datas[i].roleName
-       options.innerText = datas[i].roleName
-       envs.appendChild(options)
+     if(datas.obj) {
+         console.log(data.obj.length)
+         var len = datas.obj.length
+         for(var i = 0; i < len; i++) {
+           var options = document.createElement('option')
+           options.value = datas.obj[i].id + '&' + datas.obj[i].roleName
+           options.innerText = datas.obj[i].roleName
+           envs.appendChild(options)
+         }
+         renderForm()
      }
-     renderForm()
    },
    error: function(){
        alert('服务器出错')
@@ -69,7 +68,7 @@ var editorAjax = function(method, url, datas) {
     		var intent = e(".role")
     		var len = intent.length
     		for(var citys = 0; citys < len; citys++) {
-    			log(intent[citys].innerText)
+//    			log(intent[citys].innerText)
     			if(intent[citys].innerText == Identification) {
     				console.log('相等吗？')
     				console.log(citys)
@@ -95,7 +94,11 @@ var onloadUser = function() {
 		var url = '/slloan/user/modifselect'
 		var data = {}
 		data.id = localStorage.editorUserName
-		editorAjax(method, url, data)
+		data.parentid = localStorage.roleUseID
+		data.username = localStorage.purusername
+		if(data.id) {
+			editorAjax(method, url, data)
+		}
 	}
 }
 
@@ -124,7 +127,6 @@ var collectData = function() {
 	  data.role = document.querySelector('.role').value
 	  data.city = document.querySelector('.city').value
 	  data.note = document.querySelector('.note').value
-	  data.id = localStorage.editorUserName
 	  return data
 }
 
@@ -135,7 +137,10 @@ var saveData = function() {
 		var method = 'POST'
 		var url = '/slloan/user/modifyuser'
 		var data = collectData()
-		saveAjax(method, url, data)
+		data.id = localStorage.editorUserName
+		if(data.id) {
+			saveAjax(method, url, data)	
+		}
 	})
 }
 
@@ -180,16 +185,16 @@ var obtainCityAjax = function(method, url, datas) {
    data: {data:JSON.stringify(datas)},
    success: function(data) {
      var envs = e('.city')
-     log('join city---')
-     console.log(data.belongs_City)
+//     log('join city---')
+     console.log(data.obj.length)
      var datas = data
-     var len = Object.keys(datas).length
-     log(Object.keys(datas))
+     var len = datas.obj.length
+     log(len)
      for(var i = 0; i < len; i++) {
        envs.innerHTML = ''
        var options = document.createElement('option')
-       options.value = datas.belongs_City
-       options.innerText = datas.belongs_City
+       options.value = datas.obj[i].belongs_City
+       options.innerText = datas.obj[i].belongs_City
        envs.appendChild(options)
      }
      renderForm()
@@ -204,28 +209,30 @@ var obtainCityAjax = function(method, url, datas) {
 
 //获取分配角色
 var obtainRole = function(element) {
-log('获取角色')
+//log('获取角色')
 var evs = document.querySelector(element)
 var method = 'GET'
 var url = '/slloan/role/initrole'
 var datas = {}
+datas.parentid = localStorage.roleUseID
+datas.username = localStorage.purusername
 obtainRoleAjax(method, url, datas, null)
 }
 
 
 
-//根据角色确定城市
-var linkRoleCity = function() {
-var form = layui.form;
-form.on('select(role)', function(data){
-var datas = {
- id: data.value.split('&')[0],
-}
-var method = 'GET'
-var url = '/slloan/role/initcity'
-obtainCityAjax(method, url, datas)
-});
-}
+////根据角色确定城市
+//var linkRoleCity = function() {
+//var form = layui.form;
+//form.on('select(role)', function(data){
+//var datas = {
+// id: data.value.split('&')[0],
+//}
+//var method = 'GET'
+//var url = '/slloan/role/initcity'
+//obtainCityAjax(method, url, datas)
+//});
+//}
 
 
 

@@ -61,7 +61,7 @@ public class PersonalProfileController {
 
 	@ResponseBody
 	@RequestMapping("/loanApplypersonaldata")
-	public Json save(HttpServletRequest req, String spare1) {
+	public Json save(HttpServletRequest req) {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
@@ -170,17 +170,28 @@ public class PersonalProfileController {
 		    		PersonalProfile p =personalproFileService.getSelectById(param);
 		    		int pid = p.getId();
 		    		String submit = String.valueOf(pid);
-		    	
-					CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,spare1,createDate,username,parentnodeId,city,rolename);
+		    		String spare1 = "";
+		    		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,spare1,createDate,username,parentnodeId,city,rolename);
 		    		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		    		if (pe == true) {
 		    			logger.info("数据插入成功!");
 		    			return new Json(true, "success", pe,submit);
 		    		} else {
 		    			logger.info("数据插入失败!");
-		    			return new Json(false, "fail",pe , submit);
+		    			return new Json(false, "fail", pe,submit);
 		}
+//		return null;
+//		return null;
+			
 	
+    		
+		
+
+		
+//	 	p.setParentnodeId("27");
+//	 	p.setCity("北京");
+		
+		
 
 	}
 
@@ -261,7 +272,7 @@ public class PersonalProfileController {
 		String postal_address=json.getString("communication"); // 通讯地址
 		String state=json.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
-		String ctime=json.getString("ctime"); // 日期
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 
 		Double Revenue_previous_year = 0.0;
 		if (lastyearIncome.length() > 0) {
@@ -372,7 +383,7 @@ public class PersonalProfileController {
 		String postal_address=json.getString("communication"); // 通讯地址
 		String state=json.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
-		String ctime=json.getString("ctime"); // 日期
+		String ctime=DateUtils.getInDateTime((new Date()));//日期
 		
 //		String datatime = DateUtils.getToDateTime((new Date()));
 //		String appnumber = applicationnumber+seqid;
@@ -431,16 +442,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -451,7 +461,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -479,16 +489,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -499,7 +508,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -527,16 +536,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -547,7 +555,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -576,16 +584,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -596,7 +603,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -624,16 +631,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -644,7 +650,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -672,16 +678,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -692,7 +697,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -721,16 +726,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -741,7 +745,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -768,16 +772,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -788,7 +791,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -815,16 +818,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -835,7 +837,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -864,16 +866,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -884,7 +885,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2
@@ -913,16 +914,15 @@ public class PersonalProfileController {
 		String mobilephone = obj.getString("iphone");
 		String idnumber = obj.getString("IDcard");
 		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
+		String ctim1 = obj.getString("start");
 		String ctim2 = obj.getString("end");
 		String amount = obj.getString("min");
 		String amount2 = obj.getString("max");
-		String statu = obj.getString("statu");
-		String state = req.getParameter("state");
-		String rolename = req.getParameter("rolename");
-		String username = req.getParameter("username");
-		String city = req.getParameter("city");
-		String parentnodeId = req.getParameter("parentnodeId");
+		String state = obj.getString("state");
+		String rolename = obj.getString("rolename");
+		String username = obj.getString("username");
+		String city = obj.getString("city");
+		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -933,7 +933,7 @@ public class PersonalProfileController {
 		map.put("ctime2", ctim2);//申请时间2
 		map.put("amount", amount);//金额
 		map.put("amount2", amount2);//金额2
-		map.put("state", statu);//金额2
+		map.put("state", state);//金额2
 		map.put("rolename", rolename);//申请时间2
 		map.put("username", username);//金额
 		map.put("city", city);//金额2

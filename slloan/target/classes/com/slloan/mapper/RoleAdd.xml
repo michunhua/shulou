@@ -11,15 +11,26 @@
 		<result column="belongs_city" property="belongs_City" />
 		<result column="configuration" property="configuration"/>
 		<result column="updatedate" property="updatedate"/>
+		<result column="parentid" property="parentid"/>
 	</resultMap>
-	<!-- 列表分页展示 -->
+	<!-- 城市经理查 -->
 	<select id="getRolePage" resultType="Map" resultMap="roleaadddao">
+		select DISTINCT a.parentid,a.rolename,a.createdate,a.id from add_role a , user_login b where 
+		a.parentid = b.r_id and b.r_id=#{parentid} and b.username= #{username} ORDER BY a.id desc
+			<if test="page!=null and limit!=null">
+				limit #{page},#{limit} 
+			</if>
+	</select>
+	
+	<!--系统管理员查看  -->
+	<select id="getRolePage2" resultType="Map" resultMap="roleaadddao">
 		select id,rolename,createdate 
 			from add_role  ORDER BY id desc
 			<if test="page!=null and limit!=null">
 				limit #{page},#{limit} 
 			</if>
 	</select>
+	
 	<!-- 查询用户总记录数 -->
 	<select id="getRoleCount"  resultType="Integer">
      	 SELECT COUNT(*) FROM add_role 
@@ -29,8 +40,8 @@
 		select * from add_role where rolename = #{rolename}
 	</select>
 	<insert id="addRoleUser" parameterType="com.slloan.entity.AddRole"  useGeneratedKeys="true" keyProperty="id">
-		insert into add_role(rolename,description,note,createdate,belongs_city,configuration)
-		 values(#{roleName},#{descriPtion},#{belongs_City},#{note},#{configuration},#{createDate})
+		insert into add_role(rolename,description,note,createdate,belongs_city,configuration,parentid)
+		 values(#{roleName},#{descriPtion},#{belongs_City},#{note},#{configuration},#{createDate},#{parentid})
 	</insert>
 	<!-- 批量删除 -->
 	 <delete id="batchDeletes" parameterType="java.util.List">
@@ -81,10 +92,9 @@
 <!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->
 <!-- 	 		</trim> -->
 	 </select> 
-	 
 	  <!-- 查询角色传到用户 -->
 	 <select id="list" resultType="com.slloan.entity.AddRole">
-	 		select rolename,id from add_role
+	 		select rolename,id from add_role where not id=1
 <!-- 	 		<trim prefix="where" prefixOverrides="and|or"> -->
 <!-- 	 		<if test="rolename !=null and rolename !=''"> and roleName =#{roleName}</if> -->
 <!-- 					<if test="belongs_city !=null and belongs_city !=''">and belongs_City =#{belongs_City}</if> -->
@@ -104,6 +114,16 @@
 	 </update>
 	 
 	 <select id="selectroleRoleName" resultType="Map" resultMap="roleaadddao">
-	 	SELECT rolename,belongs_city FROM add_role WHERE rolename=#{rolename}  and belongs_city=#{belongscity}
+	 	SELECT rolename,belongs_City FROM add_role WHERE rolename=#{rolename} and belongs_City=#{belongs_City}
+	 </select>
+	 
+	 <select id="getselectByid"  parameterType="String" resultType="com.slloan.entity.AddRole">
+	 	select DISTINCT a.id,a.rolename,a.belongs_city from add_role a , user_login b 
+	 	where a.id = b.r_id and b.r_id=#{parentid} ORDER BY a.id desc
+	 </select>
+	 
+	 <select id="getselectByid2"  parameterType="String" resultType="com.slloan.entity.AddRole">
+	 	select a.rolename,a.belongs_city from add_role a , user_login b 
+	 	where a.id = b.r_id and b.r_id=#{parentid} ORDER BY a.id desc
 	 </select>
 </mapper>

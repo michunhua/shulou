@@ -550,7 +550,14 @@
 	</update>
 	
 	<select id="getSelectById" resultType="com.slloan.entity.PersonalProfile" parameterType="Map">
-		SELECT * FROM borrow_information WHERE username = #{username} and city =#{city} and rolename = #{rolename} and parentnodeId=#{parentnodeId} and name = #{name}
+		SELECT applicationnumber,id FROM borrow_information WHERE
+			<if test="username !=null and username !=''">username = #{username}</if>
+			<if test="city !=null and city !=''"> and city =#{city}</if>
+			<if test="rolename !=null and rolename !=''"> and rolename = #{rolename} </if>
+			<if test="parentnodeId !=null and parentnodeId !=''"> and parentnodeId=#{parentnodeId} </if>
+			<if test="name !=null and name !=''">and name = #{name}</if>
+			<if test="id !=null and id !=''">and id = #{id}</if>
 	</select>
+	
 
 </mapper>

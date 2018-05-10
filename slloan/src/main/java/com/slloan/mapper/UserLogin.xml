@@ -64,7 +64,7 @@
 <!-- 				 and u.password= #{password,jdbcType=VARCHAR} -->
 	
 	
-		select username,distribution_role,belongs_city from User_Login where
+		select username,distribution_role,belongs_city,r_id from User_Login where
 		username=#{username,jdbcType=VARCHAR}
 		and password =
 		#{password,jdbcType=VARCHAR}
@@ -78,13 +78,27 @@
 	</select> -->
 	<!-- 列表分页展示 -->
 	<select id="getUserByPage"  resultType="Map" resultMap="userlogin">
-        select id,username,employeeis_name,distribution_role,create_date,r_id 
-        from User_Login  ORDER BY id desc
+<!--         select id,username,employeeis_name,distribution_role,create_date,r_id  -->
+<!--         from User_Login  ORDER BY id desc -->
+ select id,username,employeeis_name,distribution_role,create_date,r_id from 
+ User_Login where r_id=#{parentid} ORDER BY id desc
         	<if test="page !=null and limit !=null">
         		limit #{page}, #{limit} 
         	</if>
         
      </select>
+     
+     <select id="getUserByPage2"  resultType="Map" resultMap="userlogin">
+<!--         select id,username,employeeis_name,distribution_role,create_date,r_id  -->
+<!--         from User_Login  ORDER BY id desc -->
+ 				 select id,username,employeeis_name,distribution_role,create_date,r_id 
+   			     from User_Login  ORDER BY id desc
+        	<if test="page !=null and limit !=null">
+        		limit #{page}, #{limit} 
+        	</if>
+        
+     </select>
+     
      <!-- 查询用户总记录数 -->
      <select id="getCount"  resultType="Integer">
      	 SELECT COUNT(*) FROM User_Login 

@@ -65,6 +65,8 @@
 		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo}</if>
 		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
 		<if test="createdata !=null and createdata !=''">and createdata=#{createdata}</if>
+<!-- 		<if test="id !=null and id !=''">and id=#{id}</if> -->
+		<if test="filepath !=null and filepath !=''">and filepath like CONCAT('%', #{filepath}, '%')</if>
 </select>
 <!--贷款终审列表审批是否通过  -->
 <update id="loanFinalReviewRefuse" parameterType="java.util.List">

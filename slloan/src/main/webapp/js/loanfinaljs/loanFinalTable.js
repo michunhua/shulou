@@ -82,11 +82,14 @@ var addTable = function(data) {
 		  td7.innerText = address
 		  td8.innerText = time
   		  td10.classList.add('up')
+  		  td10.name = state
 		  td10.href = "#"
 		  td10.innerText = '[ 挂起  ]'
 		  td10a.classList.add('record')
+		  td10a.name = state
 		  td10a.href = "#"
 		  td10a.innerText = '[ 流转记录  ]'
+		  td9.classList.add(ID)
           td9.appendChild(td10)
           td9.appendChild(td10a)
           td.appendChild(input)
@@ -439,6 +442,17 @@ var listenAllSel = function(item, index, element) {
 	})
 }
 
+//批量后全选按钮不选中
+var unselected = function(element) {
+	log("_______改变选中状态______")
+	var intent = document.querySelector(element)
+	var flag = intent.checked 
+	if(flag) {
+		intent.checked = false
+	}
+}
+
+
 //终审批量拒绝方法
 //发送数据方法
 var refuseAjax = function(method, url, datas) {
@@ -452,7 +466,9 @@ var refuseAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('返回数据', data)
 			if (data.msg == 'success') {
+				saveSend.length = 0
 				initData()
+				unselected('#alls')
 			} else {
 				alert('服务器错误')
 			}
@@ -469,7 +485,13 @@ var batchRefuse  = function(element) {
 		console.log('refuse')
 		var method = "POST"
 		var url = "/slloan/financevoucher/loaninalreviewbatch"
-	    var data = saveSend
+		var datas = {}
+		datas.rolename = localStorage.purrole
+		datas.username = localStorage.purusername
+		datas.city = localStorage.purcity
+		datas.parentnodeId = localStorage.purid
+		var data = saveSend
+		data.push(datas)
 	    if(data.length > 0) {
 			refuseAjax(method, url, data)	
 	    } else {
@@ -491,7 +513,9 @@ var passAjax = function(method, url, datas) {
 		success : function(data) {
 			console.log('通过返回数据', data)
 			if (data.msg == 'success') {
+				saveSend.length = 0
 				initData()
+				unselected('#alls')
 			} else {
 				alert('服务器错误')
 			}
@@ -509,7 +533,13 @@ var batchPass = function(element) {
 		console.log('pass')
 		var method = "POST"
 		var url = "/slloan/financevoucher/loaninalreviewbatchpast"
-	    var data = saveSend
+		var datas = {}
+		datas.rolename = localStorage.purrole
+		datas.username = localStorage.purusername
+		datas.city = localStorage.purcity
+		datas.parentnodeId = localStorage.purid
+		var data = saveSend
+		data.push(datas)
 	    if(data.length > 0) {
 	    	passAjax(method, url, data)
 	    } else {
@@ -526,7 +556,27 @@ var hang_cirulationAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
+          console.log(data.obj.a.length)
+          var content = data.obj.b.applicationnumber
+          console.log(content)
+          var tableString = ''
+          if(data.obj.a.length) {
+          	var flag = data.obj.a.length
+          	for(var i = 0; i < flag; i++) {
+                  var rolename = data.obj.a[i].rolename
+                  var username = data.obj.a[i].username
+                  var circulation = data.obj.a[i].circulation
+                  var updatedata = data.obj.a[i].updatedata
+                  tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
+                  
+          	}
+          }
+  		layer.open({
+  			  title: '流转记录',
+  			  area: ['830px', '560px'],
+  			  content: "<table border='1'><tr><th>申请编号</th><th>状态</th><th>负责角色</th><th>负责人</th><th>处理时间</th></tr>" +
+  			  		 tableString + "</table>",
+  			});
       }, 
       error: function() {
     	  layer.msg('服务器错误')
@@ -543,6 +593,7 @@ var HangAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
         console.log(data)
+        initData()
       }, 
       error: function() {
     	  layer.msg('服务器错误')
@@ -557,21 +608,23 @@ var Hang_cirulation = function(element) {
 		if(event.target.classList.contains("up")) {   
 			console.log('挂起')
 			var method = "GET"
-		    var url = "/slloan/sumiteregresses/selectwhole"
+		    var url = "/slloan/loan/checkHangdata"
 		    var datas = {}
-			datas.state = 0
+			datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value
 			datas.rolename = localStorage.purrole
 			datas.username = localStorage.purusername
 			datas.city = localStorage.purcity
 			datas.parentnodeId = localStorage.purid
+			datas.page = init.pages
+			datas.limit = init.limit
 			HangAjax(method, url, datas)
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')
 			var method = "GET"
 		    var url = "/slloan/sumiteregresses/selectwhole"
 		    var datas = {}
-			datas.state = 0
+			datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value
 			datas.rolename = localStorage.purrole
 			datas.username = localStorage.purusername

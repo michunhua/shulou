@@ -193,13 +193,13 @@ wantTo(flags, Authority.role, navgatorState.on, "#navuserManagement-role")
 
 var mustLogin = function(data) {
 	if(data) {
-		 console.log('登录成功登录成功登录成功登录成功登录成功登录成功登录成功')
+//		 console.log('登录成功登录成功登录成功登录成功登录成功登录成功登录成功')
 	} else {
 		window.location.href = '/slloan/user/signin'
 		console.log('到底是去哪儿')
 	}
 }
 
-console.log(localStorage.username, '登录成功没有')
+console.log(localStorage.username, '登录成功')
 
 mustLogin(localStorage.username)

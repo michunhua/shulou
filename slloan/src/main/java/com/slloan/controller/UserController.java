@@ -68,12 +68,41 @@ public class UserController {
 	@RequestMapping(value="/userlist",method=RequestMethod.GET,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String userLlist(HttpServletRequest req){
+		String json = req.getParameter("data");
+		JSONObject jsonobj = new JSONObject().fromObject(json);
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		int startPos = Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
-		return JSON.toJSONString(userservice.getUserByPage(startPos));
+		String parentid = jsonobj.getString("parentid");
+		String username = jsonobj.getString("username");
+		if(username.contains("admin")){
+		return JSON.toJSONString(userservice.getUserByPage(startPos));	
+		}
+		return JSON.toJSONString(userservice.getUserByPage(startPos,parentid));
 	}
+	
+	/**
+	 * 用户列表展示
+	 * @return
+	 */
+	@RequestMapping(value="/selectrolecity",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@ResponseBody
+	public Json selectrolecity(HttpServletRequest req){
+		String json = req.getParameter("data");
+		Map<String,Object> map = new HashMap<String,Object>();
+		JSONObject jsonobj = new JSONObject().fromObject(json);
+		String parentid = jsonobj.getString("parentid");
+		List<AddRole> add = roleAddService.getselectByid(parentid);
+		if(add !=null){
+			return new Json(true,"success",add,"");//JSON.toJSONString(addrole);
+		}else{
+			return new Json(false,"fail",add,"");//JSON.toJSONString(addrole);
+		}
+		
+	}
+	
+	
 	/**
 	 * 初始化角色与城市
 	 */
@@ -114,7 +143,7 @@ public class UserController {
 			selectUserName.put("username", username);
 			UserLogin selectuserName2 = userservice.selectroleUserName(selectUserName);
 				if(selectuserName2 !=null){
-					return new Json(false,"fail",selectuserName2,"用户名已存在插入失败");//JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
+					return new Json(true,"success",selectuserName2,"用户名已存在插入失败");//JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
 				}else{
 					isResult=	userservice.addUser(u);
 				}
@@ -324,7 +353,7 @@ public class UserController {
 						 //获取session最大的不活动的间隔时间，以秒为单位120秒。
 						  System.out.println(  session.getMaxInactiveInterval());
 //						return JSON.toJSONString(username+"异地登录被拒绝！该用户已经登录！");
-						 return new Json(false,"fail","异地登录被拒绝！该用户已经登录！","loginrefusal");
+						 return new Json(false,"fail","异地登录被拒绝！该用户已经登录！70秒后在登录","loginrefusal");
 					}
 				}
 			}
@@ -634,5 +663,16 @@ public class UserController {
 	@RequestMapping(value = "firstPage")
 	public String firstPage(){
 		return "index/firstPage";
+	}
+	
+	/***
+	 * 跳转到expirytime.html
+	 * @return
+	 * http://localhost:8089/slloan/user/gqtime
+	 */
+	@RequestMapping(value = "/expirytime")
+	public String expirytime(){
+		System.out.println("66666666666666666666666666666666");
+		return "error/expirytime";
 	}
 }

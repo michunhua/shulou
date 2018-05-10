@@ -5,9 +5,14 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.note = e('.record-note').value
-  data.recordFirst = e('.first-trial').value
-  data.recorFinal = ''
-	  data.recorfore = ''
+  data.recordFirst = e('..first-trial').value
+  data.recorFinal = ""
+  data.recorfore = ""
+  
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid
   data.state = ''
   data.ctime = ''
   return data
@@ -47,13 +52,8 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     data.id = localStorage.firstID
-    data.rolename = localStorage.purrole
-    data.username = localStorage.purusername
-    data.city = localStorage.purcity
-    data.parentnodeId = localStorage.purid
-    data.temporaryId = '1'
     var method = 'POST'
-    var url = '/slloan/loan/updatenotetwo'
+    var url = '/slloan/loan/notedescriptionassc'
     log(data)
     if(data.id) {
         sendAjax(method, url, data)
@@ -64,8 +64,10 @@ var sendData = function(element) {
 //设置页面数据
 var searchExport = function(back) {
 	recordNote = e('.record-note')
+	recordFirst = e('.first-trial')
 	
 	recordNote.value = back.note_Description1
+	recordFirst.value = back.note_Description2
 }
 
 //查询

@@ -21,8 +21,9 @@ layui.use('laydate', function(){
 var collectData = function() {
   var data = {}
   data.note = e('.note').value
-  data.recordFirst = e('.note').value
-  data.recorFinal = e('.note').value
+  data.recordFirst = e('.esnote')
+  data.recorFinal = e('.esnote')
+  data.recorfore = ''
   data.state = ''
   return data
 }

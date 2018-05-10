@@ -64,6 +64,13 @@ public interface UserDao extends BaseDao<UserLogin>{
   	  * @return
   	  */
  	public List<UserLogin> getUserByPage(Map<String,Object>param);
+ 	 /**
+ 	  * 分页
+ 	  * @param param 参数
+ 	  * @return
+ 	  */
+	public List<UserLogin> getUserByPage2(Map<String,Object>param);
+ 	
   	 
  	/**
  	 * 统计

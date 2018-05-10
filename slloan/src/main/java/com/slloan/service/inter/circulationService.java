@@ -8,7 +8,7 @@ import com.slloan.entity.circulation;
 public interface circulationService {
 	
 	
-	circulation findById(int id); 
+	List<circulation> findById(circulation id); 
 	
 	boolean delete(int id); 
 	
@@ -22,5 +22,5 @@ public interface circulationService {
 	
 	boolean save2(circulation circul); 
 	
-	List<circulation> findById(circulation param); 
+	List<circulation> findById2(circulation param); 
 }

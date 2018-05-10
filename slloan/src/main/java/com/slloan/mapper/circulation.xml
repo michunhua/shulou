@@ -5,36 +5,37 @@
 	<resultMap type="com.slloan.entity.circulation" id="circul">
 		<result column="state" property="state" />
 		<result column="circulation" property="circulation" />
-		<result column="ctime" property="ctime" />
+		<result column="createdata" property="createdata" />
 		<result column="username" property="username" />
 		<result column="parentnodeId" property="ParentnodeId" />
 		<result column="city" property="city" />
 		<result column="rolename" property="rolename" />
+		<result column="updatedata" property="updatedata"/>
+		<result column="spare" property="spare"/>
 	</resultMap>
 	<insert id="save" parameterType="com.slloan.entity.circulation">
 		INSERT INTO the_circulation (
 			state,
 			circulation,
-			ctime,
-			username,parentnodeId,city,rolename
+			createdata,
+			username,parentnodeId,city,rolename,updatedata,spare
 		)
 		VALUES
 		(
-			#{state},#{circulation},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
+			#{state},#{circulation},#{createdata},#{username},#{ParentnodeId},#{city},#{rolename},#{updatedata},#{spare})
 	</insert>
 	<insert id="save2" parameterType="com.slloan.entity.circulation">
 		INSERT INTO the_circulation (
 			state,
 			circulation,
-			ctime,
-			username,parentnodeId,city,rolename
+			createdata,
+			username,parentnodeId,city,rolename,updatedata,spare
 		)
 		VALUES
-		(
-			#{state},#{circulation},#{ctime},#{username},#{ParentnodeId},#{city},#{rolename})
+		(#{state},#{circulation},#{createdata},#{username},#{ParentnodeId},#{city},#{rolename},#{updatedata},#{spare})
 	</insert>
 	<select id="findById" parameterType="Map" resultType="com.slloan.entity.circulation">
-		SELECT circulation,ctime,city,rolename FROM the_circulation where city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username}
+		SELECT circulation,updatedata,city,rolename,username FROM the_circulation where  spare = #{spare} and  city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username} ORDER BY id
 	</select>
 	
 </mapper>

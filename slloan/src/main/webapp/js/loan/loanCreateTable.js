@@ -158,6 +158,7 @@ var addTable = function(data) {
 		td7.innerText = address
 		td8.innerText = time
 		  td10.classList.add('record')
+		  td10.name = state
 		  td10.href = "#"
 		  td10.innerText = "[ 流转记录 ]"
 		  td9.classList.add(ID)
@@ -346,6 +347,30 @@ var previoupage = function() {
 
 previoupage()
 
+// 展示流转记录表格
+var displayTable = function(result) {
+	var table = document.createElement('table')
+	var tr = document.createElement('tr')
+	var th1 = document.createElement('th')
+	var th2 = document.createElement('th')
+	var th3 = document.createElement('th')
+	var th4 = document.createElement('th')
+	var th5 = document.createElement('th')
+	th1.innerText = "申请编号"
+	th2.innerText = "状态"
+	th3.innerText = "负责角色"
+	th4.innerText = "负责人"
+	th5.innerText = "处理时间"
+	tr.appendChild(th1)
+	tr.appendChild(th2)
+	tr.appendChild(th3)
+	tr.appendChild(th4)
+	tr.appendChild(th5)
+	table.appendChild(tr)
+	console.log(table)
+}
+
+
 //流转记录查询
 var hang_cirulationAjax = function(method, url, datas) {
   console.log(' send data ajax')
@@ -354,7 +379,28 @@ var hang_cirulationAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
+        console.log(data.obj.a.length)
+        var content = data.obj.b.applicationnumber
+        console.log(content)
+        var tableString = ''
+        if(data.obj.a.length) {
+        	var flag = data.obj.a.length
+        	for(var i = 0; i < flag; i++) {
+                var rolename = data.obj.a[i].rolename
+                var username = data.obj.a[i].username
+                var circulation = data.obj.a[i].circulation
+                var updatedata = data.obj.a[i].updatedata
+                tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
+                
+        	}
+        }
+		layer.open({
+			  title: '流转记录',
+			  area: ['830px', '560px'],
+			  content: "<table border='1'><tr><th>申请编号</th><th>状态</th><th>负责角色</th><th>负责人</th><th>处理时间</th></tr>" +
+			  		 tableString + "</table>",
+			});
+
       }, 
       error: function() {
     	  layer.msg('服务器错误')
@@ -373,7 +419,7 @@ var Hang_cirulation = function(element) {
 			var method = "GET"
 		    var url = "/slloan/sumiteregresses/selectwhole"
 		    var datas = {}
-			datas.state = 0
+			datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value
 		    datas.username = localStorage.purusername
 		    datas.city = localStorage.purcity

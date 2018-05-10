@@ -63,15 +63,16 @@ var searchAjax = function(method, url, datas) {
 
 // 查询数据
 var searchData = function() {
-	var method = ''
-	var url = ''
+	var method = 'GET'
+	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	 data.rolename = localStorage.purrole
 	  data.username = localStorage.purusername
 	  data.city = localStorage.purcity
 	  data.parentnodeId = localStorage.purid
+	  data.id = localStorage.financialID
 	if(url) {
-		searchAajx(method, url, data)
+		searchAjax(method, url, data)
 	}
 }
 
@@ -80,9 +81,9 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.note = e('.note').value
-  data.firstNote = e('.first-note').value
-  data.finalNote = e('.final-note').value
-  data.financialNote = e('.financial-note').value
+  data.recordFirst = e('.first-note').value
+  data.recorFinal = e('.final-note').value
+  data.recorfore = e('.financial-note').value
   return data
 }
 

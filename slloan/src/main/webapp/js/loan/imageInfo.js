@@ -78,7 +78,7 @@ $(function() {
 	    		  var file = data.obj[0].filepath
   	        	console.log( data.obj[0])
   	        	var udata = data.obj[0]
-  	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+  	        	var dd = "<img  width='200px' height='200px' width='200px' height='200px' src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
   	        	  $("#imagedata").append(dd)
 	    	  }else{
 	    		  alert(data)
@@ -107,7 +107,7 @@ var loadImageAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		alert(data)
+    		console.log(data)
     	} else {
     		alert('服务器错误')
     	}
@@ -121,7 +121,7 @@ var loadImageAjax = function(method, url, datas) {
 // 执行加载图片
 window.onload = function() {
 	var method = 'GET'
-	var url = '../updateftpimage/selectfiletype'
+	var url = '/slloan/updateftpimage/selectfiletype'
 	var data = {}
 	data.usernameid = localStorage.purid
 	data.city = localStorage.purcity
@@ -134,23 +134,25 @@ window.onload = function() {
 }
 
 
-// 添加默认上传相关的用户值
-var userInitUpload = function(element, elements, elementss, elementes) {
+//添加默认上传相关的用户值
+var userInitUpload = function(element, elements, elementss, elementes, userid) {
 	var intent = document.querySelector(element)
 	var intents = document.querySelector(elements)
 	var intentss = document.querySelector(elementss)
 	var intentes = document.querySelector(elementes)
+	var userid = document.querySelector(userid)
 
 	
 	intent.value = localStorage.purusername
 	intents.value = localStorage.purcity
 	intentss.value = localStorage.purid
 	intentes.value = localStorage.purrole
+	userid.value = localStorage.createTemporaryId
 }
 
-userInitUpload("#username6", '#city6', '#id6', '#rolename6')
-userInitUpload("#username1", '#city1', '#id1', '#rolename1')
-userInitUpload("#username2", '#city2', '#id2', '#rolename2')
-userInitUpload("#username3", '#city3', '#id3', '#rolename3')
-userInitUpload("#username4", '#city4', '#id4', '#rolename4')
-userInitUpload("#username5", '#city5', '#id5', '#rolename5')
+userInitUpload("#username6", '#city6', '#id6', '#rolename6', '#uid1')
+userInitUpload("#username1", '#city1', '#id1', '#rolename1', '#uid2')
+userInitUpload("#username2", '#city2', '#id2', '#rolename2', '#uid3')
+userInitUpload("#username3", '#city3', '#id3', '#rolename3', '#uid4')
+userInitUpload("#username4", '#city4', '#id4', '#rolename4', '#uid5')
+userInitUpload("#username5", '#city5', '#id5', '#rolename5', '#uid6')

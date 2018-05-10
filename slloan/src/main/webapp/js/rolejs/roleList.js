@@ -69,22 +69,22 @@ var sendAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
     	  if(data.lists.length !== undefined) {
-    		  	console.log(data)
+//    		  	console.log(data)
 				var ds = data
 				var len = ds.lists.length
-				console.log('JSON', ds.lists[0].createDate)
+//				console.log('JSON', ds.lists[0].createDate)
 				var Felement = document.querySelector('.tab-data')
 				var totalPage = document.querySelector('.totalPage')
 				totalPage.innerText = ds.totalPage
-				console.log(Felement)
+//				console.log(Felement)
 				Felement.innerHTML = null
 				for (var i = 0; i < len; i++) {
-					console.log('append')
+//					console.log('append')
 					var flag = '选中'
 					var id = ds.lists[i].id
 					var role = ds.lists[i].roleName
 					var createT = ds.lists[i].createDate
-					console.log('id', id)
+//					console.log('id', id)
 					var tr = document.createElement('tr')
 					var td0 = document.createElement('td')
 					var input = document.createElement('input')
@@ -126,7 +126,7 @@ currpages()
 
 // 默认加载数据
 var firtLoadlist = function() {
-    console.log('firtLoadlist', init.pages, init.limit)
+//    console.log('firtLoadlist', init.pages, init.limit)
     // var getData = collectData()
     var data = {}
     data.parentid = localStorage.roleUseID
@@ -200,7 +200,7 @@ var singlesendAjax = function(method, url, datas, callback) {
       var findEl = document.querySelector('.update')
       findEl.addEventListener('click', function() {
     	var flag = result 
-    	console.log('1234', flag.length)
+//    	console.log('1234', flag.length)
     	if(flag.length == 1){
     		localStorage.updateRoleName = null
     		localStorage.updateRoleName = flag[0]
@@ -235,15 +235,15 @@ var result = []
 var checkboxEvs = function() {
   var parent = document.querySelector('.tab-data')
   parent.addEventListener('click', function(event) {
-      console.log(event.target)
+//      console.log(event.target)
       var flag = event.target.checked
-      console.log(flag)
+//      console.log(flag)
       var content = event.target.parentNode.nextSibling.innerText
-      console.log('内容', content)
+//      console.log('内容', content)
       if(flag) { 
-        console.log('will go')
+//        console.log('will go')
         var text = event.target.parentNode.nextSibling.innerText
-        console.log('text', text)
+//        console.log('text', text)
         if(!result.includes(text)) {
           result.push(text)
         }
@@ -254,7 +254,7 @@ var checkboxEvs = function() {
     		  }
     	  }
       }
-      console.log(result)
+//      console.log(result)
       return result
   })
 }

@@ -45,7 +45,15 @@ public interface RoleAddService extends BaseDao<AddRole>{
      * @param map
      * @return
      */
+	Page<AddRole> getRolePage(int currentPage,String parentid,String username);
+	
+	/**
+     * 分页操作，调用getRolePage limit分页方法
+     * @param map
+     * @return
+     */
 	Page<AddRole> getRolePage(int currentPage);
+	
 	
 	public List<AddRole> find(AddRole addrole);
 	
@@ -72,6 +80,9 @@ public interface RoleAddService extends BaseDao<AddRole>{
      */
     public AddRole selectroleRoleName(Map<Object,Object>map);
     
+  public List<AddRole> getselectByid(String parentid);
   
+  public AddRole getselectByid2(String parentid);
+//  public AddRole selectrolecity(String)
 	
 }

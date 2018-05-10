@@ -18,44 +18,7 @@ public class AddRole{
 	private String configuration;//权限配置
 	private String createDate;//创建日期
 	private String updatedate;//修改日期
-	
-	/*private String loan_management;//贷款管理
-	private String repayment_confirmation;//回款确认
-	private String loan_Final_review;//贷款终审
-	private String loan_First_trial;//贷款初审
-	private String loan_information;//贷款信息查看
-	private String loan_Create;//贷款创建
-	private String qz_certificate;//取证凭证上传
-	private String Incarceration_certificate;//进押凭证上传
-	private String jy_certificate;//解押凭证上传
-	private String finance_Management;//财务管理
-	private String finance_sp;//财务审批
-	private String loan_Sp;//放款审批
-	private String setTlement_Pz;//结算凭证上传
-	private String transfer_Accounts_Pz;//转账凭证上传
-	private String personal_information_sz;//个人信息设置
-	private String personal_information_xg;//个人信息修改
-	private String password_Modify;//密码修改	
-	private String role_Setup;//角色设置
-	private String add_Role;//添加角色
-	private String modify_Role;//修改角色信息
-	private String del_Role;//删除角色
-	private String qx__Setup;//权限设置
-	private String fp_Jurisdiction;//分配权限
-	private String del_Jurisdiction;//删除权限
-	private String user_Administration;//用户管理
-	private String add_User;//添加用户
-	private String fp_Role;//分配角色
-	private String del_User;//删除用户
-	private String modify_user;//修改用户信息
-	private String parent_id;//父ID
-	private String url;//地址
-	private String method;//请求方式
-	private String city;//市
-	private String county;//省
-//	private String name;//栏目名称
-//	private String orderline;//排序值
- * */
+	private String parentid;
 	public AddRole(){}
 	
 	public AddRole(String roleName, String descriPtion, String belongs_City, String note, String createDate) {
@@ -78,7 +41,7 @@ public class AddRole{
 		this.configuration = configuration;
 		this.createDate = createDate;
 	}
-	public AddRole(String roleName, String descriPtion,String belongs_City, String note,String configuration, String createDate) {
+	public AddRole(String roleName, String descriPtion,String belongs_City, String note,String configuration, String createDate,String parentid) {
 		super();
 		this.roleName = roleName;
 		this.descriPtion = descriPtion;
@@ -86,59 +49,9 @@ public class AddRole{
 		this.createDate = createDate;
 		this.belongs_City = belongs_City;
 		this.configuration = configuration;
+		this.parentid = parentid;
 	}
 	
-	/*public AddRole(Integer id, String roleName, String descriPtion, String note, Date createDate, String belongs_City,
-			String configuration, String loan_management, String repayment_confirmation, String loan_Final_review,
-			String loan_First_trial, String loan_information, String loan_Create, String qz_certificate,
-			String incarceration_certificate, String jy_certificate, String finance_Management, String finance_sp,
-			String loan_Sp, String setTlement_Pz, String transfer_Accounts_Pz, String personal_information_sz,
-			String personal_information_xg, String password_Modify, String role_Setup, String add_Role,
-			String modify_Role, String del_Role, String qx__Setup, String fp_Jurisdiction, String del_Jurisdiction,
-			String user_Administration, String add_User, String fp_Role, String del_User, String modify_user,
-			String url, String method, String city, String county) {
-		super();
-		this.id = id;
-		this.roleName = roleName;
-		this.descriPtion = descriPtion;
-		this.note = note;
-		this.createDate = createDate;
-		this.belongs_City = belongs_City;
-		this.configuration = configuration;
-		this.loan_management = loan_management;
-		this.repayment_confirmation = repayment_confirmation;
-		this.loan_Final_review = loan_Final_review;
-		this.loan_First_trial = loan_First_trial;
-		this.loan_information = loan_information;
-		this.loan_Create = loan_Create;
-		this.qz_certificate = qz_certificate;
-		Incarceration_certificate = incarceration_certificate;
-		this.jy_certificate = jy_certificate;
-		this.finance_Management = finance_Management;
-		this.finance_sp = finance_sp;
-		this.loan_Sp = loan_Sp;
-		this.setTlement_Pz = setTlement_Pz;
-		this.transfer_Accounts_Pz = transfer_Accounts_Pz;
-		this.personal_information_sz = personal_information_sz;
-		this.personal_information_xg = personal_information_xg;
-		this.password_Modify = password_Modify;
-		this.role_Setup = role_Setup;
-		this.add_Role = add_Role;
-		this.modify_Role = modify_Role;
-		this.del_Role = del_Role;
-		this.qx__Setup = qx__Setup;
-		this.fp_Jurisdiction = fp_Jurisdiction;
-		this.del_Jurisdiction = del_Jurisdiction;
-		this.user_Administration = user_Administration;
-		this.add_User = add_User;
-		this.fp_Role = fp_Role;
-		this.del_User = del_User;
-		this.modify_user = modify_user;
-		this.url = url;
-		this.method = method;
-		this.city = city;
-		this.county = county;
-	}*/
 	
 	public AddRole(String roleName, String descriPtion, String belongs_City, String note, String configuration,
 			String updatedate, Integer id) {
@@ -202,6 +115,7 @@ public class AddRole{
 	public void setConfiguration(String configuration) {
 		this.configuration = configuration;
 	}
+	
 	/*public String getLoan_management() {
 		return loan_management;
 	}
@@ -419,11 +333,19 @@ public class AddRole{
 				+ modify_user + ", url=" + url + ", method=" + method + ", city=" + city + ", county=" + county + "]";
 	}*/
 
+	public String getParentid() {
+		return parentid;
+	}
+
+	public void setParentid(String parentid) {
+		this.parentid = parentid;
+	}
+
 	@Override
 	public String toString() {
 		return "AddRole [id=" + id + ", roleName=" + roleName + ", descriPtion=" + descriPtion + ", belongs_City="
 				+ belongs_City + ", note=" + note + ", configuration=" + configuration + ", createDate=" + createDate
-				+ ", updatedate=" + updatedate + "]";
+				+ ", updatedate=" + updatedate + ", parentid=" + parentid + "]";
 	}
 
 }

@@ -217,6 +217,19 @@ var searchExport = function(back) {
 	supportPeople.value = back.family_number
 	expenses.value =  back.monthly_expenditure
 	communication.value = back.monthly_expenditure
+	
+	// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".paperwork-type").val(back.id_type);
+		  $(".country").val(back.country_and_region);
+		  $(".gender").val(back.sex);
+		  $(".census").val(back.local_domicile);
+		  $(".marriage").val(back.marital_status);
+		  $(".housing").val(back.housing_condition_now);
+		  $(".communication").val(back.postal_address);
+		  form.render()
+		});
 }
 
 // 查询
@@ -254,82 +267,6 @@ var searchData = function() {
 	}
 }
 
-// 提交表单
-var sendFormData = function() {
-    log('send data to server')
-    log('data to send at time')
-    var data = collectData()
-    var method = 'POST'
-    var url = '/slloan/loan/loanApplypersonaldata'
-    log(data)
-    sendAjax(method, url, data)
-}
-
-
-//开启验证 后提交表单
-//$.validator.setDefaults({
-//    submitHandler: function() {
-////      alert("提交事件!");
-//    	sendFormData()
-//    }
-//});
-
-//$().ready(function() {
-//    $("#loaner").validate({
-//    	rules: {
-//    	      ctitle: {
-//    	        required: true,
-//    	        minlength: 2
-//    	      },
-//    	      etitle: {
-//    	        required: true,
-//    	        minlength: 3
-//    	      },
-//    	      CardId: {
-//    	        required: true,
-//    	        minlength: 5
-//    	      },
-//    	      currentAddress: {
-//    	    	required: true,
-//      	        minlength: 12
-//    	      }
-//    	    },
-//    	    messages: {
-//    	      ctitle: {
-//    	    	required:  "请输入用户名",
-//    	        minlength: "用户名必需由两个字母组成"
-//    	      },
-//    	      etitle: {
-//    	    	required:  "请输证件号码",
-//    	        minlength: "密码长度不能小于 3 个字母"
-//    	      },
-//    	      CardId: {
-//    	    	required:  "请输证件号码",
-//    	        minlength: "证件长度不能小于 16 个"
-//    	      },
-//    	      currentAddress: {
-//    	    	required:  "请输入现住址",
-//      	        minlength: "请正确输入现住址"
-//    	      }
-//    	     }
-//    });
-//});
-
-// 自定义验证
-var validator = function(element, message) {
-	  var potion = document.querySelector(element)
-	  var flag = (potion.value).length
-	  var result = true
-	  if(!flag) {
-		 var lable = document.createElement('lable')
-		 lable.classList.add('error')
-		 lable.innerText = message
-		 potion.parentNode.appendChild(lable)
-		 result = false
-	  }
-	  return result
-}
-
 // 修改保存数据 
 var updateData = function(element) {
   log('send data to server')
@@ -346,6 +283,58 @@ var updateData = function(element) {
     }
   })
 }
+
+// 自定义验证
+var validateContent = function() {
+	  log('收集需要验证的数据')
+	  var data = {}
+	  data.cname = e('.ch-name').value
+	  data.ename = e('.en-name').value
+	  data.paperwork = e('.paperwork-type').value
+	  data.otherPaperwork = e('.other-paperwork').value
+	  data.paperNumb = e('.paperwork-numb').value
+	  data.country = e('.country').value
+	  data.otherCountry = e('.other-country').value
+	  data.gender = e('.gender').value
+	  data.census = e('.census').value
+	  data.otherCensus = e('.other-census').value
+	  data.marriage = e('.marriage').value
+	  data.housing = e('.housing').value
+	  data.otherHousing = e('.other-housing').value
+	  data.birthday = e('.birthday').value
+	  data.currentAddress = e('.current-address').value
+	  data.residencePhone = e('.residence-phone').value
+	  data.mobilePhone = e('.mobile-phone').value
+	  data.email = e('.E-mail').value
+	  data.code = e('.zip-code').value
+	  data.career = e('.career').value
+	  data.unit = e('.unit-industry').value
+	  data.unitName = e('.unit-name').value
+	  data.unitAddress = e('.unit-address').value
+	  data.companyNumber = e('.company-number').value
+	  data.lastyearIncome = e('.lastyear-income').value
+	  data.assetSize = e('.asset-size').value
+	  data.unitPhone = e('.unit-phone').value
+	  data.unitCode = e('.unit-code').value
+	  data.jobsType = e('.jobs-type').value
+	  data.unitTime = e('.unit-time').value
+	  data.lastunitName = e('.lastunit-name').value
+	  data.lastunitTime = e('.lastunit-time').value
+	  data.incomeSource = e('.income-source').value
+	  data.salary = e('.salary').value
+	  data.investment = e('.investment').value
+	  data.rent = e('.rent').value
+	  data.added = e('.added').value
+	  data.supportPeople = e('.support-people').value
+	  data.expenses = e('.expenses').value
+	  data.communication = e('.communication').value
+	  data.state = 'c'
+	  data.ctime ='d'
+	  data.hi = 'hi'	  
+	  return data
+}
+
+
 
 //
 var __main = function() {

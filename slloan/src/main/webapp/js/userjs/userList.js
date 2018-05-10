@@ -66,14 +66,14 @@ layui.use('table', function(){
 
 // 发送 ajax
 var sendAjax = function(method, url, datas, callback) {
-  log(' send data ajax')
+//  log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(d) {
     	  if(d.lists.length !== undefined) {
-    	        log(d)
+//    	        log(d)
     	        var datas = d
     	        var len = datas.lists.length
     	        var pageElement = document.querySelector('.tab-data')
@@ -81,7 +81,7 @@ var sendAjax = function(method, url, datas, callback) {
     	        totalPage.innerText = datas.totalPage
     	        pageElement.innerHTML = null
     	        for(var i = 0; i < len; i++) {
-    	          log(i)
+//    	          log(i)
     	          var tr = document.createElement('tr')
     	          var td0 = document.createElement('td')
     	          var td1 = document.createElement('td')
@@ -257,13 +257,13 @@ addUser()
 }
 // 查看按钮发送数据
     var readAjax = function(method, url, datas) {
-	log(' send data readajax')
+//	log(' send data readajax')
 	$.ajax({
 		type : method,
 		url : url,
 		data : {datas:JSON.stringify(datas)},
 		success : function(data) {
-			console.log(data)
+//			console.log(data)
 			layer.open({
 				  title: '用户信息'
 				  ,content: '用户名: '  + data.userName + '<br>' + 
@@ -279,14 +279,14 @@ addUser()
 	      }
 	})
 }
+   
 // 编辑 删除 查看
-
 var groupBtn = function() {
 	var envs = document.querySelector('.tab-data')
 	envs.addEventListener('click',
 			function(e) {
 				var mark = e.target.innerText.trim()
-				console.log(mark)
+//				console.log(mark)
 				if (mark == '编辑') {
 					localStorage.editorUserName = null
 					localStorage.editorUserName = e.target.parentNode.parentNode.querySelector('.flag').innerText
@@ -309,7 +309,7 @@ var groupBtn = function() {
 					var data = {}
 					data.id = e.target.parentNode.parentNode
 							.querySelector('.flag').innerText
-					console.log(data)
+//					console.log(data)
 					readAjax(method, url, data)
 				}
 			})

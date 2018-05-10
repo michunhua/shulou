@@ -524,7 +524,16 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		map.put("rolename", param.getRolename());
 		map.put("parentnodeId", param.getParentnodeId());
 		map.put("name", param.getName());
-		return personalProfiledao.getSelectById(map);
+		map.put("id", param.getId());
+		PersonalProfile p =	personalProfiledao.getSelectById(map);
+				if(p !=null){
+					return personalProfiledao.getSelectById(map);
+				}else{
+					return null;
+				}
+					
+				
+//		return ;
 	}
 
 }

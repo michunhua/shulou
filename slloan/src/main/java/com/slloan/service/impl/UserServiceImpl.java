@@ -132,6 +132,31 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public Page<UserLogin> getUserByPage(int currentPage,String parentid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<UserLogin> pageBean = new Page<UserLogin>();
+		//封装当前页数
+		pageBean.setCurrPage(currentPage);
+		//每页显示的数据
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		//封装总记录数
+		int totalCount = userdao.getCount();
+		pageBean.setTotalCount(totalCount);
+		//封装总页数
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("parentid",parentid);
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		//封装每页显示的数据
+		List<UserLogin> lists = userdao.getUserByPage(map); 
+		pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
 	public Page<UserLogin> getUserByPage(int currentPage) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<UserLogin> pageBean = new Page<UserLogin>();
@@ -147,14 +172,14 @@ public class UserServiceImpl implements UserService{
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
+//		map.put("parentid",parentid);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
-		List<UserLogin> lists = userdao.getUserByPage(map); 
+		List<UserLogin> lists = userdao.getUserByPage2(map); 
 		pageBean.setLists(lists);
 		return pageBean;
 	}
-
 //	@Override
 //	public Page<UserLogin> getRolePage(int currentPage) {
 //

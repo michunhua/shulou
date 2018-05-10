@@ -68,11 +68,21 @@ public class PersonalProfile implements Serializable {
 	private List<ApplyForLoanInformation> applyfor;
 	
 	public PersonalProfile(){}
-
-	
-	
 	public PersonalProfile(String username, String city, String rolename,  String parentnodeId,String name) {
 		super();
+		this.username = username;
+		this.city = city;
+		this.rolename = rolename;
+		ParentnodeId = parentnodeId;
+		this.name = name;
+		
+		
+	}
+	
+	
+	public PersonalProfile(int id,String username, String city, String rolename,  String parentnodeId,String name) {
+		super();
+		this.id = id;
 		this.username = username;
 		this.city = city;
 		this.rolename = rolename;

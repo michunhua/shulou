@@ -39,18 +39,20 @@ var obtainRoleAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-    	  console.log(data.obj[0].id)
-        log('join role---')
+//    	console.log(data.obj[0].id)
+//        log('join role---')
         var envs = e('.role')
         var datas = data
-        var len = datas.obj.length
-        for(var i = 0; i < len; i++) {
-          var options = document.createElement('option')
-          options.value = datas.obj[i].id + '&' + datas.obj[i].roleName
-          options.innerText = datas.obj[i].roleName
-          envs.appendChild(options)
+        if(data.obj) {
+            var len = datas.obj.length
+            for(var i = 0; i < len; i++) {
+              var options = document.createElement('option')
+              options.value = datas.obj[i].id + '&' + datas.obj[i].roleName
+              options.innerText = datas.obj[i].roleName
+              envs.appendChild(options)
+            }
+            renderForm()
         }
-        renderForm()
       },
       error: function(){
           alert('服务器出错')
@@ -67,15 +69,15 @@ var obtainCityAjax = function(method, url, datas) {
       success: function(data) {
         var envs = e('.city')
         log('join city---')
-        console.log(data.belongs_City)
+        console.log(data.obj.length)
         var datas = data
-        var len = Object.keys(datas).length
+        var len = datas.obj.length
         log(Object.keys(datas))
         for(var i = 0; i < len; i++) {
-          envs.innerHTML = ''
+//          envs.innerHTML = ''
           var options = document.createElement('option')
-          options.value = datas.obj.belongs_City
-          options.innerText = datas.obj.belongs_City
+          options.value = datas.obj[i].belongs_City
+          options.innerText = datas.obj[i].belongs_City
           envs.appendChild(options)
         }
         renderForm()
@@ -87,10 +89,9 @@ var obtainCityAjax = function(method, url, datas) {
 }
 
 
-
 // 获取分配角色
 var obtainRole = function(element) {
-  log('获取角色')
+//  log('获取角色')
   var evs = document.querySelector(element)
   var method = 'GET'
   var url = '/slloan/role/initrole'
@@ -102,6 +103,30 @@ var obtainRole = function(element) {
 
 window.onload = obtainRole()
 
+
+// 根据用户显示城市方法
+var cityRoleAjax = function(method, url, datas) {
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        var envs = e('.city')
+        log('join city---')
+          envs.innerHTML = ''
+          var options = document.createElement('option')
+          options.value = data.belongs_City
+          options.innerText = data.belongs_City
+          envs.appendChild(options)        
+        renderForm()
+      },
+      error: function(){
+          alert('服务器错误')
+      }
+    })
+}
+
+
 // 根据角色确定城市
 var linkRoleCity = function() {
   var form = layui.form;
@@ -109,18 +134,19 @@ var linkRoleCity = function() {
   var datas = {
     id: data.value.split('&')[0],
   }
+  console.log(datas)
   var method = 'GET'
   var url = '/slloan/role/initcity'
-  obtainCityAjax(method, url, datas)
+  cityRoleAjax(method, url, datas)
 });
 }
 
-//linkRoleCity()
+linkRoleCity()
 
 
 // 获取城市
 var obtainCtiy = function(element) {
-	console.log("获取想对应的城市")
+//	console.log("获取想对应的城市")
   var envs = document.querySelector(element)
   var method = 'GET'
   var url = '/slloan/user/selectrolecity'
@@ -145,7 +171,7 @@ var colect = function() {
 
 // 保存按钮点击事件&发送数据
 var sendData = function() {
-  log('发送数据')
+//  log('发送数据')
   var ev = document.querySelector('#save-data')
   ev.addEventListener('click', function() {
     var datas = colect()

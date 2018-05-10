@@ -47,6 +47,7 @@ public class NoteDescriptionController {
 	@Autowired
 	private	PersonalProfileService personalproFileService;
 
+	
 	@ResponseBody
 	@RequestMapping("/notedescription")
 	public Json save(HttpServletRequest req) {
@@ -76,46 +77,7 @@ public class NoteDescriptionController {
 		
 		//
 	}
-	
 
-
-	
-	
-//	/**
-//	 * 贷款创建备注提交到贷款初审
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/notedescription", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-//	public String loannotesSubmitss(HttpServletRequest req) {
-//		String data = req.getParameter("data");
-//		JSONObject obj = new JSONObject().fromObject(data);
-//		String note_Description1 = obj.getString("note");
-//		String note_Description2 = obj.getString("note");
-//		String note_Description3 = obj.getString("note");
-//		String state = obj.getString("state");
-//		String ctime = obj.getString("ctime");
-//		String username = obj.getString("username");
-//		String parentnodeId = obj.getString("parentnodeId");
-//		String city = obj.getString("city");
-//		String rolename = obj.getString("rolename");
-//		String fallbackname = obj.getString("note");
-////		String username = obj.getString("username");
-////		String rolename =obj.getString("rolename");
-////		String city =obj.getString("city");
-////		 String parentnodeId = obj.getString("parentnodeId");
-//		int stateid =0;
-//		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-//		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename);
-//		boolean isResultInsert = recordSubmitService.fallbackinserts(circuLationRecord);
-//		if (isResultInsert == true) {
-//			System.out.println("插入流程表成功"); 
-//		} else {
-//			System.out.println("失败");
-//		}
-// 
-//		return "loan/loanCreateTable";// 提交到贷款初审
-//	}
 
 	/***
 	 * 根据ID查所有联系人信息
@@ -136,14 +98,14 @@ public class NoteDescriptionController {
 		
 		NoteDescription contactcd = notedesc.findById(id);
 
-		if (contactcd != null) {
+		if (contactcd != null ||contactcd == null) {
 			return new Json(true, "success", contactcd);
 		} else
 			return new Json(false, "fail", contactcd);
 	}
 
 	/**
-	 * 修改用户保存
+	 * 备注创建保存
 	 * 
 	 * @return
 	 */
@@ -162,7 +124,9 @@ public class NoteDescriptionController {
 		String note_Description4 =json.getString("recorfore");
 		String state = json.getString("state");
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
+
+state,ctime);
 		boolean isResult = notedesc.update(contact);
 		if (isResult == true) {
 			System.out.println("插入流程表成功"); 
@@ -180,7 +144,7 @@ public class NoteDescriptionController {
 	
 	
 	/**
-	 * 初审用户保存
+	 * 备注初审用户保存
 	 * 
 	 * @return
 	 */
@@ -199,7 +163,9 @@ public class NoteDescriptionController {
 		String note_Description4 =json.getString("recorfore");
 		String state = json.getString("state");
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
+
+state,ctime);
 		boolean isResult = notedesc.updatetwo(contact);
 		if (isResult == true) {
 			System.out.println("插入流程表成功"); 
@@ -215,7 +181,7 @@ public class NoteDescriptionController {
 	}
 	
 	/**
-	 * 初审用户保存
+	 * 备注终审用户保存
 	 * 
 	 * @return
 	 */
@@ -234,7 +200,9 @@ public class NoteDescriptionController {
 		String note_Description4 =json.getString("recorfore");
 		String state = json.getString("state");
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
+
+state,ctime);
 		boolean isResult = notedesc.updatethere(contact);
 		if (isResult == true) {
 			System.out.println("插入流程表成功"); 
@@ -270,7 +238,9 @@ public class NoteDescriptionController {
 		String note_Description4 =json.getString("recorfore");
 		String state = json.getString("state");
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
+
+state,ctime);
 		boolean isResult = notedesc.updatefore(contact);
 		if (isResult == true) {
 			System.out.println("插入流程表成功"); 
@@ -287,7 +257,7 @@ public class NoteDescriptionController {
 	
 	/**
 	 * 按揭员保存
-	 * 保存s
+	 * 保存
 	 * @return
 	 */
 	@RequestMapping(value = "/notedescription", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -401,8 +371,9 @@ public class NoteDescriptionController {
 		 String parentnodeId = obj.getString("parentnodeId");
 		int stateid =1;
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
-		circulation record = new  circulation("1",fallbackname,createDate,username,parentnodeId,city,rolename);
+		circulation record = new  circulation("1",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 		boolean coan = circulationservice.save(record);
 		if (isResultInsert == true && coan == true) {
