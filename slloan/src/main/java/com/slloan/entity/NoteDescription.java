@@ -21,9 +21,25 @@ public class NoteDescription {
 	
 	
 	
+//
+//	public NoteDescription(String note_Description1, String note_Description2, String note_Description3,
+//			String note_Description4, String state, String ctime) {
+//		super();
+//		this.id = id;
+//		this.note_Description1 = note_Description1;
+//		this.note_Description2 = note_Description2;
+//		this.note_Description3 = note_Description3;
+//		this.note_Description4 = note_Description4;
+//		this.state = state;
+//		this.ctime = ctime;
+//		
+//	}
+
+
+
 
 	public NoteDescription(String note_Description1, String note_Description2, String note_Description3, String note_Description4,String state,
-			String ctime, String username, String parentnodeId, String city, String rolename, String submit) {
+			String ctime, String username, String parentnodeId, String city, String rolename) {
 		super();
 		this.note_Description1 = note_Description1;
 		this.note_Description2 = note_Description2;
@@ -35,7 +51,7 @@ public class NoteDescription {
 		ParentnodeId = parentnodeId;
 		this.city = city;
 		this.rolename = rolename;
-		this.submit = submit;
+	
 	}
 
 
@@ -55,7 +71,7 @@ public class NoteDescription {
 	
 	
 	public NoteDescription(String note_Description1, String state, String ctime, String username, String parentnodeId,
-			String city, String rolename, String submit) {
+			String city, String rolename) {
 		super();
 		this.note_Description1 = note_Description1;
 		this.state = state;
@@ -64,7 +80,7 @@ public class NoteDescription {
 		ParentnodeId = parentnodeId;
 		this.city = city;
 		this.rolename = rolename;
-		this.submit = submit;
+	
 	}
 
 

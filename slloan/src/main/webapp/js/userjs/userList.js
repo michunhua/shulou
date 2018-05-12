@@ -179,6 +179,7 @@ var getPageData = function() {
   var datas = {}
   datas.parentid = localStorage.roleUseID
   datas.username = localStorage.purusername
+  datas.id = localStorage.purid
   sendAjax(method, url, datas, null)
 }
 

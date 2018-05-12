@@ -2,6 +2,7 @@ package com.slloan.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 添加角色
@@ -19,6 +20,8 @@ public class AddRole{
 	private String createDate;//创建日期
 	private String updatedate;//修改日期
 	private String parentid;
+//	private UserLogin userid;
+	
 	public AddRole(){}
 	
 	public AddRole(String roleName, String descriPtion, String belongs_City, String note, String createDate) {
@@ -64,6 +67,14 @@ public class AddRole{
 		this.updatedate = updatedate;
 		this.id = id;
 	}
+
+//	public UserLogin getUserid() {
+//		return userid;
+//	}
+//
+//	public void setUserid(UserLogin userid) {
+//		this.userid = userid;
+//	}
 
 	public Integer getId() {
 		return id;
@@ -340,6 +351,13 @@ public class AddRole{
 	public void setParentid(String parentid) {
 		this.parentid = parentid;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "AddRole [id=" + id + ", roleName=" + roleName + ", descriPtion=" + descriPtion + ", belongs_City="
+//				+ belongs_City + ", note=" + note + ", configuration=" + configuration + ", createDate=" + createDate
+//				+ ", updatedate=" + updatedate + ", parentid=" + parentid + ", userid=" + userid + "]";
+//	}
 
 	@Override
 	public String toString() {

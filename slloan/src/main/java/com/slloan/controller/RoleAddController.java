@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSON;
 import com.slloan.entity.AddRole;
 import com.slloan.entity.Page;
 import com.slloan.entity.PermissionEntity;
+import com.slloan.entity.ResultList;
 import com.slloan.entity.UserLogin;
 import com.slloan.entity.UtilCity;
 import com.slloan.entity.permission;
@@ -97,7 +98,7 @@ public class RoleAddController {
 		String username = jsonobj.getString("username");
 		int startPos= Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
-			if(username.contains("admin")){
+			if(username.contains("liming")){
 				return JSON.toJSONString(roleAddService.getRolePage(startPos));
 			}else{
 				return JSON.toJSONString(roleAddService.getRolePage(startPos,parentid,username));//这个只能查自己所创建的数据
@@ -168,7 +169,8 @@ public class RoleAddController {
 		String city = json.getString("city");//所属城市
 		String note = json.getString("note");//备注
 		String configuration = json.getString("setPurview");//权限配置
-		String id = json.getString("id");//id
+		String id = json.getString("id");//角色里的ID
+		String parentId = json.getString("parentId");//用户ID
 		int idint = Integer.parseInt(id);
 		String updatedate = DateUtils.getInDateTime((new Date()));//日期
 		AddRole addrole = new AddRole(username,descriPtion,city,note,configuration,updatedate,idint);
@@ -196,9 +198,17 @@ public class RoleAddController {
 						PermissionEntity permissionEntity = new PermissionEntity(jsonObject.getString(key),id);
 						result = addpermissionservice.addPermission(permissionEntity);//插入权限表数据
 					}
-						
-				 if(isResult == true && result == true){
-					 
+					List<UserLogin> u = userservice.selectUserById2(idint);
+					boolean is = false;
+						for(UserLogin us: u){
+							int usid = us.getId();
+							int ruid = us.getR_id();
+							 is = userservice.updateUserCity(username, city, idint, usid);//少了一个角色
+						}
+					
+				
+//					boolean is2 = roleAddService.updateRoleCity(username,city,idint);
+				 if(isResult == true && result == true && is == true){
 					 return  new Json(true,"success",isResult,"修改角色权限保存成功");//JSON.toJSONString("success");
 				 }else{
 					 return new Json(true,"success",isResult,"修改角色权限保存失败");
@@ -331,21 +341,25 @@ public class RoleAddController {
 		JSONObject jsonObject = new JSONObject().fromObject(paramdata);
 		String parentid  = jsonObject.getString("parentid");
 		String username = jsonObject.getString("username");
+		String city = jsonObject.getString("city");
+		String city2 = jsonObject.getString("city");
+		ResultList<AddRole> lists = new ResultList<AddRole>();
 		Map<String,Object> map = new HashMap<String,Object>();
 			
-			if(username.contains("admin")){
+			if(username.contains("liming")){
 				List<AddRole> add = roleAddService.list();
+				
 				if(add !=null){
 					return new Json(true,"success",add,"");//JSON.toJSONString(add);
 				}else{
 					return new Json(false,"fail",add,"");//JSON.toJSONString("fail");
 				}
 			}else{
-				List<AddRole> add = roleAddService.getselectByid(parentid);
+				List<AddRole> add = roleAddService.getselectByid(parentid,city,city2);
 				if(add !=null){
 					return new Json(true,"true",add,"");//JSON.toJSONString(add);
 				}else{
-					return new Json(false,"fail","","");//JSON.toJSONString("fail");
+					return new Json(false,"fail",add,"");//JSON.toJSONString("fail");
 				}
 			}
 		

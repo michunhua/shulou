@@ -12,18 +12,28 @@ var collectData = function() {
   data.username = localStorage.purusername
   data.city = localStorage.purcity
   data.parentnodeId = localStorage.purid
+  data.state = ""
   return data
 }
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
-    	callback()
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+//  				window.location.href = "/slloan/loan/loancreas"
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
     },
     error: function(){
         alert('服务器错误')
@@ -39,10 +49,11 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
+    data.id = localStorage.finalID
     var method = 'POST'
-    var url = '/slloan/loan/notedescriptionaweqc'
+    var url = '/slloan/loan/updatenotethere'
     log(data)
-    sendAjax(method, url, data, null)
+    sendAjax(method, url, data)
   })
 }
 
@@ -92,7 +103,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/select'
+	var url = '/slloan/loan/notedescripti'
 	var data = {}
 	data.id = localStorage.finalID
 	  data.rolename = localStorage.purrole
@@ -127,7 +138,7 @@ var submitAjax = function(method, url, datas) {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
-	  				 window.location.href = "/slloan/loan/loancreass"
+	  				 window.location.href = "/slloan/loan/loancrea"
 	  			});
 	    	} else {
 	    		alert('服务器错误')

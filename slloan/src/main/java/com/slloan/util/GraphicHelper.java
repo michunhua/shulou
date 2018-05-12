@@ -31,7 +31,7 @@ public class GraphicHelper {
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);  
     Graphics graphic = image.getGraphics();  
   
-    graphic.setColor(Color.getColor("F8F8F8"));  
+    graphic.setColor(Color.getColor("F8F8"));  
     graphic.fillRect(0, 0, width, height);  
   
     Color[] colors = new Color[] { Color.BLUE, Color.GRAY, Color.GREEN, Color.RED, Color.BLACK, Color.ORANGE,  

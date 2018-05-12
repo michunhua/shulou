@@ -42,8 +42,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    var method = ''
-    var url = ''
+     var method = 'POST'
+    var url = '/slloan/loan/modifyusersjfo'
     log(data)
     sendAjax(method, url, data, null)
   })

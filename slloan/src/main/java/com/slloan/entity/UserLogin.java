@@ -22,13 +22,13 @@ public class UserLogin implements Serializable{
 	private Integer r_id;//角色ID
 	private String create_Date;//创建日期
 	private String updateDate;//修改日期
-	
+	private String spare;
 	public UserLogin(){
 		
 	}
 
 	public UserLogin(String userName, String passWord, String employeeis_Name, String distribution_Role,
-			String belongs_City, String note,String updateDate, Integer id) {
+			String belongs_City, String note,String updateDate,Integer r_id, Integer id) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
@@ -36,13 +36,14 @@ public class UserLogin implements Serializable{
 		this.distribution_Role = distribution_Role;
 		this.belongs_City = belongs_City;
 		this.note = note;
-		this.id = id;
+		this.r_id = r_id;
 		this.updateDate = updateDate;
+		this.id = id;
 	}
 	
 
 	public UserLogin(String userName, String passWord,String employeeis_Name, String distribution_Role,
-			String belongs_City, String note, Integer r_id,String create_Date) {
+			String belongs_City, String note, Integer r_id,String create_Date,String spare) {
 		super();
 		this.userName = userName;
 		this.passWord = passWord;
@@ -52,6 +53,7 @@ public class UserLogin implements Serializable{
 		this.note = note;
 		this.r_id = r_id;
 		this.create_Date = create_Date;
+		this.spare = spare;
 	}
 	
 	public UserLogin(String userName, String passWord, String employeeis_Name, String distribution_Role,
@@ -75,19 +77,22 @@ public class UserLogin implements Serializable{
 		this.belongs_City = belongs_City;
 		this.note = note;
 		this.create_Date = create_Date;
+		
 	}
 	
 	public UserLogin(Integer id,String userName, String passWord,
 			String employeeis_Name, String distribution_Role,
-			String belongs_City, String note, String create_Date) {
+			String belongs_City, String note, String create_Date,String spare) {
 		super();
+		this.id = id;
 		this.userName = userName;
 		this.passWord = passWord;
 		this.employeeis_Name = employeeis_Name;
 		this.distribution_Role = distribution_Role;
 		this.belongs_City = belongs_City;
 		this.note = note;
-		this.id = id;
+		
+		
 	}
 	
 	public UserLogin(String userName, String passWord) {
@@ -98,8 +103,16 @@ public class UserLogin implements Serializable{
 
 	
 	
+	public String getSpare() {
+		return spare;
+	}
+
+	public void setSpare(String spare) {
+		this.spare = spare;
+	}
+
 	public UserLogin(Integer id, String userName, String passWord, String employeeis_Name, String distribution_Role,
-			String belongs_City, String note, Integer r_id,String create_Date) {
+			String belongs_City, String note, Integer r_id,String create_Date,String spare) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -110,6 +123,7 @@ public class UserLogin implements Serializable{
 		this.note = note;
 		this.r_id = r_id;
 		this.create_Date = create_Date;
+		this.spare = spare;
 	}
 
 	
@@ -210,6 +224,7 @@ public class UserLogin implements Serializable{
 		return "UserLogin [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", employeeis_Name="
 				+ employeeis_Name + ", distribution_Role=" + distribution_Role + ", belongs_City=" + belongs_City
 				+ ", note=" + note + ", r_id=" + r_id + ", create_Date=" + create_Date + ", updateDate=" + updateDate
+				+", spare=" + spare
 				+ "]";
 	}
 

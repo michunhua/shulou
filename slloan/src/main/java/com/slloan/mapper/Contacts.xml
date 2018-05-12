@@ -38,7 +38,7 @@
 		
 		<!-- 根据ID查记录 -->
 		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.Contacts">
-				select * from contacts_table where id = #{id}
+				select * from contacts_table where state = #{id}
 		</select>
 		
 		<update id="updateadd" parameterType="com.slloan.entity.Contacts">
@@ -53,7 +53,9 @@
 					<if test="c_Telephone !=null and c_Telephone !=''">c_Telephone = #{c_Telephone},</if>
 					<if test="c_Telephone1 !=null and c_Telephone1 !=''">c_Telephone1 = #{c_Telephone1},</if>
 					<if test="c_Telephone2 !=null and c_Telephone2 !=''">c_Telephone2 = #{c_Telephone2},</if>
+					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
+					<if test="state !=null and state !=''">state = #{state},</if>
 				</set>
-					 WHERE id = #{id}
+					 WHERE state = #{id}
 		</update>
 </mapper>

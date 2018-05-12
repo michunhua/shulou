@@ -30,7 +30,7 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 			String city = notedescription.getCity();
 			String rolename = notedescription.getRolename();
 			String submit = notedescription.getSubmit();
-		 NoteDescription note = new NoteDescription(note_Description1, note_Description2, note_Description3,note_Description4, state, ctime,username,ParentnodeId,city,rolename,submit);
+		 NoteDescription note = new NoteDescription(note_Description1, note_Description2, note_Description3,note_Description4, state, ctime,username,ParentnodeId,city,rolename);
 		return notedescriptionDao.save(note);
 
 }
@@ -38,9 +38,9 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 	
 
 	@Override
-	public NoteDescription findById(int id) {
+	public NoteDescription findById(int stateid) {
 		// TODO Auto-generated method stub
-		return notedescriptionDao.findById(id);
+		return notedescriptionDao.findById(stateid);
 	}
 
 

@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="renderer" content="webkit"> 
+    <link rel="stylesheet" href="../public/layui/css/layui.css">
+    <link rel="stylesheet" href="../public/css/navigate.css">
+    <link rel="stylesheet" href="../public/css/main.css">
+    <script type="text/javascript" src="//consumer-res.huawei.com/etc/designs/huawei-cbg-site/statics/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../public/js/jquery.form.js"></script>
+    <title>贷款管理/ 解押凭证/ 影像资料</title>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">赎楼业务系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <span id = 'username'>admin</span>
+                </a>
+            </li>
+            <li class="layui-nav-item" id = 'logout'>退出登录</li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll" id = 'nav'>
+          <!-- 导航内容 -->
+          <div class="layui-collapse">
+            <div class="layui-colla-item" id = 'navloan'>
+              <h2 class="layui-colla-title">贷款管理</h2>
+              <div class="layui-colla-content layui-show">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item " id = 'tree-create'>
+                        <a href="javascript:;">贷款创建</a>
+                        <dl class="layui-nav-child">
+                             <dd><a href="../../slloan/loan/loancrea">贷款创建列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-trival'>
+                        <a href="javascript:;">贷款初审</a>
+                        <dl class="layui-nav-child">
+                         <dd><a href="../../slloan/loan/loancreas">待初审列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-final'>
+                        <a href="javascript:;">贷款终审</a>
+                        <dl class="layui-nav-child">
+                         <dd><a href="../../slloan/loan/loancreass">待终审列表</a></dd>
+                        </dl>
+                    </li>
+                     <li class="layui-nav-item " id = 'tree-read'>
+                        <a href="../../slloan/loan/anin">贷款信息查看</a>
+                    </li>
+                    <li class="layui-nav-item " id = 'tree-confirm'>
+                        <a href="../../slloan/loan/repa">回款确认</a>
+                      </dl>
+                    </li>
+                    <li class="layui-nav-item" id = 'tree-gain'>
+                        <a href="../../slloan/loan/gain">取证凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-this" id = 'tree-relief'>
+                        <a href="../../slloan/loan/reli">解押凭证</a>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id = 'tree-incare'>
+                        <a href="../../slloan/loan/inca">进押凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navfinance'>
+              <h2 class="layui-colla-title">财务管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item" id = "navfinance-list">
+                        <a href="javascript:;">财务审批</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../financial/financeapproval">审批列表</a></dd>
+                            
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id ="navfinance-trans">
+                        <a href="../financial/transfervoucher">转账凭证</a>
+                    </li>
+                    <li class="layui-nav-item" id = "navfinance-clear">
+                        <a href="../financial/settlementvoucher">结算凭证</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserInfo'>
+              <h2 class="layui-colla-title">个人信息</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item" id = "navuserInfo-update">
+                        
+                    </li>
+                    <li class="layui-nav-item" id = "navuserInfo-password">
+                        <a href="../user/userinfo/updatepassword">密码修改</a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="layui-colla-item" id = 'navuserManagement'>
+              <h2 class="layui-colla-title">用户管理</h2>
+              <div class="layui-colla-content">
+                <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                    <li class="layui-nav-item" id = "navuserManagement-user">
+                        <a href="javascript:;">用户</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="../user/ulist">用户列表</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" id = "navuserManagement-role">
+                        <a href="javascript:;">角色</a>
+                        <dl class="layui-nav-child">
+                           <dd><a href="../role/rolelist">角色列表</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <!-- 顶部导航 -->
+        <ul class="layui-nav" lay-filter="">
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/loannotess">终审备注</a></li>
+        </ul>
+        <div class="container">
+          <!-- 具体页面导航 -->
+          <span class="layui-breadcrumb nav-title">
+            <a href="">贷款管理</a>
+            <a href="">解押凭证</a>
+            <a href="">影像资料</a>
+          </span>
+          <hr>
+          <!-- 页面内容区域 -->
+          <div class="layui-tab">
+            <ul class="layui-tab-title">
+              <li class="layui-this">申请表</li>
+              <li>身份证明</li>
+              <li>房产证明</li>
+              <li>批示</li>
+              <li>其他类</li>
+              <li>凭证类</li>
+            </ul>
+            <div class="layui-tab-content">
+              <div class="layui-tab-item layui-show">
+                             <script type="text/javascript">
+             function updateUserInfo() {
+       	      var form = new FormData(document.getElementById("frm-reg"));  
+       	      $.ajax({  
+       	      url: "/slloan/updateftpimage/imagedatafileupload",
+       	      type:"post",  
+       	      data:form,  
+       	      cache: false,  
+       	      processData: false,  
+       	      contentType: false,  
+       	      success:function(data){
+       	    	  var len = data.length;
+       	    	  console.log(len)
+       	    	  if(len == undefined){
+       	    		  alert("操作成功！"+data.value); 
+       	    		  var file = data.obj[0].filepath
+         	        	console.log( data.obj[0])
+         	        	var udata = data.obj[0]
+         	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+         	        	  $("#imagedata1").append(dd)
+       	    	  }else{
+       	    		  alert(data)
+       	    	  }
+       	      },complete:function(msg){ 
+       	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+       	          
+       	      } ,  
+       	      error:function(e){  
+       	          alert("网络错误，请重试！！");  
+       	       }  
+       	      });          
+       	    }
+           	function uuuu(udata){
+           	alert(udata)
+           	}
+             </script> 
+			<form  id="frm-reg"  enctype="multipart/form-data">
+				<fieldset>
+				<legend>上传申请表</legend>
+				上传类型 <input type="text" id="uploadtype1" value="申请表" id="upload_type" name="upload_type" /><br>
+				用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> 
+				city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>
+				id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>
+				角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>
+				备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  
+				<input type="file"  name="file" onchange="document.getElementById('filepath1').value=this.value;"/>
+				<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>
+				<input type="button" onclick="updateUserInfo()"  value="提交" />
+				</fieldset>
+			</form>
+			<div id="imagedata1" class="nav-container">
+     		</div></br>
+              </div>
+              <div class="layui-tab-item">
+             <script type="text/javascript">
+             function updateUserInfos() {
+       	      var form = new FormData(document.getElementById("frm-regs"));  
+       	      $.ajax({  
+       	     url: "/slloan/updateftpimage/imagedatafileupload",
+       	      type:"post",  
+       	      data:form,  
+       	      cache: false,  
+       	      processData: false,  
+       	      contentType: false,  
+       	      success:function(data){
+       	    	  var len = data.length;
+       	    	  console.log(len)
+       	    	  if(len == undefined){
+       	    		  alert("操作成功！"+data.value); 
+       	    		  var file = data.obj[0].filepath
+         	        	console.log( data.obj[0])
+         	        	var udata = data.obj[0]
+         	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+         	        	  $("#imagedata2").append(dd)
+       	    	  }else{
+       	    		  alert(data)
+       	    	  }
+       	      },complete:function(msg){ 
+       	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+       	          
+       	      } ,  
+       	      error:function(e){  
+       	          alert("网络错误，请重试！！");  
+       	       }  
+       	      });          
+       	    }
+           	function uuuu(udata){
+           	alert(udata)
+           	}
+             </script> 
+			<form  id="frm-regs"  enctype="multipart/form-data">
+				<fieldset>
+				<legend>上传身份证明</legend>
+				上传类型 <input type="text" id="uploadtype2" value="身份证明" name="upload_type" /><br>
+				用户名：<input type="text" value="" id="username2" name="username" readonly="readonly"/><br/> 
+				city：<input type="text" value="" id="city2" name="city" readonly="readonly"/><br/>
+				id：<input type="text" id="id2"  value="" name="id" readonly="readonly"/><br/>
+				角色名:<input type="text" id="rolename2"  value="" name="rolename" readonly="readonly"/><br/>
+				备注 :<textarea type="text" id="note2"  value="" name="note"/></textarea><br/>  
+				<input type="file"  name="file" onchange="document.getElementById('filepath2').value=this.value;"/>
+				<input type="hidden" name="filepath" id="filepath2" onchange="alert(this.value)" value=""/>
+				<input type="button" onclick="updateUserInfos()"  value="提交" />
+				</fieldset>
+			</form>
+			<div id="imagedata2" class="nav-container">
+     		</div></br>
+              </div>
+              <div class="layui-tab-item">
+              	             <script type="text/javascript">
+             function updateUserInfoes() {
+       	      var form = new FormData(document.getElementById("frm-reges"));  
+       	      $.ajax({  
+       	     url: "/slloan/updateftpimage/imagedatafileupload",
+       	      type:"post",  
+       	      data:form,  
+       	      cache: false,  
+       	      processData: false,  
+       	      contentType: false,  
+       	      success:function(data){
+       	    	  var len = data.length;
+       	    	  console.log(len)
+       	    	  if(len == undefined){
+       	    		  alert("操作成功！"+data.value); 
+       	    		  var file = data.obj[0].filepath
+         	        	console.log( data.obj[0])
+         	        	var udata = data.obj[0]
+         	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+         	        	  $("#imagedata3").append(dd)
+       	    	  }else{
+       	    		  alert(data)
+       	    	  }
+       	      },complete:function(msg){ 
+       	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+       	          
+       	      } ,  
+       	      error:function(e){  
+       	          alert("网络错误，请重试！！");  
+       	       }  
+       	      });          
+       	    }
+           	function uuuu(udata){
+           	alert(udata)
+           	}
+             </script> 
+			<form  id="frm-reges"  enctype="multipart/form-data">
+				<fieldset>
+				<legend>上传房产证明</legend>
+				上传类型 <input type="text" id="uploadtype3" value="房产证明" name="upload_type" /><br>
+				用户名：<input type="text" value="" id="username3" name="username" readonly="readonly"/><br/> 
+				city：<input type="text" value="" id="city3" name="city" readonly="readonly"/><br/>
+				id：<input type="text" id="id3"  value="" name="id" readonly="readonly"/><br/>
+				角色名:<input type="text" id="rolename3"  value="" name="rolename" readonly="readonly"/><br/>
+				备注 :<textarea type="text" id="note3"  value="" name="note"/></textarea><br/>  
+				<input type="file"  name="file" onchange="document.getElementById('filepath3').value=this.value;"/>
+				<input type="hidden" name="filepath" id="filepath3" onchange="alert(this.value)" value=""/>
+				<input type="button" onclick="updateUserInfoes()"  value="提交" />
+				</fieldset>
+			</form>
+			<div id="imagedata3" class="nav-container">
+     		</div></br>
+              </div>
+              <div class="layui-tab-item">
+              	             <script type="text/javascript">
+             function updateUserInfoed() {
+       	      var form = new FormData(document.getElementById("frm-reged"));  
+       	      $.ajax({  
+       	     url: "/slloan/updateftpimage/imagedatafileupload",
+       	      type:"post",  
+       	      data:form,  
+       	      cache: false,  
+       	      processData: false,  
+       	      contentType: false,  
+       	      success:function(data){
+       	    	  var len = data.length;
+       	    	  console.log(len)
+       	    	  if(len == undefined){
+       	    		  alert("操作成功！"+data.value); 
+       	    		  var file = data.obj[0].filepath
+         	        	console.log( data.obj[0])
+         	        	var udata = data.obj[0]
+         	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+         	        	  $("#imagedata4").append(dd)
+       	    	  }else{
+       	    		  alert(data)
+       	    	  }
+       	      },complete:function(msg){ 
+       	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+       	          
+       	      } ,  
+       	      error:function(e){  
+       	          alert("网络错误，请重试！！");  
+       	       }  
+       	      });          
+       	    }
+           	function uuuu(udata){
+           	alert(udata)
+           	}
+             </script> 
+			<form  id="frm-reged"  enctype="multipart/form-data">
+				<fieldset>
+				<legend>上传批示</legend>
+				上传类型 <input type="text" id="uploadtype4" value="批示" name="upload_type" readonly="readonly" /><br>
+				用户名：<input type="text" value="" id="username4" name="username" readonly="readonly"/><br/> 
+				city：<input type="text" value="" id="city4" name="city" readonly="readonly"/><br/>
+				id：<input type="text" id="id4"  value="" name="id" readonly="readonly"/><br/>
+				角色名:<input type="text" id="rolename4"  value="" name="rolename" readonly="readonly"/><br/>
+				备注 :<textarea type="text" id="note4"  value="" name="note"/></textarea><br/>  
+				<input type="file"  name="file" onchange="document.getElementById('filepath4').value=this.value;"/>
+				<input type="hidden" name="filepath" id="filepath4" onchange="alert(this.value)" value=""/>
+				<input type="button" onclick="updateUserInfoed()"  value="提交" />
+				</fieldset>
+			</form>
+			<div id="imagedata4" class="nav-container">
+     		</div></br>
+              </div>
+              <div class="layui-tab-item">
+              	             <script type="text/javascript">
+             function updateUserInfoeds() {
+       	      var form = new FormData(document.getElementById("frm-regeds"));  
+       	      $.ajax({  
+       	      url: "/slloan/updateftpimage/imagedatafileupload",
+       	      type:"post",  
+       	      data:form,  
+       	      cache: false,  
+       	      processData: false,  
+       	      contentType: false,  
+       	      success:function(data){
+       	    	  var len = data.length;
+       	    	  console.log(len)
+       	    	  if(len == undefined){
+       	    		  alert("操作成功！"+data.value); 
+       	    		  var file = data.obj[0].filepath
+         	        	console.log( data.obj[0])
+         	        	var udata = data.obj[0]
+         	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+         	        	  $("#imagedata5").append(dd)
+       	    	  }else{
+       	    		  alert(data)
+       	    	  }
+       	      },complete:function(msg){ 
+       	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+       	          
+       	      } ,  
+       	      error:function(e){  
+       	          alert("网络错误，请重试！！");  
+       	       }  
+       	      });          
+       	    }
+           	function uuuu(udata){
+           	alert(udata)
+           	}
+             </script> 
+			<form  id="frm-regeds"  enctype="multipart/form-data">
+				<fieldset>
+				<legend>上传其他</legend>
+				上传类型 <input type="text" id="uploadtype5" value="其他类" name="upload_type" /><br>
+				用户名：<input type="text" value="" id="username5" name="username" readonly="readonly"/><br/> 
+				city：<input type="text" value="" id="city5" name="city" readonly="readonly"/><br/>
+				id：<input type="text" id="id5"  value="" name="id" readonly="readonly"/><br/>
+				角色名:<input type="text" id="rolename5"  value="" name="rolename" readonly="readonly"/><br/>
+				备注 :<textarea type="text" id="note5"  value="" name="note"/></textarea><br/>   
+				<input type="file"  name="file" onchange="document.getElementById('filepath5').value=this.value;"/>
+				<input type="hidden" name="filepath" id="filepath5" onchange="alert(this.value)" value=""/>
+				<input type="button" onclick="updateUserInfoeds()"  value="提交" />
+				</fieldset>
+			</form>
+			<div id="imagedata5" class="nav-container">
+     		</div></br>
+              </div>
+              <div class="layui-tab-item">
+              	             <script type="text/javascript">
+             function updateUserInfoess() {
+       	      var form = new FormData(document.getElementById("frm-regess"));  
+       	      $.ajax({  
+       	      url: "/slloan/updateftpimage/imagedatafileupload",
+       	      type:"post",  
+       	      data:form,  
+       	      cache: false,  
+       	      processData: false,  
+       	      contentType: false,  
+       	      success:function(data){
+       	    	  var len = data.length;
+       	    	  console.log(len)
+       	    	  if(len == undefined){
+       	    		  alert("操作成功！"+data.value); 
+       	    		  var file = data.obj[0].filepath
+         	        	console.log( data.obj[0])
+         	        	var udata = data.obj[0]
+         	        	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+         	        	  $("#imagedata6").append(dd)
+       	    	  }else{
+       	    		  alert(data)
+       	    	  }
+       	      },complete:function(msg){ 
+       	          //请求完成后调用的回调函数（请求成功或失败时均调用）
+       	          
+       	      } ,  
+       	      error:function(e){  
+       	          alert("网络错误，请重试！！");  
+       	       }  
+       	      });          
+       	    }
+           	function uuuu(udata){
+           	alert(udata)
+           	}
+             </script> 
+			<form  id="frm-regess"  enctype="multipart/form-data">
+				<fieldset>
+				<legend>上传凭证</legend>
+				上传类型 <input type="text" id="uploadtype6" value="凭证类" id="upload_type" name="upload_type" /><br>
+				用户名：<input type="text" value="" id="username6" name="username" readonly="readonly"/><br/> 
+				city：<input type="text" value="" id="city6" name="city" readonly="readonly"/><br/>
+				id：<input type="text" id="id6"  value="" name="id" readonly="readonly"/><br/>
+				角色名:<input type="text" id="rolename6"  value="" name="rolename" readonly="readonly"/><br/>
+				备注 :<textarea type="text" id="note6"  value="" name="note"/></textarea><br/>   
+				<input type="file"  name="file" onchange="document.getElementById('filepath6').value=this.value;"/>
+				<input type="hidden" name="filepath" id="filepath6" onchange="alert(this.value)" value=""/>
+				<input type="button" onclick="updateUserInfoess()"  value="提交" />
+				</fieldset>
+			</form>
+			<div id="imagedata6" class="nav-container">
+     		</div></br>
+              </div>
+            </div>
+          </div>
+          
+          <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-loaner'>下一页</button>
+          <button type="reset" class="layui-btn layui-btn-primary" id = "cancel">返回</button>
+          
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © 版权所有
+    </div>
+</div>
+<script type="text/javascript" src="../public/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../public/layui/layui.all.js"></script>
+<script type="text/javascript" src="../public/js/utils.js"></script>
+<script type="text/javascript" src="../public/js/navigate.js"></script>
+<script type="text/javascript" src="../js/loanfinaljs/imageInfo.js"></script>
+</body>
+</html>

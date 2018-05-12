@@ -19,5 +19,5 @@ public interface CoborrowerSpouseService {
 	List<CoborrowerSpouse> findAll();
 	
 	//查询ID
-	CoborrowerSpouse SelectById(int id);
+	CoborrowerSpouse SelectById(int state);
 }

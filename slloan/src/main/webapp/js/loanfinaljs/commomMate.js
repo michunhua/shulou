@@ -6,13 +6,18 @@ var collectData = function() {
   data.cname = e('.ch-name').value
   data.certificate = e('.certificate').value
   data.certificateType = e('.certificate-type').value
-  data.documents = e('.document-number').value
+  data.document = e('.document-number').value
   data.untilName = e('.until-name').value
   data.untilPhone = e('.until-phone').value
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.id = 2
+  data.state = ''
+	  data.ctime = ''
+  data.id = localStorage.finalID
+  
+  
+
   return data
 }
 
@@ -41,7 +46,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/save'
+    var url = '/slloan/loan/cobupdatesaad'
     log(data)
     sendAjax(method, url, data, null)
   })

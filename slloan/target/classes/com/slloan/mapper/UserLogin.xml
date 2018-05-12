@@ -11,12 +11,13 @@
 		<result column="note" property="note" />
 		<result column="r_id" property="r_id" />
 		<result column="create_date" property="create_Date" />
-		<result column="updatedate" property="updateDate" />
+		<result column="update	date" property="updateDate" />
+		<result column="spare" property="spare" />
 	</resultMap>
 
 	<insert id="addUser" parameterType="com.slloan.entity.UserLogin">
-		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note,r_id,create_date) 
-		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note},#{r_id},#{create_Date})
+		insert into user_Login(username,password,employeeis_name,distribution_role,belongs_city,note,r_id,create_date,spare) 
+		values(#{userName},#{passWord},#{employeeis_Name},#{distribution_Role},#{belongs_City},#{note},#{r_id},#{create_Date},#{spare})
 		
 	</insert>
 	<!-- 删除  -->
@@ -38,7 +39,8 @@
 		distribution_role=#{distribution_Role}
 		,belongs_city=#{belongs_City},
 		note=#{note},
-		updateDate = #{updateDate} 
+		updateDate = #{updateDate},
+		r_id = #{r_id} 
 <!-- 			<set> -->
 <!-- 				<if test="username !=null and username !=''">userName = #{userName},</if> -->
 <!-- 					<if test="password !=null and password !=''">passWord= #{passWord},</if> -->
@@ -64,7 +66,7 @@
 <!-- 				 and u.password= #{password,jdbcType=VARCHAR} -->
 	
 	
-		select username,distribution_role,belongs_city,r_id from User_Login where
+		select username,distribution_role,belongs_city,r_id,id from User_Login where
 		username=#{username,jdbcType=VARCHAR}
 		and password =
 		#{password,jdbcType=VARCHAR}
@@ -81,7 +83,7 @@
 <!--         select id,username,employeeis_name,distribution_role,create_date,r_id  -->
 <!--         from User_Login  ORDER BY id desc -->
  select id,username,employeeis_name,distribution_role,create_date,r_id from 
- User_Login where r_id=#{parentid} ORDER BY id desc
+ User_Login where spare=#{spare} ORDER BY id desc
         	<if test="page !=null and limit !=null">
         		limit #{page}, #{limit} 
         	</if>
@@ -103,6 +105,11 @@
      <select id="getCount"  resultType="Integer">
      	 SELECT COUNT(*) FROM User_Login 
      </select>
+      <!-- 查询用户总记录数 -->
+     <select id="getCount2"  resultType="Integer">
+     	 SELECT COUNT(*) FROM User_Login where spare = #{id}
+     </select>
+     
      <select id="list" resultType="com.slloan.entity.UserLogin">
      	select distribution_Role from add_role;
      </select>
@@ -136,8 +143,14 @@
      <select id="selectUserById" parameterType="int" resultType="com.slloan.entity.UserLogin">
      	select id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from User_Login where id=#{id}
      </select>
+     <select id="selectUserById2" parameterType="int" resultType="com.slloan.entity.UserLogin">
+     	select r_id,id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from User_Login where r_id=#{id}
+     </select>
      
      <select id="selectroleUserName" resultType="Map" resultMap="userlogin">
      	SELECT USERNAME FROM User_Login WHERE USERNAME = #{username}
      </select>
+      <update id="updateUserCity"  parameterType="Map">
+	 		update User_Login set distribution_Role =#{rolename},belongs_City=#{city},r_id=#{rid} where id=#{id}
+	 </update>
 </mapper>

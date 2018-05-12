@@ -20,10 +20,9 @@ public class CircuLationRecord implements Serializable{
 	private String city;//城市
 	private String rolename;//角色名
 	private String updatedate;
+	private String marked;
+	
 	public CircuLationRecord(){}
-
-
-
 
 	public CircuLationRecord(String fallbackname, int state,String updatedate, int id) {
 //		super();
@@ -32,9 +31,6 @@ public class CircuLationRecord implements Serializable{
 		this.updatedate = updatedate;
 		this.id = id;
 	}
-
-
-
 
 	public CircuLationRecord(String fallbackname, int state, String createDate,
 			String username, String parentnodeId, String city, String rolename) {
@@ -49,19 +45,18 @@ public class CircuLationRecord implements Serializable{
 	}
 	
 
-	public CircuLationRecord(String fallbackname,String submit, int state,String spare1, String createDate,
-			String username, String parentnodeId, String city, String rolename) {
+	public CircuLationRecord(String fallbackname,String submit, int state, String createDate,
+			String username, String parentnodeId, String city, String rolename,String spare1) {
 		super();
 		this.fallbackname = fallbackname;
 		this.submit = submit;
 		this.state = state;
-		this.spare1 = spare1;
 		this.createDate = createDate;
 		this.username = username;
 		ParentnodeId = parentnodeId;
 		this.city = city;
 		this.rolename = rolename;
-		
+		this.spare1 = spare1;
 	}
 	public CircuLationRecord(String fallbackname, int state, String createDate,
 			String username, String parentnodeId, String city, String rolename,int id) {
@@ -197,25 +192,25 @@ public class CircuLationRecord implements Serializable{
 		return updatedate;
 	}
 
-
-
-
 	public void setUpdatedate(String updatedate) {
 		this.updatedate = updatedate;
 	}
 
 
+	public String getMarked() {
+		return marked;
+	}
 
+	public void setMarked(String marked) {
+		this.marked = marked;
+	}
 
 	@Override
 	public String toString() {
 		return "CircuLationRecord [id=" + id + ", fallbackname=" + fallbackname + ", submit=" + submit + ", state="
 				+ state + ", spare1=" + spare1 + ", createDate=" + createDate + ", username=" + username
 				+ ", ParentnodeId=" + ParentnodeId + ", city=" + city + ", rolename=" + rolename + ", updatedate="
-				+ updatedate + "]";
+				+ updatedate + ", marked=" + marked + "]";
 	}
-
-
-
 
 }

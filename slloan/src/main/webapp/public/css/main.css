@@ -28,3 +28,13 @@ label.error {
 input.error { 
 	border: 1px solid red !important; 
 	}
+
+.images {
+	width: 200px;
+	height: 200px;
+	margin: 12px;
+}
+
+.marked {
+	background-color: red;
+}

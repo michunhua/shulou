@@ -130,6 +130,7 @@ var collectData = function() {
    // data.setPurview = document.querySelector('.role-power').value
    data.setPurview = getEachData(powerShow, Opower)
    data.id = localStorage.updateRoleName
+   data.parentId = localStorage.purid
    return data
 }
 
@@ -275,24 +276,24 @@ var updatesendAjax = function(method, url, datas, callback) {
     		// 设置获取城市
 //    		console.log(data.obj.belongs_City)
     		var Identification = data.obj.belongs_City
-    		var intent = e(".role-city")
+    		var intent = document.querySelector(".role-city")
     		var len = intent.length
-//    		for(var p = 0; p < len; city++) {
+    		log('城市',len)
+//    		log("显示城市")
+    		for(var p = 0; p < len; p++) {
 //    			log(intent[p].value)
-//    			log('Identification', Identification)
-//    			if(intent[p].value == Identification) {
-//    				console.log('相等吗？')
-//    				console.log(p)
-//    				intent[p].selected = true
-//    				
+    			log('Identification', Identification)
+    			if(intent[p].value == Identification) {
+    				intent[p].selected = true
+    				
     				// 显示设置的城市
     				layui.use('form', function(){
     					  var form = layui.form;
-    					  
+    					  log("渲染选中")
     					  form.render('select')
     					})
-//    			}
-//    		}
+    			}
+    		}
     	}
     }
   })

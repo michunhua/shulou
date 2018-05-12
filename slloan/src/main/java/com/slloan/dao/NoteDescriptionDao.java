@@ -13,7 +13,7 @@ public interface NoteDescriptionDao {
 	
 	boolean savethere(NoteDescription notedesc);
 
-	NoteDescription findById(int id);
+	NoteDescription findById(int state);
 
 	boolean delete(int id);
 

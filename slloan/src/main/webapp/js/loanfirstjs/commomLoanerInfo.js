@@ -96,7 +96,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/joinupdate'
+    var url = '/slloan/loan/joinupdatessaq'
     log(data)
     sendAjax(method, url, data)
   })

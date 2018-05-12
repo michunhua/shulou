@@ -76,10 +76,11 @@ public class UserController {
 		int pageSize = Integer.parseInt(limit);
 		String parentid = jsonobj.getString("parentid");
 		String username = jsonobj.getString("username");
-		if(username.contains("admin")){
+		String id = jsonobj.getString("id");
+		if(username.contains("liming")){
 		return JSON.toJSONString(userservice.getUserByPage(startPos));	
 		}
-		return JSON.toJSONString(userservice.getUserByPage(startPos,parentid));
+		return JSON.toJSONString(userservice.getUserByPage(startPos,id));
 	}
 	
 	/**
@@ -93,7 +94,9 @@ public class UserController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		JSONObject jsonobj = new JSONObject().fromObject(json);
 		String parentid = jsonobj.getString("parentid");
-		List<AddRole> add = roleAddService.getselectByid(parentid);
+		String city = jsonobj.getString("city");
+		String city2 = jsonobj.getString("city");
+		List<AddRole> add = roleAddService.getselectByid(parentid,city,city2);
 		if(add !=null){
 			return new Json(true,"success",add,"");//JSON.toJSONString(addrole);
 		}else{
@@ -115,6 +118,7 @@ public class UserController {
 		AddRole add = userservice.accordingtoroleCity(addrole);
 		return JSON.toJSONString(add);
 	}*/
+	
 	/**
 	 * 用户添加
 	 * @return
@@ -132,18 +136,20 @@ public class UserController {
 			String distribution_Role = jsonobj.getString("role");//分配角色
 			String belongs_City = jsonobj.getString("city");//所属城市
 			String note = jsonobj.getString("note");
+			String spare = jsonobj.getString("parentid");
+			String id = jsonobj.getString("id");
 			String createDate = DateUtils.getInDateTime((new Date()));//日期
 			AddRole add = new AddRole();
 			add.setRoleName(distribution_Role);//角色
 			add.setBelongs_City(belongs_City);//城市
 			AddRole rid= roleAddService.selectByRId(add);
 //			initrolecs(rid);
-			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note,rid.getId(),createDate);
+			UserLogin u = new UserLogin(username,password,employeeis_Name,distribution_Role,belongs_City,note,rid.getId(),createDate,id);
 			Map<Object,Object> selectUserName = new HashMap<Object,Object>();
 			selectUserName.put("username", username);
 			UserLogin selectuserName2 = userservice.selectroleUserName(selectUserName);
 				if(selectuserName2 !=null){
-					return new Json(true,"success",selectuserName2,"用户名已存在插入失败");//JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
+					return new Json(false,"fail",selectuserName2,"用户名已存在插入失败");//JSON.toJSONString("用户名已存在插入失败"); //new Json(false,"fail",selectuserName2,"用户名已存在插入失败");
 				}else{
 					isResult=	userservice.addUser(u);
 				}
@@ -233,20 +239,24 @@ public class UserController {
 		String userName = json.getString("username");//用户名
 		String passWord = json.getString("password");
 		String employeeis_Name = json.getString("employee");//员工姓名
-		String distribution_Role = json.getString("role");//分配角色
+		String distribution_Role = json.getString("urolename");//分配角色
 		String belongs_City = json.getString("city");//所属城市
 		String updateDate = DateUtils.getInDateTime((new Date()));//日期
 		String note =json.getString("note");
-		String sid = json.getString("id");
-		int id = Integer.parseInt(sid);
-		UserLogin userlogin = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,updateDate,id);
+		String r_id = json.getString("id");//角色ID
+		String uid = json.getString("uid");//用户ID
+		int id = Integer.parseInt(r_id);
+		int uid2 = Integer.parseInt(uid);
+		UserLogin userlogin = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,updateDate,id,uid2);
 		Map<Object,Object> param = new HashMap<Object,Object>();
 		param.put("username",userName);
 		UserLogin userUpdateAdd = userservice.selectroleUserName(param);
-		if(userUpdateAdd !=null){
-			return new Json(false,"fail",userUpdateAdd,"修改保存用户名存在修改失败");
+		
+		if(userUpdateAdd ==null ){
+			return new Json(false,"fail",userUpdateAdd,"修改保存用户名存在修改成功");
 		}else{
 			boolean isResult =userservice.updateaddUser(userlogin);
+//			boolean is = roleAddService.updateRoleCity(distribution_Role,belongs_City,id);
 			if(isResult == true){
 				return new Json(true,"success",isResult,"");
 			}else

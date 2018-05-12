@@ -2,6 +2,7 @@ package com.slloan.service.inter;
 
 import java.util.List;
 
+import com.slloan.entity.Contacts;
 import com.slloan.entity.NoteDescription;
 
 public interface NoteDescriptionService {
@@ -10,7 +11,9 @@ public interface NoteDescriptionService {
 	
 
 
-	NoteDescription findById(int id);
+	NoteDescription findById(int state);
+	
+
 
 	boolean delete(int id);
 

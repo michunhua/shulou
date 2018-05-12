@@ -66,6 +66,10 @@ var addTable = function(data) {
           var address = myFilter(datas.lists[i].home_address_now)
           var time = myFilter(datas.lists[i].ctime)
           
+          if(datas.lists[i].marked) {
+			tr.classList.add('marked')
+		}
+          
           input.type = 'checkbox'
           input.classList.add('indicate')
           a.classList.add('mark')
@@ -608,7 +612,7 @@ var Hang_cirulation = function(element) {
 		if(event.target.classList.contains("up")) {   
 			console.log('挂起')
 			var method = "GET"
-		    var url = "/slloan/loan/checkHangdata"
+		    var url = "/slloan/loan/loanfinalreviewlist?page="+ init.pages + '&limit='+ init.limit
 		    var datas = {}
 			datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value
@@ -616,8 +620,6 @@ var Hang_cirulation = function(element) {
 			datas.username = localStorage.purusername
 			datas.city = localStorage.purcity
 			datas.parentnodeId = localStorage.purid
-			datas.page = init.pages
-			datas.limit = init.limit
 			HangAjax(method, url, datas)
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')

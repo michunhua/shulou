@@ -6,8 +6,9 @@ form.render('select');
 });
 }
 
+var log = console.log.bind(console)
 
-//角色加入
+//角色加入方法
 var obtainRoleAjax = function(method, url, datas) {
  $.ajax({
    type: method,
@@ -34,8 +35,21 @@ var obtainRoleAjax = function(method, url, datas) {
  })
 }
 
+//获取分配角色请求
+var obtainRole = function(element) {
+	 log('获取角色')
+	var evs = document.querySelector(element)
+	var method = 'GET'
+	var url = '/slloan/role/initrole'
+	var datas = {}
+	datas.parentid = localStorage.roleUseID
+	datas.username = localStorage.purusername
+	datas.city = localStorage.purcity
+	obtainRoleAjax(method, url, datas)
+}
 
-//默认加载数据
+
+//默认加载用户名及密码和备注的数据方法
 var editorAjax = function(method, url, datas) {
 	$.ajax({
 		type : method,
@@ -60,6 +74,8 @@ var editorAjax = function(method, url, datas) {
 			username.value = data.userName
 			pwd.value = data.passWord
 			name.value  = data.employeeis_Name
+			name.name = data.id
+			console.log(data.id)
 			note.value  = data.note
 			
 			// 设置角色和城市
@@ -102,9 +118,42 @@ var onloadUser = function() {
 	}
 }
 
+// 收集数据
+var collectData = function() {
+	  var data = {}
+	  data.username = document.querySelector('.username').value
+	  data.password = document.querySelector('.password').value
+	  data.employee = document.querySelector('.name').value
+	  data.urolename = document.querySelector('.role').value.split('&')[1]
+	  data.city = document.querySelector('.city').value
+	  data.note = document.querySelector('.note').value
+	  data.id = document.querySelector('.role').value.split('&')[0]
+	  data.uid = document.querySelector('.name').name
+	  return data
+}
 
+////发送 ajax
+//var sendAjax = function(method, url, datas) {
+// $.ajax({
+//   type: method,
+//   url: url,
+//   data: {data:JSON.stringify(datas)},
+//   success: function(data) {
+//     if(data === 'success') {
+//       document.querySelector('form').reset()
+//       alert('保存成功')
+//       window.location.href = '../user/ulist'
+//     } else {
+//     	alert('服务器出错!')
+//     }
+//   },
+//   error: function(){
+//       alert('服务器出错!!!')
+//   }
+// })
+//}
 
-// 保存数据方法
+//保存数据方法
 var saveAjax = function(method, url, datas){
 	$.ajax({
 		type : method,
@@ -115,36 +164,25 @@ var saveAjax = function(method, url, datas){
 			alert('修改成功')
 			localStorage.editorUserName = null
 			window.location.href = '../user/ulist'
+		},
+		error: function() {
+			alert('服务器错误')
 		}
 	})
 }
-// 收集数据
-var collectData = function() {
-	  var data = {}
-	  data.username = document.querySelector('.username').value
-	  data.password = document.querySelector('.password').value
-	  data.employee = document.querySelector('.name').value
-	  data.role = document.querySelector('.role').value
-	  data.city = document.querySelector('.city').value
-	  data.note = document.querySelector('.note').value
-	  return data
-}
 
-// 保存
+// 修改保存事件及发送数据
 var saveData = function() {
 	var envs = document.querySelector('#save')
 	envs.addEventListener('click', function() {
 		var method = 'POST'
 		var url = '/slloan/user/modifyuser'
 		var data = collectData()
-		data.id = localStorage.editorUserName
-		if(data.id) {
-			saveAjax(method, url, data)	
-		}
+		saveAjax(method, url, data)	
 	})
 }
 
-// 取消 
+// 取消回到列表
 var cancelData = function() {
 	var envs = document.querySelector('#cancel')
 	envs.addEventListener('click', function() {
@@ -153,29 +191,6 @@ var cancelData = function() {
 	})
 }
 
-
-var log = console.log.bind(console)
-
-//发送 ajax
-var sendAjax = function(method, url, datas) {
- $.ajax({
-   type: method,
-   url: url,
-   data: {data:JSON.stringify(datas)},
-   success: function(data) {
-     if(data === 'success') {
-       document.querySelector('form').reset()
-       alert('保存成功')
-       window.location.href = '../user/ulist'
-     } else {
-     	alert('服务器出错!')
-     }
-   },
-   error: function(){
-       alert('服务器出错!!!')
-   }
- })
-}
 
 //城市加入
 var obtainCityAjax = function(method, url, datas) {
@@ -205,37 +220,44 @@ var obtainCityAjax = function(method, url, datas) {
  })
 }
 
-
-
-//获取分配角色
-var obtainRole = function(element) {
-//log('获取角色')
-var evs = document.querySelector(element)
-var method = 'GET'
-var url = '/slloan/role/initrole'
-var datas = {}
-datas.parentid = localStorage.roleUseID
-datas.username = localStorage.purusername
-obtainRoleAjax(method, url, datas, null)
+//根据用户显示城市方法
+var cityRoleAjax = function(method, url, datas) {
+    $.ajax({
+      type: method,
+      url: url,
+      data: {data:JSON.stringify(datas)},
+      success: function(data) {
+        var envs = e('.city')
+        log('join city---')
+          envs.innerHTML = ''
+          var options = document.createElement('option')
+          options.value = data.belongs_City
+          options.innerText = data.belongs_City
+          envs.appendChild(options)        
+        renderForm()
+      },
+      error: function(){
+          alert('服务器错误')
+      }
+    })
 }
 
 
+//根据角色确定城市
+var linkRoleCity = function() {
+	var form = layui.form;
+	form.on('select(role)', function(data) {
+		var datas = {
+			id : data.value.split('&')[0],
+		}
+		console.log(data)
+		var method = 'GET'
+		var url = '/slloan/role/initcity'
+		cityRoleAjax(method, url, datas)
+	});
+}
 
-////根据角色确定城市
-//var linkRoleCity = function() {
-//var form = layui.form;
-//form.on('select(role)', function(data){
-//var datas = {
-// id: data.value.split('&')[0],
-//}
-//var method = 'GET'
-//var url = '/slloan/role/initcity'
-//obtainCityAjax(method, url, datas)
-//});
-//}
-
-
-
+linkRoleCity()
 
 //获取城市
 var obtainCtiy = function(element) {
@@ -253,7 +275,7 @@ var _main = function() {
 	onloadUser()          // 默认加载用户数据
 	saveData()			  // 保存修改数据
 	cancelData()		  // 取消按钮
-	//linkRoleCity()		  // 获取角色城市
+//	linkRoleCity()		  // 获取角色城市
 }
 
 _main()

@@ -108,7 +108,7 @@ public class PersonalProfileController {
 		String postal_address=obj.getString("communication"); // 通讯地址
 		String state=obj.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
-		String ctime=DateUtils.getInDateTime((new Date()));//日期
+		String ctime=DateUtils.getInDateTime(new Date());
 		String username = obj.getString("username"); //用户名
 		 String parentnodeId = obj.getString("parentnodeId"); //用户名id
 		 String city = obj.getString("city"); //城市
@@ -170,8 +170,7 @@ public class PersonalProfileController {
 		    		PersonalProfile p =personalproFileService.getSelectById(param);
 		    		int pid = p.getId();
 		    		String submit = String.valueOf(pid);
-		    		String spare1 = "";
-		    		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,spare1,createDate,username,parentnodeId,city,rolename);
+		    		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,submit,stateid,createDate,username,parentnodeId,city,rolename,null);
 		    		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
 		    		if (pe == true) {
 		    			logger.info("数据插入成功!");
@@ -270,9 +269,11 @@ public class PersonalProfileController {
 		String family_number=json.getString("supportPeople"); // 供养人数
 		String expenses=json.getString("expenses");// 月支出
 		String postal_address=json.getString("communication"); // 通讯地址
-		String state=json.getString("state"); // 状态;//
+		String state = String.valueOf(id);
+		int stateid = Integer.parseInt(state);
+//		String state= strid; // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
-		String ctime=DateUtils.getInDateTime((new Date()));//日期
+		String ctime=DateUtils.getInDateTime(new Date());
 
 		Double Revenue_previous_year = 0.0;
 		if (lastyearIncome.length() > 0) {
@@ -306,12 +307,31 @@ public class PersonalProfileController {
 				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
 				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
 				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime, null, null);
-		boolean isResult = personalprofileservice.perupdate(jointss);
-		if (isResult == true) {
-			return new Json(true, "success", isResult);
-		} else {
-			return new Json(false, "fail", isResult);
+		PersonalProfile person = personalprofileservice.SelectById(stateid);
+		if(person !=null){
+			boolean isResult = personalprofileservice.perupdate(jointss);
+			if (isResult == true) {
+				return new Json(true, "success", isResult);
+			} else {
+				return new Json(false, "fail", isResult);
+			}
+		}else{
+			PersonalProfile person2 = new PersonalProfile(product_Number, name, phoneticize, id_type, Other_identity_types,
+    				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+    				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+    				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+    				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+    				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+    				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime,"","","","","");
+			boolean pe = personalprofileservice.save(person2);
+    			if(pe ==true){
+    				return new Json(true, "success", pe);
+    			} else {
+    				return new Json(false, "fail", pe);
+    			}
+    		
 		}
+		
 	}
 	
 	
@@ -383,7 +403,7 @@ public class PersonalProfileController {
 		String postal_address=json.getString("communication"); // 通讯地址
 		String state=json.getString("state"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
-		String ctime=DateUtils.getInDateTime((new Date()));//日期
+		String ctime=DateUtils.getInDateTime(new Date()); // 日期
 		
 //		String datatime = DateUtils.getToDateTime((new Date()));
 //		String appnumber = applicationnumber+seqid;

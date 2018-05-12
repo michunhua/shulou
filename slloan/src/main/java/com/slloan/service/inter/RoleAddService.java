@@ -80,9 +80,11 @@ public interface RoleAddService extends BaseDao<AddRole>{
      */
     public AddRole selectroleRoleName(Map<Object,Object>map);
     
-  public List<AddRole> getselectByid(String parentid);
+  public List<AddRole> getselectByid(String parentid,String city,String city2);
   
   public AddRole getselectByid2(String parentid);
 //  public AddRole selectrolecity(String)
+  
+  public boolean updateRoleCity (String rolename,String belongs_city,int id);
 	
 }

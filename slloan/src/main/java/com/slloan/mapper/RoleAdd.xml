@@ -12,10 +12,24 @@
 		<result column="configuration" property="configuration"/>
 		<result column="updatedate" property="updatedate"/>
 		<result column="parentid" property="parentid"/>
+<!-- 		<association property="userid"  -->
+<!-- 			javaType="com.slloan.entity.UserLogin"> -->
+<!-- 			<id column="id" property="id" jdbcType="INTEGER" /> -->
+<!-- 			<result column="username" property="userName" jdbcType="VARCHAR" /> -->
+<!-- 		<result column="password" property="passWord" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="employeeis_name" property="employeeis_Name" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="distribution_role" property="distribution_Role" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="belongs_city" property="belongs_City" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="note" property="note" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="r_id" property="r_id" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="create_date" property="create_Date" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="updatedate" property="updateDate" jdbcType="VARCHAR"/> -->
+<!-- 		<result column="spare" property="spare" jdbcType="VARCHAR"/> -->
+<!-- 		</association> -->
 	</resultMap>
 	<!-- 城市经理查 -->
 	<select id="getRolePage" resultType="Map" resultMap="roleaadddao">
-		select DISTINCT a.parentid,a.rolename,a.createdate,a.id from add_role a , user_login b where 
+		select DISTINCT a.id,a.parentid,a.rolename,a.createdate,a.id from add_role a , user_login b where 
 		a.parentid = b.r_id and b.r_id=#{parentid} and b.username= #{username} ORDER BY a.id desc
 			<if test="page!=null and limit!=null">
 				limit #{page},#{limit} 
@@ -34,6 +48,9 @@
 	<!-- 查询用户总记录数 -->
 	<select id="getRoleCount"  resultType="Integer">
      	 SELECT COUNT(*) FROM add_role 
+     </select>
+     <select id="getRoleCountCityManager"  resultType="Integer">
+     	 SELECT COUNT(*) FROM add_role  where parentid=#{parentid}
      </select>
 	
 	<select id="selectRoleId" parameterType="java.lang.String" resultType="com.slloan.entity.AddRole">
@@ -119,11 +136,15 @@
 	 
 	 <select id="getselectByid"  parameterType="String" resultType="com.slloan.entity.AddRole">
 	 	select DISTINCT a.id,a.rolename,a.belongs_city from add_role a , user_login b 
-	 	where a.id = b.r_id and b.r_id=#{parentid} ORDER BY a.id desc
+	 	where  b.r_id=#{0}  and  a.belongs_city=#{1} and b.belongs_city=#{2}  ORDER BY a.id desc
 	 </select>
 	 
 	 <select id="getselectByid2"  parameterType="String" resultType="com.slloan.entity.AddRole">
 	 	select a.rolename,a.belongs_city from add_role a , user_login b 
 	 	where a.id = b.r_id and b.r_id=#{parentid} ORDER BY a.id desc
 	 </select>
+	 
+	  <update id="updateRoleCity"  parameterType="Map">
+	 	update add_role set rolename =#{rolename},belongs_city=#{city} where id=#{id}
+	 </update>
 </mapper>

@@ -60,4 +60,6 @@ public interface CircuLationRecordSubmitService {
 	CircuLationRecord findById(int id);
 	
 	List<CircuLationRecord> findById2(CircuLationRecord param); 
+	
+	public boolean updateDateState(String id);//挂起
 }

@@ -28,7 +28,7 @@ public interface PersonalProfileService {
 			
 		 	public Page<PersonalProfile> getPersonalProfilePage(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
-		 	int getPersonalProfileCount();
+		 	int getPersonalProfileCount(String username,String rolename,String city,String parentnodeId);
 		 	
 		 	
 		 	/**
@@ -50,12 +50,13 @@ public interface PersonalProfileService {
 		     * @param map
 		     * @return
 		     */
-		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage,String username,String role,String city,String parentnodeId);
+		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,String parentnodeId , int intid);
+		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,String parentnodeId);
 		 		/**
 			     * 初审用户记录总数
 			     * @return
 			     */
-		 	int getFirsttrialPageCount();
+		 	int getFirsttrialPageCount(String username,String rolename,String city,String parentnodeId);
 		 	
 			/**
 		     *终审分页操作，调用分页方法
@@ -67,7 +68,7 @@ public interface PersonalProfileService {
 			     * 终审用户记录总数
 			     * @return
 			     */
-		 	int getFinalreviewPageCount();
+		 	int getFinalreviewPageCount(String username,String rolename,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 财务列表
@@ -79,7 +80,7 @@ public interface PersonalProfileService {
 		 	 * 财务状态统计
 		 	 * @return
 		 	 */
-		 	int getFinancePageCount();
+		 	int getFinancePageCount(String username,String rolename,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 结算列表
@@ -91,7 +92,7 @@ public interface PersonalProfileService {
 		 	 * 结算状态统计
 		 	 * @return
 		 	 */
-		 	int getjsloanPageCount();
+		 	int getjsloanPageCount(String username,String rolename,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 转账列表
@@ -103,7 +104,7 @@ public interface PersonalProfileService {
 		 	 * 转账状态统计
 		 	 * @return
 		 	 */
-		 	int getTransferloanPageCount();
+		 	int getTransferloanPageCount(String username,String rolename,String city,String parentnodeId);
 		 	
 
 		 	/**
@@ -116,7 +117,7 @@ public interface PersonalProfileService {
 		 	 * 贷款信息统计
 		 	 * @return
 		 	 */
-		 	int getLoanInformationCount();
+		 	int getLoanInformationCount(String username,String rolename,String city,String parentnodeId);
 
 			/**
 		 	 * 回款列表
@@ -128,7 +129,7 @@ public interface PersonalProfileService {
 		 	 * 回款统计
 		 	 * @return
 		 	 */
-		 	int getReturnMoneyCount();
+		 	int getReturnMoneyCount(String username,String rolename,String city,String parentnodeId);
 
 			/**
 		 	 * 取证列表
@@ -140,7 +141,7 @@ public interface PersonalProfileService {
 		 	 * 取证统计
 		 	 * @return
 		 	 */
-		 	int getObtainEvidenceCount();
+		 	int getObtainEvidenceCount(String username,String rolename,String city,String parentnodeId);
 
 			/**
 		 	 * 解压列表
@@ -152,7 +153,7 @@ public interface PersonalProfileService {
 		 	 * 解压统计
 		 	 * @return
 		 	 */
-		 	int getDecompressionCount();
+		 	int getDecompressionCount(String username,String rolename,String city,String parentnodeId);
 	
 			/**
 		 	 * 进压列表
@@ -161,14 +162,16 @@ public interface PersonalProfileService {
 		 	public Page<PersonalProfile> getLoanPressure(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
-		 	 * 进压统计
+		 	 * 进押统计
 		 	 * @return
 		 	 */
-		 	int getLoanPressureCount();
+		 	int getLoanPressureCount(String username,String rolename,String city,String parentnodeId);
 
 //			int getPersonalProfilePage();
 		 	
 		 	public PersonalProfile getSelectById(PersonalProfile param);
 		 	
-			
+		 	public Page<PersonalProfile> checkHangData(String state,String username,String role,String city,String parentnodeId,int id,int currentPage);
+		 	int checkHangDataCount(String state);
+		 	
 }

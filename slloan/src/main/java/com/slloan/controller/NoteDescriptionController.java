@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.slloan.entity.CircuLationRecord;
+import com.slloan.entity.Contacts;
 import com.slloan.entity.NoteDescription;
 import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.circulation;
@@ -47,7 +48,6 @@ public class NoteDescriptionController {
 	@Autowired
 	private	PersonalProfileService personalproFileService;
 
-	
 	@ResponseBody
 	@RequestMapping("/notedescription")
 	public Json save(HttpServletRequest req) {
@@ -56,15 +56,15 @@ public class NoteDescriptionController {
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 		String note_Description1 = obj.getString("note");
 
-		String state = obj.getString("state");
+		String state = obj.getString("temporaryId");
 		String ctime =  DateUtils.getInDateTime((new Date()));//日期
 		String username = obj.getString("username");
 		String parentnodeId = obj.getString("parentnodeId");
 		String city = obj.getString("city");
 		String rolename = obj.getString("rolename");
-		String submit = obj.getString("temporaryId");
+//		String submit = obj.getString("temporaryId");
 		int stateid =0;
-		NoteDescription note = new NoteDescription(note_Description1, state,ctime, username, parentnodeId, city, rolename,submit);
+		NoteDescription note = new NoteDescription(note_Description1, state,ctime, username, parentnodeId, city, rolename);
 		boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
 
 		if (notes == true) {
@@ -77,7 +77,46 @@ public class NoteDescriptionController {
 		
 		//
 	}
+	
 
+
+	
+	
+//	/**
+//	 * 贷款创建备注提交到贷款初审
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/notedescription", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	public String loannotesSubmitss(HttpServletRequest req) {
+//		String data = req.getParameter("data");
+//		JSONObject obj = new JSONObject().fromObject(data);
+//		String note_Description1 = obj.getString("note");
+//		String note_Description2 = obj.getString("note");
+//		String note_Description3 = obj.getString("note");
+//		String state = obj.getString("state");
+//		String ctime = obj.getString("ctime");
+//		String username = obj.getString("username");
+//		String parentnodeId = obj.getString("parentnodeId");
+//		String city = obj.getString("city");
+//		String rolename = obj.getString("rolename");
+//		String fallbackname = obj.getString("note");
+////		String username = obj.getString("username");
+////		String rolename =obj.getString("rolename");
+////		String city =obj.getString("city");
+////		 String parentnodeId = obj.getString("parentnodeId");
+//		int stateid =0;
+//		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+//		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename);
+//		boolean isResultInsert = recordSubmitService.fallbackinserts(circuLationRecord);
+//		if (isResultInsert == true) {
+//			System.out.println("插入流程表成功"); 
+//		} else {
+//			System.out.println("失败");
+//		}
+// 
+//		return "loan/loanCreateTable";// 提交到贷款初审
+//	}
 
 	/***
 	 * 根据ID查所有联系人信息
@@ -98,18 +137,18 @@ public class NoteDescriptionController {
 		
 		NoteDescription contactcd = notedesc.findById(id);
 
-		if (contactcd != null ||contactcd == null) {
+		if (contactcd != null) {
 			return new Json(true, "success", contactcd);
 		} else
 			return new Json(false, "fail", contactcd);
 	}
 
 	/**
-	 * 备注创建保存
+	 * 修改用户保存
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/updatenote", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "/updatenote",method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Json updateUser(HttpServletRequest req) {
 
@@ -122,11 +161,11 @@ public class NoteDescriptionController {
 		String note_Description2 =json.getString("recordFirst");
 		String note_Description3 =json.getString("recorFinal");
 		String note_Description4 =json.getString("recorfore");
-		String state = json.getString("state");
+		String state = json.getString("id");
+		int stateid = Integer.parseInt(state);
+//		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
-
-state,ctime);
+		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
 		boolean isResult = notedesc.update(contact);
 		if (isResult == true) {
 			System.out.println("插入流程表成功"); 
@@ -139,12 +178,41 @@ state,ctime);
 //			return JSON.toJSONString(isResult);
 //		} else
 //			return JSON.toJSONString("fail");
+		
+		
+//		
+//			NoteDescription contact= new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+//			NoteDescription con = notedesc.findById(stateid);
+//		
+//			if(con !=null){
+//				boolean isResult =notedesc.update(con);
+//				if(isResult == true){
+//					return new Json(true,"success",isResult,"");//JSON.toJSONString(isResult);
+//				}else{
+//					return new Json(true,"success",isResult,"");
+//				}
+//			}else{
+//				NoteDescription note = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+//				boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
+//
+//				if (notes == true) {
+//					logger.info("数据插入成功!");
+//					return new Json(true, "success", notes);
+//				} else {
+//					logger.info("数据插入失败!");
+//					return new Json(false, "fail", notes);
+//				}
+//			}
+//		
+//		
+		
 	}
 	
 	
+
 	
 	/**
-	 * 备注初审用户保存
+	 * 初审用户修改
 	 * 
 	 * @return
 	 */
@@ -161,27 +229,25 @@ state,ctime);
 		String note_Description2 =json.getString("recordFirst");
 		String note_Description3 =json.getString("recorFinal");
 		String note_Description4 =json.getString("recorfore");
-		String state = json.getString("state");
+		String state = json.getString("id");
+		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
 
-state,ctime);
-		boolean isResult = notedesc.updatetwo(contact);
-		if (isResult == true) {
-			System.out.println("插入流程表成功"); 
-			return new Json(true,"success",isResult,"");
-		} else {
-			System.out.println("失败");
-			return new Json(false,"fail",isResult,"");
+		NoteDescription contact= new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+//		NoteDescription con = notedesc.findById(stateid);
+//		boolean isResult = notedesc.update(contact);
+	    boolean isResult =notedesc.updatetwo(contact);
+			if(isResult == true){
+				return new Json(true,"success",isResult,"");
+			
+			}else{
+				return new Json(false,"fail",isResult,"");//JSON.toJSONString(isResult);
 		}
-//		if (isResult == true) {
-//			return JSON.toJSONString(isResult);
-//		} else
-//			return JSON.toJSONString("fail");
+	
 	}
 	
 	/**
-	 * 备注终审用户保存
+	 * 终审用户修改
 	 * 
 	 * @return
 	 */
@@ -198,28 +264,26 @@ state,ctime);
 		String note_Description2 =json.getString("recordFirst");
 		String note_Description3 =json.getString("recorFinal");
 		String note_Description4 =json.getString("recorfore");
-		String state = json.getString("state");
+		String state = json.getString("id");
+		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
 
-state,ctime);
-		boolean isResult = notedesc.updatethere(contact);
-		if (isResult == true) {
-			System.out.println("插入流程表成功"); 
-			return new Json(true,"success",isResult,"");
-		} else {
-			System.out.println("失败");
-			return new Json(false,"fail",isResult,"");
+		NoteDescription contact= new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+//		NoteDescription con = notedesc.findById(stateid);
+	
+
+			boolean isResult =notedesc.updatethere(contact);
+			if(isResult == true){
+				return new Json(true,"success",isResult,"");
+			
+			}else{
+				return new Json(false,"fail",isResult,"");//JSON.toJSONString(isResult);
 		}
-//		if (isResult == true) {
-//			return JSON.toJSONString(isResult);
-//		} else
-//			return JSON.toJSONString("fail");
+	
 	}
 	
-	
 	/**
-	 * 初审用户保存
+	 * 财务用户修改
 	 * 
 	 * @return
 	 */
@@ -236,28 +300,24 @@ state,ctime);
 		String note_Description2 =json.getString("recordFirst");
 		String note_Description3 =json.getString("recorFinal");
 		String note_Description4 =json.getString("recorfore");
-		String state = json.getString("state");
+		String state = json.getString("id");
+		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
-		NoteDescription contact = new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, 
 
-state,ctime);
-		boolean isResult = notedesc.updatefore(contact);
-		if (isResult == true) {
-			System.out.println("插入流程表成功"); 
+		NoteDescription contact= new NoteDescription(id, note_Description1,note_Description2,note_Description3,note_Description4, state,ctime);
+//		NoteDescription con = notedesc.findById(stateid);
+		boolean isResult =notedesc.updatefore(contact);
+		if(isResult != true){
 			return new Json(true,"success",isResult,"");
-		} else {
-			System.out.println("失败");
-			return new Json(false,"fail",isResult,"");
-		}
-//		if (isResult == true) {
-//			return JSON.toJSONString(isResult);
-//		} else
-//			return JSON.toJSONString("fail");
+		
+		}else{
+			return new Json(false,"fail",isResult,"");//JSON.toJSONString(isResult);
+	}
 	}
 	
 	/**
 	 * 按揭员保存
-	 * 保存
+	 * 保存s
 	 * @return
 	 */
 	@RequestMapping(value = "/notedescription", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -288,7 +348,7 @@ state,ctime);
 
 	
 	/**
-	 * 贷款初审保存
+	 * 终审初审修改
 	 * 保存
 	 * 
 	 * @return
@@ -350,7 +410,8 @@ state,ctime);
  
 //		return "loan/loanCreateTable";// 提交到贷款初审
 	}
-
+	
+	
 	/**
 	 * 贷款创建备注提交到贷款初审
 	 * 
@@ -387,6 +448,115 @@ state,ctime);
 //		return "redirect:/loan/loancrea";// 提交到贷款初审
 	}
 
+	
+	
+
+//	/**
+//	 * 贷款创建备注提交到贷款初审
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannotfirsts", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Json loannotesSubmit(HttpServletRequest req) {
+//		String data = req.getParameter("data");
+//		JSONObject obj = new JSONObject().fromObject(data);
+//		String sid = obj.getString("id");
+//		int id = Integer.parseInt(sid);
+//		String fallbackname = "待初审审批中";
+//		String spare1 = obj.getString("note");//备注
+//		String username = obj.getString("username");
+//		String rolename =obj.getString("rolename");
+//		String city =obj.getString("city");
+//		 String parentnodeId = obj.getString("parentnodeId");
+//		int stateid =1;
+//		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+//		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
+//		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
+//		circulation record = new  circulation("1",fallbackname,createDate,username,parentnodeId,city,rolename);
+//		boolean coan = circulationservice.save(record);
+//		if (isResultInsert == true && coan == true) {
+//			System.out.println("插入流程表成功"); 
+//			return new Json(true,"success",isResultInsert,"");
+//		} else {
+//			System.out.println("失败");
+//			return new Json(false,"fail",isResultInsert,"");
+//		}
+// 
+////		return "redirect:/loan/loancrea";// 提交到贷款初审
+//	}
+
+//	/**
+//	 * 贷款初审备注提交到贷款终审
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	@ResponseBody
+//	public Json loannotesSubmits(HttpServletRequest req) {
+//		String data = req.getParameter("data");
+//		JSONObject obj = new JSONObject().fromObject(data);
+//		String sid = obj.getString("id");
+//		int id = Integer.parseInt(sid);
+//		String fallbackname = "待终审审批中";
+//		String spare1 = obj.getString("note");
+//		String username = obj.getString("username");
+//		String rolename =obj.getString("rolename");
+//		String city =obj.getString("city");
+//		 String parentnodeId = obj.getString("parentnodeId");
+//		int stateid =2;
+//		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+//		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
+//		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
+//		circulation record = new  circulation("2",fallbackname,createDate,username,parentnodeId,city,rolename);
+//		boolean coan = circulationservice.save(record);
+//		
+//		if (isResultInsert == true && coan == true) {
+//			System.out.println("插入流程表成功"); 
+//			return new Json(true,"success",isResultInsert,"");
+//		} else {
+//			System.out.println("失败");
+//			return new Json(false,"fail",isResultInsert,"");
+//		}
+// 
+////		return "loan/loanCreateTable";// 提交到贷款初审
+//	}
+//
+//	/**
+//	 * 贷款终审备注提交到财务审批
+//	 * 
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/loanfinance", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+//	@ResponseBody
+//	public Json loanfinance(HttpServletRequest req) {
+//		String data = req.getParameter("data");
+//		JSONObject obj = new JSONObject().fromObject(data);
+//		String sid = obj.getString("id");
+//		int id = Integer.parseInt(sid);
+//		String fallbackname = "待出账确认";
+//		String spare1 = obj.getString("note");
+//		String username = obj.getString("username");
+//		String rolename =obj.getString("rolename");
+//		String city =obj.getString("city");
+//		 String parentnodeId = obj.getString("parentnodeId");
+//		int stateid =3;
+//		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+//		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
+//		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
+//		circulation record = new  circulation("3",fallbackname,createDate,username,parentnodeId,city,rolename);
+//		boolean coan = circulationservice.save(record);
+//		if (isResultInsert == true && coan == true) {
+//			System.out.println("插入流程表成功"); 
+//			return new Json(true,"success",isResultInsert,"");
+//		} else {
+//			System.out.println("失败");
+//			return new Json(false,"fail",isResultInsert,"");
+//		}
+// 
+////		return "loan/loanCreateTable";// 提交到贷款初审
+//	}
+	
 	/**
 	 * 贷款初审备注提交到贷款终审
 	 * 
@@ -407,9 +577,11 @@ state,ctime);
 		 String parentnodeId = obj.getString("parentnodeId");
 		int stateid =2;
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
-		circulation record = new  circulation("2",fallbackname,createDate,username,parentnodeId,city,rolename);
+//		circulation record = new  circulation("1",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
+		circulation record = new  circulation("2",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
 		boolean coan = circulationservice.save(record);
 		
 		if (isResultInsert == true && coan == true) {
@@ -443,9 +615,10 @@ state,ctime);
 		 String parentnodeId = obj.getString("parentnodeId");
 		int stateid =3;
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
-		circulation record = new  circulation("3",fallbackname,createDate,username,parentnodeId,city,rolename);
+		circulation record = new  circulation("3",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
 		boolean coan = circulationservice.save(record);
 		if (isResultInsert == true && coan == true) {
 			System.out.println("插入流程表成功"); 
@@ -457,6 +630,7 @@ state,ctime);
  
 //		return "loan/loanCreateTable";// 提交到贷款初审
 	}
+
 	
 	/**
 	 * 财务审批提交到转账凭证
@@ -478,9 +652,10 @@ state,ctime);
 		 String parentnodeId = obj.getString("parentnodeId");
 		int stateid =4;
 		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
-		circulation record = new  circulation("4",fallbackname,createDate,username,parentnodeId,city,rolename);
+		circulation record = new  circulation("4",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
 		boolean coan = circulationservice.save(record);
 		if (isResultInsert == true && coan == true) {
 			System.out.println("插入流程表成功"); 
@@ -707,6 +882,7 @@ state,ctime);
 		circuLationRecord.setState(0);// 退回后状态改为1
 		circuLationRecord.setId(id);
 		String updatedate = DateUtils.getInDateTime2((new Date()));
+		String spare = String.valueOf(id);
 		circuLationRecord.setUpdatedate(updatedate);
 		
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
@@ -718,6 +894,7 @@ state,ctime);
 			record.setCity(city);
 			record.setRolename(rolename);
 			record.setUpdatedata(updatedate);
+			record.setSpare(spare);
 		boolean coan = circulationservice.save2(record);
 		if (isResultInsert == true && coan == true) {
 			return new Json(true,"success",isResultInsert,"");//System.out.println("插入流程表成功");
@@ -747,10 +924,12 @@ state,ctime);
 		circuLationRecord.setFallbackname("初审审批回退");
 		circuLationRecord.setState(1);// 退回后状态改为1
 		circuLationRecord.setId(id);
+		
 		String updatedate = DateUtils.getInDateTime2((new Date()));
 		circuLationRecord.setUpdatedate(updatedate);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 		circulation record = new  circulation();
+		String spare = String.valueOf(id);
 		record.setState("1");
 		record.setCirculation("初审审批回退");
 		record.setUsername(username);
@@ -758,6 +937,7 @@ state,ctime);
 		record.setCity(city);
 		record.setRolename(rolename);
 		record.setUpdatedata(updatedate);
+		record.setSpare(spare);
 	boolean coan = circulationservice.save2(record);
 		if (isResultInsert == true && coan == true) {
 			return new Json(true,"success",isResultInsert,""); //System.out.println("插入流程表成功");

@@ -24,5 +24,5 @@ public interface coborrowerSpouseDao {
 	//查询ID
 	
 
-	CoborrowerSpouse SelectById(int id);
+	CoborrowerSpouse SelectById(int state);
 }

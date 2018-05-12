@@ -12,6 +12,7 @@ public class circulation {
 	private String rolename;//角色名
 	private String updatedata;
 	private String spare;
+	private String marked;
 	public  circulation (){
 		
 	}
@@ -55,6 +56,14 @@ public class circulation {
 		this.rolename = rolename;
 		this.updatedata = updatedata;
 		this.spare = spare;
+	}
+
+	public String getMarked() {
+		return marked;
+	}
+
+	public void setMarked(String marked) {
+		this.marked = marked;
 	}
 
 	public String getSpare() {

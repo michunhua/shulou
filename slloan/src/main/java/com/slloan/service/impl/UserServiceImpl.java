@@ -45,7 +45,8 @@ public class UserServiceImpl implements UserService{
 		String createDate = t.getCreate_Date();
 		Integer r_id = t.getR_id();
 		String distribution_Role = t.getDistribution_Role();//分配角色
-		UserLogin user = new UserLogin(id,userName,password,employeeis_Name,distribution_Role,belongs_City,note,r_id,createDate);
+		String spare = t.getSpare();
+		UserLogin user = new UserLogin(id,userName,password,employeeis_Name,distribution_Role,belongs_City,note,r_id,createDate,spare);
 		boolean isResult= userdao.addUser(user);
 			if(isResult == true){
 				return isResult;
@@ -73,7 +74,8 @@ public class UserServiceImpl implements UserService{
 		 String belongs_City =user.getBelongs_City();//所属城市
 		 String note = user.getNote();//备注
 		String updateDate = DateUtils.getInDateTime((new Date()));//日期
-		 UserLogin u = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,updateDate,id);
+		int r_id = user.getR_id();
+		 UserLogin u = new UserLogin(userName,passWord,employeeis_Name,distribution_Role,belongs_City,note,updateDate,r_id,id);
 
 		boolean isResult = userdao.updateUser(u);
 		if(isResult == true){
@@ -132,7 +134,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Page<UserLogin> getUserByPage(int currentPage,String parentid) {
+	public Page<UserLogin> getUserByPage(int currentPage,String spare) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<UserLogin> pageBean = new Page<UserLogin>();
 		//封装当前页数
@@ -141,13 +143,14 @@ public class UserServiceImpl implements UserService{
 		int pageSize = 10;
 		pageBean.setPageSize(pageSize);
 		//封装总记录数
-		int totalCount = userdao.getCount();
+		int  id = Integer.parseInt(spare); 
+		int totalCount = userdao.getCount2(id);
 		pageBean.setTotalCount(totalCount);
 		//封装总页数
 		double tc = totalCount;
 		Double num = Math.ceil(tc/pageSize);
 		pageBean.setTotalPage(num.intValue());
-		map.put("parentid",parentid);
+		map.put("spare",spare);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
@@ -158,6 +161,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public Page<UserLogin> getUserByPage(int currentPage) {
+		
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<UserLogin> pageBean = new Page<UserLogin>();
 		//封装当前页数
@@ -222,5 +226,25 @@ public class UserServiceImpl implements UserService{
 			param.put(key, value);
 		}
 		return userdao.selectroleUserName(param);
+	}
+
+	@Override
+	public boolean updateUserCity(String rolename, String belongs_city,int rid, int id) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("rolename", rolename);
+		param.put("city", belongs_city);
+		param.put("rid", rid);
+		param.put("id", id);
+		return userdao.updateUserCity(param);
+	}
+
+	@Override
+	public List<UserLogin> selectUserById2(int id) {
+		return userdao.selectUserById2(id);
+	}
+
+	@Override
+	public int getCount2(Integer spare) {
+		return userdao.getCount2(spare);
 	}
 }

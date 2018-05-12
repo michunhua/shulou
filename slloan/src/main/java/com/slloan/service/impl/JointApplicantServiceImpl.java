@@ -123,7 +123,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 		String family_number = jointApplicant.getFamily_number();// 供养人数
 		double monthly_expenditure = jointApplicant.getMonthly_expenditure();// 月支出
 		String postal_address = jointApplicant.getPostal_address();// 通讯地址
-		String state = jointApplicant.getState();// 状态 //
+		String state = String.valueOf(jointApplicant.getId());// 状态 //
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = jointApplicant.getCtime();// 日期
 

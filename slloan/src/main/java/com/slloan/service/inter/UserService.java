@@ -70,6 +70,7 @@ public interface UserService {
   	 
  	 
  	 public int getCount();//统计
+ 	public int getCount2(Integer spare);//统计
  	 
  	/**
  	 * 根据角色名得到所属城市
@@ -80,7 +81,7 @@ public interface UserService {
      * @param map
      * @return
      */
- 	Page<UserLogin> getUserByPage(int currentPage,String parentid);
+ 	Page<UserLogin> getUserByPage(int currentPage,String id);
  	/**
      * 分页操作，调用getRolePage limit分页方法
      * @param map
@@ -115,12 +116,16 @@ public interface UserService {
      * @return
      */
     public UserLogin selectUserById(int id);
+    public List<UserLogin> selectUserById2(int id);
     
     /**
      * 查询角色名在不在
      * @param map
      * @return
      */
+    
     public UserLogin selectroleUserName(Map<Object,Object>map);
+    
+    public boolean updateUserCity (String rolename, String belongs_city,int rid, int id);
 	
 }

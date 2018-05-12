@@ -44,4 +44,5 @@ public interface CircuLationRecordSubmitDao {
 	
 	List<CircuLationRecord> findById2(Map<String,Object>param);
 	
+	public boolean updateDateState(String id);//挂起
 }

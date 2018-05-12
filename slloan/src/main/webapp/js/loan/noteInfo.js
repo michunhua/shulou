@@ -25,6 +25,10 @@ var collectData = function() {
   data.recorFinal = e('.esnote')
   data.recorfore = ''
   data.state = ''
+	  data.rolename = localStorage.purrole
+		data.username = localStorage.purusername
+		data.city = localStorage.purcity
+		data.parentnodeId = localStorage.purid
   return data
 }
 
@@ -42,7 +46,7 @@ var sendAjax = function(method, url, datas, callback) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
-  				window.location.href = "/slloan/loan/loancrea"
+//  				window.location.href = "/slloan/loan/loancrea"
   			});
     	} else {
     		alert('服务器错误')
@@ -76,7 +80,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('当前页面无数据,请添加')
 			}
 		},
 	    error: function(){
@@ -137,10 +141,10 @@ var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     var data = collectData()
-    data.rolename = localStorage.purrole
-    data.username = localStorage.purusername
-    data.city = localStorage.purcity
-    data.parentnodeId = localStorage.purid
+  data.rolename = localStorage.purrole
+	data.username = localStorage.purusername
+	data.city = localStorage.purcity
+	data.parentnodeId = localStorage.purid
     data.temporaryId = localStorage.createTemporaryId
     var method = 'POST'
     var url = '/slloan/loan/notedescription'

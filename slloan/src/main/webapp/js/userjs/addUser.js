@@ -1,5 +1,12 @@
 var log = console.log.bind(console)
 
+// 判别名字
+var judeName = function(data) {
+	var str = new RegExp("^[A-Za-z]+$")
+	return str.test(data)
+}
+
+
 // 发送 ajax
 var sendAjax = function(method, url, datas) {
     $.ajax({
@@ -98,6 +105,7 @@ var obtainRole = function(element) {
   var datas = {}
   datas.parentid = localStorage.roleUseID
   datas.username = localStorage.purusername
+  datas.city = localStorage.purcity
   obtainRoleAjax(method, url, datas, null)
 }
 
@@ -153,6 +161,7 @@ var obtainCtiy = function(element) {
   var datas = {}
   datas.parentid = localStorage.roleUseID
   datas.username = localStorage.purusername
+  datas.city = localStorage.purcity
   obtainCityAjax(method, url, datas)
 }
 
@@ -166,6 +175,7 @@ var colect = function() {
   data.city = e('.city').value
   data.note = e('.text-note').value
   data.parentid = localStorage.roleUseID
+  data.id = localStorage.purid
   return data
 }
 
@@ -175,13 +185,19 @@ var sendData = function() {
   var ev = document.querySelector('#save-data')
   ev.addEventListener('click', function() {
     var datas = colect()
-    if(datas.userName.length > 0 && datas.password.length) {
-    	console.log(datas)
-        var url = '/slloan/user/adduser'
-        var method = 'POST'
-        sendAjax(method, url, datas)
+    var flag = judeName(datas.userName)
+    console.log(datas)
+    if(flag) {
+        if(datas.userName.length > 2 && datas.password.length > 2) {
+        	console.log(datas)
+            var url = '/slloan/user/adduser'
+            var method = 'POST'
+            sendAjax(method, url, datas)
+        } else {
+        	alert('用户名和密码都需要2位以上。')
+        }
     } else {
-    	alert('请正确填写')
+    	alert('用户名必须为字母')
     }
   })
 }

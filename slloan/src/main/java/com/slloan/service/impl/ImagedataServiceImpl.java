@@ -107,7 +107,7 @@ public class ImagedataServiceImpl implements ImagedataService {
 		mapparam.put("sparetwo",param.getSparetwo());
 		mapparam.put("uploadtype",param.getUploadtype());
 		mapparam.put("createdata",param.getCreateData());
-//		mapparam.put("id",param.getId());
+		mapparam.put("uid",param.getId());
 		mapparam.put("filepath",param.getFilepath());
 		return imagedatadao.financevoucherSelectToupload2(mapparam);
 	}

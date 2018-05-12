@@ -34,51 +34,51 @@ public class circulationServiceImpl implements circulationService{
 		String updatedata = circul.getUpdatedata();
 		if(state.equals("1")){
 			System.out.println("贷款创建提交到贷款初审,");
-			circulation record = new circulation(state ,"------用户名:"+username.trim()+"------------>"+"贷款创建提交到贷款初审",ctime,username.trim(),parentnodeId,city.trim(),rolename.trim(),updatedata,spare);
+			circulation record = new circulation(state ,"贷款创建提交到贷款初审",ctime,username.trim(),parentnodeId,city.trim(),rolename.trim(),updatedata,spare);
 			return recordSubmitDao.save(record);
 		}if(state.equals("2")){
 			System.out.println("贷款初审提交到贷款终审,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"贷款初审提交到贷款终审",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"贷款初审提交到贷款终审",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("3")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"贷款终审提交到财务待出账确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"贷款终审提交到财务待出账确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("4")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"待出账确认通过待放款确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"待出账确认通过待放款确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("5")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"放款财务确认通过待取证确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"放款财务确认通过待取证确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("6")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"待取证确认通过待解押确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"待取证确认通过待解押确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("7")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"待解押确认通过待进押确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"待解押确认通过待进押确认",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("8")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"待进押确认通过待确认回款",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"待进押确认通过待确认回款",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("9")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"待确认回款确认通过待结算",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"待确认回款确认通过待结算",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		if(state.equals("10")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"待结算确认通过待贷款查看",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"结算已结清贷款信息贷款查看",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		return true;
@@ -111,18 +111,18 @@ public class circulationServiceImpl implements circulationService{
 		if(state.equals("0")){
 			System.out.println("贷款初审退回到贷款创建,");
 //			circulation record = new circulation(state ,circulation,createdata,updatedata,spare);
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"贷款初审退回到贷款创建",createdata,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"贷款初审退回到贷款创建",createdata,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save2(record);
 		}if(state.equals("1")){
 			System.out.println("贷款终审退回到贷款初审");
 //			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"贷款终审回退贷款初审",username,parentnodeId,city,rolename,updatedata);
 //			circulation record = new circulation(state ,"贷款终审提交到财务",createdata,updatedata,spare);
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"贷款终审回退贷款初审",createdata,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"贷款终审回退贷款初审",createdata,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save2(record);
 		}if(state.equals("2")){
 			System.out.println("审批财务回退到终审审批中");
 //			circulation record = new circulation(state ,"贷款终审提交到财务",createdata,updatedata,spare);
-			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"财务回退贷款终审",createdata,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"财务回退贷款终审",createdata,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 //			circulation record = new circulation(state ,"------用户名:"+username+"------------>"+"财务回退贷款终审",username,parentnodeId,city,rolename,updatedata);
 			return recordSubmitDao.save2(record);
 		}

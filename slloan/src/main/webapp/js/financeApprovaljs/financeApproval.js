@@ -121,7 +121,11 @@ var addTable = function(data) {
 		var state = datas.lists[i].state
 		var address = datas.lists[i].home_address_now
 		var time = datas.lists[i].ctime
-
+		
+		if(datas.lists[i].marked) {
+			tr.classList.add('marked')
+		}
+		
 		input.type = 'checkbox'
 		input.classList.add('indicate')
 		a.classList.add('mark')
@@ -341,7 +345,7 @@ var envs = function(element) {
 }
 
 
-//具体查询转至财务备注
+//具体查询详情页面
 var numberSearch = function(element) {
 	var envs = e(element)
 		envs.addEventListener('click', function(event) {
@@ -350,7 +354,7 @@ var numberSearch = function(element) {
 				console.log(event.target.parentNode.nextSibling.innerText, '就这个数据')
 				console.log(event.target.innerText, '好的')
 				localStorage.financialID = event.target.parentNode.nextSibling.innerText
-				window.location.href = '/slloan/financial/financenote'
+				window.location.href = '/slloan/loan/financialinfo'
 			}
 		})
 }
@@ -716,7 +720,7 @@ var Hang_cirulation = function(element) {
 		if(event.target.classList.contains("upload")) {   
 			console.log('挂起')
 			var method = "GET"
-		    var url = "/slloan/loan/checkHangdata"
+		    var url = "/slloan/loan/checkHangdata?page="+ init.pages + '&limit='+ init.limit
 			var datas = {}
 		    datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value
@@ -724,8 +728,6 @@ var Hang_cirulation = function(element) {
 			datas.username = localStorage.purusername
 			datas.city = localStorage.purcity
 			datas.parentnodeId = localStorage.purid
-			datas.page = init.pages
-			datas.limit = init.limit
 			HangAjax(method, url, datas)
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')

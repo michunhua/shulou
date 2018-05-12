@@ -34,7 +34,7 @@
 	<!-- 根据ID查记录 -->
 	<select id="SelectById" parameterType="int"
 		resultType="com.slloan.entity.SpousesOfBorrowers">
-		select * from borrower_spouse where id = #{id}
+		select * from borrower_spouse where state = #{id}
 	</select>
 
 

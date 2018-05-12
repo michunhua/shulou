@@ -60,8 +60,8 @@ public class PropertyInformationController {
 		String funds = obj.getString("funds"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = obj.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = obj.getString("newApproved"); // 备注
-		String state=obj.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		String state=obj.getString("temporaryId"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		String ctime=DateUtils.getInDateTime(new Date());
 		Double original_Loan_Amount = 0.0;
 		if (originalBank.length() > 0) {
 			original_Loan_Amount = Double.parseDouble(originalBank);
@@ -139,81 +139,13 @@ public class PropertyInformationController {
 			return new Json(false,"fail",isResult); 
 	}
 //	
-	
-	
-	/**
-	 * 创建修改
-	 * @param request
-	 * @param contactsparam
-	 * @return
-	 */
-		@RequestMapping(value= "/proupdatee",method=RequestMethod.POST,produces="application/json;charset=utf-8")
-		@ResponseBody
-		public Json proupdatee(HttpServletRequest request,Contacts contactsparam){
-			String dataid = request.getParameter("data");
-			JSONObject req = new JSONObject().fromObject(dataid);
-			Integer id = req.getInt("id");
-			String name = req.getString("owner");
-			String ownership_And_percentage = req.getString("owner"); // 权属人及占比
-			String property_Address = req.getString("accounting"); // 房产地址
-			String conStruction_Area = req.getString("propertyAddress"); // 建筑面积
-			String inner_Area = req.getString("building"); // 套内面积
-			String sales_Contract_Number = req.getString("innerArea"); // 买卖合同编号
-			String certificate_of_Title = req.getString("contract"); // 产权证号
-			String proPerty_for = req.getString("certificate"); // 房产用于
-			String the_Assessed_Value = req.getString("evaluation"); // 评估值
-			String original_Loan_Bank = req.getString("property"); // 原贷款银行
-			String originalBank = req.getString("originalBank"); // 原贷款金额
-			String originalBanks = req.getString("originalBank"); // 原贷款尚欠本息余额
-			String house_Account = req.getString("houseAccount"); // 供楼账号
-			String originalOwed = req.getString("originalOwed"); // 买卖成交价
-			String bidPrice = req.getString("bidPrice"); // 购房定金
-			String supervision_of_funds = req.getString("deposit"); // 资金监管
-			String new_loan_Bank = req.getString("newBank"); // 新贷款银行
-			String funds = req.getString("funds"); // 新贷款批复金额
-			String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
-			String note_DescriPtion = req.getString("newApproved"); // 备注
-			String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-			String ctime =DateUtils.getInDateTime((new Date()));//日期
-			Double original_Loan_Amount = 0.0;
-			if (originalBank.length() > 0) {
-				original_Loan_Amount = Double.parseDouble(originalBank);
-			}
-			Double loan_Outstanding_Balance = 0.0;
-			if (originalBanks.length() > 0) {
-				loan_Outstanding_Balance = Double.parseDouble(originalBanks);
-			}
-			Double transaCtion_Price = 0.0;
-			if (originalOwed.length() > 0) {
-				transaCtion_Price = Double.parseDouble(originalOwed);
-			}
-			Double purchase_Deposit = 0.0;
-			if (bidPrice.length() > 0) {
-				purchase_Deposit = Double.parseDouble(bidPrice);
-			}	
-			Double new_Loan_Approval_Amount = 0.0;
-			if (funds.length() > 0) {
-				new_Loan_Approval_Amount = Double.parseDouble(funds);
-			}
-			PropertyInformation preperty = new PropertyInformation(id,name,ownership_And_percentage, property_Address,
-					conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
-					the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
-					transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
-					new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
-				boolean isResult=	propertyinformationservice.proupdate(preperty);
-				if(isResult ==true){
-					return  new Json(true,"success",isResult);
-				}else{
-					return  new Json(false,"fail",isResult);
-				}
-		}
 /**
  * 初审修改
  * @param request
  * @param contactsparam
  * @return
  */
-	@RequestMapping(value= "/proupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value= "/proupdatee",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json proupdate(HttpServletRequest request,Contacts contactsparam){
 		String dataid = request.getParameter("data");
@@ -239,8 +171,9 @@ public class PropertyInformationController {
 		String funds = req.getString("funds"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = req.getString("newApproved"); // 备注
-		String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		String state=String.valueOf(id); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		int stateid = Integer.parseInt(state);
+		String ctime = DateUtils.getInDateTime(new Date());
 		Double original_Loan_Amount = 0.0;
 		if (originalBank.length() > 0) {
 			original_Loan_Amount = Double.parseDouble(originalBank);
@@ -261,17 +194,36 @@ public class PropertyInformationController {
 		if (funds.length() > 0) {
 			new_Loan_Approval_Amount = Double.parseDouble(funds);
 		}
+		
 		PropertyInformation preperty = new PropertyInformation(id,name,ownership_And_percentage, property_Address,
 				conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
 				the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
 				transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
 				new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
-			boolean isResult=	propertyinformationservice.proupdate(preperty);
-			if(isResult ==true){
-				return  new Json(true,"success",isResult);
+			
+			PropertyInformation pro= propertyinformationservice.SelectById(stateid);
+			
+			if(pro !=null){
+				boolean isResult=	propertyinformationservice.proupdate(preperty);
+				if(isResult ==true){
+					return  new Json(true,"success",isResult);
+				}else{
+					return  new Json(false,"fail",isResult);
+				}
 			}else{
-				return  new Json(false,"fail",isResult);
+				PropertyInformation pre = new PropertyInformation(name,ownership_And_percentage, property_Address,
+						conStruction_Area, inner_Area, sales_Contract_Number, certificate_of_Title, proPerty_for,
+						the_Assessed_Value, original_Loan_Bank, original_Loan_Amount, loan_Outstanding_Balance, house_Account,
+						transaCtion_Price, purchase_Deposit, supervision_of_funds, new_loan_Bank, new_Loan_Approval_Amount,
+						new_Loan_Bank_Account_Number, note_DescriPtion,state,ctime);
+				boolean pr = propertyinformationservice.save(pre);// 插入角色
+				if(pr == true){
+					return  new Json(true,"success",pr);
+				}else{
+					return  new Json(false,"fail",pr);
+				}
 			}
+			
 	}
 	
 	/**
@@ -307,7 +259,7 @@ public class PropertyInformationController {
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
 		String note_DescriPtion = req.getString("newApproved"); // 备注
 		String state=req.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		String ctime = DateUtils.getInDateTime(new Date());
 		Double original_Loan_Amount = 0.0;
 		if (originalBank.length() > 0) {
 			original_Loan_Amount = Double.parseDouble(originalBank);

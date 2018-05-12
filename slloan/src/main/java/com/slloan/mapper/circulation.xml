@@ -12,6 +12,7 @@
 		<result column="rolename" property="rolename" />
 		<result column="updatedata" property="updatedata"/>
 		<result column="spare" property="spare"/>
+		<result column="marked" property="marked"/>
 	</resultMap>
 	<insert id="save" parameterType="com.slloan.entity.circulation">
 		INSERT INTO the_circulation (

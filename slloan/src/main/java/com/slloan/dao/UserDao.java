@@ -77,6 +77,7 @@ public interface UserDao extends BaseDao<UserLogin>{
  	 * @return
  	 */
   	 public int getCount();//统计
+  	public int getCount2(Integer spare);//统计
   	 
   	/**
 	     * 分页操作，调用findByPage limit分页方法
@@ -97,6 +98,7 @@ public interface UserDao extends BaseDao<UserLogin>{
 	     * @return
 	     */
 	    public UserLogin selectUserById(int id);
+	    public List<UserLogin> selectUserById2(int id);
 	    
 	    /**
 	     * 查询角色名在不在
@@ -104,4 +106,6 @@ public interface UserDao extends BaseDao<UserLogin>{
 	     * @return
 	     */
 	    public UserLogin selectroleUserName(Map<Object,Object>map);
+	    
+	    public boolean updateUserCity (Map<String,Object>map);
 }

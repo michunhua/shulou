@@ -42,7 +42,7 @@ public interface personalProfileDao{
 	     * 查询用户记录总数
 	     * @return
 	     */
-	 	int getPersonalProfileCount();
+	 	int getPersonalProfileCount(String username,String rolename,String city,String parentnodeId);
 	 	
 	 	/**
 	 	 * 初审列表查询
@@ -77,7 +77,7 @@ public interface personalProfileDao{
 	     * 初审用户记录总数
 	     * @return
 	     */
-	 	int getFirsttrialPageCount();
+	 	int getFirsttrialPageCount(String username,String rolename,String city,String parentnodeId);
 	 	
 		/**
 	     *终审 分页操作，调用分页方法
@@ -89,7 +89,7 @@ public interface personalProfileDao{
 	     * 终审用户记录总数
 	     * @return
 	     */
-	 	int getFinalreviewPageCount();
+	 	int getFinalreviewPageCount(String username,String rolename,String city,String parentnodeId);
 	 	
 
 		/**
@@ -102,7 +102,7 @@ public interface personalProfileDao{
 	     *财务用户记录总数
 	     * @return
 	     */
-	 	int getFinancePageCount();
+	 	int getFinancePageCount(String username,String rolename,String city,String parentnodeId);
 	 	
 	 	/**
 	 	 * 结算列表
@@ -115,7 +115,7 @@ public interface personalProfileDao{
 	     *财务用户记录总数
 	     * @return
 	     */
-	 	int getjsloanPageCount();
+	 	int getjsloanPageCount(String username,String rolename,String city,String parentnodeId);
 	 	
 	 	
 	 	/**
@@ -129,7 +129,7 @@ public interface personalProfileDao{
 	     *转账用户记录总数
 	     * @return
 	     */
-	 	int getTransferloanPageCount();
+	 	int getTransferloanPageCount(String username,String rolename,String city,String parentnodeId);
 	 	
 		/**
 	 	 * 贷款信息列表
@@ -141,7 +141,7 @@ public interface personalProfileDao{
 	 	 * 贷款信息统计
 	 	 * @return
 	 	 */
-	 	int getLoanInformationCount();
+	 	int getLoanInformationCount(String username,String rolename,String city,String parentnodeId);
 
 		/**
 	 	 * 回款列表
@@ -153,7 +153,7 @@ public interface personalProfileDao{
 	 	 * 回款统计
 	 	 * @return
 	 	 */
-	 	int getReturnMoneyCount();
+	 	int getReturnMoneyCount(String username,String rolename,String city,String parentnodeId);
 
 		/**
 	 	 * 取证列表
@@ -165,7 +165,7 @@ public interface personalProfileDao{
 	 	 * 取证统计
 	 	 * @return
 	 	 */
-	 	int getObtainEvidenceCount();
+	 	int getObtainEvidenceCount(String username,String rolename,String city,String parentnodeId);
 
 		/**
 	 	 * 解压列表
@@ -177,7 +177,7 @@ public interface personalProfileDao{
 	 	 * 解压统计
 	 	 * @return
 	 	 */
-	 	int getDecompressionCount();
+	 	int getDecompressionCount(String username,String rolename,String city,String parentnodeId);
 
 		/**
 	 	 * 进压列表
@@ -189,7 +189,10 @@ public interface personalProfileDao{
 	 	 * 进压统计
 	 	 * @return
 	 	 */
-	 	int getLoanPressureCount();
+	 	int getLoanPressureCount(String username,String rolename,String city,String parentnodeId);
 	 	
 	 	public PersonalProfile getSelectById(Map<String,Object> param);
+	 	
+	 	public List<PersonalProfile> checkHangData(Map<String,Object> param);
+		int checkHangDataCount(String state);
 }

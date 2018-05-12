@@ -14,13 +14,13 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		<mvc:interceptor>
 			<mvc:mapping path="/updateftpimage/**"/>
 			<bean class="com.slloan.util.FileTypeInterceptor">
-				<property name="maxSize" value="-1"></property>
+				<!-- <property name="maxSize" value="-1"></property> -->
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/financevoucher/**"/>
 			<bean class="com.slloan.util.FileTypeInterceptor">
-				<property name="maxSize" value="-1"></property>
+<!-- 				<property name="maxSize" value="-1"></property> -->
 			</bean>
 		</mvc:interceptor>
 		<mvc:interceptor>

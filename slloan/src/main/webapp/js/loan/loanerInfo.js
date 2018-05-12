@@ -96,7 +96,6 @@ var sendAjax = function(method, url, datas) {
   })
 }
 
-
 // 录单提交按钮&发送数据
 var sendData = function(element) {
   log('send data to server')
@@ -267,7 +266,10 @@ var searchData = function() {
 	}
 }
 
-// 修改保存数据 
+
+
+
+// 修改保存数据
 var updateData = function(element) {
   log('send data to server')
   var evs = e(element)

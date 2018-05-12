@@ -40,19 +40,19 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	@Override
 	public boolean fallbackinsert(CircuLationRecord circuLationRecord) {
 		String fallbackname = circuLationRecord.getFallbackname();
-		String submit = circuLationRecord.getSubmit();
+//		String submit = circuLationRecord.getSubmit();
 		int state = circuLationRecord.getState();
-		String spare1 = circuLationRecord.getSpare1();
-		String createDate = DateUtils.getInDateTime((new Date()));
+		String submit =circuLationRecord.getSubmit();
+//		String Sparefield =circuLationRecord.getSparefield();
+		String createDate =  DateUtils.getInDateTime((new Date()));//日期
 		String username = circuLationRecord.getUsername();
 		String ParentnodeId = circuLationRecord.getParentnodeId();
 		String city = circuLationRecord.getCity();
 		String rolename = circuLationRecord.getRolename();
-		CircuLationRecord record = new CircuLationRecord(fallbackname,submit,state,spare1,createDate,username,ParentnodeId,city,rolename);
+		String spare1 = circuLationRecord.getSpare1();
+		CircuLationRecord record = new CircuLationRecord(fallbackname,submit,state,createDate,username,ParentnodeId,city,rolename,spare1);
 		return recordSubmitDao.fallbackinsert(record);
 	}
-	
-
 
 	@Override
 	public boolean firstTrial(NoteExplain noteExplain) {
@@ -111,6 +111,7 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 		return recordSubmitDao.findById(id);
 	}
 	
+	
 	@Override
 	public List<CircuLationRecord> findById2(CircuLationRecord param) {
 		Map<String,Object>map = new HashMap<String,Object>();
@@ -121,5 +122,10 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 		map.put("submit", param.getId());
 		map.put("state", param.getState());
 		return recordSubmitDao.findById2(map);
+	}
+
+	@Override
+	public boolean updateDateState(String id) {
+		return recordSubmitDao.updateDateState(id);
 	}
 }

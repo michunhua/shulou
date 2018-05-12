@@ -13,6 +13,7 @@
 		<result column="city" property="city" />
 		<result column="rolename" property="rolename" />
 		<result column="updatedate" property="updatedate" />
+		<result column="marked" property="marked" />
 	</resultMap>
 
 	<!-- 回退保存一条流转记录 -->
@@ -137,4 +138,13 @@
 		<select id="findById2" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
 		SELECT * FROM recordsubmit_table where submit=#{submit} and  city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username} and state=#{state}
 	</select>
+	
+	<!-- 状态记录添加 -->
+	<update id="updateDateState"  parameterType="String">    
+			update recordsubmit_table set marked='己挂起' where submit = #{id}
+<!-- 				<set> -->
+<!-- 					<if test="marked !=null and marked !=''">marked = '己挂起',</if> -->
+<!-- 				</set> -->
+<!-- 					 WHERE submit = #{id} -->
+    </update>
 </mapper>

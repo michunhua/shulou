@@ -135,8 +135,8 @@ public class RoleAddServiceImpl implements RoleAddService{
 		//每页显示的数据
 		int pageSize = 10;
 		pageBean.setPageSize(pageSize);
-		//封装总记录数
-		int totalCount = roleAddDao.getRoleCount();
+		//封装总记录数 int getRoleCountCityManager(String parentid);
+		int totalCount = roleAddDao.getRoleCountCityManager(parentid);
 		pageBean.setTotalCount(totalCount);
 		//封装总页数
 		double tc = totalCount;
@@ -220,12 +220,22 @@ public class RoleAddServiceImpl implements RoleAddService{
 	}
 
 	@Override
-	public List<AddRole> getselectByid(String parentid) {
-		return roleAddDao.getselectByid(parentid);
+	public List<AddRole> getselectByid(String parentid,String belongs_city,String belongs_city1) {
+		return roleAddDao.getselectByid(parentid,belongs_city,belongs_city1);
 	}
 
 	@Override
 	public AddRole getselectByid2(String parentid) {
 		return roleAddDao.getselectByid2(parentid);
+	}
+
+	@Override
+	public boolean updateRoleCity(String rolename, String belongs_city, int id) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("rolename", rolename);
+		param.put("city", belongs_city);
+//		param.put("parentId", belongs_city);
+		param.put("id", id);
+		return roleAddDao.updateRoleCity(param);
 	}
 }

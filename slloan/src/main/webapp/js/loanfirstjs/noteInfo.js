@@ -5,7 +5,7 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.note = e('.record-note').value
-  data.recordFirst = e('..first-trial').value
+  data.recordFirst = e('.first-trial').value
   data.recorFinal = ""
   data.recorfore = ""
   
@@ -31,7 +31,7 @@ var sendAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
-  				window.location.href = "/slloan/loan/loancreas"
+//  				window.location.href = "/slloan/loan/loancreas"
   			});
     	} else {
     		alert('服务器错误')
@@ -53,7 +53,7 @@ var sendData = function(element) {
     var data = collectData()
     data.id = localStorage.firstID
     var method = 'POST'
-    var url = '/slloan/loan/notedescriptionassc'
+    var url = '/slloan/loan/updatenotetwo'
     log(data)
     if(data.id) {
         sendAjax(method, url, data)
@@ -197,7 +197,7 @@ var backBtn = function(element) {
 			    var method = 'GET'
 				var url = '/slloan/loan/loannotFallback'
 				var data = collectData()
-					data.id = localStorage.firstID
+			data.id = localStorage.firstID
 			data.rolename = localStorage.purrole
 		    data.username = localStorage.purusername
 		    data.city = localStorage.purcity

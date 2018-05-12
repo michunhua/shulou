@@ -150,14 +150,6 @@ public class CirculationContRoller {
 //		String circulation = req.getParameter("circulation");
 //		String ctime = DateUtils.getInDateTime2((new Date()));//日期
 //		String ctime = DateUtils.getInDateTime2((new Date()));//日期
-		
-//				datas.state = event.target.name
-//				datas.id = event.target.parentNode.classList.value
-//			    datas.username = localStorage.purusername
-//			    datas.city = localStorage.purcity
-//				datas.parentnodeId = localStorage.purid
-//		
-		
 		String city= obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		String username = obj.getString("username");

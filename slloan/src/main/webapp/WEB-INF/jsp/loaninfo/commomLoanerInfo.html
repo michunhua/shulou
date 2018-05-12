@@ -20,10 +20,6 @@
                 <a href="javascript:;">
                     <span id = 'username'>admin</span>
                 </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
             </li>
             <li class="layui-nav-item" id = 'logout'>退出登录</li>
         </ul>
@@ -49,13 +45,13 @@
                          <dd><a href="../../slloan/loan/loancreas">待初审列表</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed" id = 'tree-final'>
+                    <li class="layui-nav-item" id = 'tree-final'>
                         <a href="javascript:;">贷款终审</a>
                         <dl class="layui-nav-child">
                            <dd><a href="../../slloan/loan/loancreass">待终审列表</a></dd>
                         </dl>
                     </li>
-                     <li class="layui-nav-item " id = 'tree-read'>
+                     <li class="layui-nav-item layui-this" id = 'tree-read'>
                         <a href="../../slloan/loan/anin">贷款信息查看</a>
                     </li>
                     <li class="layui-nav-item " id = 'tree-confirm'>
@@ -101,7 +97,7 @@
               <div class="layui-colla-content">
                 <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                     <li class="layui-nav-item" id = "navuserInfo-update">
-                        <a href="../user/userinfo/updateuserInfo">个人信息修改</a>
+                        
                     </li>
                     <li class="layui-nav-item" id = "navuserInfo-password">
                         <a href="../user/userinfo/updatepassword">密码修改</a>
@@ -150,7 +146,7 @@
           <!-- 具体页面导航 -->
           <span class="layui-breadcrumb nav-title">
             <a href="">贷款管理</a>
-            <a href="">贷款终审</a>
+            <a href="">贷款信息查看</a>
             <a href="">共同申请人个人资料</a>
           </span>
           <hr>

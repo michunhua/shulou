@@ -63,6 +63,8 @@
 			<result column="parentnodeId" property="ParentnodeId" />
 			<result column="city" property="city" />
 			<result column="rolename" property="rolename" />
+			<result column="updatedate" property="updatedate" />
+			<result column="marked" property="marked" />
 		</collection>
 		<collection property="applyfor" javaType="java.util.List"
 			ofType="com.slloan.entity.ApplyForLoanInformation">
@@ -195,63 +197,67 @@
 	<!-- 按揭员回退按揭员状态 -->
 	<select id="getPersonalProfileCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='0'
+		FROM recordsubmit_table WHERE state='0' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 
 	<!-- 初审状态 -->
 	<select id="getFirsttrialPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='1'
+		FROM recordsubmit_table WHERE state='1' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 	<!-- 终审状态 -->
 	<select id="getFinalreviewPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='2'
+		FROM recordsubmit_table WHERE state='2' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 	<!-- 财务状态 -->
 	<select id="getFinancePageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename) FROM
-		recordsubmit_table WHERE state='3'
+		recordsubmit_table WHERE state='3' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 	<!-- 结算状态 -->
 	<select id="getjsloanPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename) FROM
-		recordsubmit_table WHERE state='9'
+		recordsubmit_table WHERE state='9' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 	<!-- 转账凭证状态 -->
 	<select id="getTransferloanPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='4'
+		FROM recordsubmit_table WHERE state='4' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 
 	<!-- 贷款信息状态 -->
 	<select id="getLoanInformationCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='10'
+		FROM recordsubmit_table WHERE state='10' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 
 	<!-- 回款状态 -->
 	<select id="getReturnMoneyCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename) FROM
-		recordsubmit_table WHERE state='8'
+		recordsubmit_table WHERE state='8' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 
 	<!-- 取证状态 -->
 	<select id="getObtainEvidenceCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='5'
+		FROM recordsubmit_table WHERE state='5' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 
 	<!-- 解压状态 -->
 	<select id="getDecompressionCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='6'
+		FROM recordsubmit_table WHERE state='6' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 
-	<!-- 进压状态 -->
+	<!-- 进押状态 -->
 	<select id="getLoanPressureCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='7'
+		FROM recordsubmit_table WHERE state='7' and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
+	</select>
+	<select id="checkHangDataCount" resultType="Integer">
+		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
+		FROM recordsubmit_table WHERE state=#{state} and username=#{0} and rolename=#{1} and city=#{2} and parentnodeId=#{3} 
 	</select>
 	<!-- 按揭员列表展示 -->
 	<select id="getPersonalProfilePage" resultType="Map" resultMap="personalpr">
@@ -263,8 +269,9 @@
 		 a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
 		FROM borrow_information a
 		LEFT   JOIN recordsubmit_table c on(a.id = c.submit)
-		left JOIN apply_for_loan_information b on(c.submit = b.id)
+		left JOIN apply_for_loan_information b on(c.submit = b.state)
 		where c.state='0' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId} 
+<!-- 		 ORDER BY case a.id when #{id} then 1 else 2 END,a.id  -->
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -278,11 +285,13 @@
 
 		
 		SELECT
-		 a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		 a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber,c.marked
 		FROM borrow_information a
 		LEFT   JOIN recordsubmit_table c on(a.id = c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.id)
-		where c.state='1' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId} 
+		where c.state='1'  
+		and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
+		 ORDER BY case a.id when #{intid} then 1 else 2 END,a.id 
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -298,7 +307,9 @@
 		FROM borrow_information a
 		LEFT   JOIN recordsubmit_table c on(a.id = c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.id)
-		where c.state='2' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}  
+		where c.state='2' and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId}
+
+<!-- 	 ORDER BY case a.id when #{id} then 1 else 2 END,a.id  -->
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -559,5 +570,29 @@
 			<if test="id !=null and id !=''">and id = #{id}</if>
 	</select>
 	
+	<select id="checkHangData"  resultType="Map" resultMap="personalpr">
+<!-- 		SELECT -->
+<!-- 		 a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber -->
+<!-- 		FROM borrow_information a -->
+<!-- 		LEFT   JOIN recordsubmit_table c on(a.id = c.submit) -->
+<!-- 		left JOIN apply_for_loan_information b on(c.submit = b.id) -->
+SELECT
+		 a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber,c.marked
+		FROM borrow_information a
+		LEFT   JOIN recordsubmit_table c on(a.id = c.submit)
+		left JOIN apply_for_loan_information b on(c.submit = b.id)
+		where  
+<!-- 		where c.state=#{state}  and c.username=#{username} and c.rolename=#{rolename} and c.city=#{city} and c.parentnodeId=#{parentnodeId} -->
+			<if test="state !='' and state !=null">c.state=#{state}</if>
+		<if test="username !='' and username !=null"> and c.username=#{username}</if>
+		<if test="rolename !='' and rolename !=null">and c.rolename=#{rolename}</if>
+		<if test="city !='' and city !=null">and c.city=#{city}</if>
+		<if test="parentnodeId !='' and parentnodeId !=null">and c.parentnodeId=#{parentnodeId}</if>
+<!-- 		<if test="id !='' and id !=null">HAVING a.id >= #{id}</if> -->
+			ORDER BY case a.id when #{intid} then 1 else 2 END,a.id desc
+		<if test="test =page !=null and limit !=''">
+			limit #{page},#{limit}
+		</if>
+	</select>
 
 </mapper>

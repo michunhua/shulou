@@ -34,10 +34,12 @@ var setSearchData = function(data) {
   note = e('.note')
   firstNote = e('.first-note')
   finalNote = e('.final-note')
+  financeNote = e('.financeNote')
   
-  note.value = data.note
-  firstNote.value = data.firstNote
-  finalNote.value = data.finalNote
+  note.value = data.note_Description1
+  firstNote.value = data.note_Description2
+  finalNote.value = data.note_Description3
+  financeNote.value = data.note_Description4
 }
 
 
@@ -48,9 +50,9 @@ var searchAjax = function(method, url, datas) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
+    success: function(data) {
     	if(data.msg == 'success') {
-    		setSearchData(dat.obj)
+    		setSearchData(data.obj)
     	} else {
     		alert('服务器错误')
     	}
@@ -83,7 +85,8 @@ var collectData = function() {
   data.note = e('.note').value
   data.recordFirst = e('.first-note').value
   data.recorFinal = e('.final-note').value
-  data.recorfore = e('.financial-note').value
+  data.recorfore = e('.financeNote').value
+  data.state = ''
   return data
 }
 
@@ -95,9 +98,14 @@ var saveAjax = function(method, url, datas) {
 	    type: method,
 	    url: url,
 	    data: {data:JSON.stringify(datas)},
-	    success: function() {
+	    success: function(data) {
 	    	if(data.msg == 'success') {
-	    		
+	        		layer.msg('保存成功', {
+	      			  icon: 2,
+	      			  time: 2000 
+	      			}, function(){
+//	      				window.location.href = "/slloan/loan/loancrea"
+	      			});
 	    	} else {
 	    		alert('服务器错误')
 	    	}
@@ -112,12 +120,17 @@ var saveAjax = function(method, url, datas) {
 var saveBtn = function(element) {
 	var intent = e(element) 
 	intent.addEventListener('click', function() {
-		var method = ''
-		var url = ''
+		var method = 'POST'
+		var url = '/slloan/loan/updatenotefore'
 		var data = collectData()
+			 data.rolename = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.parentnodeId = localStorage.purid
+	  data.id = localStorage.financialID
 		console.log(data)
 		if(url) {
-			
+			saveAjax(method, url, data)
 		}
 	})
 }

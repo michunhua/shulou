@@ -87,8 +87,8 @@ public class UpdateFTPController{
 	@Value("${ftpPwd}")
 	public String ftpPwd;//密码
 	
-	@Value("${ftpRemotePath}")
-	public String ftpRemotePath;
+	@Value("${fileSize}")
+	public int fileSize;
 	
 	ChannelSftp sftp;
 	
@@ -136,8 +136,8 @@ public class UpdateFTPController{
     			String usernameid = req.getParameter("id");//用户ID
     			String username = req.getParameter("username");
     			String roleName = req.getParameter("rolename");
-    			String uid = req.getParameter("uid");
-    			int intid = Integer.parseInt(uid);
+//    			String uid = req.getParameter("uid");
+//    			int intid = Integer.parseInt(uid);
     			Session session = null;
     			Channel channel = null;
 //    	final	String file = req.getParameter("FileUpload");
@@ -215,122 +215,48 @@ public class UpdateFTPController{
              	 			long requestsize = ctx.contentLength();
              	 			System.out.println("aaaa------------:  "+requestsize);
          	 			  
-         	 			 if(upload_type.equals("申请表") && requestsize >0 ){
-//         	 				if (!ftp.changeWorkingDirectory("shenqingbiao_image")) {
-//             	                ftp.makeDirectory("shenqingbiao_image");//创建目录
-//             	                ftp.changeWorkingDirectory("shenqingbiao_image");//跳转目录(可根据项目需求选择创建目录的多少)
-//             	            }
-                     		System.out.println("申请表");
-                     		imagedata.setNote(note);//备注
-                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
-//                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/shenqingbiao_image/"+targetFileName.trim());
-//                         	imagedata.setFilepath("");
-//                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-                         	imagedata.setUploads(note);//上传者
-                         	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setCity(city);
-                         	imagedata.setSubnode("");
-                         	imagedata.setParentnode(usernameid);//用户名ID
-                         	imagedata.setSpare(username);//用户名
-                         	imagedata.setSparetwo(roleName);//角色名
-                         	String createData = DateUtils.getInDateTime((new Date()));//日期
-                         	imagedata.setCreateData(createData);
-                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-                         	sftp.cd("/usr/local/FTP/shenqingbiao_image");
-                         	
-                     	}
-         	 			if(upload_type.equals("身份证明")){
-                     		System.out.println("身份证明");
-//                     		if (!ftp.changeWorkingDirectory("shenfenzheng_image")) {
-//             	                ftp.makeDirectory("shenfenzheng_image");//创建目录
-//             	                ftp.changeWorkingDirectory("shenfenzheng_image");//跳转目录(可根据项目需求选择创建目录的多少)
-//             	            }
-//                     		 ZipUtil1.unZip(shenfenzheng_image+"/"+targetFileName);
-                     		imagedata.setNote(note);//备注
-                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
-//                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/shenfenzheng_image/"+targetFileName.trim());
-//                         	imagedata.setFilepath("");
-//                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-                         	imagedata.setUploads(note);//上传者
-                         	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setCity(city);
-                         	imagedata.setSubnode("");
-                         	imagedata.setParentnode(usernameid);//用户名ID
-                         	imagedata.setSpare(username);//用户名
-                         	imagedata.setSparetwo(roleName);//角色名
-                         	String createData = DateUtils.getInDateTime((new Date()));//日期
-                         	imagedata.setCreateData(createData);
-                         	imagedataservice.imageDataAdd(imagedata);
-                         	sftp.cd("/usr/local/FTP/shenfenzheng_image");
-                     	}
-                     	if(upload_type.equals("房产证明")&& requestsize >0){
-                     		System.out.println("房产证明");
-//                     		if (!ftp.changeWorkingDirectory("fangchanzheng_image")) {
-//             	                ftp.makeDirectory("fangchanzheng_image");//创建目录
-//             	                ftp.changeWorkingDirectory("fangchanzheng_image");//跳转目录(可根据项目需求选择创建目录的多少)
-//             	            }
-                     		imagedata.setNote(note);//备注
-                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
-//                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/fangchanzheng_image/"+targetFileName.trim());
-//                         	imagedata.setFilepath("");
-//                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-                         	imagedata.setUploads(note);//上传者
-                         	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setCity(city);
-                         	imagedata.setSubnode("");
-                         	imagedata.setParentnode(usernameid);//用户名ID
-                         	imagedata.setSpare(username);//用户名
-                         	imagedata.setSparetwo(roleName);//角色名
-                         	String createData = DateUtils.getInDateTime((new Date()));//日期
-                         	imagedata.setCreateData(createData);
-                         	imagedataservice.imageDataAdd(imagedata);
-                         	sftp.cd("/usr/local/FTP/fangchanzheng_image");
-//                         	 ZipUtil1.unZip(fangchanzheng_image+"/"+targetFileName);
-                     	}
-                     	if(upload_type.equals("批示")&& requestsize >0){
-                     		System.out.println("批示");
-//                     		if (!ftp.changeWorkingDirectory("pishi_image")) {
-//             	                ftp.makeDirectory("pishi_image");//创建目录
-//             	                ftp.changeWorkingDirectory("pishi_image");//跳转目录(可根据项目需求选择创建目录的多少)
-//             	            }
-                     		imagedata.setNote(note);//备注
-                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
-//                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-//                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
-                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/pishi_image/"+targetFileName.trim());
-//                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+tdf+"/"+"pishi_image/"+str.trim());
-//                         	imagedata.setFilepath("");
-//                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-                         	imagedata.setUploads(note);//上传者
-                         	imagedata.setUploadtype(upload_type);//上传类型
-                         	imagedata.setCity(city);
-                         	imagedata.setSubnode("");
-                         	imagedata.setParentnode(usernameid);//用户名ID
-                         	imagedata.setSpare(username);//用户名
-                         	imagedata.setSparetwo(roleName);//角色名
-                         	String createData = DateUtils.getInDateTime((new Date()));//日期
-                         	imagedata.setCreateData(createData);
-                         	imagedataservice.imageDataAdd(imagedata);
-                         	sftp.cd("/usr/local/FTP/pishi_image");
-//                         	 ZipUtil1.unZip(pishi_image+"/"+targetFileName);
-                     	}
-                     	if(upload_type.equals("其他类")&& requestsize >0){
-                     		System.out.println("其他类");
-//                     		Vector content2 = sftp.ls("qita_image");
-//                     			if(content2 == null){
-//                     				sftp.mkdir("/usr/local/FTP/qita_image");
-//                     			}else{
-                     				imagedata.setNote(note);//备注
+             	 			if(requestsize > fileSize){
+             	 				return new Json(false,"fail","","文件上传大小己超过5M");
+             	 			}else{
+             	 				if(upload_type.equals("申请表") && requestsize >0 ){
+//                 	 				if (!ftp.changeWorkingDirectory("shenqingbiao_image")) {
+//                     	                ftp.makeDirectory("shenqingbiao_image");//创建目录
+//                     	                ftp.changeWorkingDirectory("shenqingbiao_image");//跳转目录(可根据项目需求选择创建目录的多少)
+//                     	            }
+                             		System.out.println("申请表");
+                             		imagedata.setNote(note);//备注
                                  	imagedata.setOriginalfilename(tmpFileName);//原文件名
 //                                 	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-//                                 	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
-                                 	imagedata.setFilepath("http://120.79.252.173:8080/ftp/qita_image/"+targetFileName.trim());
+//                                 	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenqingbiao_image/"+targetFileName.trim());
+                                 	imagedata.setFilepath("http://120.79.252.173:8080/ftp/shenqingbiao_image/"+targetFileName.trim());
+//                                 	imagedata.setFilepath("");
+//                                 	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+                                 	imagedata.setUploads(note);//上传者
+                                 	imagedata.setUploadtype(upload_type);//上传类型
+                                 	imagedata.setCity(city);
+                                 	imagedata.setSubnode("");
+                                 	imagedata.setParentnode(usernameid);//用户名ID
+                                 	imagedata.setSpare(username);//用户名
+                                 	imagedata.setSparetwo(roleName);//角色名
+                                 	String createData = DateUtils.getInDateTime((new Date()));//日期
+                                 	imagedata.setCreateData(createData);
+                                 	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+                                 	sftp.cd("/usr/local/FTP/shenqingbiao_image");
+                                 	
+                             	}
+                 	 			if(upload_type.equals("身份证明")){
+                             		System.out.println("身份证明");
+//                             		if (!ftp.changeWorkingDirectory("shenfenzheng_image")) {
+//                     	                ftp.makeDirectory("shenfenzheng_image");//创建目录
+//                     	                ftp.changeWorkingDirectory("shenfenzheng_image");//跳转目录(可根据项目需求选择创建目录的多少)
+//                     	            }
+//                             		 ZipUtil1.unZip(shenfenzheng_image+"/"+targetFileName);
+                             		imagedata.setNote(note);//备注
+                                 	imagedata.setOriginalfilename(tmpFileName);//原文件名
+//                                 	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//                                 	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/shenfenzheng_image/"+targetFileName.trim());
+                                 	imagedata.setFilepath("http://120.79.252.173:8080/ftp/shenfenzheng_image/"+targetFileName.trim());
+//                                 	imagedata.setFilepath("");
 //                                 	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
                                  	imagedata.setUploads(note);//上传者
                                  	imagedata.setUploadtype(upload_type);//上传类型
@@ -342,53 +268,132 @@ public class UpdateFTPController{
                                  	String createData = DateUtils.getInDateTime((new Date()));//日期
                                  	imagedata.setCreateData(createData);
                                  	imagedataservice.imageDataAdd(imagedata);
-                                 	sftp.cd("/usr/local/FTP/qita_image");
-//                     			}
-                     		
-//                         	 ZipUtil1.unZip(qita_image+"/"+targetFileName);
-                     	}
-                     	if(upload_type.equals("凭证类")&& requestsize >0){
-                     		System.out.println("凭证类");//mkdir() 
-                     	// 判断子目录文件夹是否存在，不存在即创建  
-//                     		SftpATTRS attrs = null;
-                     		 
-//                     		Vector content = sftp.ls("pingzheng_image"); 
-//                     		for(int i=0;i<content.size();i++){
-//                				System.out.println(content.get(i));
-//                			}
-                     		try {
-//                     			SftpATTRS attrs = sftp.lstat("/usr/local/FTP/pingzheng_image"); 
-//                     			if(attrs == null) {   
-//                          	       sftp.mkdir("/usr/local/FTP/pingzheng_image");   
-//                          	      System.err.println("创建子目录：" + sftp);  
-//                          	    }else{
-                          	    	imagedata.setNote(note);//备注
-                                  	imagedata.setOriginalfilename(tmpFileName);//原文件名
-//                                  	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-//                                  	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
-//                                  	imagedata.setFilepath("http://120.79.252.173:"+req.getServerPort()+"/usr/local/FTP/pingzheng_image/"+targetFileName.trim());
-                                  	imagedata.setFilepath("http://120.79.252.173:8080/ftp/pingzheng_image/"+targetFileName.trim());
-//                                  	http://120.79.252.173:8080/ftp/pingzheng_image/1805051655477836_aa_123.jpg
-                                  	readerZipFile(tmpFileName.trim());
-//                                  	imagedata.setFilepath("");
-                                  	imagedata.setUploads(note);//上传者
-                                  	imagedata.setUploadtype(upload_type);//上传类型
-                                  	imagedata.setCity(city);
-                                  	imagedata.setSubnode("");
-                                  	imagedata.setParentnode(usernameid);//用户名ID
-                                  	imagedata.setSpare(username);//用户名
-                                  	imagedata.setSparetwo(roleName);//角色名
-                                  	String createData = DateUtils.getInDateTime((new Date()));//日期
-                                  	imagedata.setCreateData(createData);
-                                  	imagedataservice.imageDataAdd(imagedata);
-                                  	sftp.cd("/usr/local/FTP/pingzheng_image");
-//                          	    }
-							} catch (Exception e) {
-							}
-                     	    
-//             	            }
-                     			
-                     	}
+                                 	sftp.cd("/usr/local/FTP/shenfenzheng_image");
+                             	}
+                             	if(upload_type.equals("房产证明")&& requestsize >0){
+                             		System.out.println("房产证明");
+//                             		if (!ftp.changeWorkingDirectory("fangchanzheng_image")) {
+//                     	                ftp.makeDirectory("fangchanzheng_image");//创建目录
+//                     	                ftp.changeWorkingDirectory("fangchanzheng_image");//跳转目录(可根据项目需求选择创建目录的多少)
+//                     	            }
+                             		imagedata.setNote(note);//备注
+                                 	imagedata.setOriginalfilename(tmpFileName);//原文件名
+//                                 	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//                                 	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/fangchanzheng_image/"+targetFileName.trim());
+                                 	imagedata.setFilepath("http://120.79.252.173:8080/ftp/fangchanzheng_image/"+targetFileName.trim());
+//                                 	imagedata.setFilepath("");
+//                                 	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+                                 	imagedata.setUploads(note);//上传者
+                                 	imagedata.setUploadtype(upload_type);//上传类型
+                                 	imagedata.setCity(city);
+                                 	imagedata.setSubnode("");
+                                 	imagedata.setParentnode(usernameid);//用户名ID
+                                 	imagedata.setSpare(username);//用户名
+                                 	imagedata.setSparetwo(roleName);//角色名
+                                 	String createData = DateUtils.getInDateTime((new Date()));//日期
+                                 	imagedata.setCreateData(createData);
+                                 	imagedataservice.imageDataAdd(imagedata);
+                                 	sftp.cd("/usr/local/FTP/fangchanzheng_image");
+//                                 	 ZipUtil1.unZip(fangchanzheng_image+"/"+targetFileName);
+                             	}
+                             	if(upload_type.equals("批示")&& requestsize >0){
+                             		System.out.println("批示");
+//                             		if (!ftp.changeWorkingDirectory("pishi_image")) {
+//                     	                ftp.makeDirectory("pishi_image");//创建目录
+//                     	                ftp.changeWorkingDirectory("pishi_image");//跳转目录(可根据项目需求选择创建目录的多少)
+//                     	            }
+                             		imagedata.setNote(note);//备注
+                                 	imagedata.setOriginalfilename(tmpFileName);//原文件名
+//                                 	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//                                 	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pishi_image/"+targetFileName.trim());
+                                 	imagedata.setFilepath("http://120.79.252.173:8080/ftp/pishi_image/"+targetFileName.trim());
+//                                 	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+tdf+"/"+"pishi_image/"+str.trim());
+//                                 	imagedata.setFilepath("");
+//                                 	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+                                 	imagedata.setUploads(note);//上传者
+                                 	imagedata.setUploadtype(upload_type);//上传类型
+                                 	imagedata.setCity(city);
+                                 	imagedata.setSubnode("");
+                                 	imagedata.setParentnode(usernameid);//用户名ID
+                                 	imagedata.setSpare(username);//用户名
+                                 	imagedata.setSparetwo(roleName);//角色名
+                                 	String createData = DateUtils.getInDateTime((new Date()));//日期
+                                 	imagedata.setCreateData(createData);
+                                 	imagedataservice.imageDataAdd(imagedata);
+                                 	sftp.cd("/usr/local/FTP/pishi_image");
+//                                 	 ZipUtil1.unZip(pishi_image+"/"+targetFileName);
+                             	}
+                             	if(upload_type.equals("其他类")&& requestsize >0){
+                             		System.out.println("其他类");
+//                             		Vector content2 = sftp.ls("qita_image");
+//                             			if(content2 == null){
+//                             				sftp.mkdir("/usr/local/FTP/qita_image");
+//                             			}else{
+                             				imagedata.setNote(note);//备注
+                                         	imagedata.setOriginalfilename(tmpFileName);//原文件名
+//                                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//                                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/qita_image/"+targetFileName.trim());
+                                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/qita_image/"+targetFileName.trim());
+//                                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+                                         	imagedata.setUploads(note);//上传者
+                                         	imagedata.setUploadtype(upload_type);//上传类型
+                                         	imagedata.setCity(city);
+                                         	imagedata.setSubnode("");
+                                         	imagedata.setParentnode(usernameid);//用户名ID
+                                         	imagedata.setSpare(username);//用户名
+                                         	imagedata.setSparetwo(roleName);//角色名
+                                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+                                         	imagedata.setCreateData(createData);
+                                         	imagedataservice.imageDataAdd(imagedata);
+                                         	sftp.cd("/usr/local/FTP/qita_image");
+//                             			}
+                             		
+//                                 	 ZipUtil1.unZip(qita_image+"/"+targetFileName);
+                             	}
+                             	if(upload_type.equals("凭证类")&& requestsize >0){
+                             		System.out.println("凭证类");//mkdir() 
+                             	// 判断子目录文件夹是否存在，不存在即创建  
+//                             		SftpATTRS attrs = null;
+                             		 
+//                             		Vector content = sftp.ls("pingzheng_image"); 
+//                             		for(int i=0;i<content.size();i++){
+//                        				System.out.println(content.get(i));
+//                        			}
+                             		try {
+//                             			SftpATTRS attrs = sftp.lstat("/usr/local/FTP/pingzheng_image"); 
+//                             			if(attrs == null) {   
+//                                  	       sftp.mkdir("/usr/local/FTP/pingzheng_image");   
+//                                  	      System.err.println("创建子目录：" + sftp);  
+//                                  	    }else{
+                                  	    	imagedata.setNote(note);//备注
+                                          	imagedata.setOriginalfilename(tmpFileName);//原文件名
+//                                          	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//                                          	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/pingzheng_image/"+targetFileName.trim());
+//                                          	imagedata.setFilepath("http://120.79.252.173:"+req.getServerPort()+"/usr/local/FTP/pingzheng_image/"+targetFileName.trim());
+                                          	imagedata.setFilepath("http://120.79.252.173:8080/ftp/pingzheng_image/"+targetFileName.trim());
+//                                          	http://120.79.252.173:8080/ftp/pingzheng_image/1805051655477836_aa_123.jpg
+                                          	readerZipFile(tmpFileName.trim());
+//                                          	imagedata.setFilepath("");
+                                          	imagedata.setUploads(note);//上传者
+                                          	imagedata.setUploadtype(upload_type);//上传类型
+                                          	imagedata.setCity(city);
+                                          	imagedata.setSubnode("");
+                                          	imagedata.setParentnode(usernameid);//用户名ID
+                                          	imagedata.setSpare(username);//用户名
+                                          	imagedata.setSparetwo(roleName);//角色名
+                                          	String createData = DateUtils.getInDateTime((new Date()));//日期
+                                          	imagedata.setCreateData(createData);
+                                          	imagedataservice.imageDataAdd(imagedata);
+                                          	sftp.cd("/usr/local/FTP/pingzheng_image");
+//                                  	    }
+        							} catch (Exception e) {
+        							}
+                             	    
+//                     	            }
+                             			
+                             	}
+             	 			}
+         	 			 
                      	
          	 			}
          	 			
@@ -417,7 +422,7 @@ public class UpdateFTPController{
 //          	        	li.add(isResult);
 //          	        	pageBean.setLists(li);
           	        	
-                    	sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+                    	sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
           	        	 
 //          	        	String filepath =targetFileName;//原文件名
                     	String parentnode =city;
@@ -426,7 +431,7 @@ public class UpdateFTPController{
                     	String spare = username;
                     	String sparetwo = roleName;
                     	String createDate = DateUtils.getInDateTime((new Date()));
-						ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate,intid,targetFileName.trim());
+						ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate,0,targetFileName.trim());
                     List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload2(imagedata2);
                     	if(listimg.size()> 0){
                     		//return new Json(true,"success",listimg);

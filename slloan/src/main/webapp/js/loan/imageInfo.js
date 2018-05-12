@@ -97,6 +97,111 @@ $(function() {
     	}
 })
 
+// 显示查询图片
+var imageDisplay1 = function(element, result) {
+	var intent = document.querySelector(element)
+	var flag = '申请表'
+	console.log('执行次数', result.申请表)
+	if(result.申请表) {
+		console.log('开始加入图片')
+		var len = result.申请表.length
+		for(var i = 0; i < len; i++) {
+			var img = document.createElement('img')
+			img.classList.add('images')
+			console.log(result.申请表[i].filepath)
+			img.src = result.申请表[i].filepath
+			console.log(img)
+			intent.appendChild(img)
+		}
+	}
+}
+var imageDisplay2 = function(element, result) {
+	var intent = document.querySelector(element)
+	console.log('执行次数', result.身份证明)
+	if(result.身份证明) {
+		console.log('开始加入图片')
+		var len = result.身份证明.length
+		for(var i = 0; i < len; i++) {
+			var img = document.createElement('img')
+			img.classList.add('images')
+			console.log(result.身份证明[i].filepath)
+			img.src = result.身份证明[i].filepath
+			console.log(img)
+			intent.appendChild(img)
+		}
+	}
+}
+var imageDisplay3 = function(element, result) {
+	var intent = document.querySelector(element)
+	console.log('执行次数', result.批示)
+	if(result.批示) {
+		console.log('开始加入图片')
+		var len = result.批示.length
+		for(var i = 0; i < len; i++) {
+			var img = document.createElement('img')
+			img.classList.add('images')
+			console.log(result.批示[i].filepath)
+			img.src = result.批示[i].filepath
+			console.log(img)
+			intent.appendChild(img)
+		}
+	}
+}
+
+var imageDisplay4 = function(element, result) {
+	var intent = document.querySelector(element)
+	console.log('执行次数', result.房产证明)
+	if(result.房产证明) {
+		console.log('开始加入图片')
+		var len = result.房产证明.length
+		console.log(result.房产证明[0].filepath)
+		for(var i = 0; i < len; i++) {
+			var img = document.createElement('img')
+			img.classList.add('images')
+			console.log(result.房产证明[i].filepath)
+			img.src = result.房产证明[i].filepath
+			console.log(img)
+			intent.appendChild(img)
+		}
+	}
+}
+
+var imageDisplay5 = function(element, result) {
+	var intent = document.querySelector(element)
+	console.log('执行次数', result.其他类)
+	if(result.其他类) {
+		console.log('开始加入图片')
+		var len = result.其他类.length
+		console.log(result.其他类[0].filepath)
+		for(var i = 0; i < len; i++) {
+			var img = document.createElement('img')
+			img.classList.add('images')
+			console.log(result.其他类[i].filepath)
+			img.src = result.其他类[i].filepath
+			console.log(img)
+			intent.appendChild(img)
+		}
+	}
+}
+
+
+var imageDisplay6 = function(element, result) {
+	var intent = document.querySelector(element)
+	console.log('执行次数', result.凭证类)
+	if(result.凭证类) {
+		console.log('开始加入图片')
+		var len = result.凭证类.length
+		console.log(result.凭证类[0].filepath)
+		for(var i = 0; i < len; i++) {
+			var img = document.createElement('img')
+			img.classList.add('images')
+			console.log(result.凭证类[i].filepath)
+			img.src = result.凭证类[i].filepath
+			console.log(img)
+			intent.appendChild(img)
+		}
+	}
+}
 
 // 加载图像方法
 var loadImageAjax = function(method, url, datas) {
@@ -107,7 +212,13 @@ var loadImageAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		console.log(data)
+    		console.log(data.obj)
+    		imageDisplay1("#imagedata1",  data.obj)
+    		imageDisplay2("#imagedata2",  data.obj)
+    		imageDisplay3("#imagedata3",  data.obj)
+    		imageDisplay4("#imagedata4",  data.obj)
+    		imageDisplay5("#imagedata5",  data.obj)
+    		imageDisplay6("#imagedata6",  data.obj)
     	} else {
     		alert('服务器错误')
     	}

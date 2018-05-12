@@ -13,7 +13,7 @@ import com.slloan.entity.UserLogin;
  * @author Administrator
  *
  */
-@Repository(value="userupdateuaoq")
+@Repository(value="userupdateuao")
 public interface UserUpdateDao {
 	 /**
  	  * 更改密码

@@ -53,6 +53,9 @@ public interface RoleAddDao extends BaseDao<AddRole>{
 	     */
 	 	int getRoleCount();
 	 	
+	 	
+	 	int getRoleCountCityManager(String parentid);
+	 	
 	 	  /**
 	     * 根据Id查询一条记录
 	     *
@@ -68,8 +71,10 @@ public interface RoleAddDao extends BaseDao<AddRole>{
 	     */
 	    public AddRole selectroleRoleName(Map<Object,Object>map);
 	    
-	    public List<AddRole> getselectByid(String parentid);
+	    public List<AddRole> getselectByid(String parentid,String belongs_city,String belongs_city1);
 	    
 	    public AddRole getselectByid2(String parentid);
+	    
+	    public boolean updateRoleCity (Map<String,Object>map);
 	    
 }
