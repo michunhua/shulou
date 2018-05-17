@@ -13,20 +13,30 @@ var collectData = function() {
   data.repaymenBtank = e('.repayment-bank').value
   data.repaymentAccount = e('.repayment-account').value
   data.accountNumber = e('.account-number').value
-  data.id = 2
+  data.unit = e('.unit').value
+  data.id = localStorage.finalID
   return data
 }
 
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
-    	callback()
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loanestass'
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
     },
     error: function(){
         alert('服务器错误')
@@ -42,8 +52,8 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-     var method = 'POST'
-    var url = '/slloan/loan/modifyusersjfo'
+    var method = 'POST'
+    var url = '/slloan/loan/appupdate'
     log(data)
     sendAjax(method, url, data, null)
   })

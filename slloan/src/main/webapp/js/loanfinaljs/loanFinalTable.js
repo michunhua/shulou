@@ -36,6 +36,7 @@ var addTable = function(data) {
 	totalPage.innerText = datas.totalPage
     pageElement.innerHTML = null
     console.log('回写数据长度', len)
+    var sequence = []
     for(var i = 0; i < len; i++) {
     	  log('回写次数' + i)
           var tr = document.createElement('tr')
@@ -61,14 +62,12 @@ var addTable = function(data) {
           var userName = myFilter(datas.lists[i].applyfor[0].amount)
           var phone = myFilter(datas.lists[i].mobile_phone)
           var number = myFilter(datas.lists[i].id_number)
-          var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)
-          var state = myFilter(datas.lists[i].state)
+          var limit = myFilter(datas.lists[i].applyfor[0].time_Limit) + datas.lists[i].applyfor[0].time_Limits
+  		  var state = myFilter(datas.lists[i].notes[0].fallbackname)
+  		  var state_number = data.lists[i].state
           var address = myFilter(datas.lists[i].home_address_now)
           var time = myFilter(datas.lists[i].ctime)
           
-          if(datas.lists[i].marked) {
-			tr.classList.add('marked')
-		}
           
           input.type = 'checkbox'
           input.classList.add('indicate')
@@ -78,19 +77,20 @@ var addTable = function(data) {
           td1a.classList.add('flag')
           td1a.innerText = ID
           td1.innerText = userid
-		  td2.innerText = userName
+		  td2.innerText = userName + ' 元'
 		  td3.innerText = phone
 		  td4.innerText = number
 		  td5.innerText = limit
+		  td6.classList.add(state_number)
 		  td6.innerText = state
 		  td7.innerText = address
 		  td8.innerText = time
   		  td10.classList.add('up')
-  		  td10.name = state
+  		  td10.name = state_number
 		  td10.href = "#"
 		  td10.innerText = '[ 挂起  ]'
 		  td10a.classList.add('record')
-		  td10a.name = state
+		  td10a.name = state_number
 		  td10a.href = "#"
 		  td10a.innerText = '[ 流转记录  ]'
 		  td9.classList.add(ID)
@@ -111,8 +111,20 @@ var addTable = function(data) {
           tr.appendChild(td7)
           tr.appendChild(td8)
           tr.appendChild(td9)
-      pageElement.insertAdjacentElement('beforeend', tr)
-    }
+          
+          if(datas.lists[i].notes[0].marked) {
+			tr.classList.add('marked')
+			sequence.unshift(tr)
+          } else {
+        	  sequence.push(tr)
+          }
+    	  
+    } 
+	if(sequence.length) {
+		for(var j = 0; j < sequence.length; j++) {
+			pageElement.insertAdjacentElement('beforeend', sequence[j])
+		}
+	}
 }
 
 //var testData = {
@@ -143,6 +155,7 @@ var initData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanfinalreviewlist?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
+	datas.id = ""
     datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
@@ -193,7 +206,7 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var method = 'GET'
-    var url = '/slloan/loan/finalreviewselect'
+    var url = '/slloan/loan/finalreviewselect?page='+init.pages+'&limit='+ init.limit
     var data = collectData()
       data.rolename = localStorage.purrole
     data.username = localStorage.purusername
@@ -231,7 +244,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/'
+	var url = '/slloan/loan/loanlist?page='+init.pages+'&limit='+ init.limit
 	var data = {}
 	searchAjax(method, url, data)
 }
@@ -574,6 +587,8 @@ var hang_cirulationAjax = function(method, url, datas) {
                   tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
                   
           	}
+          } else {
+              tableString += "<tr><td>" + content + "</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><tr>"
           }
   		layer.open({
   			  title: '流转记录',

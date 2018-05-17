@@ -24,8 +24,11 @@ public class ImagedataServiceImpl implements ImagedataService {
 	@Autowired
 	private ImagedataDao imagedatadao;
 	@Override
-	public boolean imagedatedel(int id) {
-		return imagedatadao.imagedatedel(id);
+	public boolean imagedatedel(ImageDataUpdate uploadFtpRoute) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("uploadFtpRoute", uploadFtpRoute.getUploadFtpRoute());
+		map.put("filepath", uploadFtpRoute.getFilepath());
+		return imagedatadao.imagedatedel(map);
 	}
 
 	@Override
@@ -42,7 +45,8 @@ public class ImagedataServiceImpl implements ImagedataService {
 			String Parentnode = imagedata.getParentnode();//用户名ID
 			String spare = imagedata.getSpare();
 			String sparetwo = imagedata.getSparetwo();
-		ImageDataUpdate imdata = new ImageDataUpdate(filepate,note,uploads,originalfilename,upload_type,city,Subnode,createdate,Parentnode,spare,sparetwo);
+			String uploadFtpRoute = imagedata.getUploadFtpRoute();
+		ImageDataUpdate imdata = new ImageDataUpdate(filepate,note,uploads,originalfilename,upload_type,city,Subnode,createdate,Parentnode,spare,sparetwo,uploadFtpRoute);
 		return imagedatadao.imageDataAdd(imdata);
 	}
 
@@ -83,13 +87,21 @@ public class ImagedataServiceImpl implements ImagedataService {
 			  calen.add(Calendar.DAY_OF_YEAR,5);
 			  Date createdata2=calen.getTime();
 			 System.out.println(f.format(createdata2));
+			 
+			  calen.setTime(date1);
+			  calen.add(Calendar.DAY_OF_YEAR,-5);
+			  Date createdata3=calen.getTime();
+			 System.out.println(f.format(createdata3));
+			 
 				mapparam.put("city", param.getCity());
 				mapparam.put("parentnode", param.getParentnode());
 				mapparam.put("spare", param.getSpare());
 				mapparam.put("sparetwo",param.getSparetwo());
 				mapparam.put("uploadtype",param.getUploadtype());
-				mapparam.put("createData",param.getCreateData());
+				mapparam.put("createData",f.format(createdata3));
 				mapparam.put("createData2",f.format(createdata2));
+				mapparam.put("uploadFtpRoute",param.getUploadFtpRoute());
+				
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -98,6 +110,18 @@ public class ImagedataServiceImpl implements ImagedataService {
 		return imagedatadao.financevoucherSelectToupload(mapparam);
 	}
 
+	@Override
+	public List<ImageDataUpdate> financevoucherSelectTouploadAdmin(ImageDataUpdate param){
+		  Map<String,Object> mapparam = new HashMap<String,Object>();
+		try {
+				mapparam.put("uploadtype",param.getUploadtype());
+				mapparam.put("uploadFtpRoute",param.getUploadFtpRoute());
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imagedatadao.financevoucherSelectTouploadAdmin(mapparam);
+	}
 	@Override
 	public List<ImageDataUpdate> financevoucherSelectToupload2(ImageDataUpdate param){
 		Map<String,Object> mapparam = new HashMap<String,Object>();
@@ -175,5 +199,16 @@ public class ImagedataServiceImpl implements ImagedataService {
 	@Override
 	public ObjectSeq addSeq() {
 		return imagedatadao.addSeq();
+	}
+
+	
+	@Override
+	public ImageDataUpdate imagedataUpdateNote(ImageDataUpdate image) {
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("city", image.getCity());
+			map.put("uploadFtpRoute", image.getId());
+			map.put("uploadtype", image.getUploadtype());
+			map.put("filepath", image.getFilepath());
+		return imagedatadao.imagedataUpdateNote(map);
 	}
 }

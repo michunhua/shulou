@@ -9,6 +9,7 @@ import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.Firstfilla;
 import com.slloan.entity.NoteExplain;
+import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.PropertyInformation;
 import com.slloan.entity.circulation;
 
@@ -45,4 +46,7 @@ public interface CircuLationRecordSubmitDao {
 	List<CircuLationRecord> findById2(Map<String,Object>param);
 	
 	public boolean updateDateState(String id);//挂起
+	CircuLationRecord findByIdHangup(String id);
+	CircuLationRecord selectByidHangup(Map<String,Object> submit);
+	public boolean updateDateStateCancel(String id);
 }

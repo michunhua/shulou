@@ -14,15 +14,22 @@
 		<result column="city" property="city" />
 		<result column="spare" property="spare" />
 		<result column="sparetwo" property="sparetwo" />
+		<result column="uploadFtpRoute" property="uploadFtpRoute" />
 	</resultMap>
 
 <!-- 删除影像 -->
 <delete id="imagedatedel" parameterType="int" >
-	delete from imagedata where id=#{id}
+<!-- 	delete from imagedata where uploadFtpRoute=#{uploadFtpRoute} -->
+delete from imagedata
+	<where>
+		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''"> uploadFtpRoute = #{uploadFtpRoute}</if>
+		<if test="filepath !=null and filepath !=''"> and  filepath like concat('%',#{filepath},'%')</if>
+	</where>
+	
 </delete>
 <insert id="imageDataAdd" parameterType="com.slloan.entity.ImageDataUpdate">
-	insert into imagedata(filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city,spare,sparetwo)
-	values(#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city},#{spare},#{sparetwo})
+	insert into imagedata(filepath,note,uploads,originalfilename,uploadtype,Parentnode,Subnode,createdata,city,spare,sparetwo,uploadFtpRoute)
+	values(#{filepath},#{note},#{uploads},#{originalfilename},#{uploadtype},#{Parentnode},#{Subnode},#{createData},#{city},#{spare},#{sparetwo},#{uploadFtpRoute})
 </insert>
 <!-- 展示所有 -->
 <select id="list" resultType="com.slloan.entity.ImageDataUpdate">
@@ -50,19 +57,26 @@
 
 <!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
 <select id="financevoucherSelectToupload"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
-		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where city =#{city}
-		<if test="Parentnode !=null and Parentnode !='' ">and parentnode =#{parentnode}</if>
-		<if test="spare !=null and spare !='' ">and spare =#{spare}</if>
-		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo}</if>
+		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where
+		
+		 <if test="city !=null and city !=''"> city =#{city}</if>
 		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
-		and createdata BETWEEN #{createData} and #{createData2}
+		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute=#{uploadFtpRoute}</if>
+</select>
+<!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
+<select id="financevoucherSelectTouploadAdmin"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
+		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where
+		
+<!-- 		 <if test="city !=null and city !=''"> city =#{city}</if> -->
+		<if test="uploadtype !=null and uploadtype !=''"> uploadtype=#{uploadtype}</if>
+		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute=#{uploadFtpRoute}</if>
 </select>
 <!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
 <select id="financevoucherSelectToupload2"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
 		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where city =#{city}
-		<if test="Parentnode !=null and Parentnode !='' ">and parentnode =#{parentnode}</if>
-		<if test="spare !=null and spare !='' ">and spare =#{spare}</if>
-		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo}</if>
+<!-- 		<if test="Parentnode !=null and Parentnode !='' ">and parentnode =#{parentnode}</if> -->
+<!-- 		<if test="spare !=null and spare !='' ">and spare =#{spare}</if> -->
+<!-- 		<if test="sparetwo !=null and sparetwo !='' ">and sparetwo =#{sparetwo}</if> -->
 		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
 		<if test="createdata !=null and createdata !=''">and createdata=#{createdata}</if>
 		
@@ -148,4 +162,13 @@
 			#{item}
 		</foreach>
 </update>
+<select id="imagedataUpdateNote" parameterType="Map" resultType="com.slloan.entity.ImageDataUpdate">
+	select spare,note,filepath,uploadtype,originalfilename from imagedata
+	<where>
+		<if test="city !=null and city !=''">city =#{city}</if>
+		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute = #{uploadFtpRoute}</if>
+		<if test="uploadtype !=null and uploadtype !=''">and uploadtype = #{uploadtype}</if>
+		<if test="filepath !=null and filepath !=''">and filepath like concat('%',#{filepath},'%')</if>
+	</where>
+</select>
 </mapper>

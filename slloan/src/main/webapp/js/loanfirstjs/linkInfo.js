@@ -53,7 +53,7 @@ var sendData = function(element) {
     var data = collectData()
     data.id = localStorage.firstID
     var method = 'POST'
-    var url = '/slloan/loan/modifyuseraaase'
+    var url = '/slloan/loan/contaupdate'
     log(data)
     if(data.id) {
     	sendAjax(method, url, data)

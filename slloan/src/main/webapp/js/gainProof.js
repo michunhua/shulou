@@ -204,7 +204,7 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/forensicdocuments'
+    var url = '/slloan/loan/forensicdocuments?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
     datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
@@ -214,15 +214,20 @@ var envs = function(element) {
   })
 }
 
-// 具体查询
-var numberSearch = function() {
-	var envs = es('.mark')
-	for(var i = 0; i < envs.length; i++) {
-		envs[i].addEventListener('click', function(event) {
-			console.log(event.target.innerText)
+//具体查询
+var numberSearch = function(element) {
+	var envs = e(element)
+		envs.addEventListener('click', function(event) {
+			var indicate = event.target.classList
+			if(indicate == 'mark') {
+				localStorage.gainID = event.target.parentNode.nextSibling.innerText
+				console.log(localStorage.clearInfo)
+				window.location.href = '/slloan/loan/gaininfoloan'
+				
+			}
 		})
-	}
 }
+
 
 //分页接口 user/userlist
 var init = {
@@ -288,6 +293,7 @@ var uploadCertificate = function(element) {
 						'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
 						'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
 						'角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>'+
+						'<input type="text" id="uid"  value="" name="uid" readonly="readonly" style = "display:none;"/><br/>'+
 						'状态:<input type="text" id="specialState"  value="" name="state" readonly="readonly"/><br/>'+
 						'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
 						'<input type="file"  name="file" onchange="document.getElementById("filepath1").value=this.value;"/>'+
@@ -302,12 +308,26 @@ var uploadCertificate = function(element) {
 			var worth = e('#specialState')
 			worth.value = event.target.parentNode.classList
 			userInitUpload("#username1", '#city1', '#id1', '#rolename1')
+			var mark = document.querySelector('#uid')
+			console.log(event.target.parentNode.classList.value)
+			mark.value = event.target.parentNode.classList.value
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')
 		}
 	}) 
 } 
 
+//// 上传时 ID
+//var updateImgId = function(element, goal) {
+//	var mark = document.querySelector(goal)
+//	var intent = document.querySelectorAll(element)
+//	for(var i = 0; i < intent.length; i++) {
+//		intent[i].addEventListener('click', function(event) {
+//			console.log(event[i].target.parentNode.class.value)
+//			mark.vlaue = event.target.parentNode.class.value
+//		})
+//	}
+//}
 
 //添加默认上传相关的用户值
 var userInitUpload = function(element, elements, elementss, elementes) {
@@ -382,6 +402,8 @@ var hang_cirulationAjax = function(method, url, datas) {
                   tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
                   
           	}
+          } else {
+              tableString += "<tr><td>" + content + "</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><tr>"
           }
   		layer.open({
   			  title: '流转记录',
@@ -420,12 +442,13 @@ var Hang_cirulation = function(element) {
 
 var __main = function() {
   initData()
-  numberSearch()
+  numberSearch(".tab-data")
   envs('#save-data')
   nextpage()
   previoupage()
   uploadCertificate(".tab-data")
   Hang_cirulation('.tab-data')
+//  updateImgId('#upload', '#uid')
 }
 
 __main()

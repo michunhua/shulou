@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +49,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.jcraft.jsch.JSch;
+import com.slloan.constants.CaptchaConstants;
 import com.slloan.entity.ImageDataUpdate;
 import com.slloan.entity.ObjectSeq;
 import com.slloan.entity.ResultList;
@@ -79,7 +81,7 @@ public class UpdateFTPController{
 	public String ftpIp;//IP
 	
 	@Value("${ftpPort}")
-	public String ftpPort;//端口
+	public int ftpPort;//端口
 	
 	@Value("${ftpUser}")
 	public String ftpUser;//用户名
@@ -90,7 +92,12 @@ public class UpdateFTPController{
 	@Value("${fileSize}")
 	public int fileSize;
 	
-	ChannelSftp sftp;
+	@Value("${sftp}")
+	public String sftpp;
+	
+	@Value("${admin}")
+	public String admin;
+	static ChannelSftp sftp;
 	
 	FileInputStream fis = null;
 	static ZipFile zf ;
@@ -134,10 +141,11 @@ public class UpdateFTPController{
     	final	String filepath2 = req.getParameter("filepath");
     	final	String city = req.getParameter("city");
     			String usernameid = req.getParameter("id");//用户ID
+    			String reqid= req.getParameter("state");
     			String username = req.getParameter("username");
     			String roleName = req.getParameter("rolename");
-//    			String uid = req.getParameter("uid");
-//    			int intid = Integer.parseInt(uid);
+    			String uid = req.getParameter("uid");
+    			int intid = Integer.parseInt(uid);
     			Session session = null;
     			Channel channel = null;
 //    	final	String file = req.getParameter("FileUpload");
@@ -165,10 +173,10 @@ public class UpdateFTPController{
     	       
     	        try {
     	        	
-    	        	 if(22<= 0){
+    	        	 if(ftpPort<= 0){
     	    	        	session = jsch.getSession(ftpUser, ftpIp);
     		        	}else{
-    		        		session = jsch.getSession(ftpUser, ftpIp,22);
+    		        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
     		        	}
     	        	
     	        	//如果服务器连接不上，则抛出异常
@@ -176,14 +184,14 @@ public class UpdateFTPController{
     	     			throw new Exception("session is null");
     	     		}
     	     		//设置登陆主机的密码
-    	    		session.setPassword("Dt20180503");//设置密码   
+    	    		session.setPassword(ftpPwd);//设置密码   
     	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
     	    		session.setConfig("StrictHostKeyChecking", "no");
     	    		//设置登陆超时时间   
     	    		session.connect(30000);
     	    		
     	    		//创建sftp通信通道
-    				channel = (Channel) session.openChannel("sftp");
+    				channel = (Channel) session.openChannel(sftpp);
     				channel.connect(1000);
     				ChannelSftp sftp = (ChannelSftp) channel;
 //    	            ftp.connect(ftpIp);// 连接FTP服务器
@@ -216,7 +224,7 @@ public class UpdateFTPController{
              	 			System.out.println("aaaa------------:  "+requestsize);
          	 			  
              	 			if(requestsize > fileSize){
-             	 				return new Json(false,"fail","","文件上传大小己超过5M");
+             	 				return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
              	 			}else{
              	 				if(upload_type.equals("申请表") && requestsize >0 ){
 //                 	 				if (!ftp.changeWorkingDirectory("shenqingbiao_image")) {
@@ -240,8 +248,9 @@ public class UpdateFTPController{
                                  	imagedata.setSparetwo(roleName);//角色名
                                  	String createData = DateUtils.getInDateTime((new Date()));//日期
                                  	imagedata.setCreateData(createData);
+                                 	imagedata.setUploadFtpRoute(uid);
                                  	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-                                 	sftp.cd("/usr/local/FTP/shenqingbiao_image");
+                                 	sftp.cd(CaptchaConstants.SHENQINGBIAO_IMAGE);
                                  	
                              	}
                  	 			if(upload_type.equals("身份证明")){
@@ -267,8 +276,9 @@ public class UpdateFTPController{
                                  	imagedata.setSparetwo(roleName);//角色名
                                  	String createData = DateUtils.getInDateTime((new Date()));//日期
                                  	imagedata.setCreateData(createData);
+                                 	imagedata.setUploadFtpRoute(uid);
                                  	imagedataservice.imageDataAdd(imagedata);
-                                 	sftp.cd("/usr/local/FTP/shenfenzheng_image");
+                                 	sftp.cd(CaptchaConstants.SHENFENZHENG_IMAGE);
                              	}
                              	if(upload_type.equals("房产证明")&& requestsize >0){
                              		System.out.println("房产证明");
@@ -292,8 +302,9 @@ public class UpdateFTPController{
                                  	imagedata.setSparetwo(roleName);//角色名
                                  	String createData = DateUtils.getInDateTime((new Date()));//日期
                                  	imagedata.setCreateData(createData);
+                                 	imagedata.setUploadFtpRoute(uid);
                                  	imagedataservice.imageDataAdd(imagedata);
-                                 	sftp.cd("/usr/local/FTP/fangchanzheng_image");
+                                 	sftp.cd(CaptchaConstants.FANGCHANZHENG_IMAGE);
 //                                 	 ZipUtil1.unZip(fangchanzheng_image+"/"+targetFileName);
                              	}
                              	if(upload_type.equals("批示")&& requestsize >0){
@@ -319,8 +330,9 @@ public class UpdateFTPController{
                                  	imagedata.setSparetwo(roleName);//角色名
                                  	String createData = DateUtils.getInDateTime((new Date()));//日期
                                  	imagedata.setCreateData(createData);
+                                 	imagedata.setUploadFtpRoute(uid);
                                  	imagedataservice.imageDataAdd(imagedata);
-                                 	sftp.cd("/usr/local/FTP/pishi_image");
+                                 	sftp.cd(CaptchaConstants.PISHI_IMAGE);
 //                                 	 ZipUtil1.unZip(pishi_image+"/"+targetFileName);
                              	}
                              	if(upload_type.equals("其他类")&& requestsize >0){
@@ -342,10 +354,11 @@ public class UpdateFTPController{
                                          	imagedata.setParentnode(usernameid);//用户名ID
                                          	imagedata.setSpare(username);//用户名
                                          	imagedata.setSparetwo(roleName);//角色名
+                                         	imagedata.setUploadFtpRoute(uid);
                                          	String createData = DateUtils.getInDateTime((new Date()));//日期
                                          	imagedata.setCreateData(createData);
                                          	imagedataservice.imageDataAdd(imagedata);
-                                         	sftp.cd("/usr/local/FTP/qita_image");
+                                         	sftp.cd(CaptchaConstants.QITA_IMAGE);
 //                             			}
                              		
 //                                 	 ZipUtil1.unZip(qita_image+"/"+targetFileName);
@@ -383,8 +396,9 @@ public class UpdateFTPController{
                                           	imagedata.setSparetwo(roleName);//角色名
                                           	String createData = DateUtils.getInDateTime((new Date()));//日期
                                           	imagedata.setCreateData(createData);
+                                          	imagedata.setUploadFtpRoute(uid);
                                           	imagedataservice.imageDataAdd(imagedata);
-                                          	sftp.cd("/usr/local/FTP/pingzheng_image");
+                                          	sftp.cd(CaptchaConstants.PINGZHENG_IMAGE);
 //                                  	    }
         							} catch (Exception e) {
         							}
@@ -437,11 +451,11 @@ public class UpdateFTPController{
                     		//return new Json(true,"success",listimg);
                     		  return new Json(true,"success",listimg,"上传成功");
                     	}else{
-                    		return new Json(false,"fail",listimg,"请选择城市或上海类型");
+                    		return new Json(false,"fail",listimg,CaptchaConstants.FILE_TYPE);
                     	}
           	          }else{
           	        	  System.err.println("上传失败！"); 
-          	        	  return new Json(false,"fail",pageBean,"请选择上传文件类型jpg,png,jpge,bmp,png");
+          	        	  return new Json(false,"fail",pageBean,CaptchaConstants.IMAGE_TYPE);
           	          }
          	 		}
 //	     	         getPhont(origFileName);
@@ -525,23 +539,119 @@ public class UpdateFTPController{
      * @param req
      * @return
 	 * @throws IOException 
+	 * @throws SftpException 
      */
     @RequestMapping(value = "/imagedatadel",method=RequestMethod.POST,produces="application/json;charset=utf-8")
     @ResponseBody
-	  	public Json imagedatadel(HttpServletRequest req) throws IOException{
+	  	public Json imagedatadel(HttpServletRequest req,HttpServletResponse res) throws IOException, SftpException{
     	String data = req.getParameter("data");
-    	JSONObject obj = new JSONObject().fromObject(data);
-    	String sid = obj.getString("id");
-    	String image = obj.getString("file");
-//    	System.out.println(sid+ ""+ image)
-//    	String sid=req.getParameter("id");
-//    	String image=req.getParameter("file");//文件名
-    	 filenameimage = image;//图片
-    		int imageid = Integer.valueOf(sid);
-    		boolean isResult = imagedataservice.imagedatedel(imageid);
-    		filename2 ="D:/FTP";
-    		File f = new File(filename2);
-    		getDirectory(f);
+    	Session session = null;
+		Channel channel = null;
+		JSch jsch = new JSch();
+		try {
+			if(ftpPort<= 0){
+	        	session = jsch.getSession(ftpUser, ftpIp);
+        	}else{
+        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+        	}
+    	
+    	//如果服务器连接不上，则抛出异常
+ 		if (session == null) {
+ 			throw new Exception("session is null");
+ 		}
+ 		//设置登陆主机的密码
+		session.setPassword(ftpPwd);//设置密码   
+		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+		session.setConfig("StrictHostKeyChecking", "no");
+		//设置登陆超时时间   
+		session.connect(30000);
+			channel = (Channel) session.openChannel(sftpp);
+			channel.connect(1000);
+			ChannelSftp sftp = (ChannelSftp) channel;
+			JSONObject obj = new JSONObject().fromObject(data);
+	    	String uploadFtpRoute = obj.getString("id");
+	    	String image = obj.getString("file");
+	    	String type = obj.getString("type");
+	    	
+	    	 filenameimage = image;//图片
+	    	String ss = URLDecoder.decode(filenameimage, "UTF-8");
+	    	 int imageid = Integer.valueOf(uploadFtpRoute);
+	    	System.out.println(ss);
+	    	 String imagefile = ss.substring(ss.lastIndexOf("/")+1);
+	    	 ImageDataUpdate imagedata = new ImageDataUpdate();
+	    	 imagedata.setUploadFtpRoute(uploadFtpRoute);
+	    	 imagedata.setFilepath(imagefile);
+	    	 if(type.equals("申请表")){
+    	    	boolean isResult = imagedataservice.imagedatedel(imagedata);
+    	    	if(isResult == true){
+    	    		sftp.cd(CaptchaConstants.SHENQINGBIAO_IMAGE);
+         	 	 	sftp.rm(imagefile);
+        			return new Json(true,"success",isResult);
+        		}else{
+        			return new Json(false,"false",isResult);
+        		}
+     	 	}else if(type.equals("身份证明")){
+     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+     	 		if(isResult == true){
+	     	 		sftp.cd(CaptchaConstants.SHENFENZHENG_IMAGE);
+	         	 	sftp.rm(imagefile);
+         	 		return new Json(true,"success",isResult);
+        		}else{
+        			return new Json(false,"false",isResult);
+        		}
+     	 	}else if(type.equals("房产证明")){
+     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+     	 		if(isResult == true){
+     	 			sftp.cd(CaptchaConstants.FANGCHANZHENG_IMAGE);
+             	 	sftp.rm(imagefile);
+     	 			return new Json(true,"success",isResult);
+     	 		}else{
+     	 			return new Json(false,"false",isResult);
+     	 		}
+     	 	}else if(type.equals("批示")){
+     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+     	 		if(isResult == true){
+     	 			sftp.cd(CaptchaConstants.PISHI_IMAGE);
+             	 	sftp.rm(imagefile);
+     	 			return new Json(true,"success",isResult);
+     	 		}else{
+     	 			return new Json(false,"false",isResult);
+     	 		}
+     	 		
+     	 	}else if(type.equals("其他类")){
+     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+     	 		if(isResult == true){
+     	 			sftp.cd(CaptchaConstants.QITA_IMAGE);
+             	 	sftp.rm(imagefile);
+     	 			return new Json(true,"success",isResult);
+     	 		}else{
+     	 			return new Json(false,"false",isResult);
+     	 		}
+     	 	}
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return null;
+    	
+    	 	
+//    		int imageid = Integer.valueOf(uploadFtpRoute);
+//    		boolean isResult = imagedataservice.imagedatedel(imageid);
+//    		filename2 = "/usr/local/FTP";//FTP路径
+//    		
+//    		try {
+//    			
+////    			sftp.cd("/usr/local/FTP/shenqingbiao_image");
+////    			  List<String> list=sftp.ls("/usr/local/FTP/shenqingbiao_image");
+////    			  for (int i = 0; i < list.size(); i++) {
+////    			        sftp.rm(list.get(i));
+////    			    }
+//    			
+//    			sftp.rm(filenameimage);
+//				File f = new File(filename2);
+//	    		getDirectory(f);
+//			} catch (SftpException e) {
+//				e.printStackTrace();
+//			}
 //    		File f = new File(filename2);
 //    			boolean b = f.delete();
 //    			if(b == true){
@@ -549,16 +659,16 @@ public class UpdateFTPController{
 //    			}else{
 //    				System.err.println("失败");
 //    			}
-    		if(isResult ==true){
-    			return new Json(true,"success",isResult);
-    		}else
-    			return new Json(false,"false",isResult);
+//    		if(isResult ==true){
+//    			return new Json(true,"success",isResult);
+//    		}else
+//    			return new Json(false,"false",isResult);
     		
 	  	}
     
     
   //递归遍历  
-    private static void getDirectory(File file) {  
+    private static void getDirectory(File file) throws SftpException {  
     	String filename =filenameimage;
     	System.out.println(filename);
     File flist[] = file.listFiles();  
@@ -574,7 +684,9 @@ public class UpdateFTPController{
            System.out.println("file==>" + f.getAbsolutePath());  
            
            if(f.getName().endsWith(filename)){
+        	   sftp.rm(filename);
     			if(f.delete()){
+//        	   if(sftp.rm("filename") == true){
     				System.err.println("图片文件已经删除: "+f.getName());
     			}else{
     				System.err.println("图片文件删除失败");
@@ -709,7 +821,44 @@ public class UpdateFTPController{
  
         return formatDate + random+"_"+city+"_"+fileName;
     }
-  
+    
+  /**
+   * 点击查看返回结果
+   * @param req 
+   * @param res
+   * @return
+ * @throws UnsupportedEncodingException 
+   */
+    @RequestMapping(value="/selectupdateinformation",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+    @ResponseBody
+    public Json selectNoteUpdateinformation(HttpServletRequest req , HttpServletResponse res) throws UnsupportedEncodingException{
+    	String data = req.getParameter("data");
+    	JSONObject jsonobj = new JSONObject().fromObject(data);
+    	String uploadtype = jsonobj.getString("uploadtype");//上传类型
+    	String city = jsonobj.getString("city");
+//    	String sparetwo = jsonobj.getString("rolename");
+    	String id = jsonobj.getString("id");
+    	String filepathsub = jsonobj.getString("filepath");
+    	String filepathsubstring = filepathsub.substring(filepathsub.lastIndexOf("/")+1);
+    String filepath = URLDecoder.decode(filepathsubstring,"UTF-8");
+//    	String id = req.getParameter("id");
+//    	String uploadtype = req.getParameter("uploadtype");
+//    	String city = req.getParameter("city");
+//    	String filepath = req.getParameter("filepath");
+    	int uid = Integer.valueOf(id);
+    	ImageDataUpdate image = new ImageDataUpdate();
+    	image.setUploadtype(uploadtype);//上传类型
+    	image.setCity(city);
+    	image.setId(uid);
+    	image.setFilepath(filepath);
+    	ImageDataUpdate imageupdate = imagedataservice.imagedataUpdateNote(image);
+    	if(imageupdate !=null){
+    		return new Json(true,"success",imageupdate,"");
+    	}else
+    		return new Json(false,"fail",imageupdate,"");
+    	
+    	
+    }
     /**
      * 根据 上传类型 原文件名  上传者姓名查所上传的
      * @param req
@@ -728,6 +877,7 @@ public class UpdateFTPController{
     	String sparetwo = jsonobj.getString("rolename");//角色名
     	String spare = jsonobj.getString("username");//用户名
     	String Parentnode = jsonobj.getString("usernameid");//用户ID
+    	String uploadFtpRoute = jsonobj.getString("listid");//用户ID
     	String[] splist = uploadtype.split(",");
     	String createDate = DateUtils.getInDateTime((new Date()));
     	Map<Object,Object> map = new HashMap<Object,Object>();
@@ -738,47 +888,229 @@ public class UpdateFTPController{
     		String strplist = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
 //    		System.out.println(strplist);
     		if(strplist.equals("申请表")){
-    			map.put("申请表", strplist);
-    			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
-    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
-    		    result.setLists(listimg);
-    		    listmap.put("申请表", listimg);
+    			
+    			if(spare.contains(admin)){
+    				map.put("申请表", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("申请表", listimg);
+    			}else{
+    				map.put("申请表", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("申请表", listimg);
+    			}
+    			
     		}else if(strplist.equals("身份证明")){
-    			map.put("身份证明", strplist);
-    			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
-    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
-    		    result.setLists(listimg);
-    		    listmap.put("身份证明", listimg);
+    			
+    			if(spare.contains(admin)){
+    				map.put("身份证明", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("身份证明", listimg);
+    			}else{
+    				map.put("身份证明", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("身份证明", listimg);
+    			}
+    			
     		}else if(strplist.equals("批示")){
-    			map.put("批示", strplist);
-    			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
-    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
-    		    result.setLists(listimg);
-    			listmap.put("批示", listimg);
-    		}else if(strplist.equals("凭证类")){
-    			map.put("凭证类", strplist);
-    			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
-    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
-    		    result.setLists(listimg);
-    		    listmap.put("凭证类", listimg);
+    			
+    			if(spare.contains(admin)){
+    				map.put("批示", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        			listmap.put("批示", listimg);
+    			}else{
+    				map.put("批示", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        			listmap.put("批示", listimg);
+    			}
+    			
+    			
+    			
+    		}else if(strplist.equals("转账凭证")){
+    			if(spare.contains(admin)){
+    				map.put("转账凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("转账凭证", listimg);
+    			}else{
+    				map.put("转账凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("转账凭证", listimg);
+    			}
+    			
+    			
+    		}else if(strplist.equals("结算凭证")){
+    			
+    			if(spare.contains(admin)){
+    				map.put("结算凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("结算凭证", listimg);
+    			}else{
+    				map.put("结算凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("结算凭证", listimg);
+    			}
+    			
+    			
+    		}else if(strplist.equals("取证凭证")){
+    			
+    			
+    			if(spare.contains(admin)){
+    				map.put("取证凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("取证凭证", listimg);
+    			}else{
+    				map.put("取证凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("取证凭证", listimg);
+    			}
+    			
+    			
+    		}else if(strplist.equals("解押凭证")){
+    			
+    			if(spare.contains(admin)){
+    				map.put("解押凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("解押凭证", listimg);
+    			}else{
+    				map.put("解押凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("解押凭证", listimg);
+    			}
+    			
+    			
+    		}else if(strplist.equals("进押凭证")){
+    			
+    			
+    			if(spare.contains(admin)){
+    				map.put("进押凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("进押凭证", listimg);
+    			}else{
+    				map.put("进押凭证", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("进押凭证", listimg);
+    			}
+    			
+    			
+    		}else if(strplist.equals("回款确认")){
+    			
+    			if(spare.contains(admin)){
+    				map.put("回款确认", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("回款确认", listimg);
+    			}else{
+    				map.put("回款确认", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("回款确认", listimg);
+    			}
+    			
+    			
     		}else if(strplist.equals("其他类")){
-    			map.put("其他类", strplist);
-    			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
-    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
-    		    result.setLists(listimg);
-    		    listmap.put("其他类", listimg);
+    			if(spare.contains(admin)){
+    				map.put("其他类", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("其他类", listimg);
+    			}else{
+    				map.put("其他类", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("其他类", listimg);
+    			}
+    			
+    			
+    			
     		}else if(strplist.equals("房产证明")){
-    			map.put("房产证明", strplist);
+    			
+    			if(spare.contains(admin)){
+    				map.put("房产证明", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectTouploadAdmin(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("房产证明", listimg);
+    			}else{
+    				map.put("房产证明", strplist);
+        			System.out.println(strplist);
+        			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("房产证明", listimg);
+    			}
+    			
+    			
+    		}else if(strplist.equals("贷款信息查看")){
+    			
+    			map.put("贷款信息查看", strplist);
     			System.out.println(strplist);
-    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
-    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
-    		    result.setLists(listimg);
-    		    listmap.put("房产证明", listimg);
+    			if(spare.contains("admin")){
+    				ImageDataUpdate imagedata = new ImageDataUpdate("",strplist,"","","","");
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("贷款信息查看", listimg);
+    			}else{
+    				ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,"","","");
+        		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+        		    result.setLists(listimg);
+        		    listmap.put("贷款信息查看", listimg);
+    			}
     		}
     	}
 		 return new Json(true,"success",listmap,"贷款凭证");

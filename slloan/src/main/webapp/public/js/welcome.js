@@ -1,4 +1,4 @@
-console.log("欢迎登录")
+//console.log("欢迎登录")
 
 var welcomeLogin = function() {
 	var intent = document.querySelector('.welcome')

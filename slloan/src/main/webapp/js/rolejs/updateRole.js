@@ -127,7 +127,6 @@ var collectData = function() {
    data.description = e('.role-description').value
    data.city = e('.role-city').value
    data.note = e('.role-note').value
-   // data.setPurview = document.querySelector('.role-power').value
    data.setPurview = getEachData(powerShow, Opower)
    data.id = localStorage.updateRoleName
    data.parentId = localStorage.purid
@@ -202,6 +201,7 @@ var obtainAjax = function(method, url, datas) {
           options.innerText = datas[i].name
           evs.appendChild(options)
         }
+    	foo()                               // 加载默认表单数据
         renderForm()
       },
       error: function(){
@@ -223,14 +223,12 @@ var obtainCity = function() {
 
 //发送数据方法
 var updatesendAjax = function(method, url, datas, callback) {
-  // log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-//    		console.log('获取数据成功')
     		powerShow.length = 0
     		var name = e('.role-name')
     		var description = e('.role-description')
@@ -258,9 +256,7 @@ var updatesendAjax = function(method, url, datas, callback) {
     		}
     			
     		for(var m = 0; m < selected.length; m++) {
-//    			log("----------------------选中")
     			if(yii[flag[m]] > 0) {
-//    				log("+++++++++++++++++这里执行")
     				selected[yii[flag[m]] - 1].classList.add('layui-form-checked')
     			}
     		}
@@ -272,17 +268,11 @@ var updatesendAjax = function(method, url, datas, callback) {
     		
     		addPower(powerShow)
     		
-//    		console.log(powerShow)
     		// 设置获取城市
-//    		console.log(data.obj.belongs_City)
     		var Identification = data.obj.belongs_City
     		var intent = document.querySelector(".role-city")
     		var len = intent.length
-    		log('城市',len)
-//    		log("显示城市")
     		for(var p = 0; p < len; p++) {
-//    			log(intent[p].value)
-    			log('Identification', Identification)
     			if(intent[p].value == Identification) {
     				intent[p].selected = true
     				
@@ -305,7 +295,9 @@ var foo = function() {
   var url = '/slloan/role/selectbyid'
   var data = {}
   data.id = localStorage.updateRoleName
-  updatesendAjax(method, url, data, null)
+  if(data.id) {
+	  updatesendAjax(method, url, data, null)  
+  }
 }
 
 
@@ -319,7 +311,6 @@ var __main = function() {
   removeSelectPower('.role-manage')   // 用户管理 按钮
   sendForm()                          // 保存按钮点击发送&数据
   cancelBtn('#cancel')                // 取消按钮点击重置表单
-  foo()                               // 加载默认表单数据
 }
 
 __main()

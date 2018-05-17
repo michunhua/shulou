@@ -100,7 +100,7 @@ public class ContactsController {
 	 * 修改用户保存
 	 * @return
 	 */
-	@RequestMapping(value="/modifyuseraaase",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/contaupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json updateUser(HttpServletRequest req){
 		

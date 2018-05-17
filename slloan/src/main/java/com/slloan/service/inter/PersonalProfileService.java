@@ -43,7 +43,10 @@ public interface PersonalProfileService {
 		 	 * @param param
 		 	 * @return
 		 	 */
-		 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param);
+		 	
+		 	Page<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param);
+		 	
+		 	Page<PersonalProfile> vaguelikeSelectCreatetwo2(Map<Object,Object> param);
 		 	
 		 	/**
 		     *初审 分页操作，调用分页方法
@@ -64,6 +67,7 @@ public interface PersonalProfileService {
 		     * @return
 		     */
 		 	public Page<PersonalProfile> getFinalreviewPage(int currentPage,String username,String role,String city,String parentnodeId);
+		 	public Page<PersonalProfile> getFinalreviewPage(int currentPage,String username,String role,String city,String parentnodeId,int intid);
 		 		/**
 			     * 终审用户记录总数
 			     * @return
@@ -75,7 +79,7 @@ public interface PersonalProfileService {
 		 	 * @return
 		 	 */
 		 	public Page<PersonalProfile> getFinancePagePage(int currentPage,String username,String role,String city,String parentnodeId);
-		 	
+		 	public Page<PersonalProfile> getFinancePagePage(int currentPage,String username,String role,String city,String parentnodeId,int intid);
 		 	/**
 		 	 * 财务状态统计
 		 	 * @return
@@ -112,6 +116,7 @@ public interface PersonalProfileService {
 		 	 * @return
 		 	 */
 		 	public Page<PersonalProfile> getLoanInformation(int currentPage,String username,String role,String city,String parentnodeId);
+		 	public Page<PersonalProfile> getLoanInformationCity(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
 		 	 * 贷款信息统计
@@ -159,6 +164,7 @@ public interface PersonalProfileService {
 		 	 * 进压列表
 		 	 * @return
 		 	 */
+		 	
 		 	public Page<PersonalProfile> getLoanPressure(int currentPage,String username,String role,String city,String parentnodeId);
 		 	
 		 	/**
@@ -170,6 +176,7 @@ public interface PersonalProfileService {
 //			int getPersonalProfilePage();
 		 	
 		 	public PersonalProfile getSelectById(PersonalProfile param);
+			public PersonalProfile getSelectByIdAdmin(PersonalProfile param);
 		 	
 		 	public Page<PersonalProfile> checkHangData(String state,String username,String role,String city,String parentnodeId,int id,int currentPage);
 		 	int checkHangDataCount(String state);

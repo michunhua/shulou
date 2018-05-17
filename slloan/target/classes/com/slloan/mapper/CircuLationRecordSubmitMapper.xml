@@ -107,6 +107,7 @@
 		#{ParentnodeId},
 		#{city},
 		#{rolename})
+		
     </insert>
 <update id="updatefallbackinsert" parameterType="com.slloan.entity.CircuLationRecord">    
 			update recordsubmit_table 
@@ -147,4 +148,15 @@
 <!-- 				</set> -->
 <!-- 					 WHERE submit = #{id} -->
     </update>
+    <update id="updateDateStateCancel"  parameterType="String">    
+			update recordsubmit_table set marked='' where submit = #{id}
+    </update>
+    
+    <select id="selectByidHangup" parameterType="Map" resultType="com.slloan.entity.CircuLationRecord">
+		SELECT submit,id,marked FROM recordsubmit_table where 
+			<if test="submit !=null and submit !=''">submit=#{submit}</if>
+			<if test="city !=null and city !=''">and  city=#{city} </if>
+			<if test="state !=null and state !=''">and  state=#{state}</if>
+<!-- 		submit=#{submit} and  city=#{city} and  state=#{state} -->
+	</select>
 </mapper>

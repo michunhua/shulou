@@ -200,6 +200,6 @@ var mustLogin = function(data) {
 	}
 }
 
-console.log(localStorage.username, '登录成功')
+//console.log(localStorage.username, '登录成功')
 
 mustLogin(localStorage.username)

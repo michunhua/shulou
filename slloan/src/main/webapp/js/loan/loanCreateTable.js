@@ -138,8 +138,9 @@ var addTable = function(data) {
 		var userName = myFilter(datas.lists[i].applyfor[0].amount)
 		var phone = myFilter(datas.lists[i].mobile_phone)
 		var number = myFilter(datas.lists[i].id_number)
-		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)
-		var state = myFilter(datas.lists[i].state)
+		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit) + datas.lists[i].applyfor[0].time_Limits
+		var state = myFilter(datas.lists[i].notes[0].fallbackname)
+		var state_number = data.lists[i].state
 		var address = myFilter(datas.lists[i].home_address_now)
 		var time = myFilter(datas.lists[i].ctime)
 
@@ -150,15 +151,16 @@ var addTable = function(data) {
 		td1.classList.add('flag')
 		td1a.innerText = ID
 		td1.innerText = userid
-		td2.innerText = userName
+		td2.innerText = userName + ' 元'
 		td3.innerText = phone
 		td4.innerText = number
 		td5.innerText = limit
+		td6.classList.add(state_number)
 		td6.innerText = state
 		td7.innerText = address
 		td8.innerText = time
 		  td10.classList.add('record')
-		  td10.name = state
+		  td10.name = state_number
 		  td10.href = "#"
 		  td10.innerText = "[ 流转记录 ]"
 		  td9.classList.add(ID)
@@ -262,7 +264,7 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/vaguelikeselectcreate'
+    var url = '/slloan/loan/vaguelikeselectcreate?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
      datas.rolename = localStorage.purrole
   datas.username = localStorage.purusername
@@ -288,6 +290,7 @@ var numberSearch = function(element) {
 		envs.addEventListener('click', function(event) {
 			var indicate = event.target.classList
 			if(indicate == 'mark') {
+				localStorage.createTemporaryId = ""
 				localStorage.createID = event.target.parentNode.nextSibling.innerText
 				window.location.href = '../loan/loanjoin'
 				
@@ -380,19 +383,21 @@ var hang_cirulationAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
         console.log(data.obj.a.length)
-        var content = data.obj.b.applicationnumber
+        var content = data.obj.b.applicationnumber || 'null'
         console.log(content)
         var tableString = ''
         if(data.obj.a.length) {
         	var flag = data.obj.a.length
         	for(var i = 0; i < flag; i++) {
-                var rolename = data.obj.a[i].rolename
-                var username = data.obj.a[i].username
-                var circulation = data.obj.a[i].circulation
-                var updatedata = data.obj.a[i].updatedata
+                var rolename = data.obj.a[i].rolename || 'null'
+                var username = data.obj.a[i].username || 'null'
+                var circulation = data.obj.a[i].circulation || 'null'
+                var updatedata = data.obj.a[i].updatedata || 'null'
                 tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
                 
         	}
+        } else {
+            tableString += "<tr><td>" + content + "</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><tr>"
         }
 		layer.open({
 			  title: '流转记录',

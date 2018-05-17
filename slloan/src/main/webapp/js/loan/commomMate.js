@@ -132,7 +132,7 @@ log('send data method')
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){
@@ -159,7 +159,7 @@ var updateData = function(element) {
 		var data = collectData()
 	    data.id = localStorage.createID		
 		var method = 'POST'
-		var url = '/slloan/loan/cobupdatesaad'
+		var url = '/slloan/loan/cobupdate'
 		log(data)
 		if(data.id) {
 			sendAjax(method, url, data)

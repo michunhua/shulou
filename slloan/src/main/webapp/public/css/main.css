@@ -35,6 +35,30 @@ input.error {
 	margin: 12px;
 }
 
+
+/* 图像显示 */
+/* #imagedata1, #imagedata2, #imagedata3, #imagedata4, #imagedata5, #imagedata6 {
+	display: inline-block;
+}  */
+
+.updateImages {
+	display: inline-block;
+}
+
 .marked {
-	background-color: red;
+ 	background-color: #5FB878; 
+}
+
+/* 备注部分 */
+/* 录单收到有返回 */
+#record-fiance, #record-first, #record-final {
+	display: none;
+}
+/* 初审收到有返回 */
+#final-back, #final-record {
+	display: none;
+}
+/* 终审收到有返回 */
+#fiance-record {
+	display: none;
 }

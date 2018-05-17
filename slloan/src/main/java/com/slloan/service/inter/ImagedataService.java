@@ -16,7 +16,7 @@ import com.slloan.entity.ObjectSeq;
  */
 
 public interface ImagedataService {
-	public boolean imagedatedel(int id);
+	public boolean imagedatedel(ImageDataUpdate uploadFtpRoute);
 	public boolean imageDataAdd(ImageDataUpdate imagedata);
 	public List<ImageDataUpdate> list();
 
@@ -41,7 +41,19 @@ public interface ImagedataService {
 	 * @return
 	 */
 	public List<ImageDataUpdate> financevoucherSelectToupload(ImageDataUpdate param);
+	/**
+	 * 查询回调
+	 * @param param
+	 * @return
+	 */
 	public List<ImageDataUpdate> financevoucherSelectToupload2(ImageDataUpdate param);
+	
+	/**
+	 * 查询回调admin
+	 * @param param
+	 * @return
+	 */
+	public List<ImageDataUpdate> financevoucherSelectTouploadAdmin(ImageDataUpdate param);
 	
 	/**
 	 * 财务批量修改审核通过
@@ -72,4 +84,6 @@ public interface ImagedataService {
 		 boolean loanClearing(int id);//待结算
 		 
 		  ObjectSeq addSeq();
+		  
+		 ImageDataUpdate imagedataUpdateNote(ImageDataUpdate image);
 }

@@ -53,7 +53,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/cobupdatesaad'
+    var url = '/slloan/loan/cobupdate'
     log(data)
     sendAjax(method, url, data)
   })

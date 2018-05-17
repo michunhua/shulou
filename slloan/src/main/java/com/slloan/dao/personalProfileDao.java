@@ -78,6 +78,16 @@ public interface personalProfileDao{
 	     * @return
 	     */
 	 	int getFirsttrialPageCount(String username,String rolename,String city,String parentnodeId);
+	 	int getPersonalProfileCount2(Map<Object,Object> map);
+	 	/**
+	 	 * 初审统计模糊查询
+	 	 * @param username
+	 	 * @param rolename
+	 	 * @param city
+	 	 * @param parentnodeId
+	 	 * @return
+	 	 */
+	 	int getFirsttrialPageCount2(Map<String,Object> param);
 	 	
 		/**
 	     *终审 分页操作，调用分页方法
@@ -138,11 +148,23 @@ public interface personalProfileDao{
 	 	public List<PersonalProfile> getLoanInformation(Map<String, Object> map);
 	 	
 	 	/**
+	 	 * 贷款信息列表城市经理
+	 	 * @return
+	 	 */
+	 	public List<PersonalProfile> getLoanInformationCity(Map<String, Object> map);
+	 	
+	 	/**
 	 	 * 贷款信息统计
 	 	 * @return
 	 	 */
 	 	int getLoanInformationCount(String username,String rolename,String city,String parentnodeId);
 
+	 	/**
+	 	 * 贷款信息统计城市经理
+	 	 * @return
+	 	 */
+	 	int getLoanInformationCountCity(String username,String rolename,String city,String parentnodeId);
+	 	
 		/**
 	 	 * 回款列表
 	 	 * @return
@@ -192,6 +214,8 @@ public interface personalProfileDao{
 	 	int getLoanPressureCount(String username,String rolename,String city,String parentnodeId);
 	 	
 	 	public PersonalProfile getSelectById(Map<String,Object> param);
+	 	
+	 	public PersonalProfile getSelectByIdAdmin(Map<String,Object> param);
 	 	
 	 	public List<PersonalProfile> checkHangData(Map<String,Object> param);
 		int checkHangDataCount(String state);

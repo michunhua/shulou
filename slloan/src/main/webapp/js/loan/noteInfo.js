@@ -80,7 +80,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('当前页面无数据,请添加')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){
@@ -141,10 +141,10 @@ var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     var data = collectData()
-  data.rolename = localStorage.purrole
-	data.username = localStorage.purusername
-	data.city = localStorage.purcity
-	data.parentnodeId = localStorage.purid
+    data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
     data.temporaryId = localStorage.createTemporaryId
     var method = 'POST'
     var url = '/slloan/loan/notedescription'

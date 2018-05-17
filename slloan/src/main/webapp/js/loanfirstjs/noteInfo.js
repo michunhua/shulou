@@ -13,7 +13,7 @@ var collectData = function() {
   data.username = localStorage.purusername
   data.city = localStorage.purcity
   data.parentnodeId = localStorage.purid
-  data.state = ''
+  data.state = localStorage.firstID
   data.ctime = ''
   return data
 }

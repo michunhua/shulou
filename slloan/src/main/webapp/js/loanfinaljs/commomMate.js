@@ -12,24 +12,28 @@ var collectData = function() {
   data.residence = e('.residence-phone').value
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
-  data.state = ''
-	  data.ctime = ''
   data.id = localStorage.finalID
-  
-  
-
   return data
 }
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
-    	callback()
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loanapplyss'
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
     },
     error: function(){
         alert('服务器错误')
@@ -46,7 +50,7 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/cobupdatesaad'
+    var url = '/slloan/loan/cobupdate'
     log(data)
     sendAjax(method, url, data, null)
   })

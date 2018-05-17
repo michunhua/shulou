@@ -22,22 +22,31 @@ var collectData = function() {
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
   data.name= '1'
-	  data.id= 2
+	
 	  data.state= 'a'
 		  data.ctiam = 'b'
-  data.id = 2
+  data.id = localStorage.finalID
   return data
 }
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
-    	callback()
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loanimagss'
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
     },
     error: function(){
         alert('服务器错误')
@@ -54,7 +63,7 @@ var sendData = function() {
     log('data to send at time')
     var data = collectData()
     var method = 'POST'
-    var url = '/slloan/loan/proupdatee'
+    var url = '/slloan/loan/proupdate'
     log(data)
     sendAjax(method, url, data, null)
   })
@@ -138,7 +147,7 @@ var searchAjax = function(method, url, datas) {
 // 查询数据
 var searchData = function() {
 	var method = 'GET'
-	var url = '/slloan/loan/propertyinf'
+	var url = '/slloan/loan/pper'
 	var data = {}
 	data.id = localStorage.finalID
 	if(data.id) {

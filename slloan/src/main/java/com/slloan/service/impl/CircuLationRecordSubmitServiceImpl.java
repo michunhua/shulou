@@ -128,4 +128,18 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	public boolean updateDateState(String id) {
 		return recordSubmitDao.updateDateState(id);
 	}
+
+	@Override
+	public CircuLationRecord selectByidHangup(CircuLationRecord submit) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("submit", submit.getSubmit());
+		map.put("city", submit.getCity());
+		map.put("state", submit.getState());
+		return recordSubmitDao.selectByidHangup(map);
+	}
+
+	@Override
+	public boolean updateDateStateCancel(String id) {
+		return recordSubmitDao.updateDateStateCancel(id);
+	}
 }

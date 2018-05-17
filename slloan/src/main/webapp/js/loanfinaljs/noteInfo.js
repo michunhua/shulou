@@ -138,7 +138,7 @@ var submitAjax = function(method, url, datas) {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
-	  				 window.location.href = "/slloan/loan/loancrea"
+	  				 window.location.href = "/slloan/loan/loancreass"
 	  			});
 	    	} else {
 	    		alert('服务器错误')

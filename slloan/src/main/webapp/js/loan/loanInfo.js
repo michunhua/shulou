@@ -32,6 +32,7 @@ var collectData = function() {
   data.repaymenBtank = e('.repay-bank').value
   data.repaymentAccount = e('.repay-ccount').value
   data.accountNumber = e('.reapy-accountbank').value
+  data.unit = e('.unit').value
   data.state = 'a'
   data.ctime = 'b'
   return data
@@ -143,7 +144,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	      error: function(){
@@ -171,7 +172,7 @@ var updateData = function(element) {
     var data = collectData()
     data.id = localStorage.createID
     var method = 'POST'
-    var url = '/slloan/loan/modifyusersjfo'
+    var url = '/slloan/loan/appupdate'
     log(data)	
     if(data.id) {
 			sendAjax(method, url, data)

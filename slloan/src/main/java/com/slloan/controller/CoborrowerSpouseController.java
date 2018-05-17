@@ -104,7 +104,7 @@ public class CoborrowerSpouseController {
 	 * 初审修改用户保存
 	 * @return
 	 */
-	@RequestMapping(value="/cobupdatesaad",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value="/cobupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
 	@ResponseBody
 	public Json update(HttpServletRequest req){
 		String dataid = req.getParameter("data");
@@ -151,39 +151,7 @@ public class CoborrowerSpouseController {
 	
 	
 	
-	/**
-	 * 终审修改用户保存
-	 * @return
-	 */
-	@RequestMapping(value="/cobupdates",method=RequestMethod.POST,produces="application/json;charset=utf-8")
-	@ResponseBody
-	public String updates(HttpServletRequest req){
-		String dataid = req.getParameter("data");
-		JSONObject json = new JSONObject().fromObject(dataid);
-		Integer id = json.getInt("id");
-		String name = json.getString("cname");  // 共同借款人配偶姓名戦
-		String id_Type =  json.getString("certificate"); //身份证件类型
-		String id_Other = json.getString("certificateType");
-		String id_Number =json.getString("document");  // 身份证件号码
-		String uni_Name =  json.getString("untilName"); // 工作单位名称
-		String unit_Phone =json.getString("untilPhone"); // 单位电话
-		String home_Phone =json.getString("residence"); // 住宅电话
-		String mobile_Phone = json.getString("mobile"); // 移动电话
-		String salary =json.getString("salary"); // 月薪（人民币）
-		String state =json.getString("state"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
-		String ctime=json.getString("ctime");
-		Double monthly_Income = 0.0;
-		if (salary.length() > 0) {
-			monthly_Income = Double.parseDouble(salary);
-		}
-		CoborrowerSpouse coborrow = new CoborrowerSpouse(id,name, id_Type,id_Other, id_Number, uni_Name,
-				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
-		boolean isResult =coborrowerSpouseService.update(coborrow);
-		if(isResult == true){
-			return JSON.toJSONString(isResult);
-		}else
-			return JSON.toJSONString("fail");
-	} 
+
 	
 	/**
 	 * 共同申请人配偶

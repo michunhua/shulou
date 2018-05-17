@@ -205,7 +205,7 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/receivingcertificate'
+    var url = '/slloan/loan/receivingcertificate?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
     datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
@@ -224,14 +224,17 @@ var createBtn = function() {
 	})
 }
 
-// 具体查询
-var numberSearch = function() {
-	var envs = es('.mark')
-	for(var i = 0; i < envs.length; i++) {
-		envs[i].addEventListener('click', function(event) {
-			console.log(event.target.innerText)
+//具体查询
+var numberSearch = function(element) {
+	var envs = e(element)
+		envs.addEventListener('click', function(event) {
+			var indicate = event.target.classList
+			if(indicate == 'mark') {
+				localStorage.incareID = event.target.parentNode.nextSibling.innerText
+				console.log(localStorage.clearInfo)
+				window.location.href = '/slloan/loan/incareinfoloan'
+			}
 		})
-	}
 }
 
 //分页接口 user/userlist
@@ -301,6 +304,7 @@ var uploadCertificate = function(element) {
 						'用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> '+
 						'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
 						'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
+						'<input type="text" id="uid"  value="" name="uid" readonly="readonly" style = "display:none;"/><br/>'+
 						'角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>'+
 						'状态:<input type="text" id="specialState"  value="" name="state" readonly="readonly"/><br/>'+
 						'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
@@ -316,6 +320,9 @@ var uploadCertificate = function(element) {
 			var worth = e('#specialState')
 			worth.value = event.target.parentNode.classList
 			userInitUpload("#username1", '#city1', '#id1', '#rolename1')
+			var mark = document.querySelector('#uid')
+			console.log(event.target.parentNode.classList.value)
+			mark.value = event.target.parentNode.classList.value
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')
 		}
@@ -395,6 +402,8 @@ var hang_cirulationAjax = function(method, url, datas) {
                   tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
                   
           	}
+          } else {
+              tableString += "<tr><td>" + content + "</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><tr>"
           }
   		layer.open({
   			  title: '流转记录',
@@ -433,7 +442,7 @@ var Hang_cirulation = function(element) {
 
 var __main = function() {
   initData()
-  numberSearch()
+  numberSearch(".tab-data")
   envs('#save-data')
   uploadCertificate(".tab-data")
   Hang_cirulation('.tab-data')

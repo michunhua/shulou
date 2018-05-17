@@ -16,7 +16,7 @@ import com.slloan.entity.ObjectSeq;
  */
 @Repository(value="imageDao")
 public interface ImagedataDao {
-	public boolean imagedatedel(int id);
+	public boolean imagedatedel(Map<String,Object> uploadFtpRoute);
 	public boolean imageDataAdd(ImageDataUpdate imagedata);
 	public List<ImageDataUpdate> list();
 	
@@ -52,6 +52,7 @@ public interface ImagedataDao {
 	 */
 	 boolean batchUpdateStudent(List updatelList);
 	 
+	 
 	 /**
 		 *财务批量审核拒绝退回到终审
 		 * @param delList
@@ -72,4 +73,12 @@ public interface ImagedataDao {
 		 boolean tobeforensics(int id);//待取证
 		 boolean pendingconfirmation(int id);//待取证
 		 boolean loanClearing(int id);//待结算
+		 
+		 ImageDataUpdate imagedataUpdateNote(Map<String,Object> image);
+		 /**
+			 * 查询回调admin
+			 * @param param
+			 * @return
+			 */
+			public List<ImageDataUpdate> financevoucherSelectTouploadAdmin(Map<String,Object> param);
 }

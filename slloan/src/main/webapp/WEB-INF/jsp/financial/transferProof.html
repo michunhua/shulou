@@ -175,6 +175,14 @@
                     </div>
                   </div>
               </div>
+              <div class="layui-form-inline" style = "display:none;">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                  <select name="city" lay-verify="required" class="statu">
+                    <option value="4">待财务放款中</option>
+                  </select>
+                </div>
+              </div>
               <div class="layui-form-inline">
                   <div class="layui-inline">
                     <label class="layui-form-label">金额范围</label>
@@ -194,7 +202,6 @@
               <button class="layui-btn" lay-submit lay-filter="formDemo" id = 'save-data'>查询</button>
             </div>
           </div>
-           <a href="/slloan/loan/financialinfo">转账详情</a>
            <div class="layui-inline">
                 <label class="layui-form-label ">总人数:*人</label>
            </div>
@@ -208,7 +215,7 @@
             <thead>
               <tr>
                 <th>申请编号</th>
-                <th>ID</th>
+                <th>编号</th>
                 <th>姓名</th>
                 <th>申请金额</th>
                 <th>手机号码</th>

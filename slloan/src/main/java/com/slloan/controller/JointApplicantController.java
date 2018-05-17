@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,9 @@ public class JointApplicantController {
 	
 	@Autowired
 	private CoborrowerSpouseService notedesc;
+	
+	@Value("${admin}")
+	public String admin; 
 
 	@ResponseBody
 	@RequestMapping(value = "/commonApplydata")
@@ -162,7 +166,7 @@ public class JointApplicantController {
  * @return
  */
 
-	@RequestMapping(value = "/joinupdatessaq", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "/joinupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Json updateadd(HttpServletRequest req) {
 		String dataid = req.getParameter("data");
@@ -505,19 +509,7 @@ public class JointApplicantController {
 		JSONObject obj = new JSONObject().fromObject(data);
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
-//			if(obj.containsKey("id")){
-//				String id = obj.getString("id");
-//				int intid = Integer.parseInt(id);
-//				int statePos = Integer.parseInt(page);
-//				int pageSize = Integer.parseInt(limit);
-//				System.out.println(page);
-//				System.out.println(limit);// statePos, int pageSize
-//				String username = obj.getString("username");
-//				String role = obj.getString("rolename").toString();
-//				String city = obj.getString("city").toString();
-//				String parentnodeId = obj.getString("parentnodeId");
-//				return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos,username,role,city,parentnodeId,intid));
-//			}else{
+		String state = req.getParameter("state");
 				int statePos = Integer.parseInt(page);
 				int pageSize = Integer.parseInt(limit);
 				System.out.println(page);
@@ -526,24 +518,20 @@ public class JointApplicantController {
 				String role = obj.getString("rolename").toString();
 				String city = obj.getString("city").toString();
 				String parentnodeId = obj.getString("parentnodeId");
-				if(obj.containsKey("id") ==true){
+//				if(obj.containsKey("id") ==true){
 					String id = obj.getString("id");
-					int intid = Integer.parseInt(id);
 					boolean isResult =recordSubmitService.updateDateState(id);
 					if(isResult == true){
+						int intid = Integer.parseInt(id);
 						System.out.println("挂起成功");
+						return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos,username,role,city,parentnodeId,intid));
 					}else{
 						System.out.println("挂起失败");
+						return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos,username,role,city,parentnodeId));
 					}
-					return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos,username,role,city,parentnodeId,intid));
-				}else{
-					return JSON.toJSONString(personalprofileservice.getFirsttrialPage(statePos,username,role,city,parentnodeId));
-				}
-				
-				
-//			}
-//		String intid = req.getParameter("id");
-		
+					
+//				}
+					
 	}
 	/**
 	 * 贷款终审列表
@@ -566,9 +554,20 @@ public class JointApplicantController {
 		String role = obj.getString("rolename").toString();
 		String city = obj.getString("city").toString();
 		String parentnodeId = obj.getString("parentnodeId");
-		System.out.println(page);
-		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getFinalreviewPage(statePos,username,role,city,parentnodeId));
+//		if(obj.containsKey("id")){
+			String id = obj.getString("id");
+//			int intid = Integer.parseInt(id);
+			boolean isResult =recordSubmitService.updateDateState(id);
+			if(isResult == true){
+				int intid = Integer.parseInt(id);
+				System.out.println("挂起成功");
+				
+				return JSON.toJSONString(personalprofileservice.getFinalreviewPage(statePos,username,role,city,parentnodeId,intid));
+			}else{
+				 return JSON.toJSONString(personalprofileservice.getFinalreviewPage(statePos,username,role,city,parentnodeId));
+			}
+//		}
+		
 	}
 
 	
@@ -584,7 +583,7 @@ public class JointApplicantController {
 		req.setCharacterEncoding("utf-8");
 		String data = req.getParameter("data");
 		JSONObject obj = new JSONObject().fromObject(data);
-		System.out.println("-----------财务列表---------------");
+		System.out.println("----------财务列表---------------");
 		String page = req.getParameter("page");
 		String limit = req.getParameter("limit");
 		int statePos = Integer.parseInt(page);
@@ -593,10 +592,38 @@ public class JointApplicantController {
 		String role = obj.getString("rolename").toString();
 		String city = obj.getString("city").toString();
 		String parentnodeId = obj.getString("parentnodeId");
-		System.out.println(page);
-		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos,username,role,city,parentnodeId));
+//		if(obj.containsKey("id")){
+			String id = obj.getString("id");
+//			int intid = Integer.parseInt(id);
+			boolean isResult =recordSubmitService.updateDateState(id);
+			if(isResult == true){
+				int intid = Integer.parseInt(id);
+				System.out.println("挂起成功");
+				return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos,username,role,city,parentnodeId,intid));
+			}else{
+				 return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos,username,role,city,parentnodeId));
+			}
+//		}
+		
 	}
+		
+		
+//		req.setCharacterEncoding("utf-8");
+//		String data = req.getParameter("data");
+//		JSONObject obj = new JSONObject().fromObject(data);
+//		System.out.println("-----------财务列表---------------");
+//		String page = req.getParameter("page");
+//		String limit = req.getParameter("limit");
+//		int statePos = Integer.parseInt(page);
+//		int pageSize = Integer.parseInt(limit);
+//		String username = obj.getString("username");
+//		String role = obj.getString("rolename").toString();
+//		String city = obj.getString("city").toString();
+//		String parentnodeId = obj.getString("parentnodeId");
+//		System.out.println(page);
+//		System.out.println(limit);// statePos, int pageSize
+//		return JSON.toJSONString(personalprofileservice.getFinancePagePage(statePos,username,role,city,parentnodeId));
+
 	
 	/**
 	 * 转账凭证列表
@@ -673,9 +700,16 @@ public class JointApplicantController {
 		String role = obj.getString("rolename").toString();
 		String city = obj.getString("city").toString();
 		String parentnodeId = obj.getString("parentnodeId");
-		System.out.println(page);
-		System.out.println(limit);// statePos, int pageSize
-		return JSON.toJSONString(personalprofileservice.getLoanInformation(startPos,username,role,city,parentnodeId));
+		if(username.contains(admin)){
+			System.out.println(page);
+			System.out.println(limit);// statePos, int pageSize
+			return JSON.toJSONString(personalprofileservice.getLoanInformation(startPos,username,role,city,parentnodeId));
+		}else{
+			System.out.println(page);
+			System.out.println(limit);// statePos, int pageSize
+			return JSON.toJSONString(personalprofileservice.getLoanInformationCity(startPos,username,role,city,parentnodeId));
+		}
+		
 	}
 	
 	
@@ -855,126 +889,8 @@ public class JointApplicantController {
 	}
 	
 
-//	/**
-//	 * 贷款初审备注回退
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/loannotFallback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-//	public String loannotesFallback(HttpServletRequest req, HttpServletResponse response) {
-//		
-//		CircuLationRecord circuLationRecord = new CircuLationRecord();
-//		circuLationRecord.setState(0);// 退回后状态改为1
-//		String createDate = DateUtils.getInDateTime((new Date()));
-//		circuLationRecord.setCreateDate(createDate);
-//		circuLationRecord.setFallbackname("退回到按揭员------------------>");
-//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-//		if (isResultInsert == true) {
-//			System.out.println("插入流程表成功");
-//		} else {
-//			System.out.println("失败");
-//		}
-//		return "loanfirst/loanFirstTable";
-//
-//
-//	}
-//	
-//	/**
-//	 * 贷款终审备注回退
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/loannotllback", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
-//	public String FallbackFirst(HttpServletRequest req, HttpServletResponse response) {
-//		
-//		CircuLationRecord circuLationRecord = new CircuLationRecord();
-//		circuLationRecord.setState(1);// 退回后状态改为1
-//		String createDate = DateUtils.getInDateTime((new Date()));
-//		circuLationRecord.setCreateDate(createDate);
-//		circuLationRecord.setFallbackname("退回到初审------------------>");
-//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-//		if (isResultInsert == true) {
-//			System.out.println("插入流程表成功");
-//		} else {
-//			System.out.println("失败");
-//		}
-//		return "loanfirst/loanFirstTable";
-//
-//
-//	}
-//
-//	/**
-//	 * 贷款初审备注提交到贷款终审
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/loannotsubmit", method = RequestMethod.GET)
-//	public String loannotesSubmit(HttpServletRequest req) {
-//
-//		CircuLationRecord circuLationRecord = new CircuLationRecord();
-//		circuLationRecord.setState(2);// 状态改为2
-//		String createDate = DateUtils.getInDateTime((new Date()));
-//		circuLationRecord.setCreateDate(createDate);
-//		circuLationRecord.setFallbackname("提交到贷款初审------------------>");
-//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-//		if (isResultInsert == true) {
-//			System.out.println("插入流程表成功");
-//		} else {
-//			System.out.println("失败");
-//		}
-//
-//		return "loanfinal/loanFinalTable";// 提交到贷款终审
-//	}
-//	
+
 	
-//	/**
-//	 * 按揭员备注提交到贷款初审
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/loannotfile", method = RequestMethod.GET)
-//	public String loannotesFile(HttpServletRequest req) {
-//
-//		CircuLationRecord circuLationRecord = new CircuLationRecord();
-//		circuLationRecord.setState(1);// 退回后状态改为1
-//		String createDate = DateUtils.getInDateTime((new Date()));
-//		circuLationRecord.setCreateDate(createDate);
-//		circuLationRecord.setFallbackname("贷款终审跳转财务------------------>");
-//		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);
-//		if (isResultInsert == true) {
-//			System.out.println("插入流程表成功");
-//		} else {
-//			System.out.println("失败");
-//		}
-//
-//		return "financeApproval/financeApproval";// 提交到贷款初审
-//	}
-//	
-//	/**
-//	 * 贷款初审备注说明保存
-//	 * 
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/loannoteadd", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-//	@ResponseBody
-//	public Json loannoteadd(HttpServletRequest req) {
-//
-//		String recordSingleNote = req.getParameter("recordsinglenote");// 录单备注
-//
-//		String firstTrialNote = req.getParameter("firsttrialnote");// 初审备注
-//
-//		NoteExplain note = new NoteExplain(recordSingleNote, firstTrialNote);
-//		boolean isResultInsert = recordSubmitService.firstTrial(note);
-//		if (isResultInsert == true) {
-//			System.out.println("插入流程表成功");
-//			return new Json(true, "success", isResultInsert);
-//		} else {
-//			System.out.println("失败");
-//			return new Json(false, "fail", isResultInsert);
-//		}
-//
-//		// return "loanfinal/loanFinalTable";//提交到贷款终审
-//	}
 
 	/**
 	 * 贷款终审贷款列表
@@ -1085,4 +1001,7 @@ public class JointApplicantController {
 		System.out.println("--------------------------");
 		return "index/firstPage";
 	}
+	
+	
+
 }

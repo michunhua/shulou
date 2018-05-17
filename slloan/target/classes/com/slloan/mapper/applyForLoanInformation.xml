@@ -68,7 +68,7 @@
 					<if test="repayment_Account_Number !=null and repayment_Account_Number !=''">repayment_Account_Number = #{repayment_Account_Number},</if>
 					<if test="state !=null and state !=''">state = #{state}</if>
 				</set>
-					 WHERE id = #{id}
+					 WHERE state = #{id}
     </update> 
     <select id="findAll" parameterType="com.slloan.entity.ApplyForLoanInformation">
     	SELECT

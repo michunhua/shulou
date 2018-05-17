@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,10 @@ public class CirculationContRoller {
 	
 	@Autowired
 	private	PersonalProfileService personalproFileService;
+	
+	
+	@Value("${admin}")
+	public String admin;
 	/**
 	 * 提交插入一条记录
 	 * @param req
@@ -157,29 +162,65 @@ public class CirculationContRoller {
 		String id = obj.getString("id");//根据一条记录的ID查一条记录流转记录状态
 		int uid = Integer.parseInt(id);
 		int stateid = Integer.parseInt(state);
-		
-		
-//		circulation record = new  circulation( state,circulation,ctime,username, parentnodeId,city,rolename);
-		circulation record = new  circulation();
-		record.setSpare(id);
-		record.setCity(city);
-		record.setParentnodeId(parentnodeId);
-		record.setUsername(username);
-		record.setId(uid);
-		record.setState(state);
-//		record.setCirculation("----------"+username+"-------->"+"初审回退创建提交");
-		List<circulation> coan = circulationservice.findById(record);// 鎻掑叆瑙掕壊
-		PersonalProfile param = new PersonalProfile(uid,username,city,"",parentnodeId,"");
-		PersonalProfile p =personalproFileService.getSelectById(param);
+		List<circulation> coan;
+		List<String> coan2 = null;
+		PersonalProfile p;
+		if(username.contains(admin)){
+//			circulation record = new  circulation( state,circulation,ctime,username, parentnodeId,city,rolename);
+			circulation record = new  circulation();
+			record.setSpare(id);
+//			record.setCity(city);
+			record.setParentnodeId(parentnodeId);
+			record.setUsername(username);
+			record.setId(uid);
+			record.setState(state);
+			
+//			record.setCirculation("----------"+username+"-------->"+"初审回退创建提交");
+			 coan = circulationservice.findById(record);// 鎻掑叆瑙掕壊
+			List<circulation> selectAdminData = circulationservice.findById(record);// 鎻掑叆瑙掕壊
+//			PersonalProfile param = new PersonalProfile(uid,username,city,"",parentnodeId,"")C;
+			PersonalProfile param = new PersonalProfile();
+			param.setId(uid);
+			 p =personalproFileService.getSelectByIdAdmin(param);
+		}else{
+//			circulation record = new  circulation( state,circulation,ctime,username, parentnodeId,city,rolename);
+			circulation record = new  circulation();
+			record.setSpare(id);
+			record.setCity(city);
+			record.setParentnodeId(parentnodeId);
+			record.setUsername(username);
+			record.setId(uid);
+			record.setState(state);
+			
+//			record.setCirculation("----------"+username+"-------->"+"初审回退创建提交");
+			coan = circulationservice.findById(record);// 鎻掑叆瑙掕壊
+			List<circulation> selectAdminData = circulationservice.findById(record);// 鎻掑叆瑙掕壊
+//			PersonalProfile param = new PersonalProfile(uid,username,city,"",parentnodeId,"")C;
+			PersonalProfile param = new PersonalProfile(uid,city);
+			 p=personalproFileService.getSelectById(param);
+
+		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("a", coan);
 		map.put("b", p);
 		if (coan !=null) {
-			logger.info("查询成功!");
-			return new Json(true, "success", map);
+			if(coan.size()<1 || coan == null){
+				logger.info("查询成功!");
+//				map.put("a","更好的3");
+//				coan2.add("更好的3");
+//				coan2.add("更好的3");
+//				coan2.add("更好的3");
+//				coan2.add("更好的3");
+//				map.put("a", coan2);
+				return new Json(true, "success", map ,"--");
+			}else{
+				logger.info("查询成功!");
+				return new Json(true, "success", map ,"--");
+			}
+			
 		} else {
 			logger.info("查询失败!");
-			return new Json(false, "fail", map);
+			return new Json(false, "fail", "--");
 		}
 
 	}

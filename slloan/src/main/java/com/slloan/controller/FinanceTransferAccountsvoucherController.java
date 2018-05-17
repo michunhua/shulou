@@ -38,6 +38,7 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import com.slloan.constants.CaptchaConstants;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.ImageDataUpdate;
 import com.slloan.entity.ResultList;
@@ -63,7 +64,7 @@ public class FinanceTransferAccountsvoucherController {
 	public String ftpIp;//IP
 	
 	@Value("${ftpPort}")
-	public String ftpPort;//端口
+	public int ftpPort;//端口
 	
 	@Value("${ftpUser}")
 	public String ftpUser;//用户名
@@ -73,6 +74,9 @@ public class FinanceTransferAccountsvoucherController {
 	
 	@Value("${fileSize}")
 	public int fileSize;
+	
+	@Value("${sftp}")
+	public String sftpp;
 	
 	FileInputStream fis = null;
 	static ZipFile zf ;
@@ -119,7 +123,7 @@ public class FinanceTransferAccountsvoucherController {
 	    	final String upload_type = req.getParameter("upload_type");//上传类型
 //	    	final	String filepath = req.getParameter("filepath");
 	    	final	String city = req.getParameter("city");
-	    	String reqid= req.getParameter("state");
+	    	String reqid= req.getParameter("uid");
 	    	String usernameid = req.getParameter("usernameid");
 			String username = req.getParameter("username");
 			String roleName = req.getParameter("rolename");
@@ -132,10 +136,10 @@ public class FinanceTransferAccountsvoucherController {
 //	    	        FTPClient ftp = new FTPClient();
 	    	        JSch jsch = new JSch();
 	    	        try {
-	    	        	if(22<= 0){
+	    	        	if(ftpPort <= 0){
     	    	        	session = jsch.getSession(ftpUser, ftpIp);
     		        	}else{
-    		        		session = jsch.getSession(ftpUser, ftpIp,22);
+    		        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
     		        	}
     	        	
     	        	//如果服务器连接不上，则抛出异常
@@ -143,14 +147,14 @@ public class FinanceTransferAccountsvoucherController {
     	     			throw new Exception("session is null");
     	     		}
     	     		//设置登陆主机的密码
-    	    		session.setPassword("Dt20180503");//设置密码   
+    	    		session.setPassword(ftpPwd);//设置密码   
     	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
     	    		session.setConfig("StrictHostKeyChecking", "no");
     	    		//设置登陆超时时间   
     	    		session.connect(30000);
     	    		
     	    		//创建sftp通信通道
-    				channel = (Channel) session.openChannel("sftp");
+    				channel = (Channel) session.openChannel(sftpp);
     				channel.connect(1000);
     				ChannelSftp sftp = (ChannelSftp) channel;
 	    	         if(session !=null){
@@ -180,7 +184,7 @@ public class FinanceTransferAccountsvoucherController {
 	             	 			System.out.println("aaaa------------:  "+requestsize);
 	             	 			int filesize = fileSize;
 	             	 			if(requestsize >filesize){
-	             	 				return new Json(false,"fail","","文件上传大小己超过5M");
+	             	 				return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
 	             	 			}else{
 	             	 				 if(upload_type.equals("转账凭证") && requestsize >0 ){
 	     	                     		System.out.println("转账凭证");
@@ -200,8 +204,9 @@ public class FinanceTransferAccountsvoucherController {
 	     	                         	imagedata.setSparetwo(roleName);//角色名
 	     	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	     	                         	imagedata.setCreateData(createData);
+	     	                         	imagedata.setUploadFtpRoute(reqid);
 	     	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-	     	                         	sftp.cd("/usr/local/FTP/transfer_accounts_image");
+	     	                         	sftp.cd(CaptchaConstants.TRANSFER_ACCOUNTS_IMAGE);
 	     	                         	String sid = reqid;
 	     	                	    	int id = Integer.parseInt(sid);
 	     	                	    boolean listimg= imagedataservice.tobeforensics(id);//待取证
@@ -222,7 +227,7 @@ public class FinanceTransferAccountsvoucherController {
 //	     		          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
 	     		          	      if(tmpFileName !="" || tmpFileName !=null && dot>=0){
 	     		          	        	 System.err.println("上传成功");
-	     		          	        	sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件
+	     		          	        	sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件
 //	     		          	        	 list.add(isResult);
 //	     		          	        	resultList.setLists(list);
 //	     		          	        	  input.close();
@@ -240,16 +245,16 @@ public class FinanceTransferAccountsvoucherController {
 	     		                    	boolean coan = circulationservice.save(record);
 	     		                        if(listimg2.size()> 0 && listimg ==true && coan== true){
 	     		                    		//return new Json(true,"success",listimg);
-	     		                    		  return new Json(true,"success",listimg2,"上传成功 -待放款确认");
+	     		                    		  return new Json(true,"success",listimg2,CaptchaConstants.PENDING_LOAN_CONFIRMATION_UPLOAD_SUCCESS);
 	     		                    	}else{
-	     		                    		return new Json(false,"fail",listimg2,"请选择城市或上传类型-待放款确认失败");
+	     		                    		return new Json(false,"fail",listimg2,CaptchaConstants.UPLOAD_FAILUREFAILURE_TO_CONFIR_A_LOAN);
 	     		                    	}
 //	     		          	        	  return new Json(true,"success",resultList,"上传成功");
 	     		          	        	  
 	     		          	        	  
 	     		          	          }else{
 	     		          	        	  System.err.println("上传失败！"); 
-	     		          	        	  return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	     		          	        	  return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
 	     		          	          }
 	     		         	 		}
 	     	                         	
@@ -288,8 +293,9 @@ public class FinanceTransferAccountsvoucherController {
 	     	                         	imagedata.setSparetwo(roleName);//角色名
 	     	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 	     	                         	imagedata.setCreateData(createData);
+	     	                         	imagedata.setUploadFtpRoute(reqid);
 	     	                         	imagedataservice.imageDataAdd(imagedata);
-	     	                         	sftp.cd("/usr/local/FTP/settlement_voucher_image");
+	     	                         	sftp.cd(CaptchaConstants.SETTLEMENT_VOUCHER_IMAGE);
 	     	                        	String sid = reqid;
 	     	                	    	int id = Integer.parseInt(sid);
 	     	                	    boolean listimg= imagedataservice.tobesettled(id);
@@ -307,7 +313,7 @@ public class FinanceTransferAccountsvoucherController {
 	     		          	            System.out.println(input);
 //	     		          	            readStream(input);
 //	     		          	          boolean isResult =  ftp.storeFile(targetFileName, input);
-	     		          	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件
+	     		          	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件
 	     		          	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 	     		          	        	 System.err.println("上传成功");
 //	     		          	        	 list.add(isResult);
@@ -327,15 +333,15 @@ public class FinanceTransferAccountsvoucherController {
 	     		                        boolean coan = circulationservice.save(record);
 	     		                        if(listimg2.size()> 0 && listimg ==true && coan == true){
 	     		                    		//return new Json(true,"success",listimg);
-	     		                    		  return new Json(true,"success",listimg2,"上传成功 -已结清");
+	     		                    		  return new Json(true,"success",listimg2,CaptchaConstants.UPLOAD_SUCCESS_ALREADY_CLEAR);
 	     		                    	}else{
-	     		                    		return new Json(false,"fail",listimg2,"请选择城市或上海类型-待放款确认失败");
+	     		                    		return new Json(false,"fail",listimg2,CaptchaConstants.UPLOAD_FAILURE_WAIT_FOR_INFORMATION_TO_VIEW_FAILURE);
 	     		                    	}
 //	     		          	        	  return new Json(true,"success",resultList,"上传成功");
 	     		          	        	  
 	     		          	          }else{
 	     		          	        	  System.err.println("上传失败！"); 
-	     		          	        	  return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	     		          	        	  return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
 	     		          	          }
 	     		         	 		}
 	     	                     	}
@@ -345,7 +351,7 @@ public class FinanceTransferAccountsvoucherController {
 	         	 			}
 	         	 			
 	         	 		}else{
-	         	 			 return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+	         	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
 	         	 		}
 	     	            
 	         	 		
@@ -408,10 +414,10 @@ public class FinanceTransferAccountsvoucherController {
 		  for(MultipartFile f:tmpfile){
 			  JSch jsch = new JSch();
 			  try {
-				  if(22<= 0){
+				  if(ftpPort <= 0){
 	    	        	session = jsch.getSession(ftpUser, ftpIp);
 		        	}else{
-		        		session = jsch.getSession(ftpUser, ftpIp,22);
+		        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
 		        	}
 	        	
 	        	//如果服务器连接不上，则抛出异常
@@ -419,14 +425,14 @@ public class FinanceTransferAccountsvoucherController {
 	     			throw new Exception("session is null");
 	     		}
 	     		//设置登陆主机的密码
-	    		session.setPassword("Dt20180503");//设置密码   
+	    		session.setPassword(ftpPwd);//设置密码   
 	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
 	    		session.setConfig("StrictHostKeyChecking", "no");
 	    		//设置登陆超时时间   
 	    		session.connect(30000);
 	    		
 	    		//创建sftp通信通道
-				channel = (Channel) session.openChannel("sftp");
+				channel = (Channel) session.openChannel(sftpp);
 				channel.connect(1000);
 				ChannelSftp sftp = (ChannelSftp) channel;
 				if(session !=null){
@@ -472,8 +478,9 @@ public class FinanceTransferAccountsvoucherController {
 		                         	imagedata.setSparetwo(roleName);//角色名
 		                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 		                         	imagedata.setCreateData(createData);
+		                         	imagedata.setUploadFtpRoute(reqid);
 		                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-		                         	sftp.cd("/usr/local/FTP/return_confirmation");
+		                         	sftp.cd(CaptchaConstants.RETURN_CONFIRMATION);
 
 		                  	          String sid = reqid;
 			                	    	int id = Integer.parseInt(sid);
@@ -494,7 +501,7 @@ public class FinanceTransferAccountsvoucherController {
 		                  	       
 			                	    
 //		                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
-		                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+		                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
 		                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 		                  	        	 System.err.println("上传成功");
 //		                  	        	  input.close();
@@ -512,18 +519,18 @@ public class FinanceTransferAccountsvoucherController {
 			                        boolean coan = circulationservice.save(record);	
 		                            if(listimg2.size()> 0 && listimg == true){
 		                            		//return new Json(true,"success",listimg);
-		                            		  return new Json(true,"success",listimg2,"上传成功-- 待结算审核");
+		                            		  return new Json(true,"success",listimg2,CaptchaConstants.UPLOAD_SUCCESS_PENDING_AUDIT);
 		                            	}else{
-		                            		return new Json(false,"fail",listimg2,"请选择城市或上海类型");
+		                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
 		                            	}
 		                  	        	  
 		                  	          }else{
 		                  	        	  System.err.println("上传失败！"); 
-		                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpge,bmp,png");
+		                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
 		                  	          }
 		                 	 		}else{
 //		            					System.out.println("FTP连接失败");
-		            					 return new Json(false,"fail","","FTP连接失败");
+		            					 return new Json(false,"fail","",CaptchaConstants.CONNECTION_FAILED);
 		            				}
 		                         	
 								}if(upload_type.equals("取证凭证")&& requestsize > 0){
@@ -542,10 +549,11 @@ public class FinanceTransferAccountsvoucherController {
 		                         	imagedata.setParentnode(usernameid);//用户名ID
 		                         	imagedata.setSpare(username);//用户名
 		                         	imagedata.setSparetwo(roleName);//角色名
+		                         	imagedata.setUploadFtpRoute(reqid);
 		                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 		                         	imagedata.setCreateData(createData);
 		                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-		                         	sftp.cd("/usr/local/FTP/obtain_evidence");
+		                         	sftp.cd(CaptchaConstants.OBTAIN_EVIDENCE);
 		                  	          String sid = reqid;
 			                	    	int id = Integer.parseInt(sid);
 			                	    boolean listimg= imagedataservice.WaitForensics(id);//待解压
@@ -564,7 +572,7 @@ public class FinanceTransferAccountsvoucherController {
 //		                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
 		                  	       
 			                	    
-		                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+		                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
 		                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 		                  	        	 System.err.println("上传成功");
 //		                  	        	  input.close();
@@ -584,12 +592,12 @@ public class FinanceTransferAccountsvoucherController {
 		                            		//return new Json(true,"success",listimg);
 		                            		  return new Json(true,"success",listimg2,"上传成功-- 待进解压凭证审核");
 		                            	}else{
-		                            		return new Json(false,"fail",listimg2,"请选择城市或上海类型");
+		                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
 		                            	}
 		                  	        	  
 		                  	          }else{
 		                  	        	  System.err.println("上传失败！"); 
-		                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpge,bmp,png");
+		                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
 		                  	          }
 		                 	 		}else{
 		            					System.out.println("FTP连接失败");
@@ -613,8 +621,9 @@ public class FinanceTransferAccountsvoucherController {
 		                         	imagedata.setSparetwo(roleName);//角色名
 		                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 		                         	imagedata.setCreateData(createData);
+		                         	imagedata.setUploadFtpRoute(reqid);
 		                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-		                         	sftp.cd("/usr/local/FTP/solutionvoucher");
+		                         	sftp.cd(CaptchaConstants.SOLUTIONVOUCHER);
 		                  	          String sid = reqid;
 			                	    	int id = Integer.parseInt(sid);
 			                	    boolean listimg= imagedataservice.tobedetained(id);//待进压
@@ -633,7 +642,7 @@ public class FinanceTransferAccountsvoucherController {
 //		                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
 		                  	       
 			                	    
-		                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+		                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
 		                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 		                  	        	 System.err.println("上传成功");
 //		                  	        	  input.close();
@@ -654,12 +663,12 @@ public class FinanceTransferAccountsvoucherController {
 		                            		//return new Json(true,"success",listimg);
 		                            		  return new Json(true,"success",listimg2,"上传成功-- 待进押凭证审核");
 		                            	}else{
-		                            		return new Json(false,"fail",listimg2,"请选择城市或上海类型");
+		                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
 		                            	}
 		                  	        	  
 		                  	          }else{
 		                  	        	  System.err.println("上传失败！"); 
-		                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpge,bmp,png");
+		                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
 		                  	          }
 		                 	 		}else{
 		            					System.out.println("FTP连接失败");
@@ -684,8 +693,9 @@ public class FinanceTransferAccountsvoucherController {
 		                         	imagedata.setSparetwo(roleName);//角色名
 		                         	String createData = DateUtils.getInDateTime((new Date()));//日期
 		                         	imagedata.setCreateData(createData);
+		                         	imagedata.setUploadFtpRoute(reqid);
 		                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
-		                         	sftp.cd("/usr/local/FTP/entervoucher");
+		                         	sftp.cd(CaptchaConstants.ENTERVOUCHER);
 		                         	
 		                         	String sid = reqid;
 		                	    	int id = Integer.parseInt(sid);
@@ -705,7 +715,7 @@ public class FinanceTransferAccountsvoucherController {
 //	                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
 	                  	       
 		                	    
-	                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件 
+	                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件 
 	                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
 	                  	        	 System.err.println("上传成功");
 	                  	        	String filepath =targetFileName;//原文件名
@@ -723,12 +733,12 @@ public class FinanceTransferAccountsvoucherController {
 	                            		//return new Json(true,"success",listimg);
 	                            		  return new Json(true,"success",listimg2,"上传成功-- 待确认回款审核");
 	                            	}else{
-	                            		return new Json(false,"fail",listimg2,"请选择城市或上海类型");
+	                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
 	                            	}
 	                  	        	  
 	                  	          }else{
 	                  	        	  System.err.println("上传失败！"); 
-	                  	        	  return new Json(false,"fail","","请选择上传文件类型jpg,png,jpge,bmp,png");
+	                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
 	                  	          }
 	                 	 		}else{
 	            					System.out.println("FTP连接失败");
@@ -739,7 +749,7 @@ public class FinanceTransferAccountsvoucherController {
 							
 						}
 					}else{
-        	 			 return new Json(false,"fail",resultList,"请选择上传文件类型jpg,png,jpge,bmp,png");
+        	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
         	 		}
 					
 				}
@@ -890,17 +900,28 @@ public class FinanceTransferAccountsvoucherController {
 	    		}
 	    		
 	    	}
-	    	String t = null;
-			for(String str: loanFinalRefuse){
-				System.out.println(str);
-				t= str;
-				
-			}
-	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    	
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
-	    	boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
-			circulation record = new  circulation("1","待终回退到初审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
-			boolean coan = circulationservice.save2(record);
+	    	
+	    	String t = null;
+	    	boolean coan = false;
+	    	
+			for(String str: loanFinalRefuse){
+				t= str;
+				circulation record = new  circulation("1","待终回退到初审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				System.out.println(str);
+				coan = circulationservice.save2(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(2);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t)  ||  cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
+			}
+			boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
 	    	if(isResult == true && coan){
 	    		return new Json(true,"success",isResult,"待终回退到初审审批中成功");
 	    	}else{
@@ -955,18 +976,34 @@ public class FinanceTransferAccountsvoucherController {
 	    		System.out.println(streplacee);
 	    	}
 	    	
-	    	boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
-	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 			String t = null;
 			boolean coan = false;
 			for(String str: loanFinal){
 				System.out.println(str);
 				t= str;
-				circulation record = new  circulation("3","终审审批通过待出账确认",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
-				 coan = circulationservice.save(record);
+		    	circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				coan = cService.save2(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(2);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
 			}
-		
+			boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
+			
+//			for(String str: loanFinal){
+//				System.out.println(str);
+//				t= str;
+//				circulation record = new  circulation("3","终审审批通过待出账确认",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+//				 coan = circulationservice.save(record);
+//			}
+//		
 	    	if(isResult == true && coan== true){
 	    		return new Json(true,"success",isResult,"终审到待出账确认成功");
 	    	}else{
@@ -1018,16 +1055,26 @@ public class FinanceTransferAccountsvoucherController {
 	    		}
 	    		
 	    	}
-	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 	    	String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 //			circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,updatedata,spare);
 	    	String t = null;
 	    	boolean coan = false;
+	    	
 			for(String str: batchRefuse){
 				System.out.println(str);
 				t= str;
 		    	circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
 				coan = cService.save2(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(1);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
+				
 			}
 	    	boolean isResult = imagedataservice.FirsttrialbatchRefuse(batchRefuse);
 	    	
@@ -1044,6 +1091,7 @@ public class FinanceTransferAccountsvoucherController {
 	     * @param response
 	     * @return
 	     */
+	    
 	    @RequestMapping(value="/pastgobackfinalreview",method=RequestMethod.POST)
 	    @ResponseBody
 	    public Json batchPast(HttpServletRequest request,HttpServletResponse response){
@@ -1081,8 +1129,8 @@ public class FinanceTransferAccountsvoucherController {
 	    		}
 	    		
 	    	}
-	    	boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
-			String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    	
+			String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 //	    	circulation record = new  circulation("2","待终审审批中",createDate,"","","","");
 			String t = null;
@@ -1092,8 +1140,17 @@ public class FinanceTransferAccountsvoucherController {
 				t= str;
 				circulation record = new  circulation("2","待终审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
 				coan = circulationservice.save(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(1);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t)  ||  cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
 
 			}
+			boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
 			    	if(isResult == true && coan == true){
 			    		return new Json(true,"success",isResult,"初审批通过待终审审批");
 			    	}else{
@@ -1143,7 +1200,7 @@ public class FinanceTransferAccountsvoucherController {
 	    		}
 	    		
 	    	}
-	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 			String t = null;
 			boolean coan = false;
@@ -1152,6 +1209,15 @@ public class FinanceTransferAccountsvoucherController {
 				t= str;
 				circulation record = new  circulation("4","待出账确认成功",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
 				 coan = circulationservice.save(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					System.out.println(cityindexof);
+					c.setState(3);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
 			}
 	    	boolean isResult = imagedataservice.batchUpdateStudent(updatelist);
 			
@@ -1215,9 +1281,9 @@ public class FinanceTransferAccountsvoucherController {
 	    		}
 	    		
 	    	}
-	    	String createDate =  DateUtils.getInDateTime((new Date()));//日期
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
-	    	boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
+	    
 	    	String t = null;
 	    	boolean coan = false;
 			for(String str: updatelist){
@@ -1225,8 +1291,17 @@ public class FinanceTransferAccountsvoucherController {
 				t= str;
 				circulation record = new  circulation("2","回退到终审成功",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
 				 coan = circulationservice.save2(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					System.out.println(cityindexof);
+					c.setState(3);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
 			}
-			
+			boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
 	    	if(isResult == true&& coan == true){
 	    		return new Json(true,"success",isResult,"回退到终审成功");
 	    	}else{

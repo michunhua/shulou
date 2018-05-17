@@ -12,8 +12,7 @@ var collectData = function() {
   data.mobile = e('.mobile-phone').value
   data.salary = e('.salary').value
   data.state = ''
-	  data.ctime = ''
-data.id =  localStorage.finalID
+  data.id = localStorage.finalID
   return data
 }
 
@@ -24,8 +23,17 @@ var sendAjax = function(method, url, datas, callback) {
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
-    	callback()
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loancommss'
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
     },
     error: function(){
         alert('服务器错误')

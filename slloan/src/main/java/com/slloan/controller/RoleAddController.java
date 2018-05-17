@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,6 +68,9 @@ public class RoleAddController {
 	@Autowired
 	public AddPermissionService addpermissionservice;//添加权限
 	
+	@Value("${admin}")
+	public String admin; 
+	
 	/***
 	 * 得到所有城市
 	 * @return
@@ -98,7 +102,7 @@ public class RoleAddController {
 		String username = jsonobj.getString("username");
 		int startPos= Integer.parseInt(page);
 		int pageSize = Integer.parseInt(limit);
-			if(username.contains("liming")){
+			if(username.contains(admin)){
 				return JSON.toJSONString(roleAddService.getRolePage(startPos));
 			}else{
 				return JSON.toJSONString(roleAddService.getRolePage(startPos,parentid,username));//这个只能查自己所创建的数据
@@ -346,7 +350,7 @@ public class RoleAddController {
 		ResultList<AddRole> lists = new ResultList<AddRole>();
 		Map<String,Object> map = new HashMap<String,Object>();
 			
-			if(username.contains("liming")){
+			if(username.contains(admin)){
 				List<AddRole> add = roleAddService.list();
 				
 				if(add !=null){

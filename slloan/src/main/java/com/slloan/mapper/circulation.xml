@@ -36,7 +36,14 @@
 		(#{state},#{circulation},#{createdata},#{username},#{ParentnodeId},#{city},#{rolename},#{updatedata},#{spare})
 	</insert>
 	<select id="findById" parameterType="Map" resultType="com.slloan.entity.circulation">
-		SELECT circulation,updatedata,city,rolename,username FROM the_circulation where  spare = #{spare} and  city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username} ORDER BY id
+<!-- 		SELECT circulation,updatedata,city,rolename,username FROM the_circulation where  spare = #{spare} and  city=#{city} and parentnodeId= #{ParentnodeId} and username= #{username} ORDER BY id -->
+		SELECT circulation,updatedata,city,rolename,username FROM the_circulation where
+		<if test="spare !=null and spare !=''">spare = #{spare}</if> 
+		<if test="city !=null and city !=''"> and  city=#{city} </if>
+		<if test="circulation !=null and circulation !=''">and circulation = #{circulation}</if>   
+		ORDER BY id
+
 	</select>
+	
 	
 </mapper>

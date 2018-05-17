@@ -33,7 +33,8 @@
             <dl>
                 <div class="layui-input-block">
                     <input id = "code" type="text" name="code" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" required>
-                    <button id = "show-code" class="layui-btn layui-btn-primary" ><img id="yzm" src="/slloan/verificationcode" style="margin-left: -20px;margin-top: -5px;" onclick="myRefersh(this)">  </button>
+<!--                     <button id = "show-code" class="layui-btn layui-btn-primary" ><img id="yzm" src="/slloan/verificationcode" style="margin-left: -20px;margin-top: -5px;" onclick="myRefersh(this)">  </button> -->
+			<img src="/slloan/verificationcode" style="margin-left: 1px;margin-top: -2px;cursor: pointer;" onclick="this.src='/slloan/verificationcode?d='+Math.random();">
                     <input type="hidden" value="" id="hidecode" name="hidecode"/>
                 </div>
             </dl>

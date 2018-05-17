@@ -22,7 +22,7 @@ public class ContactsServiceImpl implements ContactsService {
 	
 	@Autowired
 	CircuLationRecordSubmitDao circuLationRecordSubmitDao;//备注说明插入共用
-
+	
 	@Override
 	public boolean save(Contacts con) {
 		// TODO Auto-generated method stub

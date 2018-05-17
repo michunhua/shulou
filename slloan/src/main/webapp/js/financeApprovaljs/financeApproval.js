@@ -92,6 +92,7 @@ var addTable = function(data) {
 	var totalPage = document.querySelector('.totalPage')
 	totalPage.innerText = datas.totalPage
 	pageElement.innerHTML = null
+    var sequence = []
 	for (var i = 0; i < len; i++) {
 		log(i)
 		var tr = document.createElement('tr')
@@ -168,7 +169,18 @@ var addTable = function(data) {
 		tr.appendChild(td7)
 		tr.appendChild(td8)
 		tr.appendChild(td9)
-		pageElement.insertAdjacentElement('beforeend', tr)
+		
+		 if(datas.lists[i].notes[0].marked) {
+			tr.classList.add('marked')
+			sequence.unshift(tr)
+          } else {
+        	  sequence.push(tr)
+          }
+	}
+	if(sequence.length) {
+		for(var j = 0; j < sequence.length; j++) {
+			pageElement.insertAdjacentElement('beforeend', sequence[j])
+		}
 	}
 }
 
@@ -307,6 +319,7 @@ var collectData = function() {
     data.end = e('.end').value
     data.min = e('.min').value
     data.max = e('.max').value
+	data.state = e('.statu').value
     return data
 }
 
@@ -333,9 +346,9 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/financeselect'
+    var url = '/slloan/loan/financeselect?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
-    datas.state = es('.state')[0].innerText
+//    datas.state = es('.state')[0].innerText
     datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
@@ -354,7 +367,7 @@ var numberSearch = function(element) {
 				console.log(event.target.parentNode.nextSibling.innerText, '就这个数据')
 				console.log(event.target.innerText, '好的')
 				localStorage.financialID = event.target.parentNode.nextSibling.innerText
-				window.location.href = '/slloan/loan/financialinfo'
+				window.location.href = '/slloan/loan/financeapp'
 			}
 		})
 }
@@ -682,6 +695,8 @@ var hang_cirulationAjax = function(method, url, datas) {
                   tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
                   
           	}
+          } else {
+              tableString += "<tr><td>" + content + "</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><tr>"
           }
   		layer.open({
   			  title: '流转记录',
@@ -720,7 +735,7 @@ var Hang_cirulation = function(element) {
 		if(event.target.classList.contains("upload")) {   
 			console.log('挂起')
 			var method = "GET"
-		    var url = "/slloan/loan/checkHangdata?page="+ init.pages + '&limit='+ init.limit
+		    var url = "/slloan/loan/loanfinancelist?page="+ init.pages + '&limit='+ init.limit
 			var datas = {}
 		    datas.state = event.target.name
 			datas.id = event.target.parentNode.classList.value

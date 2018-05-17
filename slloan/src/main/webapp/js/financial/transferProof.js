@@ -60,7 +60,7 @@ var addTable = function(data) {
  var pageElement = document.querySelector('.tab-data')
  var totalPage = document.querySelector('.totalPage')
  totalPage.innerText = datas.totalPage
- initData.innerHTML = null
+ pageElement.innerHTML = null
  for(var i = 0; i < len; i++) {
 		   log(i)
 		var tr = document.createElement('tr')
@@ -183,6 +183,7 @@ var collectData = function() {
     data.end = e('.end').value
     data.min = e('.min').value
     data.max = e('.max').value
+    data.state = e('.statu').value
     return data
 }
 
@@ -209,9 +210,9 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/transferdocument'
+    var url = '/slloan/loan/transferdocument?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
-    datas.state = es('.state')[0].innerText
+//    datas.state = es('.state')[0].innerText
     datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
@@ -229,17 +230,19 @@ var createBtn = function() {
 	})
 }
 
+
 //具体查询
-var numberSearch = function() {
-	var envs = es('.mark')
-	for(var i = 0; i < envs.length; i++) {
-		envs[i].addEventListener('click', function(event) {
-			console.log(event.target.innerText)
+var numberSearch = function(element) {
+	var envs = e(element)
+		envs.addEventListener('click', function(event) {
+			var indicate = event.target.classList
+			if(indicate == 'mark') {
+				localStorage.transInfo = event.target.parentNode.nextSibling.innerText
+				console.log(localStorage.transInfo)
+				window.location.href = '/slloan/loan/financiltransloan'
+			}
 		})
-	}
 }
-
-
 
 
 //分页接口 user/userlist
@@ -309,6 +312,7 @@ var uploadCertificate = function(element) {
 						'用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> '+
 						'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
 						'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
+						'<input type="text" id="uid"  value="" name="uid" readonly="readonly" style = "display:none;"/><br/>'+
 						'角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>'+
 						'状态:<input type="text" id="specialState"  value="" name="state" readonly="readonly"/><br/>'+
 						'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
@@ -324,6 +328,9 @@ var uploadCertificate = function(element) {
 			var worth = e('#specialState')
 			worth.value = event.target.parentNode.classList
 			userInitUpload("#username1", '#city1', '#id1', '#rolename1')
+			var mark = document.querySelector('#uid')
+			console.log(event.target.parentNode.classList.value)
+			mark.value = event.target.parentNode.classList.value
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')
 		}
@@ -412,7 +419,9 @@ function updateUserInfo() {
  	                tableString += "<tr><td>" + content + "</td><td>"+ circulation +"</td><td>"+ rolename +"</td><td>"+ username +"</td><td>"+ updatedata +"</td><tr>" 
  	                
  	        	}
- 	        }
+ 	        } else {
+ 	              tableString += "<tr><td>" + content + "</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><td>"+ 'null' +"</td><tr>"
+ 	          }
  			layer.open({
  				  title: '流转记录',
  				  area: ['830px', '560px'],
@@ -450,8 +459,8 @@ function updateUserInfo() {
 
 var __main = function() {
 initData()
-numberSearch()
 //envs('#save-data')
+  numberSearch('.tab-data')
 uploadCertificate(".tab-data")
 envs('#save-data')
 Hang_cirulation('.tab-data')

@@ -61,7 +61,7 @@ var collectData = function() {
   data.supportPeople = e('.support-people').value
   data.expenses = e('.expenses').value
   data.communication = e('.communication').value
-  data.state = 'c'
+  data.state = localStorage.createID
   data.ctime ='d'
   data.hi = 'hi'	  
   return data
@@ -82,9 +82,9 @@ var sendAjax = function(method, url, datas) {
     		console.log('666666')
     		layer.msg('保存成功', {
   			  icon: 2,
-  			  time: 2000 
+  			  time: 2000, 
   			}, function(){
-  				window.location.href = '../../slloan/loan/loancom'
+//  				window.location.href = '../../slloan/loan/loancom'
   			});
     	} else {
     		alert('服务器错误')
@@ -246,7 +246,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){

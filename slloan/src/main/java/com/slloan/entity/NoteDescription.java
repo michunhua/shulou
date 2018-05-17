@@ -69,6 +69,23 @@ public class NoteDescription {
 		this.ctime = ctime;
 	}
 	
+	public NoteDescription(Integer id, String note_Description1, String note_Description2, String note_Description3,String note_Description4,
+			String state, String ctime, String username, String rolename,
+			String parentnodeId, String city) {
+		super();
+		this.id = id;
+		this.note_Description1 = note_Description1;
+		this.note_Description2 = note_Description2;
+		this.note_Description3 = note_Description3;
+		this.note_Description4 = note_Description4;
+		this.state = state;
+		this.ctime = ctime;
+		this.username = username;
+		this.rolename = rolename;
+		this.ParentnodeId = parentnodeId;
+		this.city = city;
+	}
+	
 	
 	public NoteDescription(String note_Description1, String state, String ctime, String username, String parentnodeId,
 			String city, String rolename) {

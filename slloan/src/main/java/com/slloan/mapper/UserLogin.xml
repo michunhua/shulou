@@ -22,16 +22,16 @@
 	</insert>
 	<!-- 删除  -->
 	<delete id="deleteId" parameterType="Integer">
-		delete from User_Login where id=#{id}
+		delete from user_Login where id=#{id}
 	</delete>
 	
 	<!-- 修改查询 -->
     <select id="updateselectId" parameterType="Integer" resultType="userlogin">
-		SELECT * FROM User_Login WHERE id = #{id}
+		SELECT * FROM user_Login WHERE id = #{id}
 	</select>
 	
 	<update id="updateUser" parameterType="com.slloan.entity.UserLogin">
-		update User_Login 
+		update user_Login 
 		set
 		username = #{userName},
 		password = #{passWord},
@@ -53,7 +53,7 @@
 		WHERE id = #{id}
 	</update>
 	<select id="selectById" parameterType="String">
-		select * from User_Login where id= #{id}
+		select * from user_Login where id= #{id}
 	</select>
 	<!-- 登录 -->
 	<select id="logindelu" resultType="com.slloan.entity.UserLogin" parameterType="Map">
@@ -66,7 +66,7 @@
 <!-- 				 and u.password= #{password,jdbcType=VARCHAR} -->
 	
 	
-		select username,distribution_role,belongs_city,r_id,id from User_Login where
+		select username,distribution_role,belongs_city,r_id,id from user_Login where
 		username=#{username,jdbcType=VARCHAR}
 		and password =
 		#{password,jdbcType=VARCHAR}
@@ -83,7 +83,7 @@
 <!--         select id,username,employeeis_name,distribution_role,create_date,r_id  -->
 <!--         from User_Login  ORDER BY id desc -->
  select id,username,employeeis_name,distribution_role,create_date,r_id from 
- User_Login where spare=#{spare} ORDER BY id desc
+ user_Login where spare=#{spare} ORDER BY id desc
         	<if test="page !=null and limit !=null">
         		limit #{page}, #{limit} 
         	</if>
@@ -94,7 +94,7 @@
 <!--         select id,username,employeeis_name,distribution_role,create_date,r_id  -->
 <!--         from User_Login  ORDER BY id desc -->
  				 select id,username,employeeis_name,distribution_role,create_date,r_id 
-   			     from User_Login  ORDER BY id desc
+   			     from user_Login  ORDER BY id desc
         	<if test="page !=null and limit !=null">
         		limit #{page}, #{limit} 
         	</if>
@@ -103,11 +103,11 @@
      
      <!-- 查询用户总记录数 -->
      <select id="getCount"  resultType="Integer">
-     	 SELECT COUNT(*) FROM User_Login 
+     	 SELECT COUNT(*) FROM user_Login 
      </select>
       <!-- 查询用户总记录数 -->
      <select id="getCount2"  resultType="Integer">
-     	 SELECT COUNT(*) FROM User_Login where spare = #{id}
+     	 SELECT COUNT(*) FROM user_Login where spare = #{id}
      </select>
      
      <select id="list" resultType="com.slloan.entity.UserLogin">
@@ -141,16 +141,16 @@
 <!--      </select> -->
      <!-- 根据ID查所有 -->
      <select id="selectUserById" parameterType="int" resultType="com.slloan.entity.UserLogin">
-     	select id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from User_Login where id=#{id}
+     	select id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from user_Login where id=#{id}
      </select>
      <select id="selectUserById2" parameterType="int" resultType="com.slloan.entity.UserLogin">
-     	select r_id,id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from User_Login where r_id=#{id}
+     	select r_id,id,username,employeeis_name,distribution_role,belongs_city,note,create_date,r_id from user_Login where r_id=#{id}
      </select>
      
      <select id="selectroleUserName" resultType="Map" resultMap="userlogin">
-     	SELECT USERNAME FROM User_Login WHERE USERNAME = #{username}
+     	SELECT USERNAME FROM user_Login WHERE USERNAME = #{username}
      </select>
       <update id="updateUserCity"  parameterType="Map">
-	 		update User_Login set distribution_Role =#{rolename},belongs_City=#{city},r_id=#{rid} where id=#{id}
+	 		update user_Login set distribution_Role =#{rolename},belongs_City=#{city},r_id=#{rid} where id=#{id}
 	 </update>
 </mapper>

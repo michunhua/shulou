@@ -102,46 +102,13 @@ public class ApplyForLoanInformationController {
 			return new Json(false, "fail", isResult);
 	}
 
-	/**
-	 * 修改用户保存
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/modifyuser", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public String updateUser(HttpServletRequest req) {
-		String dataid = req.getParameter("data");
-		JSONObject json = new JSONObject().fromObject(dataid);
-		Integer id = json.getInt("id");
-		String amount = json.getString("amount");
-		String time_Limit = json.getString("term");
-		String time_Limits = json.getString("unit");
-		String borrowing_Variety = json.getString("variety");
-		String repayment = json.getString("repayment");
-		String receiving_Bank_Name = json.getString("beneficiarybank");
-		String receiving_Account_Name = json.getString("bankaccount");
-		String receiving_Account = json.getString("receivingAccount");
-		String repayment_Bank_Name = json.getString("repaymenBtank");
-		String repayment_Account_Name = json.getString("repaymentAccount");
-		String repayment_Account_Number = json.getString("accountNumber");
-		String state = json.getString("state");
-		String ctime = DateUtils.getInDateTime(new Date());
-		ApplyForLoanInformation ap = new ApplyForLoanInformation(id, amount, time_Limit, time_Limits, borrowing_Variety,
-				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-				repayment_Account_Name, repayment_Account_Number, state, ctime);
-		boolean isResult = applyForLoanInformationservice.appUpdate(ap);
-		if (isResult == true) {
-			return JSON.toJSONString(isResult);
-		} else
-			return JSON.toJSONString("fail");
-	}
 
 	/**
 	 * 修改用户保存
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/modifyusersjfo", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+	@RequestMapping(value = "/appupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public Json updateUserw(HttpServletRequest req) {
 		String dataid = req.getParameter("data");

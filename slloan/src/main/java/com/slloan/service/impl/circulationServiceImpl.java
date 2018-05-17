@@ -32,6 +32,11 @@ public class circulationServiceImpl implements circulationService{
 		String city = circul.getCity();
 		String spare = circul.getSpare();
 		String updatedata = circul.getUpdatedata();
+		if(state.equals("0")){
+			System.out.println("贷款创建完成,待提交");
+			circulation record = new circulation(state ,"贷款创建完成,待提交",ctime,username.trim(),parentnodeId,city.trim(),rolename.trim(),updatedata,spare);
+			return recordSubmitDao.save(record);
+		}
 		if(state.equals("1")){
 			System.out.println("贷款创建提交到贷款初审,");
 			circulation record = new circulation(state ,"贷款创建提交到贷款初审",ctime,username.trim(),parentnodeId,city.trim(),rolename.trim(),updatedata,spare);

@@ -183,29 +183,217 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	/**
 	 *  按揭员模糊查询
 	 */
-
+	
 	@Override
-	public List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param) {
+	public Page<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param) {
 		Map<Object,Object> map = new HashMap<Object,Object>();
+//		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
-		 Iterator it = param.entrySet().iterator();  
-		 while (it.hasNext()) {  
-			   Map.Entry entry = (Map.Entry) it.next();  
-			   Object key = entry.getKey();  
-			   Object value = entry.getValue();  
-//			   System.out.println("key=" + key + " value=" + value);  
-			   map.put(key, value);
+//		 Iterator it = param.entrySet().iterator();  
+//		 while (it.hasNext()) {  
+//			   Map.Entry entry = (Map.Entry) it.next();  
+//			   Object key = entry.getKey();  
+//			   Object value = entry.getValue();  
+//			   map.put(key, value);
+			   /*if(key.equals("page")){
+				   Object value2 = entry.getValue();
+				   Object key2 = entry.getKey();
+				String str =(String)entry.getValue();
+				int currentPage = Integer.parseInt(str);
+				 //封装当前页数
+					pageBean.setCurrPage(currentPage);
+					//每页显示的数据
+					int pageSize = 10;
+					pageBean.setPageSize(pageSize);
+					//封装总记录数
+					int totalCount = personalProfiledao.getPersonalProfileCount("","","长沙","");
+					pageBean.setTotalCount(totalCount);
+					//封装总页数
+					double tc = totalCount;
+					Double num = Math.ceil(tc/pageSize);
+					pageBean.setTotalPage(num.intValue());
+					map.put(key2, (currentPage-1)*pageSize);
+			   }
+			   if(key.equals("limit")){
+				   Object value2 = entry.getValue();
+				   Object key2 = entry.getKey();
+				   map.put(key2, pageBean.getPageSize());
+			   }*/
 			   
-//			   return personalProfiledao.vaguelikeSelectCreate(map);
-			  }
-		 List<PersonalProfile>  p= personalProfiledao.vaguelikeSelectCreate(map);
-		 resulit.setLists(p);
-//		return resulit;
-		return p;
+//			  }
+		
+		 
+//		return null;
 		
 //		return ;
+		Map<String,Object> map2 = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		
+		if(param.get("name") !=null){
+			map.put("name", param.get("name"));
+//			map2.put("name",param.get("name"));
+			System.out.println("a: "+param.get("a"));
+		} if(param.get("id_number")!=null){
+			map.put("id_number", param.get("id_number"));
+//			map2.put("id_number", param.get("id_number"));
+			System.out.println("b: "+param.get("b"));
+		} if(param.get("mobile_phone")!=null){
+			map.put("mobile_phone", param.get("mobile_phone"));
+//			map2.put("mobile_phone", param.get("mobile_phone"));
+			System.out.println("c: "+param.get("c"));
+		} if(param.get("ctime")!=null){
+			map.put("ctime", param.get("ctime"));
+//			map2.put("ctime", param.get("ctime"));
+			System.out.println("d: "+param.get("d"));
+		} if(param.get("ctime2")!=null){
+			map.put("ctime2", param.get("ctime2"));
+//			map2.put("ctime2", param.get("ctime2"));
+			System.out.println("e: "+param.get("e"));
+		} if(param.get("amount")!=null){
+			map.put("amount", param.get("amount"));
+//			map2.put("amount", param.get("amount"));
+			System.out.println("f: "+param.get("f"));
+		} if(param.get("amount2")!=null){
+			map.put("amount2", param.get("amount2"));
+//			map2.put("amount2", param.get("amount2"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("state")!=null){
+			map.put("state", param.get("state"));
+//			map2.put("state", param.get("state"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("city")!=null){
+			map.put("city", param.get("city"));
+//			map2.put("city", param.get("city"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("applicationnumber")!=null){
+//			map2.put("applicationnumber", param.get("applicationnumber"));
+			map.put("applicationnumber", param.get("applicationnumber"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("page")!=null || param.get("city") !=null){
+			
+			String str = (String)param.get("page");
+			String city = (String)param.get("city");
+			int par = Integer.parseInt(str);
+			//封装当前页数
+			pageBean.setCurrPage(par);
+			//每页显示的数据
+			int pageSize = 10;
+			pageBean.setPageSize(pageSize);
+			//封装总记录数
+			int totalCount = personalProfiledao.getPersonalProfileCount2(map);
+			pageBean.setTotalCount(totalCount);
+			//封装总页数
+			double tc = totalCount;
+			Double num = Math.ceil(tc/pageSize);
+			pageBean.setTotalPage(num.intValue());
+			map.put("page", (par-1)*pageSize);
+		}if(param.get("limit")!=null){
+			map.put("limit", pageBean.getPageSize());
+		}
+		 List<PersonalProfile>  p= personalProfiledao.vaguelikeSelectCreate(map);
+		 pageBean.setLists(p);
+		return pageBean;
+		
 	}
 
+	public Page<PersonalProfile> vaguelikeSelectCreatetwo2(Map<Object,Object> param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+//		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+//		 Iterator it = param.entrySet().iterator();  
+//		 while (it.hasNext()) {  
+//			   Map.Entry entry = (Map.Entry) it.next();  
+//			   Object key = entry.getKey();  
+//			   Object value = entry.getValue();  
+//			   map.put(key, value);
+			   /*if(key.equals("page")){
+				   Object value2 = entry.getValue();
+				   Object key2 = entry.getKey();
+				String str =(String)entry.getValue();
+				int currentPage = Integer.parseInt(str);
+				 //封装当前页数
+					pageBean.setCurrPage(currentPage);
+					//每页显示的数据
+					int pageSize = 10;
+					pageBean.setPageSize(pageSize);
+					//封装总记录数
+					int totalCount = personalProfiledao.getPersonalProfileCount("","","长沙","");
+					pageBean.setTotalCount(totalCount);
+					//封装总页数
+					double tc = totalCount;
+					Double num = Math.ceil(tc/pageSize);
+					pageBean.setTotalPage(num.intValue());
+					map.put(key2, (currentPage-1)*pageSize);
+			   }
+			   if(key.equals("limit")){
+				   Object value2 = entry.getValue();
+				   Object key2 = entry.getKey();
+				   map.put(key2, pageBean.getPageSize());
+			   }*/
+			   
+//			  }
+		
+		 
+//		return null;
+		
+//		return ;
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		if(param.get("name") !=null){
+			map.put("name", param.get("name"));
+			System.out.println("a: "+param.get("a"));
+		} if(param.get("id_number")!=null){
+			map.put("id_number", param.get("id_number"));
+			System.out.println("b: "+param.get("b"));
+		} if(param.get("mobile_phone")!=null){
+			map.put("mobile_phone", param.get("mobile_phone"));
+			System.out.println("c: "+param.get("c"));
+		} if(param.get("ctime")!=null){
+			map.put("ctime", param.get("ctime"));
+			System.out.println("d: "+param.get("d"));
+		} if(param.get("ctime2")!=null){
+			map.put("ctime2", param.get("ctime2"));
+			System.out.println("e: "+param.get("e"));
+		} if(param.get("amount")!=null){
+			map.put("amount", param.get("amount"));
+			System.out.println("f: "+param.get("f"));
+		} if(param.get("amount2")!=null){
+			map.put("amount2", param.get("amount2"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("state")!=null){
+			map.put("state", param.get("state"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("city")!=null){
+			map.put("city", param.get("city"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("applicationnumber")!=null){
+			map.put("applicationnumber", param.get("applicationnumber"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("page")!=null || param.get("city") !=null){
+			
+			String str = (String)param.get("page");
+			String city = (String)param.get("city");
+			int par = Integer.parseInt(str);
+			//封装当前页数
+			pageBean.setCurrPage(par);
+			//每页显示的数据
+			int pageSize = 10;
+			pageBean.setPageSize(pageSize);
+			//封装总记录数
+			int totalCount = personalProfiledao.getPersonalProfileCount2(map);
+			pageBean.setTotalCount(totalCount);
+			//封装总页数
+			double tc = totalCount;
+			Double num = Math.ceil(tc/pageSize);
+			pageBean.setTotalPage(num.intValue());
+			map.put("page", (par-1)*pageSize);
+		}if(param.get("limit")!=null){
+			map.put("limit", pageBean.getPageSize());
+		}
+		 List<PersonalProfile>  p= personalProfiledao.vaguelikeSelectCreate(map);
+		 pageBean.setLists(p);
+		return pageBean;
+		
+	}
 	/*
 	 *  初审模糊查询
 	 */
@@ -220,7 +408,8 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 			   map.put(key, value);
 			   
 			  }
-		return personalProfiledao.vaguelikeSelectCreate(map);
+//		return personalProfiledao.vaguelikeSelectCreate(map);
+		 return null;
 		
 //		return ;
 	}
@@ -245,8 +434,8 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		map.put("rolename",role);
 		map.put("city",city);
 		map.put("parentnodeId",parentnodeId);
-		map.put("intid",intid);
-		map.put("intid",parentnodeId);
+		map.put("id",intid);
+//		map.put("intid",parentnodeId);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		//封装每页显示的数据
@@ -254,6 +443,9 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		pageBean.setLists(lists);
 		return pageBean;
 }
+	
+	
+
 
 	
 	@Override
@@ -324,7 +516,8 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 
 	@Override
-	public Page<PersonalProfile> getFinancePagePage(int currentPage, String username, String rolename, String city,String parentnodeId) {
+	public Page<PersonalProfile> getFinancePagePage(int currentPage, String username, String rolename, String city,
+			String parentnodeId,int intid) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		pageBean.setCurrPage(currentPage);
@@ -339,6 +532,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		map.put("rolename",rolename);
 		map.put("city",city);
 		map.put("parentnodeId",parentnodeId);
+		map.put("id",intid);
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getFinancePagePage(map);
@@ -430,7 +624,28 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 			pageBean.setLists(lists);
 		return pageBean;
 	}
-
+	@Override
+	public Page<PersonalProfile> getLoanInformationCity(int currentPage, String username, String rolename, String city,String parentnodeId) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getLoanInformationCountCity(username,rolename,city,parentnodeId);
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",rolename);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getLoanInformationCity(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	}
 	@Override
 	public int getLoanInformationCount(String username,String rolename,String city,String parentnodeId) {
 		return personalProfiledao.getLoanInformationCount(username,rolename,city,parentnodeId);
@@ -536,6 +751,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		map.put("rolename",rolename);
 		map.put("city",city);
 		map.put("parentnodeId",parentnodeId);
+		
 		map.put("page", (currentPage-1)*pageSize);
 		map.put("limit", pageBean.getPageSize());
 		List<PersonalProfile> lists = personalProfiledao.getLoanPressure(map);
@@ -551,10 +767,10 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	@Override
 	public PersonalProfile getSelectById(PersonalProfile param) {
 		Map<String, Object> map = new HashMap<String,Object>();
-		map.put("username", param.getUsername());
+//		map.put("username", param.getUsername());
 		map.put("city", param.getCity());
-		map.put("rolename", param.getRolename());
-		map.put("parentnodeId", param.getParentnodeId());
+//		map.put("rolename", param.getRolename());
+//		map.put("parentnodeId", param.getParentnodeId());
 		map.put("name", param.getName());
 		map.put("id", param.getId());
 		PersonalProfile p =	personalProfiledao.getSelectById(map);
@@ -597,5 +813,74 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	public int checkHangDataCount(String state) {
 		return personalProfiledao.checkHangDataCount(state);
 	}
+
+	@Override
+	public Page<PersonalProfile> getFinalreviewPage(int currentPage, String username, String rolename, String city,String parentnodeId, int intid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		//封装当前页数
+		pageBean.setCurrPage(currentPage);
+		//每页显示的数据
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		//封装总记录数
+		int totalCount = personalProfiledao.getFinalreviewPageCount(username,rolename,city,parentnodeId);
+		pageBean.setTotalCount(totalCount);
+		//封装总页数
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",rolename);
+		map.put("parentnodeId",parentnodeId);
+		map.put("city",city);
+		map.put("id",intid);
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		//封装每页显示的数据
+		List<PersonalProfile> lists = personalProfiledao.getFinalreviewPage(map); 
+		pageBean.setLists(lists);
+		return pageBean;
+	}
+
+	@Override
+	public Page<PersonalProfile> getFinancePagePage(int currentPage, String username, String rolename, String city,
+			String parentnodeId) {
+
+		Map<String,Object> map = new HashMap<String,Object>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		pageBean.setCurrPage(currentPage);
+		int pageSize = 10;
+		pageBean.setPageSize(pageSize);
+		int totalCount = personalProfiledao.getFinancePageCount(username,rolename,city,parentnodeId);
+		pageBean.setTotalCount(totalCount);
+		double tc = totalCount;
+		Double num = Math.ceil(tc/pageSize);
+		pageBean.setTotalPage(num.intValue());
+		map.put("username",username);
+		map.put("rolename",rolename);
+		map.put("city",city);
+		map.put("parentnodeId",parentnodeId);
+		map.put("page", (currentPage-1)*pageSize);
+		map.put("limit", pageBean.getPageSize());
+		List<PersonalProfile> lists = personalProfiledao.getFinancePagePage(map);
+			pageBean.setLists(lists);
+		return pageBean;
+	
+		
+	
+	}
+
+	@Override
+	public PersonalProfile getSelectByIdAdmin(PersonalProfile param) {
+		Map<String, Object> map = new HashMap<String,Object>();
+//		map.put("name", param.getName());
+		map.put("id", param.getId());
+		return 	personalProfiledao.getSelectByIdAdmin(map);
+	}
+				
+
+	
+
 
 }

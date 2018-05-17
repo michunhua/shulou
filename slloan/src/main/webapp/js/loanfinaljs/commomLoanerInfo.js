@@ -60,14 +60,23 @@ var collectData = function() {
 }
 
 // 发送数据方法
-var sendAjax = function(method, url, datas, callback) {
+var sendAjax = function(method, url, datas) {
   log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
-    success: function() {
-    	callback()
+    success: function(data) {
+    	if(data.msg == 'success') {
+    		layer.msg('保存成功', {
+  			  icon: 2,
+  			  time: 2000 
+  			}, function(){
+  				window.location.href = '../../slloan/loan/loanermass'
+  			});
+    	} else {
+    		alert('服务器错误')
+    	}
     },
     error: function(){
         alert('服务器错误')
@@ -83,7 +92,7 @@ var sendData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var method = 'POST'
-    var url = '/slloan/loan/joinupdatessaq'
+    var url = '/slloan/loan/joinupdate'
     var data = collectData()    	
     log(data)
     sendAjax(method, url, data, null)

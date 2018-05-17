@@ -93,7 +93,7 @@ VALUES
 					<if test="state !=null and state !=''">state = #{state},</if>
 					<if test="ctime !=null and ctime !=''">ctime = #{ctime},</if>
 				</set>
-					 WHERE id = #{id}   
+					 WHERE state = #{id}   
 					 
 
     </update>   

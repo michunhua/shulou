@@ -134,15 +134,15 @@
         <!-- 内容主体区域 -->
         <!-- 顶部导航 -->
         <ul class="layui-nav" lay-filter="">
-          <li class="layui-nav-item"><a href="../../slloan/loan/loanjoinss">借款申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loancomss">共同申请人个人资料</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loanermass">借款申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loancommss">共同申请人配偶</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loanapplyss">申请借款信息</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loanestass">房产资料</a></li>
-          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/loanimagss">影像资料</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loanlinkss">联系人信息</a></li>
-          <li class="layui-nav-item"><a href="../../slloan/loan/loannotess">终审备注</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfoloan">借款申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfotwo">共同申请人个人资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfolom">借款申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfocomm">共同申请人配偶</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfothree">申请借款信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfoestateInfo">房产资料</a></li>
+          <li class="layui-nav-item layui-this"><a href="../../slloan/loan/gaininfoimg">影像资料</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfolinkInfo">联系人信息</a></li>
+          <li class="layui-nav-item"><a href="../../slloan/loan/gaininfonoteInfo">备注说明</a></li>
         </ul>
         <div class="container">
           <!-- 具体页面导航 -->
@@ -211,7 +211,7 @@
 				备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath1').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfo()"  value="提交" />
+				<input type="button"   value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata1" class="nav-container">
@@ -265,7 +265,7 @@
 				备注 :<textarea type="text" id="note2"  value="" name="note"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath2').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath2" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfos()"  value="提交" />
+				<input type="button"   value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata2" class="nav-container">
@@ -319,7 +319,7 @@
 				备注 :<textarea type="text" id="note3"  value="" name="note"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath3').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath3" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoes()"  value="提交" />
+				<input type="button"   value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata3" class="nav-container">
@@ -373,7 +373,7 @@
 				备注 :<textarea type="text" id="note4"  value="" name="note"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath4').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath4" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoed()"  value="提交" />
+				<input type="button"   value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata4" class="nav-container">
@@ -427,7 +427,7 @@
 				备注 :<textarea type="text" id="note5"  value="" name="note"/></textarea><br/>   
 				<input type="file"  name="file" onchange="document.getElementById('filepath5').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath5" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoeds()"  value="提交" />
+				<input type="button"   value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata5" class="nav-container">
@@ -481,7 +481,7 @@
 				备注 :<textarea type="text" id="note6"  value="" name="note"/></textarea><br/>   
 				<input type="file"  name="file" onchange="document.getElementById('filepath6').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath6" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoess()"  value="提交" />
+				<input type="button"   value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata6" class="nav-container">
@@ -505,6 +505,6 @@
 <script type="text/javascript" src="../public/layui/layui.all.js"></script>
 <script type="text/javascript" src="../public/js/utils.js"></script>
 <script type="text/javascript" src="../public/js/navigate.js"></script>
-<script type="text/javascript" src="../js/loanfinaljs/imageInfo.js"></script>
+<script type="text/javascript" src="../js/gaininfo/imageInfo.js"></script>
 </body>
 </html>
