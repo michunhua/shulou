@@ -280,6 +280,14 @@ var createBtn = function() {
 	var ens = document.querySelector('#createLoan')
 	ens.addEventListener('click', function() {
 		localStorage.createID = ""
+		localStorage.createTemporaryId = ""
+		localStorage.comm = ""
+		localStorage.commmate = ""
+		localStorage.commesta = ""
+		localStorage.link = ""
+		localStorage.loaner = ""
+		localStorage.loanerinfo = ""
+		localStorage.loanernote = ""
 		window.location.href = '../../slloan/loan/loanjoin'
 	})
 }

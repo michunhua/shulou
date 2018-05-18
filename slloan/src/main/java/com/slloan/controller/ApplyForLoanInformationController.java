@@ -75,7 +75,7 @@ public class ApplyForLoanInformationController {
 
 		if (rt == true) {
 			logger.info("数据插入成功!");
-			return new Json(true, "success", rt);
+			return new Json(true, "success", rt,state);
 		} else {
 			logger.info("数据插入失败!");
 			return new Json(false, "fail", rt);
@@ -145,7 +145,7 @@ public class ApplyForLoanInformationController {
 						repayment_Account_Name, repayment_Account_Number, state, ctime, "", "", "", "");
 				boolean rt = applyForLoanInformationservice.save(app);
 				if(rt == true){
-					return  new Json(true,"success",rt);
+					return  new Json(true,"success",rt,state);
 				}else{
 					return  new Json(false,"fail",rt);
 				}

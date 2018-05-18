@@ -152,7 +152,7 @@ public class JointApplicantController {
 
 		if (jo == true) {
 			logger.info("数据插入成功!");
-			return new Json(true,"success",jo ); 
+			return new Json(true,"success",jo ,state); 
 		} else {
 			logger.info("数据插入失败!");
 			return new Json(false,"fail",jo); 

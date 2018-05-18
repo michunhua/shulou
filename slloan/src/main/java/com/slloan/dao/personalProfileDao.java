@@ -219,4 +219,7 @@ public interface personalProfileDao{
 	 	
 	 	public List<PersonalProfile> checkHangData(Map<String,Object> param);
 		int checkHangDataCount(String state);
+		int getPersonalProfileCountAll(Map<Object,Object> map);
+
+		List<PersonalProfile> vaguelikeSelectCreateoneAll(Map<Object,Object> param);
 }

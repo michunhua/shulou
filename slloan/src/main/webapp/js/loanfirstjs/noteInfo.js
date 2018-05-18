@@ -6,8 +6,8 @@ var collectData = function() {
   var data = {}
   data.note = e('.record-note').value
   data.recordFirst = e('.first-trial').value
-  data.recorFinal = ""
-  data.recorfore = ""
+  data.recorFinal = ''
+  data.recorfore = ''
   
   data.rolename = localStorage.purrole
   data.username = localStorage.purusername

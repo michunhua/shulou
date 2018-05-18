@@ -35,6 +35,36 @@ var collectData = function() {
   return data
 }
 
+//验证填写
+var testfocus = function(element, rule) {
+	var intent = document.querySelector(element)
+	var span = document.createElement('span')
+	var flag = false
+	span.innerText = '请正确填写'
+	span.style.color = 'red'
+	intent.addEventListener("keyup", function() {
+		console.log('12342134', flag)
+		if(intent.value.length < rule) {
+			intent.parentNode.appendChild(span)
+			intent.parentNode.classList.add('position')
+			flag = false
+			return flag
+		} else {
+			if(!flag & intent.parentNode.classList.contains('position')) {
+				intent.parentNode.removeChild(span)
+			}
+			flag = true
+		}
+	});
+	return flag
+}
+
+testfocus('.linkf-phone', 11) 
+testfocus('.links-phone', 11)
+testfocus('.linkt-phone', 11)
+testfocus('.linkf-name', 2)
+testfocus('.links-name', 2)
+testfocus('.linkt-name', 2)
 
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
@@ -49,6 +79,8 @@ var sendAjax = function(method, url, datas, callback) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
+  				localStorage.link = data.value
+  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loannote'
   			});
     	} else {
@@ -75,7 +107,7 @@ var sendData = function() {
     var url = '/slloan/loan/contactinformation'
     log(data)
     if(!data.mark) {
-        sendAjax(method, url, data)	
+    	sendAjax(method, url, data)	
     }
   })
 }
@@ -151,6 +183,17 @@ var searchData = function() {
 	}
 }
 
+//保存后查询数据
+function sendsearchData(result)  {
+	var method = 'GET'
+	var url = '/slloan/loan/contactasss'
+	var data = {}
+	data.id = result
+	if(data.id & localStorage.link) {
+		searchAjax(method, url, data)	
+	}
+}
+
 //修改数据保存
 var updateData = function() {
   log('send data to server')
@@ -168,6 +211,7 @@ var updateData = function() {
   })
 }
 
+
 //
 var __main = function() {
   log( "run")
@@ -175,6 +219,7 @@ var __main = function() {
   cancelBtn('#cancel')
   searchData()
   updateData()
+  sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

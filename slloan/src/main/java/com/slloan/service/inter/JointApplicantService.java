@@ -33,6 +33,6 @@ public interface JointApplicantService {
      */
 	int selectCount();
 
-	JointApplicant SelectById(int reqid);
+	JointApplicant SelectById(int id);
 }
 

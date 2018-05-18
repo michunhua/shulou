@@ -41,25 +41,28 @@ public class PropertyInformationController {
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
 		String name = obj.getString("owner");
-		String ownership_And_percentage = obj.getString("owner"); // 权属人及占比
-		String property_Address = obj.getString("accounting"); // 房产地址
-		String conStruction_Area = obj.getString("propertyAddress"); // 建筑面积
-		String inner_Area = obj.getString("building"); // 套内面积
-		String sales_Contract_Number = obj.getString("innerArea"); // 买卖合同编号
-		String certificate_of_Title = obj.getString("contract"); // 产权证号
-		String proPerty_for = obj.getString("certificate"); // 房产用于
+		String ownership_And_percentage = obj.getString("accounting"); // 权属人及占比
+		String property_Address = obj.getString("propertyAddress"); // 房产地址
+		String conStruction_Area = obj.getString("building"); // 建筑面积
+		String inner_Area = obj.getString("innerArea"); // 套内面积
+		String sales_Contract_Number = obj.getString("contract"); // 买卖合同编号
+		String certificate_of_Title = obj.getString("certificate"); // 产权证号
+		
 		String the_Assessed_Value = obj.getString("evaluation"); // 评估值
-		String original_Loan_Bank = obj.getString("property"); // 原贷款银行
-		String originalBank = obj.getString("originalBank"); // 原贷款金额
-		String originalBanks = obj.getString("originalBank"); // 原贷款尚欠本息余额
+		String proPerty_for = obj.getString("usetodo"); // 房产用于
+		String original_Loan_Bank = obj.getString("originalBank"); // 原贷款银行
+		String originalBank = obj.getString("originalAmount"); // 原贷款金额
+		String originalBanks = obj.getString("originalOwed"); // 原贷款尚欠本息余额
 		String house_Account = obj.getString("houseAccount"); // 供楼账号
-		String originalOwed = obj.getString("originalOwed"); // 买卖成交价
-		String bidPrice = obj.getString("bidPrice"); // 购房定金
-		String supervision_of_funds = obj.getString("deposit"); // 资金监管
+		String originalOwed = obj.getString("bidPrice"); // 买卖成交价
+		String bidPrice = obj.getString("deposit"); // 购房定金
+		String supervision_of_funds = obj.getString("funds"); // 资金监管
 		String new_loan_Bank = obj.getString("newBank"); // 新贷款银行
-		String funds = obj.getString("funds"); // 新贷款批复金额
+		String funds = obj.getString("newApproved"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = obj.getString("newAccount"); // 新贷款行账号
-		String note_DescriPtion = obj.getString("newApproved"); // 备注
+		
+		
+		String note_DescriPtion = obj.getString("property"); // 备注
 		String state=obj.getString("temporaryId"); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime=DateUtils.getInDateTime(new Date());
 		Double original_Loan_Amount = 0.0;
@@ -133,25 +136,28 @@ public class PropertyInformationController {
 		JSONObject req = new JSONObject().fromObject(dataid);
 		Integer id = req.getInt("id");
 		String name = req.getString("owner");
-		String ownership_And_percentage = req.getString("owner"); // 权属人及占比
-		String property_Address = req.getString("accounting"); // 房产地址
-		String conStruction_Area = req.getString("propertyAddress"); // 建筑面积
-		String inner_Area = req.getString("building"); // 套内面积
-		String sales_Contract_Number = req.getString("innerArea"); // 买卖合同编号
-		String certificate_of_Title = req.getString("contract"); // 产权证号
-		String proPerty_for = req.getString("certificate"); // 房产用于
+		String ownership_And_percentage = req.getString("accounting"); // 权属人及占比
+		String property_Address = req.getString("propertyAddress"); // 房产地址
+		String conStruction_Area = req.getString("building"); // 建筑面积
+		String inner_Area = req.getString("innerArea"); // 套内面积
+		String sales_Contract_Number = req.getString("contract"); // 买卖合同编号
+		String certificate_of_Title = req.getString("certificate"); // 产权证号
+		
 		String the_Assessed_Value = req.getString("evaluation"); // 评估值
-		String original_Loan_Bank = req.getString("property"); // 原贷款银行
-		String originalBank = req.getString("originalBank"); // 原贷款金额
-		String originalBanks = req.getString("originalBank"); // 原贷款尚欠本息余额
+		String proPerty_for = req.getString("usetodo"); // 房产用于
+		String original_Loan_Bank = req.getString("originalBank"); // 原贷款银行
+		String originalBank = req.getString("originalAmount"); // 原贷款金额
+		String originalBanks = req.getString("originalOwed"); // 原贷款尚欠本息余额
 		String house_Account = req.getString("houseAccount"); // 供楼账号
-		String originalOwed = req.getString("originalOwed"); // 买卖成交价
-		String bidPrice = req.getString("bidPrice"); // 购房定金
-		String supervision_of_funds = req.getString("deposit"); // 资金监管
+		String originalOwed = req.getString("bidPrice"); // 买卖成交价
+		String bidPrice = req.getString("deposit"); // 购房定金
+		String supervision_of_funds = req.getString("funds"); // 资金监管
 		String new_loan_Bank = req.getString("newBank"); // 新贷款银行
-		String funds = req.getString("funds"); // 新贷款批复金额
+		String funds = req.getString("newApproved"); // 新贷款批复金额
 		String new_Loan_Bank_Account_Number = req.getString("newAccount"); // 新贷款行账号
-		String note_DescriPtion = req.getString("newApproved"); // 备注
+		
+		
+		String note_DescriPtion = req.getString("property"); // 备注
 		String state=String.valueOf(id); //状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime(new Date());

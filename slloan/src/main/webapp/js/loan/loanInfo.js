@@ -51,6 +51,8 @@ var sendAjax = function(method, url, datas, callback) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
+  				localStorage.loanerinfo = data.value
+  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loanesta'
   			});
     	} else {
@@ -112,15 +114,15 @@ var searchExport = function(back) {
 	  
 	  amount.value = back.amount
 	  deadline.value = back.time_Limit
-	  unit.value = back.id
-	  variety.value = back.id
-	  manner.value = back.id
-	  bank.value = back.receiving_Account_Name
-	  accountName.value = back.receiving_Account
-	  account.value = back.repayment_Bank_name
-	  repayBank.value = back.repayment_Account_Name
-	  repayCcount.value = back.repayment_Account_Number
-	  reapyAccountbank.value = back.id
+	  unit.value = back.receiving_Bank_Name
+	  variety.value = back.receiving_Account_Name
+	  manner.value = back.receiving_Account
+	  bank.value = back.receiving_Bank_Name
+	  accountName.value = back.receiving_Account_Name
+	  account.value = back.receiving_Account
+	  repayBank.value = back.repayment_Bank_Name
+	  repayCcount.value = back.repayment_Account_Name
+	  reapyAccountbank.value = back.repayment_Account_Number
 }
 
 var initback = {
@@ -153,12 +155,24 @@ var searchAjax = function(method, url, datas) {
 	})
 }
 
+//查询
 var searchData = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/loanlinkfab'
 	var data = {}
 	data.id = localStorage.createID
 	if(data.id) {
+		searchAjax(method, url, data)	
+	}
+}
+
+//保存后查询
+function sendsearchData(result) {
+	var method = 'GET'
+	var url = '/slloan/loan/loanlinkfab'
+	var data = {}
+	data.id = result
+	if(data.id & localStorage.loanerinfo) {
 		searchAjax(method, url, data)	
 	}
 }
@@ -187,6 +201,7 @@ var __main = function() {
   cancelBtn('#cancel')
   searchData()
   updateData('#save-loaner')
+  sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

@@ -173,7 +173,10 @@ public class PersonalProfileController {
 //		    		String spare1 = obj.getString("note");//备注
 		    		int stateid =0;
 		    		String createDate =  DateUtils.getInDateTime2((new Date()));//日期
-		    		PersonalProfile param = new PersonalProfile(city,name);
+		    		PersonalProfile param = new PersonalProfile();
+		    		param.setCity(city);
+		    		param.setName(name);
+		    		param.setApplicationnumber(applicationnumber);
 		    		PersonalProfile p =personalproFileService.getSelectById(param);
 		    		int pid = p.getId();
 		    		String submit = String.valueOf(pid);
@@ -352,19 +355,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -404,19 +407,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -458,18 +461,18 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
 		String parentnodeId = obj.getString("parentnodeId");
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
@@ -515,19 +518,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -572,19 +575,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -680,19 +683,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -737,19 +740,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -794,19 +797,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -851,19 +854,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -910,19 +913,19 @@ public class PersonalProfileController {
 		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
 		 String data = req.getParameter("data");
 		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("start");
-		String ctim2 = obj.getString("end");
+		String name = obj.getString("userName").trim();
+		String mobilephone = obj.getString("iphone").trim();
+		String idnumber = obj.getString("IDcard").trim();
+		String numbering = obj.getString("numbering").trim();
+		String ctim1 = obj.getString("start").trim();
+		String ctim2 = obj.getString("end").trim();
 		String amount = obj.getString("min").trim();
 		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
+		String state = obj.getString("state").trim();
+		String rolename = obj.getString("rolename").trim();
+		String username = obj.getString("username").trim();
+		String city = obj.getString("city").trim();
+		String parentnodeId = obj.getString("parentnodeId").trim();
 		
 		Map<Object,Object> map = new HashMap<Object,Object>();
 		map.put("name", name);//姓名
@@ -961,57 +964,48 @@ public class PersonalProfileController {
 	 */
 	@RequestMapping(value = "/loaninformationselect", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Page<PersonalProfile> loaninformation(HttpServletRequest req) {
-		String page = req.getParameter("page");
-		String limit = req.getParameter("limit");
-		Page<PersonalProfile> resulit = new Page<PersonalProfile>();
-		 String data = req.getParameter("data");
-		 JSONObject obj = new JSONObject().fromObject(data);
-		String name = obj.getString("userName");
-		String mobilephone = obj.getString("iphone");
-		String idnumber = obj.getString("IDcard");
-		String numbering = obj.getString("numbering");
-		String ctim1 = obj.getString("date");
-		String ctim2 = obj.getString("end");
-		String amount = obj.getString("min").trim();
-		String amount2 = obj.getString("max").trim();
-		String state = obj.getString("state");
-		String rolename = obj.getString("rolename");
-		String username = obj.getString("username");
-		String city = obj.getString("city");
-		String parentnodeId = obj.getString("parentnodeId");
-		
-		Map<Object,Object> map = new HashMap<Object,Object>();
-		map.put("name", name);//姓名
-		map.put("mobile_phone", mobilephone);//手机号码
-		map.put("id_number", idnumber);//证件号码
-		map.put("applicationnumber", numbering);
-		map.put("ctime", ctim1);//申请时间1
-		map.put("ctime2", ctim2);//申请时间2
-		map.put("amount", amount.trim());//金额
-		map.put("amount2", amount2.trim());//金额2
-		map.put("state", state);//金额2
-		map.put("rolename", rolename);//申请时间2
-		map.put("username", username);//金额
-		map.put("city", city);//金额2
-		map.put("parentnodeId", parentnodeId);//金额2
-		map.put("page", page);
-		map.put("limit", limit);
-		System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount.trim()+" g: "+amount2.trim());
-//		map.put("state", state);//状态
-//		PersonalProfile result = personalprofileservice.vaguelikeSelectCreate(map);
-//		resultlist.setLists(result);
-		
-//		Page<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo(map);
-//		 resulit.setLists(p);
-//		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo2(map);
-//		 resulit.setLists(p);
-//		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo2(map);
-//		 resulit.setLists(p);
-//		List<PersonalProfile> p =	personalprofileservice.vaguelikeSelectCreatetwo2(map);
-//		 resulit.setLists(p);
+	public Page<PersonalProfile> loaninformation(HttpServletRequest req) {String page = req.getParameter("page");
+	String limit = req.getParameter("limit");
+	Page<PersonalProfile> resulit = new Page<PersonalProfile>();
+	 String data = req.getParameter("data");
+	 JSONObject obj = new JSONObject().fromObject(data);
+	String name = obj.getString("userName").trim();
+	String mobilephone = obj.getString("iphone").trim();
+	String idnumber = obj.getString("IDcard").trim();
+	String numbering = obj.getString("numbering").trim();
+	String ctim1 = obj.getString("start").trim();
+	String ctim2 = obj.getString("end").trim();
+	String amount = obj.getString("min").trim();
+	String amount2 = obj.getString("max").trim();
+	String state = obj.getString("state").trim();
+	String rolename = obj.getString("rolename").trim();
+	String username = obj.getString("username").trim();
+	String city = obj.getString("city").trim();
+	String parentnodeId = obj.getString("parentnodeId").trim();
+	
+	Map<Object,Object> map = new HashMap<Object,Object>();
+	map.put("name", name);//姓名
+	map.put("mobile_phone", mobilephone);//手机号码
+	map.put("id_number", idnumber);//证件号码
+	map.put("applicationnumber", numbering);
+	map.put("ctime", ctim1);//申请时间1
+	map.put("ctime2", ctim2);//申请时间2
+	map.put("amount", amount.trim());//金额
+	map.put("amount2", amount2.trim());//金额2
+	map.put("state", state);//金额2
+	map.put("rolename", rolename);//申请时间2
+	map.put("username", username);//金额
+	map.put("city", city);//金额2
+	map.put("parentnodeId", parentnodeId);//金额2
+	map.put("page", page);
+	map.put("limit", limit);
+	System.out.println("a: "+name+" b: "+idnumber+" c: "+mobilephone+" d: "+ctim1+" e: "+ ctim2+" f: "+amount.trim()+" g: "+amount2.trim());
+	if(state.contains("全部")){
+		return personalprofileservice.vaguelikeSelectCreatetwoAll(map);
+	}else{
 		return personalprofileservice.vaguelikeSelectCreatetwo2(map);
-		
+	}
+	
 	}
 	
 	/**
@@ -1035,6 +1029,8 @@ public class PersonalProfileController {
 		System.out.println("--------------------------");
 		return "loanfirst/loanerInfo";
 	}
+	
+	
 
 	/**
 	 * 贷款终审申请人资料

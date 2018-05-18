@@ -11,7 +11,7 @@ public interface NoteDescriptionService {
 	
 
 
-	NoteDescription findById(int state);
+	NoteDescription findById(int id);
 	
 
 

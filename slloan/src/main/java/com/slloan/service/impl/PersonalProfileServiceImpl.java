@@ -772,6 +772,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 //		map.put("rolename", param.getRolename());
 //		map.put("parentnodeId", param.getParentnodeId());
 		map.put("name", param.getName());
+		map.put("applicationnumber", param.getApplicationnumber());
 		map.put("id", param.getId());
 		PersonalProfile p =	personalProfiledao.getSelectById(map);
 				if(p !=null){
@@ -880,7 +881,68 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	}
 				
 
-	
+	@Override
+	public Page<PersonalProfile> vaguelikeSelectCreatetwoAll(Map<Object, Object> param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
+		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
+		if(param.get("name") !=null){
+			map.put("name", param.get("name"));
+			System.out.println("a: "+param.get("a"));
+		} if(param.get("id_number")!=null){
+			map.put("id_number", param.get("id_number"));
+			System.out.println("b: "+param.get("b"));
+		} if(param.get("mobile_phone")!=null){
+			map.put("mobile_phone", param.get("mobile_phone"));
+			System.out.println("c: "+param.get("c"));
+		} if(param.get("ctime")!=null){
+			map.put("ctime", param.get("ctime"));
+			System.out.println("d: "+param.get("d"));
+		} if(param.get("ctime2")!=null){
+			map.put("ctime2", param.get("ctime2"));
+			System.out.println("e: "+param.get("e"));
+		} if(param.get("amount")!=null){
+			map.put("amount", param.get("amount"));
+			System.out.println("f: "+param.get("f"));
+		} if(param.get("amount2")!=null){
+			map.put("amount2", param.get("amount2"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("state")!=null){
+			map.put("state", param.get("state"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("city")!=null){
+			map.put("city", param.get("city"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("applicationnumber")!=null){
+			map.put("applicationnumber", param.get("applicationnumber"));
+			System.out.println("g: "+param.get("g"));
+		}if(param.get("page")!=null || param.get("city") !=null){
+			
+			String str = (String)param.get("page");
+			String city = (String)param.get("city");
+			int par = Integer.parseInt(str);
+			//封装当前页数
+			pageBean.setCurrPage(par);
+			
+			//每页显示的数据
+			int pageSize = 10;
+			pageBean.setPageSize(pageSize);
+			//封装总记录数
+			int totalCount = personalProfiledao.getPersonalProfileCountAll(map);
+			pageBean.setTotalCount(totalCount);
+			//封装总页数
+			double tc = totalCount;
+			Double num = Math.ceil(tc/pageSize);
+			pageBean.setTotalPage(num.intValue());
+			map.put("page", (par-1)*pageSize);
+		}if(param.get("limit")!=null){
+			map.put("limit", pageBean.getPageSize());
+		}
+		 List<PersonalProfile>  p= personalProfiledao.vaguelikeSelectCreateoneAll(map);
+		 pageBean.setLists(p);
+		return pageBean;
+		
+	}
 
 
 }

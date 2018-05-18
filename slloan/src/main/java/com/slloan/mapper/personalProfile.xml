@@ -207,7 +207,8 @@
 		count(c.city)
 		FROM borrow_information a LEFT JOIN recordsubmit_table c on(a.id = c.submit) 
 		left JOIN apply_for_loan_information b on(c.submit = b.state)  
-		  WHERE c.state='0'  
+		  WHERE 
+		  <if test="state !=null and state !=''">c.state= #{state}</if>
 		  <if test="city !=null and city !=''">and c.city=#{city}</if>
 		<if test="name!=null and name!=''">and a.name like CONCAT('%', #{name}, '%')</if>
 		<if test="mobile_phone!=null and mobile_phone!=''">and a.mobile_phone like CONCAT('%', #{mobile_phone}, '%')</if>
@@ -217,7 +218,7 @@
 		<if test="amount !=null and amount !=''">and b.amount &gt;= #{amount} and b.amount &lt;= #{amount2}</if>
 		 ORDER BY c.submit 
 		<if test="test =page !=null and limit !=''">
-			limit #{page},#{limit}
+			limit 0,#{limit}
 		</if>
 		
 	</select>
@@ -327,7 +328,7 @@
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
 		where c.state='0' and c.city=#{city}
 		<!-- ORDER BY case a.id when #{id} then 1 else 2 END,a.id -->
-		ORDER BY a.id
+		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -664,6 +665,7 @@
 		<!-- <if test="parentnodeId !=null and parentnodeId !=''"> and parentnodeId=#{parentnodeId} 
 			</if> -->
 		<if test="name !=null and name !=''">and name = #{name}</if>
+		<if test="applicationnumber !=null and applicationnumber !=''">and applicationnumber = #{applicationnumber}</if>
 		<if test="id !=null and id !=''">and id = #{id}</if>
 	</select>
 	
@@ -699,5 +701,77 @@
 			limit #{page},#{limit}
 		</if>
 	</select>
+	
+	<select id="vaguelikeSelectCreateoneAll" resultType="Map" resultMap="personalpr">
+		SELECT
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		FROM borrow_information a
+		LEFT JOIN recordsubmit_table c on(a.id =
+		c.submit)
+		left JOIN apply_for_loan_information b on(c.submit = b.state)
+
+		where c.state in(0,1,2,3,4,5,6,7,8,9,10)
+		<if test="city !=null and city !=''">and c.city=#{city}</if>
+<!-- 		<if test="state !=null and state !=''">and c.state = #{state}</if> -->
+		<if test="name!=null and name!=''">and a.name like CONCAT('%', #{name}, '%')</if>
+		<if test="mobile_phone!=null and mobile_phone!=''">and a.mobile_phone like CONCAT('%', #{mobile_phone}, '%')</if>
+		<if test="id_number!=null and id_number!=''">and a.id_number like CONCAT('%', #{id_number}, '%')</if>
+		<if test="applicationnumber!=null and applicationnumber!=''">and a.applicationnumber like CONCAT('%',#{applicationnumber}, '%')</if>
+		<if test="ctime !=null and ctime !=''">and a.ctime BETWEEN #{ctime} and #{ctime2}</if>
+		<if test="amount !=null and amount !=''">and b.amount &gt;= #{amount} and b.amount &lt;= #{amount2}</if>
+		order by c.state
+		<if test="test =page !=null and limit !=''">
+			limit #{page},#{limit}
+		</if>
+		<!-- <if test="amount !=null and amount !=''">and b.amount &gt;= #{amount} 
+			and b.amount &lt;= #{amount2}</if> -->
+		<!-- <if test="amount !=null and amount !=''">and b.amount BETWEEN #{amount,jdbcType=VARCHAR} 
+			and #{amount2,jdbcType=VARCHAR}</if> -->
+	</select>
+
+	
+	
+<select id="getPersonalProfileCountAll" resultType="Integer">
+		SELECT COUNT(c.city)
+		FROM borrow_information a LEFT JOIN recordsubmit_table c on(a.id = c.submit) 
+		left JOIN apply_for_loan_information b on(c.submit = b.state)  
+<!-- 		WHERE  -->
+<where> 
+	<choose>
+	<when test="name !=null">and a.name like CONCAT('%', #{name}, '%')</when>
+	<when test="mobile_phone !=null">and a.mobile_phone like CONCAT('%', #{mobile_phone}, '%')</when>
+	<when test="id_number !=null">and a.id_number like CONCAT('%', #{id_number}, '%')</when>
+		<when test="applicationnumber !=null">and a.applicationnumber like CONCAT('%',#{applicationnumber}, '%')</when>
+		<when test="ctime !=null">and a.ctime BETWEEN #{ctime} and #{ctime2}</when>
+		<when test="amount !=null">and b.amount &gt;= #{amount} and b.amount &lt;= #{amount2}</when>
+		<when test="state ==全部">c.state in(0,1,2,3,4,5,6,7,8,9,10)</when>
+		<when test="city !=null">and c.city=#{city}</when>
+		<when test="test =page !=null and limit !=null">
+			limit #{page},#{limit} 
+ 		</when>
+		<otherwise>and c.state= #{state}</otherwise>
+	</choose>
+	ORDER BY c.submit
+<!-- 		<choose> -->
+<!-- 		<when test="state !=null">c.state in(0,1,2,3,4,5,6,7,8,9,10)</when> -->
+<!-- 		<when test="city !=null">and c.city=#{city}</when> -->
+<!-- 		<when test="name !=null and">and a.name like CONCAT('%', #{name}, '%')</when> -->
+<!-- 		<when test="mobile_phone !=null">and a.mobile_phone like CONCAT('%', #{mobile_phone}, '%')</when> -->
+<!-- 		<when test="id_number !=null">and a.id_number like CONCAT('%', #{id_number}, '%')</when> -->
+<!-- 		<when test="applicationnumber !=null">and a.applicationnumber like CONCAT('%',#{applicationnumber}, '%')</when> -->
+<!-- 		<when test="ctime !=null">and a.ctime BETWEEN #{ctime} and #{ctime2}</when> -->
+<!-- 		<when test="amount !=null">and b.amount &gt;= #{amount} and b.amount &lt;= #{amount2}</when> -->
+<!-- 		 ORDER BY c.submit  -->
+<!-- 		<when test="test =page !=null and limit !=null"> -->
+<!-- 			limit #{page},#{limit} -->
+<!-- 		</when> -->
+<!-- 			<otherwise>and c.state= #{state}</otherwise> -->
+<!-- 		</choose> -->
+<!-- 		    <if test="state !=null and state !=''">c.state= #{state}</if> -->
+<!-- 		     <if test="state =='全部'">c.state in(0,1,2,3,4,5,6,7,8,9,10)</if> -->
+		  </where>
+		
+	</select>
+
 
 </mapper>

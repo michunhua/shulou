@@ -50,6 +50,8 @@ var sendAjax = function(method, url, datas, callback) {
 					icon : 2,
 					time : 2000
 				}, function() {
+					localStorage.commmate = data.value
+					sendsearchData(localStorage.createTemporaryId)
 					window.location.href = '../../slloan/loan/loanapply'
 				});
 			} else {
@@ -152,6 +154,17 @@ var searchData = function() {
 	}
 }
 
+//保存后查询数据
+function sendsearchData(result) {
+	var method = 'GET'
+	var url = '/slloan/loan/coborrowers'
+	var data = {}
+	data.id = result
+	if(data.id & localStorage.commmate) {
+		searchAjax(method, url, data)
+	}
+}
+
 //  修改数据保存
 var updateData = function(element) {
 	var evs = e(element)
@@ -173,6 +186,7 @@ var __main = function() {
 	cancelBtn('#cancel')
 	searchData()
 	updateData('#save-coMate')
+	sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

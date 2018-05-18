@@ -48,6 +48,8 @@ var sendAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
+  				localStorage.loaner = data.value
+  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loancomm'
   			});
     	} else {
@@ -155,6 +157,17 @@ var searchData = function() {
 	}
 }
 
+//查询数据
+function sendsearchData(result) {
+	var method = 'GET'
+	var url = '/slloan/loan/spouses'
+	var data = {}
+	data.id = result
+	if(data.id &localStorage.loaner) {
+		searchAjax(method, url, data)
+	}
+}
+
 //修改数据保存
 var updateData = function(element) {
   log('send data to server')
@@ -166,7 +179,7 @@ var updateData = function(element) {
     var method = 'POST'
     var url = '/slloan/loan/spoupdatea'
     log(data)
-    if(data.id) {
+    if(data.id & localStorage.loaner) {
 			sendAjax(method, url, data)
 		}
   })
@@ -179,6 +192,7 @@ var __main = function() {
   cancelBtn('#cancel')
   searchData()
   updateData('#save-data')
+  sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

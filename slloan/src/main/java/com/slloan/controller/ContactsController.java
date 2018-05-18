@@ -60,7 +60,7 @@ public class ContactsController {
 		
 		if (coan == true) {
 			logger.info("数据插入成功!");
-			return new Json(true,"success",coan ); 
+			return new Json(true,"success",coan,state ); 
 		} else {
 			logger.info("数据插入失败!");
 			return new Json(false,"fail",coan); 

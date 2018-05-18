@@ -72,7 +72,7 @@ public class SpousesOfBorrowersController {
 		boolean sp = spousesofborrowers.save(spouses);// 插入角色
 		if (sp == true) {
 			logger.info("数据插入成功!");
-			return new Json(true, "success", sp);
+			return new Json(true, "success", sp,state);
 		} else {
 			logger.info("数据插入失败!");
 			return new Json(false, "fail", sp);

@@ -79,6 +79,8 @@ var sendAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
+  				localStorage.comm = data.value
+  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loanerma'
   			});
     	} else {
@@ -241,6 +243,17 @@ var searchData = function() {
 	}
 }
 
+//保存后查询数据
+function sendsearchData(result) {
+	var method = 'GET'
+	var url = '/slloan/loan/jointappli'
+	var data = {}
+	data.id = result
+	if(data.id & localStorage.comm) {
+		searchAjax(method, url, data)
+	}
+}
+
 //保存修改数据
 var updateData = function(element) {
   var evs = e(element)
@@ -264,6 +277,7 @@ var __main = function() {
   cancelBtn('#cancel')
   searchData()
   updateData('#save-data')
+  sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

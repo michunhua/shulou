@@ -161,7 +161,7 @@ public class CirculationContRoller {
 		String state = obj.getString("state");
 		String id = obj.getString("id");//根据一条记录的ID查一条记录流转记录状态
 		int uid = Integer.parseInt(id);
-		int stateid = Integer.parseInt(state);
+//		int stateid = Integer.parseInt(state);
 		List<circulation> coan;
 		List<String> coan2 = null;
 		PersonalProfile p;
@@ -196,7 +196,10 @@ public class CirculationContRoller {
 			coan = circulationservice.findById(record);// 鎻掑叆瑙掕壊
 			List<circulation> selectAdminData = circulationservice.findById(record);// 鎻掑叆瑙掕壊
 //			PersonalProfile param = new PersonalProfile(uid,username,city,"",parentnodeId,"")C;
-			PersonalProfile param = new PersonalProfile(uid,city);
+			PersonalProfile param = new PersonalProfile();
+			param.setCity(city);
+//    		param.setName(name);
+    		param.setId(uid);
 			 p=personalproFileService.getSelectById(param);
 
 		}

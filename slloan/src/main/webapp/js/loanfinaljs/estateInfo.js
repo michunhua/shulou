@@ -11,6 +11,7 @@ var collectData = function() {
   data.certificate = e('.certificate').value
   data.evaluation = e('.evaluation').value
   data.property = e('.property').value
+  data.usetodo = e('.usetodo').value
   data.originalBank = e('.original-bank').value
   data.originalAmount = e('.original-amount').value
   data.houseAccount = e('.house-account').value
@@ -21,6 +22,7 @@ var collectData = function() {
   data.funds = e('.funds').value
   data.newAccount = e('.new-account').value
   data.newApproved = e('.new-approved').value
+
   data.name= '1'
 	
 	  data.state= 'a'
@@ -80,6 +82,7 @@ var searchExport = function(back) {
 	  certificate = e('.certificate')
 	  evaluation = e('.evaluation')
 	  property = e('.property')
+	  usetodo = e('.usetodo')
 	  originalBank = e('.original-bank')
 	  originalAmount = e('.original-amount')
 	  houseAccount = e('.house-account')
@@ -91,25 +94,26 @@ var searchExport = function(back) {
 	  newAccount = e('.new-account')
 	  newApproved = e('.new-approved')
 	  
-	  owner.value = back.ownership_And_percentage
-	  accounting.value = back.property_Address
-	  propertyAddress.value = back.conStruction_Area
-	  building.value = back.inner_Area
-	  innerArea.value = back.sales_Contract_Number
-	  contract.value = back.certificate_of_Title
-	  certificate.value = back.proPerty_for
+	  owner.value = back.name
+	  accounting.value = back.ownership_And_percentage
+	  propertyAddress.value = back.property_Address
+	  building.value = back.conStruction_Area
+	  innerArea.value = back.inner_Area
+	  contract.value = back.sales_Contract_Number
+	  certificate.value = back.certificate_of_Title
 	  evaluation.value = back.the_Assessed_Value
-	  property.value = back.id
-	  originalBank.value = back.id
+	  usetodo.value = back.proPerty_for
+	  property.value = back.original_Loan_Amount
+	  originalBank.value = back.original_Loan_Bank
 	  originalAmount.value = back.original_Loan_Amount
-	  houseAccount.value = back.id
-	  originalOwed.value = back.transaCtion_Price
-	  bidPrice.value = back.purchase_Deposit
-	  deposit.value = back.supervision_of_funds
-	  newBank.value = back.id
-	  funds.value = back.new_Loan_Approval_Amount
+	  houseAccount.value = back.house_Account
+	  originalOwed.value = back.loan_Outstanding_Balance
+	  bidPrice.value = back.transaCtion_Price
+	  deposit.value = back.purchase_Deposit
+	  newBank.value = back.new_loan_Bank
+	  funds.value = back.supervision_of_funds
 	  newAccount.value = back.new_Loan_Bank_Account_Number
-	  newApproved.value = back.note_DescriPtion
+	  newApproved.value = back.new_Loan_Approval_Amount
 	  
 
 		// 下拉选项

@@ -83,8 +83,8 @@ var addTable = function(data) {
 		var userName = myFilter(datas.lists[i].applyfor[0].amount)
 		var phone = myFilter(datas.lists[i].mobile_phone)
 		var number = myFilter(datas.lists[i].id_number)
-		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)
-		var state = myFilter(datas.lists[i].state)
+		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit)  + datas.lists[i].applyfor[0].time_Limits
+		var state = myFilter(datas.lists[i].notes[0].fallbackname)
 		var address = myFilter(datas.lists[i].home_address_now)
 		var time = myFilter(datas.lists[i].ctime)
 
@@ -95,7 +95,7 @@ var addTable = function(data) {
 		td1.classList.add('flag')
 		td1a.innerText = ID
 		td1.innerText = userid
-		td2.innerText = userName
+		td2.innerText = userName  + ' 元'
 		td3.innerText = phone
 		td4.innerText = number
 		td5.innerText = limit
@@ -171,7 +171,7 @@ var collectData = function() {
     data.iphone = e('.iphone').value
     data.IDcard = e('.Idcard').value
     data.numbering = e('.application').value
-    data.date = e('.start').value
+    data.start = e('.start').value
     data.end = e('.end').value
     data.state = e('.state').value
     data.min = e('.min').value
@@ -202,7 +202,7 @@ var envs = function(element) {
   ens.addEventListener('click', function() {
     console.log('running', datas)
     var method = 'GET'
-    var url = '/slloan/loan/LoanInformation?page='+init.pages+'&limit='+ init.limit
+    var url = '/slloan/loan/loaninformationselect?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
     datas.rolename = localStorage.purrole
     datas.username = localStorage.purusername

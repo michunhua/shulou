@@ -3,16 +3,16 @@ var collectData = function() {
   log('收集数据')
   var data = {}
   data.amount = e('.amount').value
-  data.term = e('.term').value
+  data.term = e('.deadline').value
   data.unit = e('.unit').value
   data.variety = e('.variety').value
-  data.repayment = e('.repayment').value
-  data.beneficiarybank = e('.beneficiary-bank').value
-  data.bankaccount = e('.bank-account').value
-  data.receivingAccount = e('.receiving-account').value
-  data.repaymenBtank = e('.repayment-bank').value
-  data.repaymentAccount = e('.repayment-account').value
-  data.accountNumber = e('.account-number').value
+  data.repayment = e('.manner').value
+  data.beneficiarybank = e('.bank').value
+  data.bankaccount = e('.account-name').value
+  data.receivingAccount = e('.account').value
+  data.repaymenBtank = e('.repay-bank').value
+  data.repaymentAccount = e('.repay-ccount').value
+  data.accountNumber = e('.reapy-accountbank').value
   data.unit = e('.unit').value
   data.id = localStorage.finalID
   return data
@@ -62,28 +62,28 @@ var sendData = function(element) {
 //设置页面数据
 var searchExport = function(back) {
 	  amount = e('.amount')
-	  term = e('.term')
+	  deadline = e('.deadline')
 	  unit = e('.unit')
 	  variety = e('.variety')
-	  repayment = e('.repayment')
-	  beneficiarybank = e('.beneficiary-bank')
-	  bankaccount = e('.bank-account')
-	  receivingAccount = e('.receiving-account')
-	  repaymenBtank = e('.repayment-bank')
-	  repaymentAccount = e('.repayment-account')
-	  accountNumber = e('.account-number')
+	  manner = e('.manner')
+	  bank = e('.bank')
+	  accountName = e('.account-name')
+	  account = e('.account')
+	  repayBank = e('.repay-bank')
+	  repayCcount = e('.repay-ccount')
+	  reapyAccountbank = e('.reapy-accountbank')
 	  
 	  amount.value = back.amount
-	  term.value = back.time_Limit
-	  unit.value = back.repayment
-	  variety.value = back.borrowing_Variety
-	  repayment.value = back.receiving_Bank_Name
-	  beneficiarybank.value = back.receiving_Account
-	  bankaccount.value = back.repayment_Bank_name
-	  receivingAccount.value = back.repayment_Account_Name
-	  repaymenBtank.value = back.repayment_Account_Number
-	  repaymentAccount.value = back.id
-	  accountNumber.value = back.id
+	  deadline.value = back.time_Limit
+	  unit.value = back.receiving_Bank_Name
+	  variety.value = back.receiving_Account_Name
+	  manner.value = back.receiving_Account
+	  bank.value = back.receiving_Bank_Name
+	  accountName.value = back.receiving_Account_Name
+	  account.value = back.receiving_Account
+	  repayBank.value = back.repayment_Bank_Name
+	  repayCcount.value = back.repayment_Account_Name
+	  reapyAccountbank.value = back.repayment_Account_Number
 	  
 
 		// 下拉选项

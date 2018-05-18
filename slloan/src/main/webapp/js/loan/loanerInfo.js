@@ -67,6 +67,7 @@ var collectData = function() {
   return data
 }
 
+
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
   log('send data method')
@@ -84,7 +85,8 @@ var sendAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000, 
   			}, function(){
-//  				window.location.href = '../../slloan/loan/loancom'
+  				sendsearchData(localStorage.createTemporaryId)
+  				window.location.href = '../../slloan/loan/loancom'
   			});
     	} else {
     		alert('服务器错误')
@@ -266,6 +268,17 @@ var searchData = function() {
 	}
 }
 
+//保存后查询
+function sendsearchData(result) {
+	console.log('保存后查询')
+	var method = 'GET'
+	var url = '/slloan/loan/personalp'
+	var data = {}
+	data.id = result
+	if(data.id) {
+		searchAjax(method, url, data)	
+	}
+}
 
 
 
@@ -345,6 +358,7 @@ var __main = function() {
   sendData('#save-data')
   searchData()
   updateData('#save-data')
+  sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

@@ -25,10 +25,10 @@ var collectData = function() {
   data.recorFinal = e('.esnote')
   data.recorfore = ''
   data.state = ''
-	  data.rolename = localStorage.purrole
-		data.username = localStorage.purusername
-		data.city = localStorage.purcity
-		data.parentnodeId = localStorage.purid
+  data.rolename = localStorage.purrole
+  data.username = localStorage.purusername
+  data.city = localStorage.purcity
+  data.parentnodeId = localStorage.purid
   return data
 }
 
@@ -39,13 +39,13 @@ var sendAjax = function(method, url, datas, callback) {
     url: url,
     data: {data:JSON.stringify(datas)},
     success: function(data) {
-    	localStorage.createID = ""
-        localStorage.createTemporaryId = ""
     	if(data.msg == 'success') {
     		layer.msg('保存成功', {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
+  				localStorage.loanernote = data.value
+  				sendsearchData(localStorage.createTemporaryId)
 //  				window.location.href = "/slloan/loan/loancrea"
   			});
     	} else {
@@ -105,6 +105,21 @@ var searchData = function() {
 }
 
 
+//保存后查询数据
+function sendsearchData(result) {
+	var method = 'GET'
+	var url = '/slloan/loan/notedescripti'
+	var data = {}
+	data.id = result
+	data.rolename = localStorage.purrole
+	data.username = localStorage.purusername
+	data.city = localStorage.purcity
+	data.parentnodeId = localStorage.purid
+	if(data.id & localStorage.loanernote) {
+		searchAjax(method, url, data)
+	}
+}
+
 // 提交方法
 var submitAjax = function(method, url, datas) {
 	log('send data method')
@@ -117,6 +132,7 @@ var submitAjax = function(method, url, datas) {
 		success : function(data) {
 		console.log('返回数据', data)
 		localStorage.createID = ""
+	    localStorage.createTemporaryId = ""
     	if(data.msg == 'success') {
     		layer.msg('提交成功', {
   			  icon: 2,
@@ -172,10 +188,10 @@ var submitBtn = function(element) {
 		var url = '/slloan/loan/loannotfirsts'
 		var data = collectData()
 		data.rolename = localStorage.purrole
-	data.username = localStorage.purusername
-    data.city = localStorage.purcity
-    data.parentnodeId = localStorage.purid
-		data.id = localStorage.createID
+		data.username = localStorage.purusername
+		data.city = localStorage.purcity
+		data.parentnodeId = localStorage.purid
+		data.id = localStorage.createID || localStorage.createTemporaryId
 		if(data.id) {
 			submitAjax(method, url, data)
 		} else {
@@ -207,6 +223,7 @@ var __main = function() {
   submitBtn('#submit')
   searchData()
   updateData('#save-note')
+  sendsearchData(localStorage.createTemporaryId)
 }
 
 __main()

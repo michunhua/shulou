@@ -70,7 +70,7 @@ public class CoborrowerSpouseController {
 
 		if (co == true) {
 			logger.info("数据插入成功!");
-			return new Json(true,"success",co ); 
+			return new Json(true,"success",co,state ); 
 		} else {
 			logger.info("数据插入失败!");
 			return new Json(false,"fail",co); 

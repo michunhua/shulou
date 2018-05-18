@@ -69,10 +69,10 @@ public class NoteDescriptionController {
 
 		if (notes == true) {
 			logger.info("数据插入成功!");
-			return new Json(true, "success", notes);
+			return new Json(true, "success", notes, state);
 		} else {
 			logger.info("数据插入失败!");
-			return new Json(false, "fail", notes);
+			return new Json(false, "fail", notes, state);
 		}
 
 		//
@@ -158,10 +158,10 @@ public class NoteDescriptionController {
 
 			if (notes == true) {
 				logger.info("数据插入成功!");
-				return new Json(true, "success", notes);
+				return new Json(true, "success", notes, state);
 			} else {
 				logger.info("数据插入失败!");
-				return new Json(false, "fail", notes);
+				return new Json(false, "fail", notes, state);
 			}
 		}
 
@@ -388,8 +388,8 @@ public class NoteDescriptionController {
 			}
 			
 		int stateid =2;
-		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-		String updatedata =  DateUtils.getInDateTime((new Date()));//日期
+		String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 //		circulation record = new  circulation("1",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
@@ -434,8 +434,8 @@ public class NoteDescriptionController {
 				boolean bo = recordSubmitService.updateDateStateCancel(sid);
 			}
 		int stateid =3;
-		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-		String updatedata =  DateUtils.getInDateTime((new Date()));//日期
+		String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 		circulation record = new  circulation("3",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
@@ -477,8 +477,8 @@ public class NoteDescriptionController {
 				boolean bo = recordSubmitService.updateDateStateCancel(sid);
 			}
 		int stateid =4;
-		String createDate =  DateUtils.getInDateTime((new Date()));//日期
-		String updatedata =  DateUtils.getInDateTime((new Date()));//日期
+		String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+		String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename,spare1,id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 		circulation record = new  circulation("4",fallbackname,createDate,username,parentnodeId,city,rolename,updatedata,sid);
@@ -511,7 +511,7 @@ public class NoteDescriptionController {
 		String city = obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		int stateid = 5;
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
+		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname, stateid, createDate, username,
 				parentnodeId, city, rolename, id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
@@ -545,7 +545,7 @@ public class NoteDescriptionController {
 		String city = obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		int stateid = 6;
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
+		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname, stateid, createDate, username,
 				parentnodeId, city, rolename, id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
@@ -578,7 +578,7 @@ public class NoteDescriptionController {
 		String city = obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		int stateid = 7;
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
+		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname, stateid, createDate, username,
 				parentnodeId, city, rolename, id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
@@ -611,7 +611,7 @@ public class NoteDescriptionController {
 		String city = obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		int stateid = 8;
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
+		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname, stateid, createDate, username,
 				parentnodeId, city, rolename, id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
@@ -644,7 +644,7 @@ public class NoteDescriptionController {
 		String city = obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		int stateid = 9;
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
+		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname, stateid, createDate, username,
 				parentnodeId, city, rolename, id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
@@ -678,7 +678,7 @@ public class NoteDescriptionController {
 		String city = obj.getString("city");
 		String parentnodeId = obj.getString("parentnodeId");
 		int stateid = 10;
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
+		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname, stateid, createDate, username,
 				parentnodeId, city, rolename, id);
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);

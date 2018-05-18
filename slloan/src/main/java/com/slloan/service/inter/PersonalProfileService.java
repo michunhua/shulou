@@ -181,4 +181,6 @@ public interface PersonalProfileService {
 		 	public Page<PersonalProfile> checkHangData(String state,String username,String role,String city,String parentnodeId,int id,int currentPage);
 		 	int checkHangDataCount(String state);
 		 	
+		 	Page<PersonalProfile> vaguelikeSelectCreatetwoAll(Map<Object,Object> param);
+		 	
 }
