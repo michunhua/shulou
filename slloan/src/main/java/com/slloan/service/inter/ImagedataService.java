@@ -86,4 +86,5 @@ public interface ImagedataService {
 		  ObjectSeq addSeq();
 		  
 		 ImageDataUpdate imagedataUpdateNote(ImageDataUpdate image);
+		 public ImageDataUpdate selectByDelId(String spare,String upload,String filepath);
 }

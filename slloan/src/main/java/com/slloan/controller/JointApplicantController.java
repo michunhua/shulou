@@ -115,7 +115,7 @@ public class JointApplicantController {
 		String state=obj.getString("temporaryId"); // 状态;//
 							// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结
 		String ctime=DateUtils.getInDateTime(new Date());
-
+		int sid = Integer.parseInt(state);
 
 		Double Revenue_previous_year = 0.0;
 		if (lastyearIncome.length() > 0) {
@@ -141,22 +141,41 @@ public class JointApplicantController {
 		if (expenses.length() > 0) {
 			monthly_expenditure = Double.parseDouble(expenses);
 		}
-		JointApplicant joint= new JointApplicant(name, phoneticize, id_type, Other_identity_types,
-				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
-				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
-				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
-				enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
-				former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
-				supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
-		boolean jo = jointapplicant.save(joint);// 插入角色
+		
+		JointApplicant isResult = jointapplicant.SelectById(sid);
+		if(isResult != null){
+			JointApplicant joints= new JointApplicant(sid,name, phoneticize, id_type, Other_identity_types,
+					id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+					marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+					mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+					enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+					former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+					supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
+				boolean booleanisResult = jointapplicant.update(joints);
+				if (booleanisResult == true) {
+					return new Json(true, "success", booleanisResult);
+				} else {
+					return new Json(false, "fail", booleanisResult);
+				}
+		}else{
+			JointApplicant joint= new JointApplicant(name, phoneticize, id_type, Other_identity_types,
+					id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
+					marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
+					mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
+					enterprise_scale, Revenue_previous_year, asset_scale, unit_phone, postCode, job_category, seniority,
+					former_unit_name, former_seniority, source_of_income, monthly_income, Income_from_investment,
+					supportPeople, Other_income, family_number, monthly_expenditure, postal_address, state, ctime);
+			boolean jo = jointapplicant.save(joint);// 插入角色
 
-		if (jo == true) {
-			logger.info("数据插入成功!");
-			return new Json(true,"success",jo ,state); 
-		} else {
-			logger.info("数据插入失败!");
-			return new Json(false,"fail",jo); 
+			if (jo == true) {
+				logger.info("数据插入成功!");
+				return new Json(true,"success",jo ,state); 
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false,"fail",jo); 
+			}
 		}
+		
 
 	}
 
@@ -297,7 +316,7 @@ public class JointApplicantController {
 		if (isResult != null) {
 			return new Json(true, "success", isResult);
 		} else
-			return new Json(false, "fail", isResult);
+			return new Json(true, "success", isResult);
 	}
 
 	/**

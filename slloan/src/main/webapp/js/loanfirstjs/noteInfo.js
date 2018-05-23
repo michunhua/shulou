@@ -52,6 +52,10 @@ var sendData = function(element) {
     log('data to send at time')
     var data = collectData()
     data.id = localStorage.firstID
+    data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
     var method = 'POST'
     var url = '/slloan/loan/updatenotetwo'
     log(data)
@@ -66,8 +70,20 @@ var searchExport = function(back) {
 	recordNote = e('.record-note')
 	recordFirst = e('.first-trial')
 	
-	recordNote.value = back.note_Description1
-	recordFirst.value = back.note_Description2
+//	recordNote.value = back.note_Description1
+//	recordFirst.value = back.note_Description2
+	
+	if(back.note_Description2 == "undefined" & back.note_Description2 == undefined|| back.note_Description2 == "null" || back.note_Description2 == null){
+		recordFirst.value = ""
+	  }else if(back.note_Description2 != "undefined" & back.note_Description2 != undefined || back.note_Description2 != "null" & back.note_Description2 == null){
+		  recordFirst.value = back.note_Description2
+	  }
+	  
+	  if(back.note_Description1 != "undefined" & back.note_Description1 != undefined || back.note_Description1 != "null" & back.note_Description1 == null){
+		  recordNote.value = back.note_Description1
+	  }else if(back.note_Description1 != "undefined" & back.note_Description1 == undefined || back.note_Description1 == "null" & back.note_Description1 == null){
+		  recordNote.value = ""
+	  }
 }
 
 //查询
@@ -85,7 +101,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 		error: function(){
@@ -130,7 +146,7 @@ var submitAjax = function(method, url, datas) {
 	    data: {data:JSON.stringify(datas)},
 	    success: function(data) {
 	    	if(data.msg == 'success') {
-	    		layer.msg('保存成功', {
+	    		layer.msg('提交成功', {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){

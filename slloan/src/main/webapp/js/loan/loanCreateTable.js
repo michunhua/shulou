@@ -299,6 +299,14 @@ var numberSearch = function(element) {
 			var indicate = event.target.classList
 			if(indicate == 'mark') {
 				localStorage.createTemporaryId = ""
+				localStorage.createID = ""
+				localStorage.comm = ""
+				localStorage.commmate = ""
+				localStorage.commesta = ""
+				localStorage.link = ""
+				localStorage.loaner = ""
+				localStorage.loanerinfo = ""
+				localStorage.loanernote = ""	
 				localStorage.createID = event.target.parentNode.nextSibling.innerText
 				window.location.href = '../loan/loanjoin'
 				

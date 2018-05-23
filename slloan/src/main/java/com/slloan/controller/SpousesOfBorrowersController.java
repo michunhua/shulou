@@ -59,24 +59,37 @@ public class SpousesOfBorrowersController {
 		String mobile_Phone = obj.getString("mobile"); // 移动电话
 		String salary = obj.getString("salary");// 月薪（人民币）
 		String state = obj.getString("temporaryId");// 状态
-													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+		int sid = Integer.parseInt(state);
+		// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));// 日期
 		Double monthly_Income = 0.0;
 		if (salary.length() > 0) {
 			monthly_Income = Double.parseDouble(salary);
 		}
 
-		SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Other, id_Number, uni_Name, unit_Phone,
-				home_Phone, mobile_Phone, monthly_Income, state, ctime);
+		SpousesOfBorrowers isResult = spousesofborrowers.SelectById(sid);
+		if (isResult != null) {
+			SpousesOfBorrowers splse = new SpousesOfBorrowers(sid, name, id_Type, id_Other, id_Number, uni_Name,
+					unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
+				boolean isResults = spousesofborrowers.spoupdate(splse);
+				if (isResults == true) {
+					return new Json(true, "success", isResults, "");// JSON.toJSONString(isResult);
+				} else
+					return new Json(false, "success", isResults, "");// JSON.toJSONString("fail");
+			} else {
+				SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Other, id_Number, uni_Name,
+						unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
 
-		boolean sp = spousesofborrowers.save(spouses);// 插入角色
-		if (sp == true) {
-			logger.info("数据插入成功!");
-			return new Json(true, "success", sp,state);
-		} else {
-			logger.info("数据插入失败!");
-			return new Json(false, "fail", sp);
-		}
+				boolean sp = spousesofborrowers.save(spouses);// 插入角色
+				if (sp == true) {
+					logger.info("数据插入成功!");
+					return new Json(true, "success", sp, state);
+				} else {
+					logger.info("数据插入失败!");
+					return new Json(false, "fail", sp);
+
+				}
+			}
 	}
 
 	/***
@@ -99,7 +112,7 @@ public class SpousesOfBorrowersController {
 		if (isResult != null) {
 			return new Json(true, "success", isResult);
 		} else
-			return new Json(false, "fail", isResult);
+			return new Json(true, "fail", isResult);
 	}
 
 	/**

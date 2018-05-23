@@ -59,14 +59,25 @@ public class CoborrowerSpouseController {
 		String salary =obj.getString("salary");// 月薪（人民币）
 		String state = obj.getString("temporaryId");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = DateUtils.getInDateTime((new Date()));//日期
+		int sid = Integer.parseInt(state);
 		Double monthly_Income = 0.0;
 		if (salary.length() > 0) {
 			monthly_Income = Double.parseDouble(salary);
 		}
 
-		CoborrowerSpouse coborrow = new CoborrowerSpouse(name, id_Type,id_Other,id_Number, uni_Name,
+CoborrowerSpouse isResult =coborrowerSpouseService.SelectById(sid);
+	if(isResult != null){
+		CoborrowerSpouse coborrow = new CoborrowerSpouse(sid,name, id_Type,id_Other, id_Number, uni_Name,
+				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime );
+				boolean isResults =coborrowerSpouseService.update(coborrow);
+				if(isResults == true){
+					return new Json(true,"success",isResults,"");//JSON.toJSONString(isResult);
+				}else
+					return new Json(false,"fail",isResults,"");
+	}else{
+		CoborrowerSpouse coborrows = new CoborrowerSpouse(name, id_Type,id_Other,id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income,state,ctime);
-		boolean co = coborrowerSpouseService.save(coborrow);// 鎻掑叆瑙掕壊
+		boolean co = coborrowerSpouseService.save(coborrows);// 鎻掑叆瑙掕壊
 
 		if (co == true) {
 			logger.info("数据插入成功!");
@@ -75,8 +86,7 @@ public class CoborrowerSpouseController {
 			logger.info("数据插入失败!");
 			return new Json(false,"fail",co); 
 		}
-
-
+	}
 	}
 
 	
@@ -97,7 +107,7 @@ public class CoborrowerSpouseController {
 		if(isResult !=null){
 			return new Json(true,"success",isResult); 
 		}else
-			return new Json(false,"fail",isResult); 
+			return new Json(true,"success",isResult); 
 	}
 
 	/**

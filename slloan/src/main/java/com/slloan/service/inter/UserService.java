@@ -64,7 +64,7 @@ public interface UserService {
   	  * @param newpassword
   	  * @return
   	  */
-  	 public boolean updatePassWord(String username,String oldpassword,String newpassword);
+  	 public boolean updatePassWord(String username,String oldpassword,String newpassword,String id);
 
 //  	 public Page queryUserInfo(Page pagefy);//分页
   	 

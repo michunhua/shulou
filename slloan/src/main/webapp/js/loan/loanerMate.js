@@ -6,15 +6,46 @@ var e = function(elements) {
   return  document.querySelector(elements)
 }
 
-// 依赖库方法
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
+//// 依赖库方法
+//layui.use('laydate', function(){
+//  var laydate = layui.laydate;
+//
+//  //执行一个laydate实例
+//  laydate.render({
+//    elem: '#test1' //指定元素
+//  });
+//});
 
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#test1' //指定元素
-  });
-});
+layui.use(['form', 'layedit', 'laydate'], function(){
+	  var form = layui.form
+	  ,layer = layui.layer
+	  ,layedit = layui.layedit
+	  ,laydate = layui.laydate;
+	  
+	  //自定义验证规则
+	  form.verify({
+		  username: function(value){
+	      if(value.length < 2){
+	        return '名称至少得2个字符啊';
+	      }
+	    }
+	    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+	    ,content: function(value){
+	      layedit.sync(editIndex);
+	    }
+	  });
+	  
+	  //监听提交
+	  form.on('submit(demo1)', function(data){
+		  if(localStorage.createID || localStorage.loaner) {
+			  updatevalid()
+		  } else {
+			  testsend()  
+		  }
+	    return false;
+	  });
+	});
+
 
 
 // 收集信息
@@ -30,8 +61,8 @@ var collectData = function() {
   data.untilPhone = e('.unit-phone').value
   data.mobile = e('.mobie-phone').value
   data.salary = e('.salary').value
-  data.state = 'a'
-  data.ctime = 'b'
+  data.state = ''
+  data.ctime = ''
   return data
 }
 
@@ -49,7 +80,7 @@ var sendAjax = function(method, url, datas) {
   			  time: 2000 
   			}, function(){
   				localStorage.loaner = data.value
-  				sendsearchData(localStorage.createTemporaryId)
+//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loancomm'
   			});
     	} else {
@@ -81,6 +112,20 @@ var sendData = function(element) {
   })
 }
 
+//验证后提交
+var testsend = function() {
+	log('data to send at time')
+    var data = collectData()
+    data.temporaryId = localStorage.createTemporaryId	
+	data.mark = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/loanApplyspouse'
+    log(data)
+    if(!data.mark) {
+        sendAjax(method, url, data)	
+    }
+}
+
 // 取消按钮事件
 var cancelBtn = function(element) {
   var forms = e('form')
@@ -95,8 +140,8 @@ var cancelBtn = function(element) {
 var searchExport = function(back) {
 	  cname = e('.ch-name')
 	  certificate = e('.paperwork-type')
+	  documents = e('.document-number')
 	  certificateType = e('.paperwork-numb')
-	  document = e('.document-number')
 	  untilName = e('.unit-name')
 	  untilPhone = e('.unit-phone')
 	  residence = e('.residence-phone')
@@ -104,14 +149,21 @@ var searchExport = function(back) {
 	  salary = e('.salary')
 	  
 	  cname.value = back.name
-	  certificate.value = back.id
+	  certificate.value = back.id_Other
+	  documents.value = back.id_Other
 	  certificateType.value = back.id_Number
-	  document.value = back.id_Number
 	  untilName.value = back.uni_Name
-	  untilPhone.value = back.home_Phone
-	  residence.value = back.unit_Phone
+	  untilPhone.value = back.unit_Phone
+	  residence.value = back.home_Phone
 	  mobile.value = back.mobile_Phone
 	  salary.value = back.monthly_Income
+	  
+		// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".paperwork-type").val(back.id_Type);
+		  form.render()
+		});
 }
 
 var initback = {
@@ -179,20 +231,32 @@ var updateData = function(element) {
     var method = 'POST'
     var url = '/slloan/loan/spoupdatea'
     log(data)
-    if(data.id & localStorage.loaner) {
+    if(data.id || localStorage.loaner) {
 			sendAjax(method, url, data)
 		}
   })
 }
 
+//验证后保存修改数据
+var updatevalid = function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID || localStorage.loaner
+    var method = 'POST'
+    var url = '/slloan/loan/spoupdatea'
+    log(data)
+    if(data.id || localStorage.loaner) {
+			sendAjax(method, url, data)
+		}
+}
+
 //
 var __main = function() {
   log( "run")
-  sendData('#save-data')
+//  sendData('#save-data')
   cancelBtn('#cancel')
   searchData()
-  updateData('#save-data')
+//  updateData('#save-data')
   sendsearchData(localStorage.createTemporaryId)
 }
-
 __main()

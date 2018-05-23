@@ -108,8 +108,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean updatePassWord(String username, String passWord, String newpassword) {
-		return userupdatedao.updatePassWord(username, passWord, newpassword);
+	public boolean updatePassWord(String username, String passWord, String newpassword,String id) {
+		return userupdatedao.updatePassWord(username, passWord, newpassword,id);
 	}
 
 	@Override

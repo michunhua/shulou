@@ -1,11 +1,14 @@
 log('updatePassword')
-
+$(function(){
+	$('.username').val(localStorage.purusername);
+})
 // 收集数据
 var collectData = function() {
     var data = {}
     data.username = e('.username').value
     data.oldpassword  = e('.lastPassword').value
     data.newpassword = e('.newPassword').value
+    data.id = localStorage.purid
     return data
 }
 
@@ -15,7 +18,23 @@ var sendAjax = function(method, url, datas, callback) {
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
-      success: callback
+      success: function(data) {
+//    	  alert(localStorage.purusername);
+    	 var username =  e('.username').value
+    	 var oldpassword  = e('.lastPassword').value
+    	 var newpassword = e('.newPassword').value
+    	 if(oldpassword == "" || oldpassword == null){
+    		  alert("请输入旧密码")
+    	  }else if(newpassword == "" || newpassword == null){
+    		  alert("请输入新密码")
+    	  }else{
+    		  alert(data.value)
+    		  $('.lastPassword').val("")
+    		  $('.newPassword').val("")
+    	  }
+    	 
+      }
+      
     })
 }
 
@@ -35,10 +54,13 @@ var envs = function(element) {
 
 // 取消按钮事件
 var cancelBtn = function(element) {
-  var forms = e('form')
+//  var forms = e('form')
   var evs = e(element)
   evs.addEventListener('click', function() {
-    forms.reset()
+//    forms.reset()
+	  $('.lastPassword').val("")
+	  $('.newPassword').val("")
+	  
   })
 }
 

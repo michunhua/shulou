@@ -4,7 +4,7 @@ public class NoteDescription {
 	
 	private Integer id;
 	private String note_Description1;
-	private String note_Description2;
+	private String note_Description2 ;
 	private String note_Description3;
 	private String note_Description4;
 	private String state;

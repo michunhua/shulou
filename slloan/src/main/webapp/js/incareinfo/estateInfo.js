@@ -25,7 +25,7 @@ var collectData = function() {
 	  data.id= 2
 	  data.state= 'a'
 		  data.ctiam = 'b'
-  data.id = 2
+  data.id = ''
   return data
 }
 
@@ -118,7 +118,7 @@ var searchExport = function(back) {
 		// 下拉选项
 		  layui.use('form', function(){
 			  var form = layui.form;
-			  $(".property").val(back.original_Loan_Bank);
+			  $(".property").val(back.note_DescriPtion);
 			  form.render()
 			});
 }
@@ -138,7 +138,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){

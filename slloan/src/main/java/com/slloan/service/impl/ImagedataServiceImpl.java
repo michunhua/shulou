@@ -211,4 +211,12 @@ public class ImagedataServiceImpl implements ImagedataService {
 			map.put("filepath", image.getFilepath());
 		return imagedatadao.imagedataUpdateNote(map);
 	}
+	@Override
+	public ImageDataUpdate selectByDelId(String spare,String upload,String filepath) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("spare", spare);
+		map.put("uploadFtpRoute", upload);
+		map.put("filepath", filepath);
+		return imagedatadao.selectByDelId(map);
+	}
 }

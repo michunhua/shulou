@@ -50,10 +50,10 @@ var sendData = function(element) {
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
     log('data to send at time')
-    var data = collectData()
+//    var data = collectData()
     var method = 'POST'
     var url = ''
-    log(data)
+//    log(data)
 //    sendAjax(method, url, data, null)
     window.location.href = '../../slloan/loan/repayinfoestateInfo'
   })
@@ -89,9 +89,9 @@ var searchExport = function(back) {
 		// 下拉选项
 		  layui.use('form', function(){
 			  var form = layui.form;
-			  $(".unit").val(back.repayment);
+			  $(".unit").val(back.time_Limits);
 			  $(".variety").val(back.borrowing_Variety);
-			  $(".repayment").val(back.receiving_Bank_Name);
+			  $(".manner").val(back.repayment);
 			  form.render()
 			});
 }
@@ -111,7 +111,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){

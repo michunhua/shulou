@@ -556,7 +556,7 @@
 
 	<select id="vaguelikeSelectCreate" resultType="Map" resultMap="personalpr">
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.fallbackname,c.state,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
@@ -575,6 +575,7 @@
 		<if test="applicationnumber!=null and applicationnumber!=''">and a.applicationnumber like CONCAT('%',#{applicationnumber}, '%')</if>
 		<if test="ctime !=null and ctime !=''">and a.ctime BETWEEN #{ctime} and #{ctime2}</if>
 		<if test="amount !=null and amount !=''">and b.amount &gt;= #{amount} and b.amount &lt;= #{amount2}</if>
+		order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -682,7 +683,7 @@
 		<!-- LEFT JOIN recordsubmit_table c on(a.id = c.submit) -->
 		<!-- left JOIN apply_for_loan_information b on(c.submit = b.id) -->
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber,c.marked
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber,c.marked
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
@@ -701,10 +702,10 @@
 			limit #{page},#{limit}
 		</if>
 	</select>
-	
+	<!-- 模糊查询 -->
 	<select id="vaguelikeSelectCreateoneAll" resultType="Map" resultMap="personalpr">
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.fallbackname,c.state,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
@@ -719,7 +720,7 @@
 		<if test="applicationnumber!=null and applicationnumber!=''">and a.applicationnumber like CONCAT('%',#{applicationnumber}, '%')</if>
 		<if test="ctime !=null and ctime !=''">and a.ctime BETWEEN #{ctime} and #{ctime2}</if>
 		<if test="amount !=null and amount !=''">and b.amount &gt;= #{amount} and b.amount &lt;= #{amount2}</if>
-		order by c.state
+		order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -751,7 +752,7 @@
  		</when>
 		<otherwise>and c.state= #{state}</otherwise>
 	</choose>
-	ORDER BY c.submit
+	order by a.id
 <!-- 		<choose> -->
 <!-- 		<when test="state !=null">c.state in(0,1,2,3,4,5,6,7,8,9,10)</when> -->
 <!-- 		<when test="city !=null">and c.city=#{city}</when> -->

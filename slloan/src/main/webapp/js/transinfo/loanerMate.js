@@ -71,7 +71,7 @@ var searchExport = function(back) {
 	  
 	  cname.value = back.name
 //	  certificate.value = back.id_Type
-	  certificateType.value = back.paperother
+	  certificateType.value = back.id_Other
 	  documents.value = back.id_Number
 	  untilName.value = back.uni_Name
 	  untilPhone.value = back.home_Phone
@@ -101,7 +101,7 @@ success: function(data) {
 	if(data.msg == 'success') {
 		searchExport(data.obj)
 	} else {
-		alert('服务器错误')
+		alert('这页资料尚未填写')
 	}
 },
 error: function(){

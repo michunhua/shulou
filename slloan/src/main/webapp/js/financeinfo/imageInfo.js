@@ -337,13 +337,8 @@ var imagesAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		layer.msg('删除成功', {
-  			  icon: 2,
-  			  time: 2000 
-  			}, function(){
-  				initonload()
-//  				window.location.href = '../../slloan/loan/loanimag'
-  			});
+    		alert('删除成功')
+    		window.location.href = '../../slloan/loan/financeappimg'
     	} else {
     		alert('服务器错误')
     	}

@@ -389,7 +389,7 @@ public class UserController {
 							System.out.println(session.getMaxInactiveInterval());
 							// return
 							// JSON.toJSONString(username+"异地登录被拒绝！该用户已经登录！");
-							return new Json(false, "fail", "异地登录被拒绝！该用户已经登录！70秒后在登录", "loginrefusal");
+							return new Json(false, "fail", "异地登录被拒绝！该用户已经登录！", "loginrefusal");
 						}
 					}
 				}
@@ -486,12 +486,13 @@ public class UserController {
 		String username = obj.getString("username");
 		String passWord = obj.getString("oldpassword");
 		String newpassword = obj.getString("newpassword");
+		String id =obj.getString("id");
 		// UserLoginUpdate updateupdate = new UserLoginUpdate();
-		boolean isResult = userservice.updatePassWord(username, newpassword, passWord);
+		boolean isResult = userservice.updatePassWord(username, newpassword, passWord,id);
 		if (isResult == true) {
 			return new Json(true, "success", isResult, "修改成功");// JSON.toJSONString(isResult);
 		} else
-			return new Json(false, "fail", isResult, "输入的密码错误或不正确");// JSON.toJSONString("旧密码或用户名不正确");
+			return new Json(false, "fail", isResult, "输入的旧密码错误或不正确修改失败");// JSON.toJSONString("旧密码或用户名不正确");
 	}
 
 	/**

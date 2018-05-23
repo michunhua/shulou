@@ -62,18 +62,46 @@ public class NoteDescriptionController {
 		String parentnodeId = obj.getString("parentnodeId");
 		String city = obj.getString("city");
 		String rolename = obj.getString("rolename");
-		// String submit = obj.getString("temporaryId");
+		 String submit = obj.getString("temporaryId");
+		 int uid = Integer.parseInt(submit);
 		int stateid = 0;
-		NoteDescription note = new NoteDescription(note_Description1, state, ctime, username, parentnodeId, city,rolename);
-		boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
+		NoteDescription contactcd = notedesc.findById(uid);
+		if(contactcd !=null){
+			if(contactcd.getstate().contains(submit)){
+				NoteDescription contact = new NoteDescription(uid, note_Description1, "", "",
+						"", state, ctime);
+				boolean isResult = notedesc.update(contact);
+				if (isResult == true) {
+					return new Json(true, "success", isResult, "");// JSON.toJSONString(isResult);
+				} else {
+					return new Json(false, "fail", isResult, "");
+				}
+			}else{
+				NoteDescription note = new NoteDescription(note_Description1, state, ctime, username, parentnodeId, city,rolename);
+				boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
 
-		if (notes == true) {
-			logger.info("数据插入成功!");
-			return new Json(true, "success", notes, state);
-		} else {
-			logger.info("数据插入失败!");
-			return new Json(false, "fail", notes, state);
+				if (notes == true) {
+					logger.info("数据插入成功!");
+					return new Json(true, "success", notes, state);
+				} else {
+					logger.info("数据插入失败!");
+					return new Json(false, "fail", notes, state);
+				}
+			}
+			
+		}else{
+			NoteDescription note = new NoteDescription(note_Description1, state, ctime, username, parentnodeId, city,rolename);
+			boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
+
+			if (notes == true) {
+				logger.info("数据插入成功!");
+				return new Json(true, "success", notes, state);
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false, "fail", notes, state);
+			}
 		}
+		
 
 		//
 	}
@@ -94,12 +122,13 @@ public class NoteDescriptionController {
 		String uid = json.getString("id");
 		int id = Integer.parseInt(uid);
 
+		
 		NoteDescription contactcd = notedesc.findById(id);
-
-		if (contactcd != null) {
-			return new Json(true, "success", contactcd);
-		} else
-			return new Json(false, "fail", contactcd);
+			if (contactcd != null) {
+				return new Json(true, "success", contactcd);
+			} else
+				return new Json(true, "success", contactcd);
+		
 	}
 
 	/**
@@ -152,7 +181,7 @@ public class NoteDescriptionController {
 				return new Json(false, "fail", isResult, "");
 			}
 		} else {
-			NoteDescription note = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
+			NoteDescription note = new NoteDescription(stateid, note_Description1, note_Description2, note_Description3,
 					note_Description4, state, ctime,username,rolename,parentnodeId,city);
 			boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
 
@@ -169,6 +198,10 @@ public class NoteDescriptionController {
 
 	/**
 	 * 初审用户修改
+	 * @param username 
+	 * @param rolename 
+	 * @param parentnodeId 
+	 * @param city 
 	 * 
 	 * @return
 	 */
@@ -185,26 +218,59 @@ public class NoteDescriptionController {
 		String note_Description2 = json.getString("recordFirst");
 		String note_Description3 = json.getString("recorFinal");
 		String note_Description4 = json.getString("recorfore");
+		String username = json.getString("username");
+		String parentnodeId = json.getString("parentnodeId");
+		String city = json.getString("city");
+		String rolename = json.getString("rolename");
 		String state = json.getString("id");
 		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));// 日期
-
+		
 		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
 				note_Description4, state, ctime);
-		// NoteDescription con = notedesc.findById(stateid);
-		// boolean isResult = notedesc.update(contact);
-		boolean isResult = notedesc.updatetwo(contact);
-		if (isResult == true) {
-			return new Json(true, "success", isResult, "");
+		NoteDescription con = notedesc.findById(stateid);
 
+		if (con != null) {
+			boolean isResult = notedesc.updatetwo(contact);
+			if (isResult == true) {
+				return new Json(true, "success", isResult, "");// JSON.toJSONString(isResult);
+			} else {
+				return new Json(false, "fail", isResult, "");
+			}
 		} else {
-			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
-		}
+			NoteDescription note = new NoteDescription(stateid, note_Description1, note_Description2, note_Description3,
+					note_Description4, state, ctime,username,rolename,parentnodeId,city);
+			boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
 
+			if (notes == true) {
+				logger.info("数据插入成功!");
+				return new Json(true, "success", notes, state);
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false, "fail", notes, state);
+			}
+		}
+//
+//		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
+//				note_Description4, state, ctime);
+//		// NoteDescription con = notedesc.findById(stateid);
+//		// boolean isResult = notedesc.update(contact);
+//		boolean isResult = notedesc.updatetwo(contact);
+//		if (isResult == true) {
+//			return new Json(true, "success", isResult, "");
+//
+//		} else {
+//			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
+//		}
+//
 	}
 
 	/**
 	 * 终审用户修改
+	 * @param username 
+	 * @param rolename 
+	 * @param parentnodeId 
+	 * @param city 
 	 * 
 	 * @return
 	 */
@@ -221,26 +287,59 @@ public class NoteDescriptionController {
 		String note_Description2 = json.getString("recordFirst");
 		String note_Description3 = json.getString("recorFinal");
 		String note_Description4 = json.getString("recorfore");
+		String username = json.getString("username");
+		String parentnodeId = json.getString("parentnodeId");
+		String city = json.getString("city");
+		String rolename = json.getString("rolename");
 		String state = json.getString("id");
 		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));// 日期
-
+		
 		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
 				note_Description4, state, ctime);
-		// NoteDescription con = notedesc.findById(stateid);
+		NoteDescription con = notedesc.findById(stateid);
 
-		boolean isResult = notedesc.updatethere(contact);
-		if (isResult == true) {
-			return new Json(true, "success", isResult, "");
-
+		if (con != null) {
+			boolean isResult = notedesc.updatethere(contact);
+			if (isResult == true) {
+				return new Json(true, "success", isResult, "");// JSON.toJSONString(isResult);
+			} else {
+				return new Json(false, "fail", isResult, "");
+			}
 		} else {
-			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
+			NoteDescription note = new NoteDescription(stateid, note_Description1, note_Description2, note_Description3,
+					note_Description4, state, ctime,username,rolename,parentnodeId,city);
+			boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
+
+			if (notes == true) {
+				logger.info("数据插入成功!");
+				return new Json(true, "success", notes, state);
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false, "fail", notes, state);
+			}
 		}
+
+//		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
+//				note_Description4, state, ctime);
+//		// NoteDescription con = notedesc.findById(stateid);
+//
+//		boolean isResult = notedesc.updatethere(contact);
+//		if (isResult == true) {
+//			return new Json(true, "success", isResult, "");
+//
+//		} else {
+//			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
+//		}
 
 	}
 
 	/**
 	 * 财务用户修改
+	 * @param username 
+	 * @param rolename 
+	 * @param parentnodeId 
+	 * @param city 
 	 * 
 	 * @return
 	 */
@@ -257,20 +356,48 @@ public class NoteDescriptionController {
 		String note_Description2 = json.getString("recordFirst");
 		String note_Description3 = json.getString("recorFinal");
 		String note_Description4 = json.getString("recorfore");
+		String username = json.getString("username");
+		String parentnodeId = json.getString("parentnodeId");
+		String city = json.getString("city");
+		String rolename = json.getString("rolename");
 		String state = json.getString("id");
 		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime((new Date()));// 日期
-
 		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
 				note_Description4, state, ctime);
-		// NoteDescription con = notedesc.findById(stateid);
-		boolean isResult = notedesc.updatefore(contact);
-		if (isResult == true) {
-			return new Json(true, "success", isResult, "");
+		NoteDescription con = notedesc.findById(stateid);
 
+		if (con != null) {
+			boolean isResult = notedesc.updatefore(contact);
+			if (isResult == true) {
+				return new Json(true, "success", isResult, "");// JSON.toJSONString(isResult);
+			} else {
+				return new Json(false, "fail", isResult, "");
+			}
 		} else {
-			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
+			NoteDescription note = new NoteDescription(stateid, note_Description1, note_Description2, note_Description3,
+					note_Description4, state, ctime,username,rolename,parentnodeId,city);
+			boolean notes = notedesc.save(note);// 鎻掑叆瑙掕壊
+
+			if (notes == true) {
+				logger.info("数据插入成功!");
+				return new Json(true, "success", notes, state);
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false, "fail", notes, state);
+			}
 		}
+
+//		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
+//				note_Description4, state, ctime);
+//		// NoteDescription con = notedesc.findById(stateid);
+//		boolean isResult = notedesc.updatefore(contact);
+//		if (isResult == true) {
+//			return new Json(true, "success", isResult, "");
+//
+//		} else {
+//			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
+//		}
 	}
 
 
@@ -722,7 +849,7 @@ public class NoteDescriptionController {
 		c.setCity(city.trim());
 		c.setState(1);
 		CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-		if(cir.getSubmit().equals(uid) &&cir.getMarked().equals("己挂起")){
+		if(cir.getSubmit().equals(uid) || cir.getMarked().equals("己挂起")){
 			boolean bo = recordSubmitService.updateDateStateCancel(uid);
 		}
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);

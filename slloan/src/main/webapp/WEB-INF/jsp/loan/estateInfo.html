@@ -155,7 +155,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">权属人姓名</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入权属人" autocomplete="off" class="layui-input owner">
+                <input type="text" name="title" required  lay-verify="username" placeholder="请输入权属人" autocomplete="off" class="layui-input owner">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">占比</label>
@@ -184,7 +184,7 @@
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">合同编号</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input contract">
+                <input type="text" name="password"  placeholder="请输入地址" autocomplete="off" class="layui-input contract">
               </div>
             </div>
             <div class="layui-form-item">
@@ -195,7 +195,7 @@
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">评估值</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input evaluation">
+                <input type="text" name="password" lay-verify="required|number" placeholder="请输入地址" autocomplete="off" class="layui-input evaluation">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
@@ -212,7 +212,7 @@
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入用途" autocomplete="off" class="layui-input usetodo">
+                <input type="text" name="password"  placeholder="请输入用途" autocomplete="off" class="layui-input usetodo">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
@@ -224,7 +224,7 @@
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">原贷款金额</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input original-amount">
+                <input type="text" name="password" lay-verify="required|number" placeholder="请输入金额" autocomplete="off" class="layui-input original-amount">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
@@ -237,7 +237,7 @@
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">原贷款尚欠</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input original-owed">
+                <input type="text" name="password" lay-verify="required|number" placeholder="请输入地址" autocomplete="off" class="layui-input original-owed">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
@@ -245,12 +245,12 @@
             <div class="layui-form-item">
               <label class="layui-form-label">买卖成交价</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input bid-price">
+                <input type="text" name="password"  placeholder="请输入账号" autocomplete="off" class="layui-input bid-price">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
               <label class="layui-form-label">购房定金</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input deposit">
+                <input type="text" name="password"  placeholder="请输入地址" autocomplete="off" class="layui-input deposit">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
             </div>
@@ -262,7 +262,7 @@
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">资金监管</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input funds">
+                <input type="text" name="password"  placeholder="请输入账号" autocomplete="off" class="layui-input funds">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
             </div>
@@ -274,19 +274,18 @@
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">新贷款获批</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input new-approved">
+                <input type="text" name="password" lay-verify="required|number" placeholder="请输入地址" autocomplete="off" class="layui-input new-approved">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
-
-          </form>
           <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn"  lay-filter="formDemo" id = 'save-loaner'>保存</button>
+                <button class="layui-btn"  lay-submit="" lay-filter="demo1" id = 'save-loaner'>保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary" id = 'cancel'>取消</button>
               </div>
             </div>
+          </form>
         </div>
     </div>
 

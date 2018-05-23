@@ -83,7 +83,7 @@ public class circulationServiceImpl implements circulationService{
 		}
 		if(state.equals("10")){
 			System.out.println("贷款终审提交到财务,");
-			circulation record = new circulation(state ,"结算已结清贷款信息贷款查看",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
+			circulation record = new circulation(state ,"结算已结清待贷款信息查看",ctime,username.trim(),parentnodeId.trim(),city.trim(),rolename.trim(),updatedata,spare.trim());
 			return recordSubmitDao.save(record);
 		}
 		return true;

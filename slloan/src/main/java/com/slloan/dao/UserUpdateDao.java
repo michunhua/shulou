@@ -22,6 +22,6 @@ public interface UserUpdateDao {
  	  * @param newpassword
  	  * @return
  	  */
- 	 public boolean updatePassWord(String userName,String passWord,String newpassWord);
+ 	 public boolean updatePassWord(String userName,String passWord,String newpassWord,String id);
 
 }

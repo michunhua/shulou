@@ -23,8 +23,8 @@ var collectData = function() {
 	// 固定值
 	data.cname = e('.ch-name').value
 	data.certificate = e('.paperwork-type').value
-	data.certificateType = e('.paperwork-numb').value
-	data.document = e('.document-number').value
+	data.certificateType = e('.document-number').value
+	data.document = e('.paperwork-numb').value
 	data.mobile = e('.mobile-phone').value
 	data.untilName = e('.unit-name').value
 	data.untilPhone = e('.unit-phone').value
@@ -51,7 +51,7 @@ var sendAjax = function(method, url, datas, callback) {
 					time : 2000
 				}, function() {
 					localStorage.commmate = data.value
-					sendsearchData(localStorage.createTemporaryId)
+//					sendsearchData(localStorage.createTemporaryId)
 					window.location.href = '../../slloan/loan/loanapply'
 				});
 			} else {
@@ -94,8 +94,8 @@ var cancelBtn = function(element) {
 var searchExport = function(back) {
 	  cname = e('.ch-name')
 	  certificate = e('.paperwork-type')
+	  documents = e('.document-number')
 	  certificateType = e('.paperwork-numb')
-	  document = e('.document-number')
 	  mobile = e('.mobile-phone')
 	  untilName = e('.unit-name')
 	  untilPhone = e('.unit-phone')
@@ -103,14 +103,21 @@ var searchExport = function(back) {
 	  salary = e('.salary')
 	  
 	  cname.value = back.name
-	  certificate.value = back.id
-	  document.value = back.id_Number
-	  certificateType.value = back.id_Number
-	  untilName.value = back.unit_Phone
-	  untilPhone.value = back.home_Phone
-	  residence.value = back.mobile_Phone
-	  mobile.value = back.uni_Name
+//	  certificate.value = back.id
+	  certificateType.value =back.id_Number
+	  documents.value =  back.id_Other
+	  untilName.value = back.uni_Name
+	  untilPhone.value = back.unit_Phone
+	  residence.value = back.home_Phone
+	  mobile.value = back.mobile_Phone
 	  salary.value = back.monthly_Income
+	  
+		// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".paperwork-type").val(back.id_Type);
+		  form.render()
+		});
 }
 
 var initback = {

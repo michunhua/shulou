@@ -155,7 +155,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">金额</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input amount">
+                <input type="text" name="password" lay-verify="required|number" placeholder="请输入金额" autocomplete="off" class="layui-input amount">
               </div>
               <div class="layui-form-mid layui-word-aux">元</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
@@ -163,7 +163,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">期限</label>
               <div class="layui-input-inline">
-                <input type="text" name="username" lay-verify="required" placeholder="请输入期限" autocomplete="off" class="layui-input deadline">
+                <input type="text" name="username" lay-verify="required|number" placeholder="请输入期限" autocomplete="off" class="layui-input deadline">
               </div>
                 <div class="layui-input-inline">
                   <select name="interest" lay-filter="aihao" class="unit">
@@ -199,21 +199,21 @@
               <div class="layui-inline">
                 <label class="layui-form-label">收款银行</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="date" id="date2" autocomplete="off" class="layui-input bank">
+                  <input type="text" name="date" lay-verify="required" id="date2" autocomplete="off" class="layui-input bank">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">银行账户名</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" autocomplete="off" class="layui-input account-name">
+                  <input type="text" name="number" lay-verify="required" autocomplete="off" class="layui-input account-name">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">收款账号</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" autocomplete="off" class="layui-input account">
+                  <input type="text" name="number" lay-verify="required" autocomplete="off" class="layui-input account">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
@@ -222,33 +222,32 @@
               <div class="layui-inline">
                 <label class="layui-form-label">还款银行</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="date" id="date1" autocomplete="off" class="layui-input repay-bank">
+                  <input type="text" name="date" lay-verify="required" id="date1" autocomplete="off" class="layui-input repay-bank">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">还款账户名</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" autocomplete="off" class="layui-input repay-ccount">
+                  <input type="text" name="number" lay-verify="required" autocomplete="off" class="layui-input repay-ccount">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
               <div class="layui-inline">
                 <label class="layui-form-label">还款账号</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" autocomplete="off" class="layui-input reapy-accountbank">
+                  <input type="text" name="number" lay-verify="required" autocomplete="off" class="layui-input reapy-accountbank">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
-
-          </form>
           <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo" id = "save-loaner">保存</button>
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" id = "save-loaner">保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary" id = 'cancel'>取消</button>
               </div>
             </div>
+          </form>
         </div>
     </div>
 

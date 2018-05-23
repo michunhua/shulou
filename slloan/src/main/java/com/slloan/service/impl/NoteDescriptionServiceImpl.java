@@ -38,9 +38,9 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 	
 
 	@Override
-	public NoteDescription findById(int stateid) {
+	public NoteDescription findById(int state) {
 		// TODO Auto-generated method stub
-		return notedescriptionDao.findById(stateid);
+		return notedescriptionDao.findById(state);
 	}
 
 

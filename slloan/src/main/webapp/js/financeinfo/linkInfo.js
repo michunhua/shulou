@@ -16,7 +16,7 @@ var collectData = function() {
 	  data.state = 'b'
 	  data.ctime = 'c'
 	
-  data.id = 2
+  data.id = ''
   return data
 }
 
@@ -115,7 +115,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){

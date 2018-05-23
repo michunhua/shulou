@@ -55,7 +55,8 @@ public class ApplyForLoanInformationController {
 		String time_Limit = obj.getString("term"); // 期限
 		String time_Limits = obj.getString("unit"); // 期限
 		String borrowing_Variety = obj.getString("variety"); // 借款品种,赎楼
-		String repayment = obj.getString("repayment"); // 还款方式 0到期一次性还本付息1按月付息，到期还本
+		String repayment = obj.getString("repayment"); // 还款方式
+														// 0到期一次性还本付息1按月付息，到期还本
 		String receiving_Bank_Name = obj.getString("beneficiarybank"); // 收款银行名称
 		String receiving_Account_Name = obj.getString("bankaccount"); // 收款账户名
 		String receiving_Account = obj.getString("receivingAccount"); // 收款账号
@@ -68,17 +69,32 @@ public class ApplyForLoanInformationController {
 		String parentnodeId = obj.getString("parentnodeId");
 		String city = obj.getString("city");
 		String rolename = obj.getString("rolename");
-		ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, time_Limits, borrowing_Variety,
-				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-				repayment_Account_Name, repayment_Account_Number, state, ctime, username, parentnodeId, city, rolename);
-		boolean rt = applyForLoanInformationservice.save(ap);// 鎻掑叆瑙掕壊
+		int sid = Integer.parseInt(state);
 
-		if (rt == true) {
-			logger.info("数据插入成功!");
-			return new Json(true, "success", rt,state);
+		ApplyForLoanInformation isResult = applyForLoanInformationservice.SelectById(sid);
+		if (isResult != null) {
+			ApplyForLoanInformation apples = new ApplyForLoanInformation(sid, amount, time_Limit, time_Limits,
+					borrowing_Variety, repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account,
+					repayment_Bank_Name, repayment_Account_Name, repayment_Account_Number, state, ctime);
+
+			boolean isResults = applyForLoanInformationservice.appUpdate(apples);
+			if (isResults == true) {
+				return new Json(true, "success", isResults);
+			} else
+				return new Json(false, "fail", isResults);
 		} else {
-			logger.info("数据插入失败!");
-			return new Json(false, "fail", rt);
+			ApplyForLoanInformation ap = new ApplyForLoanInformation(amount, time_Limit, time_Limits, borrowing_Variety,
+					repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
+					repayment_Account_Name, repayment_Account_Number, state, ctime, username, parentnodeId, city,
+					rolename);
+			boolean rt = applyForLoanInformationservice.save(ap);// 鎻掑叆瑙掕壊
+			if (rt == true) {
+				logger.info("数据插入成功!");
+				return new Json(true, "success", rt, state);
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false, "fail", rt);
+			}
 		}
 	}
 
@@ -101,7 +117,6 @@ public class ApplyForLoanInformationController {
 		} else
 			return new Json(false, "fail", isResult);
 	}
-
 
 	/**
 	 * 修改用户保存
@@ -132,25 +147,26 @@ public class ApplyForLoanInformationController {
 				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
 				repayment_Account_Name, repayment_Account_Number, state, ctime);
 		ApplyForLoanInformation con = applyForLoanInformationservice.SelectById(stateid);
-		
-			if(con !=null){
-				boolean isResult = applyForLoanInformationservice.appUpdate(ap);
-				if (isResult == true) {
-					 return  new Json(true,"success",isResult);
-				} else
-					return  new Json(true,"success",isResult);
-			}else{
-				ApplyForLoanInformation app = new ApplyForLoanInformation(amount, time_Limit, time_Limits, borrowing_Variety,
-						repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
-						repayment_Account_Name, repayment_Account_Number, state, ctime, "", "", "", "");
-				boolean rt = applyForLoanInformationservice.save(app);
-				if(rt == true){
-					return  new Json(true,"success",rt,state);
-				}else{
-					return  new Json(false,"fail",rt);
-				}
+
+		if (con != null) {
+			boolean isResult = applyForLoanInformationservice.appUpdate(ap);
+			if (isResult == true) {
+				return new Json(true, "success", isResult);
+			} else
+				return new Json(true, "success", isResult);
+		} else {
+			ApplyForLoanInformation app = new ApplyForLoanInformation(amount, time_Limit, time_Limits,
+					borrowing_Variety, repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account,
+					repayment_Bank_Name, repayment_Account_Name, repayment_Account_Number, state, ctime, "", "", "",
+					"");
+			boolean rt = applyForLoanInformationservice.save(app);
+			if (rt == true) {
+				return new Json(true, "success", rt, state);
+			} else {
+				return new Json(false, "fail", rt);
 			}
-		
+		}
+
 	}
 
 	/**

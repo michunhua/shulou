@@ -6,16 +6,51 @@ var e = function(elements) {
   return  document.querySelector(elements)
 }
 
-// 依赖库方法
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
+//// 依赖库方法
+//layui.use('laydate', function(){
+//  var laydate = layui.laydate;
+//
+//  //执行一个laydate实例
+//  laydate.render({
+//    elem: '#test1' //指定元素
+//  });
+//});
 
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#test1' //指定元素
-  });
-});
 
+layui.use(['form', 'layedit', 'laydate'], function(){
+	  var form = layui.form
+	  ,layer = layui.layer
+	  ,layedit = layui.layedit
+	  ,laydate = layui.laydate;
+	  
+	  //执行一个laydate实例
+	  laydate.render({
+	    elem: '#test1' //指定元素
+	  }); 
+	  
+	  //自定义验证规则
+	  form.verify({
+		  username: function(value){
+	      if(value.length < 2){
+	        return '名称至少得2个字符啊';
+	      }
+	    }
+	    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+	    ,content: function(value){
+	      layedit.sync(editIndex);
+	    }
+	  });
+	  
+	  //监听提交
+	  form.on('submit(demo1)', function(data){
+		  if(localStorage.createID || localStorage.createTemporaryId) {
+			  updatevalid()
+		  } else {
+			  testsend() 
+		  }
+	    return false;
+	  });
+	});
 
 // 收集信息
 var collectData = function() {
@@ -85,7 +120,7 @@ var sendAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000, 
   			}, function(){
-  				sendsearchData(localStorage.createTemporaryId)
+//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loancom'
   			});
     	} else {
@@ -121,6 +156,26 @@ var sendData = function(element) {
 //			}); 
     }
   })
+}
+
+//验证通过后提交
+var testsend = function() {
+	 var data = collectData()
+	  data.rolename = localStorage.purrole
+	  data.username = localStorage.purusername
+	  data.city = localStorage.purcity
+	  data.parentnodeId = localStorage.purid
+	  data.id = localStorage.createID
+	    var method = 'POST'
+	    var url = '/slloan/loan/loanApplypersonaldata'
+	    log(data)
+	    if(!data.id) {
+	    	 sendAjax(method, url, data)	
+	    } else {
+//	    	layer.msg('请登录！', function(){
+//				window.location.href = '/slloan/user/signin'
+//				}); 
+	    }
 }
 
 // 取消按钮事件
@@ -174,7 +229,7 @@ var searchExport = function(back) {
 	rent = e('.rent')
 	added = e('.added')
 	supportPeople = e('.support-people')
-	expenses = e('.expenses').value
+	expenses = e('.expenses')
 	communication = e('.communication')
 	
     //设置具体值
@@ -289,14 +344,27 @@ var updateData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    data.id = localStorage.createID
+    data.id = localStorage.createID 
     var method = 'POST'
     var url = '/slloan/loan/perupdate'
     log(data)
-    if(data.id) {
+    if(data.id || localStorage.createTemporaryId) {
     	 sendAjax(method, url, data)	
     }
   })
+}
+
+//修改保存验证
+var updatevalid = function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID || localStorage.createTemporaryId
+    var method = 'POST'
+    var url = '/slloan/loan/perupdate'
+    log(data)
+    if(data.id || localStorage.createTemporaryId) {
+    	 sendAjax(method, url, data)	
+    }
 }
 
 // 自定义验证
@@ -355,9 +423,9 @@ var validateContent = function() {
 var __main = function() {
   log( "run")
   cancelBtn('#cancel')
-  sendData('#save-data')
+//  sendData('#save-data')
   searchData()
-  updateData('#save-data')
+//  updateData('#save-data')
   sendsearchData(localStorage.createTemporaryId)
 }
 

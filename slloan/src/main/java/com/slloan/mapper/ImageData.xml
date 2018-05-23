@@ -171,4 +171,12 @@ delete from imagedata
 		<if test="filepath !=null and filepath !=''">and filepath like concat('%',#{filepath},'%')</if>
 	</where>
 </select>
+<select id="selectByDelId" parameterType="Map" resultType="com.slloan.entity.ImageDataUpdate">
+	select * from imagedata 
+		<where>
+			<if test="spare !=null and spare !=''"> spare = #{spare}</if>
+			<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute = #{uploadFtpRoute}</if>
+			<if test="filepath !=null and filepath !=''">and filepath like concat('%',#{filepath},'%')</if>
+		</where>
+</select>
 </mapper>

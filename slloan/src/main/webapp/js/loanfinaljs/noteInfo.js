@@ -66,6 +66,24 @@ var searchExport = function(back) {
 	recordNote.value = back.note_Description1
 	recordFirst.value = back.note_Description2
 	recorFinal.value = back.note_Description3
+	
+	
+	 if(back.note_Description2 == "undefined" & back.note_Description2 == undefined|| back.note_Description2 == "null" || back.note_Description2 == null){
+		 recordFirst.value = ""
+	  }else if(back.note_Description2 != "undefined" & back.note_Description2 != undefined || back.note_Description2 != "null" & back.note_Description2 == null){
+		  recordFirst.value = back.note_Description2
+	  }
+	  
+	  if(back.note_Description1 != "undefined" & back.note_Description1 != undefined || back.note_Description1 != "null" & back.note_Description1 == null){
+		  recordNote.value = back.note_Description1
+	  }else if(back.note_Description1 != "undefined" & back.note_Description1 == undefined || back.note_Description1 == "null" & back.note_Description1 == null){
+		  recordNote.value = ""
+	  }
+	  if(back.note_Description3 != "undefined" & back.note_Description3 != undefined || back.note_Description3 != "null" & back.note_Description3 == null){
+		  recorFinal.value = back.note_Description3
+	  }else if(back.note_Description3 != "undefined" & back.note_Description3 == undefined || back.note_Description3 == "null" & back.note_Description3 == null){
+		  recorFinal.value = ""
+	  }
 }
 
 var initback = {
@@ -91,7 +109,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){

@@ -62,3 +62,8 @@ input.error {
 #fiance-record {
 	display: none;
 }
+
+/* 验证信息*/ 
+.error{
+	color:red;
+}

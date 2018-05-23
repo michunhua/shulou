@@ -115,11 +115,12 @@ var addTable = function(data) {
 		var applicationnumber = datas.lists[i].applicationnumber
 		var ID = datas.lists[i].notes[0].id
 		var userid = datas.lists[i].name
-		var userName = datas.lists[i].applyfor[0].amount
+		var userName = datas.lists[i].applyfor[0].amount 
 		var phone = datas.lists[i].mobile_phone
 		var number = datas.lists[i].id_number
-		var limit = datas.lists[i].applyfor[0].time_Limit
-		var state = datas.lists[i].state
+		var limit = datas.lists[i].applyfor[0].time_Limit + datas.lists[i].applyfor[0].time_Limits
+		var state = datas.lists[i].notes[0].fallbackname
+		var state_number = data.lists[i].state
 		var address = datas.lists[i].home_address_now
 		var time = datas.lists[i].ctime
 		
@@ -135,11 +136,11 @@ var addTable = function(data) {
 		td1a.classList.add('flag')
 		td1a.innerText = ID
 		td1.innerText = userid
-		td2.innerText = userName
+		td2.innerText = userName + ' 元'
 		td3.innerText = phone
 		td4.innerText = number
 		td5.innerText = limit
-		td6.classList.add("state")
+		td6.classList.add(state_number)
 		td6.innerText = state
 		td7.innerText = address
 		td8.innerText = time
@@ -286,7 +287,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 		error : function() {

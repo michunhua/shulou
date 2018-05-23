@@ -230,7 +230,7 @@ public class FinanceTransferAccountsvoucherController {
 										// ftp.storeFile(targetFileName, input);
 
 										// boolean isResult = ftp.storeFile(new
-										// String(targetFileName.getBytes("GBK"),"iso-8859-1"),
+										// String(targetFileName.getBytes("utf-8"),"iso-8859-1"),
 										// input);
 										if (tmpFileName != "" || tmpFileName != null && dot >= 0) {
 											System.err.println("上传成功");
@@ -529,7 +529,7 @@ public class FinanceTransferAccountsvoucherController {
 										// ftp.storeFile(targetFileName, input);
 
 										// boolean isResult = ftp.storeFile(new
-										// String(targetFileName.getBytes("GBK"),"iso-8859-1"),
+										// String(targetFileName.getBytes("utf-8"),"iso-8859-1"),
 										// input);
 										sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
 										if (req != null && ServletFileUpload.isMultipartContent(req)) {

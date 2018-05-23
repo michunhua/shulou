@@ -36,10 +36,31 @@ var setSearchData = function(data) {
   finalNote = e('.final-note')
   financeNote = e('.financeNote')
   
-  note.value = data.note_Description1
-  firstNote.value = data.note_Description2
-  finalNote.value = data.note_Description3
-  financeNote.value = data.note_Description4
+ 
+ 
+//  finalNote.value = data.note_Description3
+//  financeNote.value = data.note_Description4
+  if(data.note_Description2 == "undefined" & data.note_Description2 == undefined|| data.note_Description2 == "null" || data.note_Description2 == null){
+	  firstNote.value = ""
+  }else if(data.note_Description2 != "undefined" & data.note_Description2 != undefined || data.note_Description2 != "null" & data.note_Description2 == null){
+	  firstNote.value = data.note_Description2
+  }
+  
+  if(data.note_Description1 != "undefined" & data.note_Description1 != undefined || data.note_Description1 != "null" & data.note_Description1 == null){
+	  note.value = data.note_Description1
+  }else if(data.note_Description1 != "undefined" & data.note_Description1 == undefined || data.note_Description1 == "null" & data.note_Description1 == null){
+	  note.value = ""
+  }
+  if(data.note_Description3 != "undefined" & data.note_Description3 != undefined || data.note_Description3 != "null" & data.note_Description3 == null){
+	  finalNote.value = data.note_Description3
+  }else if(data.note_Description3 != "undefined" & data.note_Description3 == undefined || data.note_Description3 == "null" & data.note_Description3 == null){
+	  finalNote.value = ""
+  }
+  if(data.note_Description4 != "undefined" & data.note_Description4 == undefined || data.note_Description4 != "null" & data.note_Description4 == null){
+	  financeNote.value =  data.note_Description4
+  }else if(data.note_Description4 != "undefined" & data.note_Description4 == undefined || data.note_Description4 == "null" & data.note_Description4 == null){
+	  financeNote.value = ""
+  }
 }
 
 
@@ -52,9 +73,10 @@ var searchAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
+    		console.log(data.note_Description2)
     		setSearchData(data.obj)
     	} else {
-    		alert('服务器错误')
+    		alert('这页资料尚未填写')
     	}
     },
     error: function() {

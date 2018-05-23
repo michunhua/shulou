@@ -62,6 +62,7 @@ $(function () {
 
 $(function() {
 	  function updateUserInfo() {
+		  updataImags()
 	      var form = new FormData(document.getElementById("frm-reg"));  
 	      $.ajax({  
 	      url:"../financevoucher/voucherupload",  
@@ -96,6 +97,32 @@ $(function() {
     	alert(udata)
     	}
 })
+
+//限制上传点击次数
+var updataImags = function(select) {
+	var intent = document.querySelector(select)
+	intent.disabled = 'disabled'
+	setTimeout(function() {
+		intent.disabled = ''
+	}, 3000)
+	console.log('上传图片中')
+}
+
+// 具体点击按钮
+var updataButton = function(element) {
+	var intent = document.querySelector(element)
+	intent.addEventListener('click', function() {
+		console.log('click')
+		updataImags(element)
+	})
+}
+
+updataButton("#applylist")
+updataButton("#personal")
+updataButton("#realestate")
+updataButton("#upinstructions")
+updataButton("#OtherType")
+updataButton("#upproof")
 
 // 显示查询图片
 var imageDisplay1 = function(element, result) {
@@ -334,8 +361,8 @@ var initonload = function() {
 	data.username = localStorage.purusername
 	data.rolename = localStorage.purrole
 	data.uploadtype = ['申请表', '身份证明', '房产证明', '批示', '其他类', '凭证类']
-	data.listid = localStorage.createID
-	if(localStorage.createID) {
+	data.listid = localStorage.createID || localStorage.createTemporaryId
+	if(data.listid) {
 		loadImageAjax(method, url, data)
 	}
 }
@@ -411,14 +438,12 @@ var imagesAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		layer.msg('删除成功', {
-  			  icon: 2,
-  			  time: 2000 
-  			}, function(){
-  				initonload()
-//  				window.location.href = '../../slloan/loan/loanimag'
-  			});
-    	} else {
+    		alert('删除成功')
+    		initonload()
+//    		window.location.href = '../../slloan/loan/loanimag'
+    	} else if(data.msg == 'fail') {
+    		alert('无权限删除')
+    	}else {
     		alert('服务器错误')
     	}
     },

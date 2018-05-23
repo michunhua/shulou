@@ -155,7 +155,7 @@
               <div class="layui-inline">
                 <label class="layui-form-label">联系人1</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input linkf-name">
+                  <input type="text" name="number" lay-verify="username" placeholder="请输入姓名" autocomplete="off" class="layui-input linkf-name">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
@@ -176,7 +176,7 @@
               <div class="layui-inline">
                 <label class="layui-form-label">手机号码</label>
                 <div class="layui-input-inline">
-                  <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input linkf-phone">
+                  <input type="tel" name="phone" lay-verify="required|phone|number" autocomplete="off" class="layui-input linkf-phone">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
@@ -185,7 +185,7 @@
               <div class="layui-inline">
                 <label class="layui-form-label">联系人2</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input links-name">
+                  <input type="text" name="number" lay-verify="username" placeholder="请输入姓名" autocomplete="off" class="layui-input links-name">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
@@ -206,7 +206,7 @@
               <div class="layui-inline">
                 <label class="layui-form-label">手机号码</label>
                 <div class="layui-input-inline">
-                  <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input links-phone">
+                  <input type="tel" name="url" lay-verify="required|phone|number" autocomplete="off" class="layui-input links-phone">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
@@ -215,7 +215,7 @@
               <div class="layui-inline">
                 <label class="layui-form-label">联系人3</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="number" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input linkt-name">
+                  <input type="text" name="number" lay-verify="username" placeholder="请输入姓名" autocomplete="off" class="layui-input linkt-name">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
@@ -236,18 +236,18 @@
               <div class="layui-inline">
                 <label class="layui-form-label">手机号码</label>
                 <div class="layui-input-inline">
-                  <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input linkt-phone">
+                  <input type="tel" name="url" lay-verify="required|phone|number" autocomplete="off" class="layui-input linkt-phone">
                 </div>
                 <div class="layui-form-mid layui-word-aux write"> * </div>
               </div>
             </div>
-          </form>
-          <div class="layui-form-item">
+         <div class="layui-form-item">
           <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="demo1" id = 'save-loaner'>保存</button>
             <button type="reset" class="layui-btn layui-btn-primary" id = 'cancel'>取消</button>
           </div>
         </div>
+          </form>
         </div>
     </div>
 

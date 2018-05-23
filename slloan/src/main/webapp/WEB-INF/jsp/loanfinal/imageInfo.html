@@ -178,15 +178,20 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  alert("操作成功！"+data.value); 
-       	    		  var file = data.obj[0].filepath
-         	        	console.log( data.obj[0])
-         	        	var udata = data.obj[0]
-         	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-         	        	"<input type='button' name = '申请表' class = 'read'  value='查看' /><input type='button' name = '申请表' class = 'delete' value='删除' /></div>";
-         	        	  $("#imagedata1").append(dd)
+       	    		  if(data.msg == "fail"){
+       	    			alert("操作失败！"+data.value);
+       	    		  }else{
+       	    			 alert("操作成功！"+data.value); 
+          	    		  var file = data.obj[0].filepath
+            	        	console.log( data.obj[0])
+            	        	var udata = data.obj[0]
+            	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+            	        	"<input type='button' name = '申请表' class = 'read'  value='查看' /><input type='button' name = '申请表' class = 'delete' value='删除' /></div>";
+            	        	  $("#imagedata1").append(dd)
+       	    		  }
+       	    		 
        	    	  }else{
-       	    		  alert(data)
+       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -213,7 +218,7 @@
 				备注 :<textarea type="text" id="note1"  value="" name="note" rows="4" cols="50"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath1').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfo()"  value="提交" />
+				<input type="button" id = "applylist" onclick="updateUserInfo()"  value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata1" class="nav-container">
@@ -234,15 +239,20 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  alert("操作成功！"+data.value); 
-       	    		  var file = data.obj[0].filepath
-         	        	console.log( data.obj[0])
-         	        	var udata = data.obj[0]
-         	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-         	        	"<input type='button' name = '身份证明' class = 'read'  value='查看' /><input type='button' name = '身份证明' class = 'delete'  value='删除' /></div>";
-         	        	  $("#imagedata2").append(dd)
+       	    		  if(data.msg == "fail"){
+       	    			alert("操作失败！"+data.value);
+       	    		  }else{
+       	    			 alert("操作成功！"+data.value); 
+          	    		  var file = data.obj[0].filepath
+            	        	console.log( data.obj[0])
+            	        	var udata = data.obj[0]
+            	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+            	        	"<input type='button' name = '身份证明' class = 'read'  value='查看' /><input type='button' name = '身份证明' class = 'delete'  value='删除' /></div>";
+            	        	  $("#imagedata2").append(dd)
+       	    		  }
+       	    		 
        	    	  }else{
-       	    		  alert(data)
+       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -269,7 +279,7 @@
 				备注 :<textarea type="text" id="note2"  value="" name="note" rows="4" cols="50"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath2').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath2" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfos()"  value="提交" />
+				<input type="button" id = "personal" onclick="updateUserInfos()"  value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata2" class="nav-container">
@@ -290,15 +300,20 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  alert("操作成功！"+data.value); 
-       	    		  var file = data.obj[0].filepath
-         	        	console.log( data.obj[0])
-         	        	var udata = data.obj[0]
-         	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-         	        	"<input type='button' name = '房产证明' class = 'read'  value='查看' /><input type='button' name = '房产证明' class = 'delete'  value='删除' /></div>";
-         	        	  $("#imagedata3").append(dd)
+       	    		  if(data.msg == "fail"){
+       	    			alert("操作失败！"+data.value);
+       	    		  }else{
+       	    			 alert("操作成功！"+data.value); 
+          	    		  var file = data.obj[0].filepath
+            	        	console.log( data.obj[0])
+            	        	var udata = data.obj[0]
+            	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+            	        	"<input type='button' name = '房产证明' class = 'read'  value='查看' /><input type='button' name = '房产证明' class = 'delete'  value='删除' /></div>";
+            	        	  $("#imagedata3").append(dd)
+       	    		  }
+       	    		 
        	    	  }else{
-       	    		  alert(data)
+       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -325,7 +340,7 @@
 				备注 :<textarea type="text" id="note3"  value="" name="note" rows="4" cols="50"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath3').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath3" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoes()"  value="提交" />
+				<input type="button" id = "realestate" onclick="updateUserInfoes()"  value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata3" class="nav-container">
@@ -346,15 +361,20 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  alert("操作成功！"+data.value); 
-       	    		  var file = data.obj[0].filepath
-         	        	console.log( data.obj[0])
-         	        	var udata = data.obj[0]
-         	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-         	        	"<input type='button' name = '批示' class = 'read'  value='查看' /><input type='button' name = '批示' class = 'delete'  value='删除' /></div>";
-         	        	  $("#imagedata4").append(dd)
+       	    		  if(data.msg == "fail"){
+       	    			alert("操作失败！"+data.value);
+       	    		  }else{
+       	    			 alert("操作成功！"+data.value); 
+          	    		  var file = data.obj[0].filepath
+            	        	console.log( data.obj[0])
+            	        	var udata = data.obj[0]
+            	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+            	        	"<input type='button' name = '批示' class = 'read'  value='查看' /><input type='button' name = '批示' class = 'delete'  value='删除' /></div>";
+            	        	  $("#imagedata4").append(dd) 
+       	    		  }
+       	    		 
        	    	  }else{
-       	    		  alert(data)
+       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -381,7 +401,7 @@
 				备注 :<textarea type="text" id="note4"  value="" name="note" rows="4" cols="50"/></textarea><br/>  
 				<input type="file"  name="file" onchange="document.getElementById('filepath4').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath4" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoed()"  value="提交" />
+				<input type="button" id = "upinstructions" onclick="updateUserInfoed()"  value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata4" class="nav-container">
@@ -402,15 +422,20 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  alert("操作成功！"+data.value); 
-       	    		  var file = data.obj[0].filepath
-         	        	console.log( data.obj[0])
-         	        	var udata = data.obj[0]
-         	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-         	        	"<input type='button' name = '其他类' class = 'read'  value='查看' /><input type='button' name = '其他类' class = 'delete'  value='删除' /></div>";
-         	        	  $("#imagedata5").append(dd)
+       	    		  if(data.msg == "fail"){
+       	    			alert("操作失败！"+data.value);
+       	    		  }else{
+       	    			 alert("操作成功！"+data.value); 
+          	    		  var file = data.obj[0].filepath
+            	        	console.log( data.obj[0])
+            	        	var udata = data.obj[0]
+            	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+            	        	"<input type='button' name = '其他类' class = 'read'  value='查看' /><input type='button' name = '其他类' class = 'delete'  value='删除' /></div>";
+            	        	  $("#imagedata5").append(dd)
+       	    		  }
+       	    		 
        	    	  }else{
-       	    		  alert(data)
+       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -437,7 +462,7 @@
 				备注 :<textarea type="text" id="note5"  value="" name="note" rows="4" cols="50"/></textarea><br/>   
 				<input type="file"  name="file" onchange="document.getElementById('filepath5').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath5" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoeds()"  value="提交" />
+				<input type="button" id = "OtherType" onclick="updateUserInfoeds()"  value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata5" class="nav-container">
@@ -458,15 +483,20 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  alert("操作成功！"+data.value); 
-       	    		  var file = data.obj[0].filepath
-         	        	console.log( data.obj[0])
-         	        	var udata = data.obj[0]
-         	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-         	        	"<input type='button' name = '凭证类' class = 'read'  value='查看' /><input type='button' name = '凭证类' class = 'delete'  value='删除' /></div>";
-         	        	  $("#imagedata6").append(dd)
+       	    		  if(data.msg == "fail"){
+       	    			alert("操作失败！"+data.value);
+       	    		  }else{
+       	    			 alert("操作成功！"+data.value); 
+          	    		  var file = data.obj[0].filepath
+            	        	console.log( data.obj[0])
+            	        	var udata = data.obj[0]
+            	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+            	        	"<input type='button' name = '凭证类' class = 'read'  value='查看' /><input type='button' name = '凭证类' class = 'delete'  value='删除' /></div>";
+            	        	  $("#imagedata6").append(dd)
+       	    		  }
+       	    		 
        	    	  }else{
-       	    		  alert(data)
+       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -493,7 +523,7 @@
 				备注 :<textarea type="text" id="note6"  value="" name="note" rows="4" cols="50"/></textarea><br/>   
 				<input type="file"  name="file" onchange="document.getElementById('filepath6').value=this.value;"/>
 				<input type="hidden" name="filepath" id="filepath6" onchange="alert(this.value)" value=""/>
-				<input type="button" onclick="updateUserInfoess()"  value="提交" />
+				<input type="button" id = "upproof" onclick="updateUserInfoess()"  value="提交" />
 				</fieldset>
 			</form>
 			<div id="imagedata6" class="nav-container">

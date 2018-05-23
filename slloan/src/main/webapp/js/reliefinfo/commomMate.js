@@ -72,10 +72,10 @@ var searchExport = function(back) {
 	  cname.value = back.name
 	  certificateType.value = back.id_Other
 	  documents.value = back.id_Number
-	  untilName.value = back.unit_Phone
-	  untilPhone.value = back.home_Phone
-	  residence.value = back.mobile_Phone
-	  mobile.value = back.uni_Name
+	  untilName.value = back.uni_Name
+	  untilPhone.value = back.unit_Phone
+	  residence.value = back.home_Phone
+	  mobile.value = back.mobile_Phone
 	  salary.value = back.monthly_Income
 	  
 	// 下拉选项
@@ -102,7 +102,7 @@ var searchAjax = function(method, url, datas) {
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
-				alert('服务器错误')
+				alert('这页资料尚未填写')
 			}
 		},
 	    error: function(){

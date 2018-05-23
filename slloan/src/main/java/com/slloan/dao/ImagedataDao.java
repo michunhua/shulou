@@ -81,4 +81,5 @@ public interface ImagedataDao {
 			 * @return
 			 */
 			public List<ImageDataUpdate> financevoucherSelectTouploadAdmin(Map<String,Object> param);
+			public ImageDataUpdate selectByDelId(Map<String,Object> image);
 }

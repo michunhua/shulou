@@ -6,15 +6,32 @@ var e = function(elements) {
   return  document.querySelector(elements)
 }
 
-// 依赖库方法
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
+//// 依赖库方法
+//layui.use('laydate', function(){
+//  var laydate = layui.laydate;
+//
+//  //执行一个laydate实例
+//  laydate.render({
+//    elem: '#test1' //指定元素
+//  });
+//});
 
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#test1' //指定元素
-  });
-});
+layui.use(['form', 'layedit', 'laydate'], function(){
+	  var form = layui.form
+	  ,layer = layui.layer
+	  ,layedit = layui.layedit
+	  ,laydate = layui.laydate;
+	  
+	  //监听提交
+	  form.on('submit(demo1)', function(data){
+		  if(localStorage.createID || localStorage.loanerinfo) {
+			  updatevalid()
+		  } else {
+			  testsend()  
+		  }
+	    return false;
+	  });
+	});
 
 
 // 收集信息
@@ -52,7 +69,7 @@ var sendAjax = function(method, url, datas, callback) {
   			  time: 2000 
   			}, function(){
   				localStorage.loanerinfo = data.value
-  				sendsearchData(localStorage.createTemporaryId)
+//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loanesta'
   			});
     	} else {
@@ -86,6 +103,24 @@ var sendData = function(element) {
         sendAjax(method, url, data)
     }
   })
+}
+
+//验证通过后提交
+var testsend = function() {
+	log('data to send at time')
+    var data = collectData()
+    data.rolename = localStorage.purrole
+    data.username = localStorage.purusername
+    data.city = localStorage.purcity
+    data.parentnodeId = localStorage.purid
+    data.mark = localStorage.createID
+    data.temporaryId = localStorage.createTemporaryId	
+    var method = 'POST'
+    var url = '/slloan/loan/ApplyLoaninformations'
+    log(data)
+    if(!data.mark) {
+        sendAjax(method, url, data)
+    }
 }
 
 // 取消按钮事件
@@ -123,6 +158,15 @@ var searchExport = function(back) {
 	  repayBank.value = back.repayment_Bank_Name
 	  repayCcount.value = back.repayment_Account_Name
 	  reapyAccountbank.value = back.repayment_Account_Number
+	  
+		// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".unit").val(back.time_Limits);
+		  $(".variety").val(back.borrowing_Variety);
+		  $(".manner").val(back.repayment);
+		  form.render()
+		});
 }
 
 var initback = {
@@ -184,7 +228,7 @@ var updateData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    data.id = localStorage.createID
+    data.id = localStorage.createID || localStorage.loanerinfo
     var method = 'POST'
     var url = '/slloan/loan/appupdate'
     log(data)	
@@ -194,13 +238,26 @@ var updateData = function(element) {
   })
 }
 
+//验证通过后保存修改数据
+var updatevalid = function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID || localStorage.loanerinfo
+    var method = 'POST'
+    var url = '/slloan/loan/appupdate'
+    log(data)	
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+}
+
 //
 var __main = function() {
   log( "run")
-  sendData('#save-loaner')
+//  sendData('#save-loaner')
   cancelBtn('#cancel')
   searchData()
-  updateData('#save-loaner')
+//  updateData('#save-loaner')
   sendsearchData(localStorage.createTemporaryId)
 }
 

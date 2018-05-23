@@ -6,15 +6,45 @@ var e = function(elements) {
   return  document.querySelector(elements)
 }
 
-// 依赖库方法
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
+//// 依赖库方法
+//layui.use('laydate', function(){
+//  var laydate = layui.laydate;
+//
+//  //执行一个laydate实例
+//  laydate.render({
+//    elem: '#test1' //指定元素
+//  });
+//});
 
-  //执行一个laydate实例
-  laydate.render({
-    elem: '#test1' //指定元素
-  });
-});
+layui.use(['form', 'layedit', 'laydate'], function(){
+	  var form = layui.form
+	  ,layer = layui.layer
+	  ,layedit = layui.layedit
+	  ,laydate = layui.laydate;
+	  
+	  //自定义验证规则
+	  form.verify({
+		  username: function(value){
+	      if(value.length < 2){
+	        return '名称至少得2个字符啊';
+	      }
+	    }
+	    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+	    ,content: function(value){
+	      layedit.sync(editIndex);
+	    }
+	  });
+	  
+	  //监听提交
+	  form.on('submit(demo1)', function(data){
+		  if(localStorage.createID || localStorage.link) {
+			  updatevalid()
+		  } else {
+			    testsend()  
+		  }
+	    return false;
+	  });
+	});
 
 
 // 收集信息
@@ -40,7 +70,7 @@ var testfocus = function(element, rule) {
 	var intent = document.querySelector(element)
 	var span = document.createElement('span')
 	var flag = false
-	span.innerText = '请正确填写'
+	span.innerText = '请按照要求正确填写'
 	span.style.color = 'red'
 	intent.addEventListener("keyup", function() {
 		console.log('12342134', flag)
@@ -59,12 +89,12 @@ var testfocus = function(element, rule) {
 	return flag
 }
 
-testfocus('.linkf-phone', 11) 
-testfocus('.links-phone', 11)
-testfocus('.linkt-phone', 11)
-testfocus('.linkf-name', 2)
-testfocus('.links-name', 2)
-testfocus('.linkt-name', 2)
+//testfocus('.linkf-phone', 11) 
+//testfocus('.links-phone', 11)
+//testfocus('.linkt-phone', 11)
+//testfocus('.linkf-name', 2)
+//testfocus('.links-name', 2)
+//testfocus('.linkt-name', 2)
 
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
@@ -80,7 +110,7 @@ var sendAjax = function(method, url, datas, callback) {
   			  time: 2000 
   			}, function(){
   				localStorage.link = data.value
-  				sendsearchData(localStorage.createTemporaryId)
+//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loannote'
   			});
     	} else {
@@ -110,6 +140,20 @@ var sendData = function() {
     	sendAjax(method, url, data)	
     }
   })
+}
+
+//验证通过后提交
+var testsend = function() {
+	log('data to send at time')
+    var data = collectData()
+    data.temporaryId = localStorage.createTemporaryId
+    data.mark = localStorage.createID
+    var method = 'POST'
+    var url = '/slloan/loan/contactinformation'
+    log(data)
+    if(!data.mark) {
+    	sendAjax(method, url, data)	
+    }
 }
 
 // 取消按钮事件
@@ -148,6 +192,15 @@ var searchExport = function(back) {
 	  linkt.value = back.contacts2
 	  linktMate.value = back.relationship2
 	  linktPhone.value = back.c_Telephone2
+	  
+		// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".linkf-relationship").val(back.relationship);
+		  $(".links-relationship").val(back.relationship1);
+		  $(".linkt-relationship").val(back.relationship2);
+		  form.render()
+		});
 }
 
 //查询
@@ -201,7 +254,7 @@ var updateData = function() {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    data.id = localStorage.createID
+    data.id = localStorage.createID || localStorage.link
     var method = 'POST'
     var url = '/slloan/loan/contaupdate'
     log(data)
@@ -211,14 +264,26 @@ var updateData = function() {
   })
 }
 
+//验证通过后保存修改数据
+var updatevalid = function() {
+    log('data to send at time')
+    var data = collectData()
+    data.id = localStorage.createID || localStorage.link
+    var method = 'POST'
+    var url = '/slloan/loan/contaupdate'
+    log(data)
+    if(data.id) {
+			sendAjax(method, url, data)
+		}
+}
 
 //
 var __main = function() {
   log( "run")
-  sendData()
+//  sendData()
   cancelBtn('#cancel')
   searchData()
-  updateData()
+//  updateData()
   sendsearchData(localStorage.createTemporaryId)
 }
 

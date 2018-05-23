@@ -572,62 +572,70 @@ public class UpdateFTPController{
 	    	String uploadFtpRoute = obj.getString("id");
 	    	String image = obj.getString("file");
 	    	String type = obj.getString("type");
-	    	
+	    	String spare = obj.getString("username");
 	    	 filenameimage = image;//图片
 	    	String ss = URLDecoder.decode(filenameimage, "UTF-8");
 	    	 int imageid = Integer.valueOf(uploadFtpRoute);
 	    	System.out.println(ss);
+	    	
 	    	 String imagefile = ss.substring(ss.lastIndexOf("/")+1);
 	    	 ImageDataUpdate imagedata = new ImageDataUpdate();
 	    	 imagedata.setUploadFtpRoute(uploadFtpRoute);
 	    	 imagedata.setFilepath(imagefile);
-	    	 if(type.equals("申请表")){
-    	    	boolean isResult = imagedataservice.imagedatedel(imagedata);
-    	    	if(isResult == true){
-    	    		sftp.cd(CaptchaConstants.SHENQINGBIAO_IMAGE);
-         	 	 	sftp.rm(imagefile);
-        			return new Json(true,"success",isResult);
-        		}else{
-        			return new Json(false,"false",isResult);
-        		}
-     	 	}else if(type.equals("身份证明")){
-     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
-     	 		if(isResult == true){
-	     	 		sftp.cd(CaptchaConstants.SHENFENZHENG_IMAGE);
-	         	 	sftp.rm(imagefile);
-         	 		return new Json(true,"success",isResult);
-        		}else{
-        			return new Json(false,"false",isResult);
-        		}
-     	 	}else if(type.equals("房产证明")){
-     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
-     	 		if(isResult == true){
-     	 			sftp.cd(CaptchaConstants.FANGCHANZHENG_IMAGE);
-             	 	sftp.rm(imagefile);
-     	 			return new Json(true,"success",isResult);
-     	 		}else{
-     	 			return new Json(false,"false",isResult);
-     	 		}
-     	 	}else if(type.equals("批示")){
-     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
-     	 		if(isResult == true){
-     	 			sftp.cd(CaptchaConstants.PISHI_IMAGE);
-             	 	sftp.rm(imagefile);
-     	 			return new Json(true,"success",isResult);
-     	 		}else{
-     	 			return new Json(false,"false",isResult);
-     	 		}
-     	 		
-     	 	}else if(type.equals("其他类")){
-     	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
-     	 		if(isResult == true){
-     	 			sftp.cd(CaptchaConstants.QITA_IMAGE);
-             	 	sftp.rm(imagefile);
-     	 			return new Json(true,"success",isResult);
-     	 		}else{
-     	 			return new Json(false,"false",isResult);
-     	 		}
-     	 	}
+	    	 String upload = uploadFtpRoute;
+	    	 ImageDataUpdate  isResultselectDel= imagedataservice.selectByDelId(spare,upload,ss);
+	    	 if(isResultselectDel !=null){
+	    		 if(type.equals("申请表")){
+	     	    	boolean isResult = imagedataservice.imagedatedel(imagedata);
+	     	    	if(isResult == true){
+	     	    		sftp.cd(CaptchaConstants.SHENQINGBIAO_IMAGE);
+	          	 	 	sftp.rm(imagefile);
+	         			return new Json(true,"success",isResult);
+	         		}else{
+	         			return new Json(false,"false",isResult);
+	         		}
+	      	 	}else if(type.equals("身份证明")){
+	      	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+	      	 		if(isResult == true){
+	 	     	 		sftp.cd(CaptchaConstants.SHENFENZHENG_IMAGE);
+	 	         	 	sftp.rm(imagefile);
+	          	 		return new Json(true,"success",isResult);
+	         		}else{
+	         			return new Json(false,"false",isResult);
+	         		}
+	      	 	}else if(type.equals("房产证明")){
+	      	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+	      	 		if(isResult == true){
+	      	 			sftp.cd(CaptchaConstants.FANGCHANZHENG_IMAGE);
+	              	 	sftp.rm(imagefile);
+	      	 			return new Json(true,"success",isResult);
+	      	 		}else{
+	      	 			return new Json(false,"false",isResult);
+	      	 		}
+	      	 	}else if(type.equals("批示")){
+	      	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+	      	 		if(isResult == true){
+	      	 			sftp.cd(CaptchaConstants.PISHI_IMAGE);
+	              	 	sftp.rm(imagefile);
+	      	 			return new Json(true,"success",isResult);
+	      	 		}else{
+	      	 			return new Json(false,"false",isResult);
+	      	 		}
+	      	 		
+	      	 	}else if(type.equals("其他类")){
+	      	 		boolean isResult = imagedataservice.imagedatedel(imagedata);
+	      	 		if(isResult == true){
+	      	 			sftp.cd(CaptchaConstants.QITA_IMAGE);
+	              	 	sftp.rm(imagefile);
+	      	 			return new Json(true,"success",isResult);
+	      	 		}else{
+	      	 			return new Json(false,"false",isResult);
+	      	 		}
+	      	 	}
+	    	 }else{
+	    		 return new Json(false,"fail","无权限删除",""); 
+	    	 }
+	    	 
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -961,6 +969,7 @@ public class UpdateFTPController{
     			}
     			
     			
+    			
     		}else if(strplist.equals("结算凭证")){
     			
     			if(spare.contains(admin)){
@@ -1111,7 +1120,17 @@ public class UpdateFTPController{
         		    result.setLists(listimg);
         		    listmap.put("贷款信息查看", listimg);
     			}
+    		}else if(strplist.equals("凭证类")){
+    			map.put("凭证类", strplist);
+    			System.out.println(strplist);
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate,uploadFtpRoute);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("凭证类", listimg);
     		}
+
+    		
+    		
     	}
 		 return new Json(true,"success",listmap,"贷款凭证");
     }

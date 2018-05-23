@@ -80,7 +80,7 @@ var sendAjax = function(method, url, datas) {
   			  time: 2000 
   			}, function(){
   				localStorage.comm = data.value
-  				sendsearchData(localStorage.createTemporaryId)
+//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loanerma'
   			});
     	} else {
@@ -123,15 +123,20 @@ var cancelBtn = function(element) {
 
 //设置页面数据
 var searchExport = function(back) {
+    // 获取页面元素
 	cname = e('.ch-name')
 	ename = e('.en-name')
 	paperwork = e('.paperwork-type')
+	otherPaperwork = e('.other-paperwork')
 	paperNumb = e('.paperwork-numb')
 	country = e('.country')
+	otherCountry = e('.other-country')
 	gender = e('.gender')
 	census = e('.census')
+	otherCensus = e('.other-census')
 	marriage = e('.marriage')
 	housing = e('.housing')
+	otherHousing = e('.other-housing')
 	birthday = e('.birthday')
 	currentAddress = e('.current-address')
 	residencePhone = e('.residence-phone')
@@ -157,9 +162,9 @@ var searchExport = function(back) {
 	rent = e('.rent')
 	added = e('.added')
 	supportPeople = e('.support-people')
-	expenses = e('.expenses').value
+	expenses = e('.expenses')
 	communication = e('.communication')
-
+	
     //设置具体值
 	cname.value = back.name
 	ename.value = back.phoneticize
@@ -201,6 +206,19 @@ var searchExport = function(back) {
 	supportPeople.value = back.family_number
 	expenses.value =  back.monthly_expenditure
 	communication.value = back.monthly_expenditure
+	
+	// 下拉选项
+	  layui.use('form', function(){
+		  var form = layui.form;
+		  $(".paperwork-type").val(back.id_type);
+		  $(".country").val(back.country_and_region);
+		  $(".gender").val(back.sex);
+		  $(".census").val(back.local_domicile);
+		  $(".marriage").val(back.marital_status);
+		  $(".housing").val(back.housing_condition_now);
+		  $(".communication").val(back.postal_address);
+		  form.render()
+		});
 }
 
 var initback = {
@@ -260,11 +278,11 @@ var updateData = function(element) {
   evs.addEventListener('click', function() {
     log('data to send at time')
     var data = collectData()
-    data.id = localStorage.createID
+    data.id = localStorage.createID || localStorage.comm
     var method = 'POST'
     var url = '/slloan/loan/joinupdate'
     log(data)
-    if(data.id) {
+    if(data.id || localStorage.comm) {
     	sendAjax(method, url, data)
     }
   })

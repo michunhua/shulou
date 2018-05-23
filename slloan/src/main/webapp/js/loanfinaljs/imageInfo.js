@@ -1,3 +1,30 @@
+//限制上传点击次数
+var updataImags = function(select) {
+	var intent = document.querySelector(select)
+	intent.disabled = 'disabled'
+	setTimeout(function() {
+		intent.disabled = ''
+	}, 3000)
+	console.log('上传图片中')
+}
+
+// 具体点击按钮
+var updataButton = function(element) {
+	var intent = document.querySelector(element)
+	intent.addEventListener('click', function() {
+		console.log('click')
+		updataImags(element)
+	})
+}
+
+updataButton("#applylist")
+updataButton("#personal")
+updataButton("#realestate")
+updataButton("#upinstructions")
+updataButton("#OtherType")
+updataButton("#upproof")
+
+
 // 显示查询图片
 var imageDisplay1 = function(element, result) {
 	var intent = document.querySelector(element)
@@ -306,14 +333,12 @@ var imagesAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		layer.msg('删除成功', {
-  			  icon: 2,
-  			  time: 2000 
-  			}, function(){
-  				initonload()
-//  				window.location.href = '../../slloan/loan/loanimag'
-  			});
-    	} else {
+    		alert("删除成功")
+    		initonload()
+//    		window.location.href = '../../slloan/loan/loanimagss'
+    	}else if(data.msg == 'fail') {
+    		alert('无权限删除')
+    	}else {
     		alert('服务器错误')
     	}
     },
@@ -340,7 +365,7 @@ var deleteImage = function(element, select) {
 			data.city = localStorage.purcity
 			data.username = localStorage.purusername
 			data.rolename = localStorage.purrole
-			data.id = localStorage.createID
+			data.id = localStorage.finalID
 	        imagesAjax(method, url, data)
 		}
 	})

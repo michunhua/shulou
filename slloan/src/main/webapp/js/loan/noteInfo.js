@@ -24,7 +24,7 @@ var collectData = function() {
   data.recordFirst = e('.esnote')
   data.recorFinal = e('.esnote')
   data.recorfore = ''
-  data.state = ''
+  data.state = localStorage.createID
   data.rolename = localStorage.purrole
   data.username = localStorage.purusername
   data.city = localStorage.purcity
@@ -59,10 +59,15 @@ var sendAjax = function(method, url, datas, callback) {
 }
 
 //设置页面数据
-var searchExport = function(back) {
+var searchExport = function(data) {
 	recordNote = e('.note')
 	
-	recordNote.value = back.note_Description1
+//	recordNote.value = back.note_Description1
+	if(data.note_Description1 != "undefined" & data.note_Description1 != undefined || data.note_Description1 != "null" & data.note_Description1 == null){
+		recordNote.value = data.note_Description1
+	  }else if(data.note_Description1 != "undefined" & data.note_Description1 == undefined || data.note_Description1 == "null" & data.note_Description1 == null){
+		  recordNote.value = ""
+	  }
 }
 
 //查询
@@ -138,6 +143,7 @@ var submitAjax = function(method, url, datas) {
   			  icon: 2,
   			  time: 2000 
   			}, function(){
+  				localStorage.createID = ""
   				window.location.href = "/slloan/loan/loancrea"
   			});
     	} else {
@@ -165,7 +171,7 @@ var sendData = function(element) {
     var method = 'POST'
     var url = '/slloan/loan/notedescription'
     log(data)
-    if(data.temporaryId) {
+    if(data.temporaryId & (localStorage.createID == "")) {
         sendAjax(method, url, data)	
     }
   })

@@ -155,7 +155,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">中文名称</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入中文名称" autocomplete="off" class="layui-input ch-name">
+                <input type="text" name="title"   lay-verify="username" placeholder="请输入中文名称" autocomplete="off" class="layui-input ch-name">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
@@ -174,52 +174,52 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input document-number">
+                <input type="text" name="password"  lay-verify="required" placeholder="请输入证件类型" autocomplete="off" class="layui-input document-number">
               </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
+                <input type="text" name="password"  lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">现单位名称</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入现单位名称" autocomplete="off" class="layui-input unit-name">
+                <input type="text" name="title"   lay-verify="required" placeholder="请输入现单位名称" autocomplete="off" class="layui-input unit-name">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">单位电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入单位电话" autocomplete="off" class="layui-input unit-phone">
+                <input type="text" name="title"   lay-verify="required|number" placeholder="请输入单位电话" autocomplete="off" class="layui-input unit-phone">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">住宅电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入住宅电话" autocomplete="off" class="layui-input residence-phone">
+                <input type="text" name="title"  lay-verify="required|number" placeholder="请输入住宅电话" autocomplete="off" class="layui-input residence-phone">
               </div>
               <label class="layui-form-label">移动电话</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="请输入移动电话" autocomplete="off" class="layui-input mobie-phone">
+                <input type="text" name="title"  lay-verify="required|phone|number" placeholder="请输入移动电话" autocomplete="off" class="layui-input mobie-phone">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">月薪</label>
               <div class="layui-input-inline">
-                <input type="text" name="title" required  lay-verify="required" placeholder="元/月" autocomplete="off" class="layui-input salary">
+                <input type="text" name="title"   lay-verify="required|number" placeholder="" autocomplete="off" class="layui-input salary">
               </div>
+              <div class="layui-form-mid layui-word-aux">元/月</div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
-
-          </form>
           <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-filter="formDemo" id = 'save-data'>保存</button>
+                <button class="layui-btn" lay-submit="" lay-filter="demo1" id = 'save-data'>保存</button>
                 <button type="reset" class="layui-btn layui-btn-primary" id = 'cancel'>取消</button>
               </div>
             </div>
+          </form>
         </div>
     </div>
 

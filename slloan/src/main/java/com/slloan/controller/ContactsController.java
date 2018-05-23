@@ -21,21 +21,21 @@ import com.slloan.util.Json;
 
 import net.sf.json.JSONObject;
 
-
 /**
  * 联系人信息
+ * 
  * @author xue
  *
  */
-@Controller(value="contactscont")
+@Controller(value = "contactscont")
 @RequestMapping("/loan")
 public class ContactsController {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private ContactsService contactsservice;
-	
+
 	@ResponseBody
 	@RequestMapping("/contactinformation")
 	public Json save(HttpServletRequest req) {
@@ -54,92 +54,103 @@ public class ContactsController {
 		String c_Telephone2= obj.getString("linktPhone");//状态  0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String state = obj.getString("temporaryId");
 		String ctime=DateUtils.getInDateTime(new Date());
-
-		Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
-		boolean coan = contactsservice.save(coa);// 鎻掑叆瑙掕壊
-		
-		if (coan == true) {
-			logger.info("数据插入成功!");
-			return new Json(true,"success",coan,state ); 
-		} else {
-			logger.info("数据插入失败!");
-			return new Json(false,"fail",coan); 
+		int sid = Integer.parseInt(state);
+		Contacts isResult =contactsservice.SelectById(sid);
+		if(isResult != null){
+			Contacts contact = new Contacts(sid,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
+			
+					boolean isResults =contactsservice.updateadd(contact);
+					if(isResults == true){
+						return new Json(true,"success",isResults,"");//JSON.toJSONString(isResult);
+					}else{
+						return new Json(false,"fail",isResults,"");
+					}
+		}else{
+			Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
+			boolean coan = contactsservice.save(coa);// 鎻掑叆瑙掕壊
+			
+			if (coan == true) {
+				logger.info("数据插入成功!");
+				return new Json(true,"success",coan,state ); 
+			} else {
+				logger.info("数据插入失败!");
+				return new Json(false,"fail",coan); 
+			}
 		}
+
+		
 		
 	}
-	
 
-
-
-	
-	
 	/***
 	 * 根据ID查所有联系人信息
+	 * 
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value="/contactasss",method=RequestMethod.GET,produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/contactasss", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Json UserSelectById(HttpServletRequest req){
+	public Json UserSelectById(HttpServletRequest req) {
 
 		System.out.println("======================================");
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String uid = json.getString("id");
 		int id = Integer.parseInt(uid);
-		Contacts isResult =contactsservice.SelectById(id);
-		
-		if(isResult !=null){
-			return new Json(true,"success",isResult); 
-		}else
-			return new Json(false,"fail",isResult); 
+		Contacts isResult = contactsservice.SelectById(id);
+
+		if (isResult != null) {
+			return new Json(true, "success", isResult);
+		} else
+			return new Json(true, "success", isResult);
 	}
-	
 
 	/**
 	 * 修改用户保存
+	 * 
 	 * @return
 	 */
-	@RequestMapping(value="/contaupdate",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	@RequestMapping(value = "/contaupdate", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
-	public Json updateUser(HttpServletRequest req){
-		
+	public Json updateUser(HttpServletRequest req) {
+
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
-		String contacts = json.getString("linkf"); //联系人姓名
-		String contacts1=json.getString("links");//联系人姓名
-		String contacts2=json.getString("linkt");//联系人姓名
-		String relationship=json.getString("linkfMate");//联系人关系
-		String relationship1=json.getString("linksMate");//联系人关系
-		String relationship2=json.getString("linktMate");//联系人关系
-		String c_Telephone=json.getString("linkfPhone");//联系人电话
-		String c_Telephone1=json.getString("linksPhone");//联系人电话
-		String c_Telephone2=json.getString("linktPhone");//联系人电话
-		String state=String.valueOf(id);
+		String contacts = json.getString("linkf"); // 联系人姓名
+		String contacts1 = json.getString("links");// 联系人姓名
+		String contacts2 = json.getString("linkt");// 联系人姓名
+		String relationship = json.getString("linkfMate");// 联系人关系
+		String relationship1 = json.getString("linksMate");// 联系人关系
+		String relationship2 = json.getString("linktMate");// 联系人关系
+		String c_Telephone = json.getString("linkfPhone");// 联系人电话
+		String c_Telephone1 = json.getString("linksPhone");// 联系人电话
+		String c_Telephone2 = json.getString("linktPhone");// 联系人电话
+		String state = String.valueOf(id);
 		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime(new Date());
-		Contacts contact = new Contacts(id,contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
+		Contacts contact = new Contacts(id, contacts, contacts1, contacts2, relationship, relationship1, relationship2,
+				c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
 		Contacts con = contactsservice.SelectById(stateid);
-		
-			if(con !=null){
-				boolean isResult =contactsservice.updateadd(contact);
-				if(isResult == true){
-					return new Json(true,"success",isResult,"");//JSON.toJSONString(isResult);
-				}else{
-					return new Json(true,"success",isResult,"");
-				}
-			}else{
-				Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2, c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
-				boolean coan = contactsservice.save(coa);
-				if(coan == true){
-					return  new Json(true,"success",coan);
-				}else{
-					return  new Json(false,"fail",coan);
-				}
+
+		if (con != null) {
+			boolean isResult = contactsservice.updateadd(contact);
+			if (isResult == true) {
+				return new Json(true, "success", isResult, "");// JSON.toJSONString(isResult);
+			} else {
+				return new Json(true, "success", isResult, "");
 			}
-		
-			
+		} else {
+			Contacts coa = new Contacts(contacts, contacts1, contacts2, relationship, relationship1, relationship2,
+					c_Telephone, c_Telephone1, c_Telephone2, state, ctime);
+			boolean coan = contactsservice.save(coa);
+			if (coan == true) {
+				return new Json(true, "success", coan);
+			} else {
+				return new Json(false, "fail", coan);
+			}
+		}
+
 	}
 
 	/**
@@ -164,7 +175,6 @@ public class ContactsController {
 		return "loanfirst/linkInfo";
 	}
 
-	
 	/**
 	 * 贷款终审联系人信息
 	 * 
