@@ -168,7 +168,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
-                <select name="paperwork"  class="paperwork-type">
+                <select name="paperwork" lay-verify="required|mustWrite"  class="paperwork-type">
                   <option value="0">居民身份证</option>
                   <option value="1">护照</option>
                   <option value="2">户口薄</option>
@@ -180,7 +180,7 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password"  placeholder="" autocomplete="off" class="layui-input other-paperwork">
+                <input type="text" name="password" id = "matherland"  placeholder="" autocomplete="off" class="layui-input other-paperwork">
               </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
@@ -191,7 +191,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">国家或地区</label>
               <div class="layui-input-inline">
-                <select name="city"  class="country">
+                <select name="city" lay-verify="required|mustland" class="country">
                   <option value="0">中国大陆</option>
                   <option value="1">港澳</option>
                   <option value="2">台湾地区</option>
@@ -200,7 +200,7 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="" autocomplete="off" class="layui-input other-country">
+                <input type="text" name="password" id = "haveland" placeholder="" autocomplete="off" class="layui-input other-country">
               </div>
               <label class="layui-form-label">性别</label>
               <div class="layui-input-inline">
@@ -215,7 +215,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">本地户籍</label>
               <div class="layui-input-inline">
-                <select name="city" class="census">
+                <select name="city" lay-verify="required|mustcensus" class="census">
                   <option value=""></option>
                   <option value="0">是</option>
                   <option value="1">否</option>
@@ -223,7 +223,7 @@
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="" autocomplete="off" class="layui-input other-census">
+                <input type="text" name="password" id = "havecensus" placeholder="" autocomplete="off" class="layui-input other-census">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">婚姻状况</label>
@@ -239,7 +239,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">现住房情况</label>
               <div class="layui-input-inline">
-                <select name="city" class="housing">
+                <select name="city" lay-verify="required|musthouse" class="housing">
                   <option value=""></option>
                   <option value="0">房改/继承</option>
                   <option value="1">按揭自置</option>
@@ -252,7 +252,7 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="" autocomplete="off" class="layui-input other-housing">
+                <input type="text" name="password" id = "havehouse" placeholder="" autocomplete="off" class="layui-input other-housing">
               </div>
               <label class="layui-form-label">出生日期</label>
               <div class="layui-input-inline">

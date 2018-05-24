@@ -35,11 +35,37 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 	        return '名称至少得2个字符啊';
 	      }
 	    }
-	    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-	    ,content: function(value){
-	      layedit.sync(editIndex);
-	    }
+		  ,IDnumber: function(value){
+		      if(value.length > 18){
+		        return '证件号码最多为18位';
+		      }
+		    }
+		 ,mustWrite: function(value){
+			 var contents = document.querySelector('#matherland').value.length
+		     if(value ==  6 & contents == 0){
+		       return '请填写其他证件类型';
+		     }
+		   }
+		 ,mustland: function(value){
+			 var contents = document.querySelector('#haveland').value.length
+		     if(value ==  3 & contents == 0 ){
+		       return '请填写其他国家或地区';
+		     }
+		   }
+		 ,mustcensus: function(value){
+			 var contents = document.querySelector('#havecensus').value.length
+		     if(value ==  2 & contents == 0){
+		       return '请填写其他户籍';
+		     }
+		   }
+		 ,musthouse: function(value){
+			 var contents = document.querySelector('#havehouse').value.length
+		     if(value ==  6 & contents == 0){
+		       return '请填写其他住房情况';
+		     }
+		   }
 	  });
+	  
 	  
 	  //监听提交
 	  form.on('submit(demo1)', function(data){
@@ -54,7 +80,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.cname = e('.ch-name').value
   data.ename = e('.en-name').value
@@ -105,17 +130,14 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
     success: function(data) {
-    	console.log('12316546465')
     	localStorage.createTemporaryId = ""
     	if(data.msg == 'success') {
     		localStorage.createTemporaryId = data.value
-    		console.log('666666')
     		layer.msg('保存成功', {
   			  icon: 2,
   			  time: 2000, 
@@ -135,11 +157,9 @@ var sendAjax = function(method, url, datas) {
 
 // 录单提交按钮&发送数据
 var sendData = function(element) {
-  log('send data to server')
   var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
-    var data = collectData()
+  var data = collectData()
   data.rolename = localStorage.purrole
   data.username = localStorage.purusername
   data.city = localStorage.purcity
@@ -147,7 +167,6 @@ var sendData = function(element) {
   data.id = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/loanApplypersonaldata'
-    log(data)
     if(!data.id) {
     	 sendAjax(method, url, data)	
     } else {
@@ -168,7 +187,6 @@ var testsend = function() {
 	  data.id = localStorage.createID
 	    var method = 'POST'
 	    var url = '/slloan/loan/loanApplypersonaldata'
-	    log(data)
 	    if(!data.id) {
 	    	 sendAjax(method, url, data)	
 	    } else {
@@ -291,7 +309,6 @@ var searchExport = function(back) {
 // 查询
 // 发送数据方法
 var searchAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -299,7 +316,6 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -325,7 +341,6 @@ var searchData = function() {
 
 //保存后查询
 function sendsearchData(result) {
-	console.log('保存后查询')
 	var method = 'GET'
 	var url = '/slloan/loan/personalp'
 	var data = {}
@@ -339,15 +354,12 @@ function sendsearchData(result) {
 
 // 修改保存数据
 var updateData = function(element) {
-  log('send data to server')
   var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID 
     var method = 'POST'
     var url = '/slloan/loan/perupdate'
-    log(data)
     if(data.id || localStorage.createTemporaryId) {
     	 sendAjax(method, url, data)	
     }
@@ -356,12 +368,10 @@ var updateData = function(element) {
 
 //修改保存验证
 var updatevalid = function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID || localStorage.createTemporaryId
     var method = 'POST'
     var url = '/slloan/loan/perupdate'
-    log(data)
     if(data.id || localStorage.createTemporaryId) {
     	 sendAjax(method, url, data)	
     }
@@ -369,7 +379,6 @@ var updatevalid = function() {
 
 // 自定义验证
 var validateContent = function() {
-	  log('收集需要验证的数据')
 	  var data = {}
 	  data.cname = e('.ch-name').value
 	  data.ename = e('.en-name').value
@@ -421,7 +430,6 @@ var validateContent = function() {
 
 //
 var __main = function() {
-  log( "run")
   cancelBtn('#cancel')
 //  sendData('#save-data')
   searchData()

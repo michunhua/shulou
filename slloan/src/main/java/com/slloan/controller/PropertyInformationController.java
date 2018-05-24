@@ -101,9 +101,9 @@ public class PropertyInformationController {
 
 			boolean isResults = propertyinformationservice.proupdate(preperty);
 			if (isResults == true) {
-				return new Json(true, "success", isResults);
+				return new Json(true, "success", isResults,state);
 			} else {
-				return new Json(false, "fail", isResults);
+				return new Json(false, "fail", isResults,state);
 			}
 		} else {
 			PropertyInformation preperty = new PropertyInformation(name, ownership_And_percentage, property_Address,
@@ -114,10 +114,10 @@ public class PropertyInformationController {
 			boolean pr = propertyinformationservice.save(preperty);// 插入角色
 			if (pr == true) {
 				logger.info("数据插入成功!");
-				return new Json(true, "success", pr);
+				return new Json(true, "success", pr,state);
 			} else {
 				logger.info("数据插入失败!");
-				return new Json(false, "fail", pr);
+				return new Json(false, "fail", pr,state);
 			}
 		}
 
@@ -215,9 +215,9 @@ public class PropertyInformationController {
 		if (pro != null) {
 			boolean isResult = propertyinformationservice.proupdate(preperty);
 			if (isResult == true) {
-				return new Json(true, "success", isResult);
+				return new Json(true, "success", isResult,state);
 			} else {
-				return new Json(false, "fail", isResult);
+				return new Json(false, "fail", isResult,state);
 			}
 		} else {
 			PropertyInformation pre = new PropertyInformation(name, ownership_And_percentage, property_Address,
@@ -227,9 +227,9 @@ public class PropertyInformationController {
 					new_Loan_Approval_Amount, new_Loan_Bank_Account_Number, note_DescriPtion, state, ctime);
 			boolean pr = propertyinformationservice.save(pre);// 插入角色
 			if (pr == true) {
-				return new Json(true, "success", pr);
+				return new Json(true, "success", pr,state);
 			} else {
-				return new Json(false, "fail", pr);
+				return new Json(false, "fail", pr,state);
 			}
 		}
 

@@ -1,3 +1,5 @@
+$('input,select,textarea').prop('readonly',true);
+
 layui.use('table', function(){
   var table = layui.table;
 

@@ -159,7 +159,7 @@
               <li>房产证明</li>
               <li>批示</li>
               <li>其他类</li>
-              <li>凭证类</li>
+              <li style = "display:none;">凭证类</li>
             </ul>
             <div class="layui-tab-content" id = 'images'>
               <div class="layui-tab-item layui-show">
@@ -177,20 +177,19 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		if(data.msg == "fail"){
-       	    			alert("操作失败！"+data.value);
-       	    		}else{
-       	    		 alert("操作成功！"+data.value); 
-      	    		  var file = data.obj[0].filepath
-        	        	console.log( data.obj[0])
-        	        	var udata = data.obj[0]
-        	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-        	        	"<input type='button' class = 'read' name = '申请表'  value='查看' /><input type='button' name = '申请表' class = 'delete'  value='删除' /></div>";
-        	        	  $("#imagedata1").append(dd)
-       	    		}
-       	    		 
+       	    		  if(data.msg == "fail") {
+       	    			alert("操作失败！"+data.value);       	    			  
+       	    		  } else {
+       	    			alert("操作成功！"+data.value); 
+        	    		  var file = data.obj[0].filepath
+          	        	console.log( data.obj[0])
+          	        	var udata = data.obj[0]
+          	        	var dd = "<div class = 'updateImages'><img class = 'images'  src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+          	        	"<input type='button' class = 'read' name = '申请表'  value='查看' /><input type='button' name = '申请表' class = 'delete'  value='删除' /></div>";
+          	        	  $("#imagedata1").append(dd)
+       	    		  }
        	    	  }else{
-       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
+       	   		  alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -238,9 +237,9 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  if(data.msg == "fail"){
-       	    			alert("操作失败！"+data.value);
-       	    		  }else{
+       	    		  if(data.msg == "fail") {
+         	    			alert("操作失败！"+data.value);       	    			  
+         	    		  } else {
        	    			  alert("操作成功！"+data.value); 
            	    		  var file = data.obj[0].filepath
              	        	console.log( data.obj[0])
@@ -248,10 +247,9 @@
              	        	var dd = "<div class = 'updateImages'><img  class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
              	        	"<input type='button' class = 'read' name = '身份证明'  value='查看' /><input type='button' name = '身份证明' class = 'delete'  value='删除' /></div>";
              	        	  $("#imagedata2").append(dd)
-       	    		  }
-       	    		
+         	    		  }
        	    	  }else{
-       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
+       	   		  alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -299,20 +297,19 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  if(data.msg == "fail"){
-       	    			alert("操作失败！"+data.value);
-       	    		  }else{
-       	    			 alert("操作成功！"+data.value); 
-          	    		  var file = data.obj[0].filepath
-            	        	console.log( data.obj[0])
-            	        	var udata = data.obj[0]
-            	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-            	        	"<input type='button' class = 'read' name = '房产证明'  value='查看' /><input type='button' name = '房产证明' class = 'delete'  value='删除' /></div>";
-            	        	  $("#imagedata3").append(dd)
+       	    		  if(data.msg == "fail") {
+       	    			alert("操作失败！"+data.value);       	    			  
+       	    		  } else {
+        	    			 alert("操作成功！"+data.value); 
+             	    		  var file = data.obj[0].filepath
+               	        	console.log( data.obj[0])
+               	        	var udata = data.obj[0]
+               	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+               	        	"<input type='button' class = 'read' name = '房产证明'  value='查看' /><input type='button' name = '房产证明' class = 'delete'  value='删除' /></div>";
+               	        	  $("#imagedata3").append(dd)  
        	    		  }
-       	    		 
        	    	  }else{
-       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
+       	   		  alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -360,20 +357,19 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  if(data.msg == "fail"){
+       	    		  if(data.msg == "fail") {
        	    			alert("操作失败！"+data.value);
-       	    		  }else{
-       	    			 alert("操作成功！"+data.value); 
-          	    		  var file = data.obj[0].filepath
-            	        	console.log( data.obj[0])
-            	        	var udata = data.obj[0]
-            	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
-            	        	"<input type='button' class = 'read' name = '批示' value='查看' /><input type='button' name = '批示' class = 'delete'  value='删除' /></div>";
-            	        	  $("#imagedata4").append(dd) 
+       	    		  } else {
+        	    			 alert("操作成功！"+data.value); 
+             	    		  var file = data.obj[0].filepath
+               	        	console.log( data.obj[0])
+               	        	var udata = data.obj[0]
+               	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
+               	        	"<input type='button' class = 'read' name = '批示' value='查看' /><input type='button' name = '批示' class = 'delete'  value='删除' /></div>";
+               	        	  $("#imagedata4").append(dd)  
        	    		  }
-       	    		 
        	    	  }else{
-       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
+       	   		  alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")       	    		
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -421,20 +417,19 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  if(data.msg == "fail"){
-       	    			alert("操作失败！"+data.value);
-       	    		  }else{
+       	    		  if(data.msg == "fail") {
+       	    			alert("操作失败！"+data.value);  
+       	    		  } else {
        	    			  alert("操作成功！"+data.value); 
            	    		  var file = data.obj[0].filepath
              	        	console.log( data.obj[0])
              	        	var udata = data.obj[0]
              	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'><br>"+
              	        	"<input type='button' class = 'read' name = '其他类'  value='查看' /><input type='button' name = '其他类' class = 'delete'  value='删除' /><div>";
-             	        	  $("#imagedata5").append(dd)
+             	        	  $("#imagedata5").append(dd)  
        	    		  }
-       	    		
        	    	  }else{
-       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
+       	   		  	alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -482,20 +477,19 @@
        	    	  var len = data.length;
        	    	  console.log(len)
        	    	  if(len == undefined){
-       	    		  if(data.msg == "fail"){
+       	    		  if(data.msg == "fail") {
        	    			alert("操作失败！"+data.value);
-       	    		  }else{
-       	    			 alert("操作成功！"+data.value); 
-          	    		  var file = data.obj[0].filepath
-            	        	console.log( data.obj[0])
-            	        	var udata = data.obj[0]
-            	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'></br>"+
-            	        	"<input type='button' class = 'read' name = '凭证类'  value='查看' /><input type='button' name = '凭证类' class = 'delete'  value='删除' /></div>";
-            	        	  $("#imagedata6").append(dd)
+       	    		  } else {
+        	    			 alert("操作成功！"+data.value); 
+             	    		  var file = data.obj[0].filepath
+               	        	console.log( data.obj[0])
+               	        	var udata = data.obj[0]
+               	        	var dd = "<div class = 'updateImages'><img class = 'images' src='"+file+"' style = 'width: 200px; height: 200px;'></br>"+
+               	        	"<input type='button' class = 'read' name = '凭证类'  value='查看' /><input type='button' name = '凭证类' class = 'delete'  value='删除' /></div>";
+               	        	  $("#imagedata6").append(dd)
        	    		  }
-       	    		 
        	    	  }else{
-       	    		alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
+       	   		  	alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
        	    	  }
        	      },complete:function(msg){ 
        	          //请求完成后调用的回调函数（请求成功或失败时均调用）

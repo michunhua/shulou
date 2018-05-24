@@ -19,7 +19,6 @@ layui.use('laydate', function(){
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.cname = e('.ch-name').value
   data.ename = e('.en-name').value
@@ -98,13 +97,11 @@ var sendAjax = function(method, url, datas) {
 var sendData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.temporaryId = localStorage.createTemporaryId
     data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/commonApplydata'
-    log(data)
     if(!data.mark) {
         sendAjax(method, url, data)	
     }
@@ -231,13 +228,11 @@ var initback = {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
 $.ajax({
   type: method,
   url: url,
   data: {data:JSON.stringify(datas)},
   success: function(data) {
-  	console.log('返回数据', data)
   	if(data.msg == 'success') {
   		searchExport(data.obj)
   	} else {
@@ -276,12 +271,10 @@ function sendsearchData(result) {
 var updateData = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID || localStorage.comm
     var method = 'POST'
     var url = '/slloan/loan/joinupdate'
-    log(data)
     if(data.id || localStorage.comm) {
     	sendAjax(method, url, data)
     }

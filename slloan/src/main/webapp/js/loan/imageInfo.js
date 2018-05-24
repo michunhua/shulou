@@ -1,8 +1,4 @@
-console.log('影像信息')
-
-
 layui.use('upload', function(){
-	console.log('上传照片')
 	  var upload = layui.upload;
 	   
 	  //执行实例
@@ -52,7 +48,6 @@ $(function () {
             processData: false,//用于对data参数进行序列化处理 这里必须false
             contentType: false, //必须
             success: function (result) {
-            	console.log(result)
                 alert("上传完成!");
             },
         })
@@ -73,11 +68,9 @@ $(function() {
 	      contentType: false,  
 	      success:function(data){
 	    	  var len = data.length;
-	    	  console.log(len)
 	    	  if(len == undefined){
 	    		  alert("操作成功！"+data.value); 
 	    		  var file = data.obj[0].filepath
-  	        	console.log( data.obj[0])
   	        	var udata = data.obj[0]
   	        	var dd = "<img  width='200px' height='200px' width='200px' height='200px' src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
   	        	  $("#imagedata").append(dd)
@@ -105,14 +98,12 @@ var updataImags = function(select) {
 	setTimeout(function() {
 		intent.disabled = ''
 	}, 3000)
-	console.log('上传图片中')
 }
 
 // 具体点击按钮
 var updataButton = function(element) {
 	var intent = document.querySelector(element)
 	intent.addEventListener('click', function() {
-		console.log('click')
 		updataImags(element)
 	})
 }
@@ -128,9 +119,7 @@ updataButton("#upproof")
 var imageDisplay1 = function(element, result) {
 	var intent = document.querySelector(element)
 	var flag = '申请表'
-	console.log('执行次数', result.申请表)
 	if(result.申请表) {
-		console.log('开始加入图片')
 		var len = result.申请表.length
 		intent.innerHTML = ''
 		for(var i = 0; i < len; i++) {
@@ -146,10 +135,8 @@ var imageDisplay1 = function(element, result) {
 			var div = document.createElement('div')
 			var img = document.createElement('img')
 			img.classList.add('images')
-			console.log(result.申请表[i].filepath)
 			div.classList.add('updateImages')
 			img.src = result.申请表[i].filepath
-			console.log(img)
 			div.appendChild(img)
 			div.appendChild(br)
 			div.appendChild(button1)
@@ -160,9 +147,7 @@ var imageDisplay1 = function(element, result) {
 }
 var imageDisplay2 = function(element, result) {
 	var intent = document.querySelector(element)
-	console.log('执行次数', result.身份证明)
 	if(result.身份证明) {
-		console.log('开始加入图片')
 		var len = result.身份证明.length
 		intent.innerHTML = ''
 		for(var i = 0; i < len; i++) {
@@ -178,10 +163,8 @@ var imageDisplay2 = function(element, result) {
 			var div = document.createElement('div')
 			var img = document.createElement('img')
 			img.classList.add('images')
-			console.log(result.身份证明[i].filepath)
 			div.classList.add('updateImages')
 			img.src = result.身份证明[i].filepath
-			console.log(img)
 			div.appendChild(img)
 			div.appendChild(br)
 			div.appendChild(button1)
@@ -193,9 +176,7 @@ var imageDisplay2 = function(element, result) {
 
 var imageDisplay3 = function(element, result) {
 	var intent = document.querySelector(element)
-	console.log('执行次数', result.房产证明)
 	if(result.房产证明) {
-		console.log('开始加入图片')
 		var len = result.房产证明.length
 		intent.innerHTML = ''
 		for(var i = 0; i < len; i++) {
@@ -211,10 +192,8 @@ var imageDisplay3 = function(element, result) {
 			var div = document.createElement('div')
 			var img = document.createElement('img')
 			img.classList.add('images')
-			console.log(result.房产证明[i].filepath)
 			div.classList.add('updateImages')
 			img.src = result.房产证明[i].filepath
-			console.log(img)
 			div.appendChild(img)
 			div.appendChild(br)
 			div.appendChild(button1)
@@ -226,9 +205,7 @@ var imageDisplay3 = function(element, result) {
 
 var imageDisplay4 = function(element, result) {
 	var intent = document.querySelector(element)
-	console.log('执行次数', result.批示)
 	if(result.批示) {
-		console.log('开始加入图片')
 		var len = result.批示.length
 		intent.innerHTML = ''
 		for(var i = 0; i < len; i++) {
@@ -244,10 +221,8 @@ var imageDisplay4 = function(element, result) {
 			var div = document.createElement('div')
 			var img = document.createElement('img')
 			img.classList.add('images')
-			console.log(result.批示[i].filepath)
 			div.classList.add('updateImages')
 			img.src = result.批示[i].filepath
-			console.log(img)
 			div.appendChild(img)
 			div.appendChild(br)
 			div.appendChild(button1)
@@ -260,9 +235,7 @@ var imageDisplay4 = function(element, result) {
 
 var imageDisplay5 = function(element, result) {
 	var intent = document.querySelector(element)
-	console.log('执行次数', result.其他类)
 	if(result.其他类) {
-		console.log('开始加入图片')
 		var len = result.其他类.length
 		intent.innerHTML = ''
 		for(var i = 0; i < len; i++) {
@@ -278,10 +251,8 @@ var imageDisplay5 = function(element, result) {
 			var div = document.createElement('div')
 			var img = document.createElement('img')
 			img.classList.add('images')
-			console.log(result.其他类[i].filepath)
 			div.classList.add('updateImages')
 			img.src = result.其他类[i].filepath
-			console.log(img)
 			div.appendChild(img)
 			div.appendChild(br)
 			div.appendChild(button1)
@@ -294,9 +265,7 @@ var imageDisplay5 = function(element, result) {
 
 var imageDisplay6 = function(element, result) {
 	var intent = document.querySelector(element)
-	console.log('执行次数', result.凭证类)
 	if(result.凭证类) {
-		console.log('开始加入图片')
 		var len = result.凭证类.length
 		intent.innerHTML = ''
 		for(var i = 0; i < len; i++) {
@@ -312,10 +281,8 @@ var imageDisplay6 = function(element, result) {
 			var div = document.createElement('div')
 			var img = document.createElement('img')
 			img.classList.add('images')
-			console.log(result.凭证类[i].filepath)
 			div.classList.add('updateImages')
 			img.src = result.凭证类[i].filepath
-			console.log(img)
 			div.appendChild(img)
 			div.appendChild(br)
 			div.appendChild(button1)
@@ -327,14 +294,12 @@ var imageDisplay6 = function(element, result) {
 
 // 加载图像方法
 var loadImageAjax = function(method, url, datas) {
-	console.log('加载图片')
 	 $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		console.log(data.obj)
     		imageDisplay1("#imagedata1",  data.obj)
     		imageDisplay2("#imagedata2",  data.obj)
     		imageDisplay3("#imagedata3",  data.obj)
@@ -458,8 +423,6 @@ var deleteImage = function(element, select) {
 	var intent = document.querySelector(element)
 	intent.addEventListener('click', function(event) {
 		if(event.target.classList.contains(select)) {
-			console.log(event.target.parentNode.querySelector('img').src)
-			console.log(event.target.name)
 			var positionName = event.target.name
 			var gainfile = event.target.parentNode.querySelector('img').src
 			var method = 'POST'
@@ -482,7 +445,6 @@ var readImage = function(element, select) {
 	var intent = document.querySelector(element)
 	intent.addEventListener('click', function(event) {
 		if(event.target.classList.contains(select)) {
-			console.log(event.target.parentNode.querySelector('img').src)
 			var positionName = event.target.name
 			var gainfile = event.target.parentNode.querySelector('img').src
 			var method = 'get'

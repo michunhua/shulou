@@ -169,7 +169,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
-                <select name="paperwork"  lay-verify="required" class="paperwork-type">
+                <select name="paperwork"  lay-verify="required|mustWrite" class="paperwork-type">
                   <option value="0">居民身份证</option>
                   <option value="1">护照</option>
                   <option value="2">户口薄</option>
@@ -181,18 +181,18 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" lay-verify="required"  placeholder="请输入证件类型" autocomplete="off" class="layui-input other-paperwork">
+                <input type="text" id = "matherland" name="password" placeholder="请输入证件类型" autocomplete="off" class="layui-input other-paperwork">
               </div>
               <label class="layui-form-label">证件号码</label>
               <div class="layui-input-inline">
-                <input type="text" name="CardId" lay-verify="required"  placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
+                <input type="text" name="CardId" lay-verify="required|IDnumber"  placeholder="请输入证件号码" autocomplete="off" class="layui-input paperwork-numb">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">国家或地区</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required"  class="country">
+                <select name="city" lay-verify="required|mustland"  class="country">
                   <option value="0">中国大陆</option>
                   <option value="1">港澳</option>
                   <option value="2">台湾地区</option>
@@ -201,7 +201,7 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" lay-verify="required" placeholder="请输入国家或地区" autocomplete="off" class="layui-input other-country">
+                <input type="text" name="password" id = "haveland" placeholder="请输入国家或地区" autocomplete="off" class="layui-input other-country">
               </div>
               <label class="layui-form-label">性别</label>
               <div class="layui-input-inline">
@@ -216,17 +216,17 @@
             <div class="layui-form-item">
               <label class="layui-form-label">本地户籍</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="census">
+                <select name="city" lay-verify="required|mustcensus" class="census">
                   <option value=""></option>
                   <option value="0">是</option>
                   <option value="1">否</option>
                   <option value="2">其他</option>
                 </select>
               </div>
-              <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="请输入户籍地" autocomplete="off" class="layui-input other-census">
-              </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
+              <div class="layui-input-inline">
+                <input type="text" name="password" id = "havecensus" placeholder="请输入户籍地" autocomplete="off" class="layui-input other-census">
+              </div>
               <label class="layui-form-label">婚姻状况</label>
               <div class="layui-input-inline">
                 <select name="city" lay-verify="required" class="marriage">
@@ -240,7 +240,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">现住房情况</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="housing">
+                <select name="city" lay-verify="required|musthouse" class="housing">
                   <option value=""></option>
                   <option value="0">房改/继承</option>
                   <option value="1">按揭自置</option>
@@ -253,7 +253,7 @@
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="请输入住房情况" autocomplete="off" class="layui-input other-housing">
+                <input type="text" name="password" id = "havehouse" placeholder="请输入住房情况" autocomplete="off" class="layui-input other-housing">
               </div>
               <label class="layui-form-label">出生日期</label>
               <div class="layui-input-inline">
@@ -314,7 +314,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">现单位地址</label>
               <div class="layui-input-inline">
-                <input type="text" name="password" placeholder="请输入现单位地址" autocomplete="off" class="layui-input unit-address">
+                <input type="text" name="password" lay-verify="required" placeholder="请输入现单位地址" autocomplete="off" class="layui-input unit-address">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>

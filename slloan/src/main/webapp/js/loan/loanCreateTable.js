@@ -1,28 +1,28 @@
-layui.use('table', function(){
-  var table = layui.table;
-
-  //第一个实例
-  table.render({
-    elem: '#demo'
-    ,height: 315
-    ,url: '/demo/table/user/' //数据接口
-    ,page: true //开启分页
-    ,cols: [[ //表头
-      {field: 'id', title: '全选', width:80, sort: true, fixed: 'left'}
-      ,{field: 'user', title: '申请编号', width:200}
-      ,{field: 'username', title: '姓名', width:80}
-      ,{field: 'sex', title: '申请金额', width:200, sort: true}
-      ,{field: 'city', title: '手机号码', width:200}
-      ,{field: 'sign', title: '证件号码', width: 200}
-      ,{field: 'experience', title: '贷款期限', width: 200, sort: true}
-      ,{field: 'score', title: '状态', width: 80, sort: true}
-      ,{field: 'classify', title: '住房风地址', width: 200}
-      ,{field: 'wealth', title: '创建时间', width: 200, sort: true}
-      ,{field: 'wealth', title: '操作', width: 135, sort: true}
-    ]]
-  });
-
-});
+//layui.use('table', function(){
+//  var table = layui.table;
+//
+//  //第一个实例
+//  table.render({
+//    elem: '#demo'
+//    ,height: 315
+//    ,url: '/demo/table/user/' //数据接口
+//    ,page: true //开启分页
+//    ,cols: [[ //表头
+//      {field: 'id', title: '全选', width:80, sort: true, fixed: 'left'}
+//      ,{field: 'user', title: '申请编号', width:200}
+//      ,{field: 'username', title: '姓名', width:80}
+//      ,{field: 'sex', title: '申请金额', width:200, sort: true}
+//      ,{field: 'city', title: '手机号码', width:200}
+//      ,{field: 'sign', title: '证件号码', width: 200}
+//      ,{field: 'experience', title: '贷款期限', width: 200, sort: true}
+//      ,{field: 'score', title: '状态', width: 80, sort: true}
+//      ,{field: 'classify', title: '住房风地址', width: 200}
+//      ,{field: 'wealth', title: '创建时间', width: 200, sort: true}
+//      ,{field: 'wealth', title: '操作', width: 135, sort: true}
+//    ]]
+//  });
+//
+//});
 
 // 引入验证
 
@@ -115,9 +115,7 @@ var addTable = function(data) {
     var totalPage = document.querySelector('.totalPage')
 	totalPage.innerText = datas.totalPage
     pageElement.innerHTML = null
-    console.log('长度', len)
     for(var i = 0; i < len; i++) {
-		    	  log(i)
 		var tr = document.createElement('tr')
 		var td0 = document.createElement('td')
 		var a = document.createElement('a')
@@ -181,23 +179,13 @@ var addTable = function(data) {
     }
 }
 
-//var testData = {
-//		test: '233',
-//		lists: [1, 2, 3, 4]
-//}
-//
-// addTable(testData)
-
-
 // 默认加载
 var initAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
         addTable(data)
       },
       error: function() {
@@ -208,7 +196,6 @@ var initAjax = function(method, url, datas) {
 
 //默认加载
 var initData = function() {
-	console.log('初始化加载数据')
 	var method = 'GET'
 	var url = '/slloan/loan/rolemanagement?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
@@ -216,7 +203,6 @@ var initData = function() {
     datas.username = localStorage.purusername
     datas.city = localStorage.purcity
 	datas.parentnodeId = localStorage.purid
-	console.log('初始化加载数据233')
 	if(datas.parentnodeId) {
 		initAjax(method, url, datas)
 	} else {
@@ -243,13 +229,11 @@ var collectData = function() {
 
 //查询方法
 var sendAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
         addTable(data)
       },
       error: function() {
@@ -262,7 +246,6 @@ var sendAjax = function(method, url, datas) {
 var envs = function(element) {
   var ens = e(element)
   ens.addEventListener('click', function() {
-    console.log('running', datas)
     var method = 'GET'
     var url = '/slloan/loan/vaguelikeselectcreate?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
@@ -386,21 +369,17 @@ var displayTable = function(result) {
 	tr.appendChild(th4)
 	tr.appendChild(th5)
 	table.appendChild(tr)
-	console.log(table)
 }
 
 
 //流转记录查询
 var hang_cirulationAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data.obj.a.length)
         var content = data.obj.b.applicationnumber || 'null'
-        console.log(content)
         var tableString = ''
         if(data.obj.a.length) {
         	var flag = data.obj.a.length
@@ -434,9 +413,7 @@ var Hang_cirulation = function(element) {
 	var intent = e(element)
 	intent.addEventListener('click', function(event) {
 		if(event.target.classList.contains("upload")) {   
-			console.log('挂起')
 		} else if(event.target.classList.contains("record")) {
-			console.log('流转记录')
 			var method = "GET"
 		    var url = "/slloan/sumiteregresses/selectwhole"
 		    var datas = {}

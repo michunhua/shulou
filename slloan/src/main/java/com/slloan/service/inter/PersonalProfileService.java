@@ -30,6 +30,7 @@ public interface PersonalProfileService {
 		 	
 		 	int getPersonalProfileCount(String username,String rolename,String city,String parentnodeId);
 		 	
+		 	PersonalProfile SelectByIdMarital(int id); 
 		 	
 		 	/**
 		 	 * 初审模糊查询

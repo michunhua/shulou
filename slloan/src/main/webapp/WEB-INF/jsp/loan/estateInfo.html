@@ -203,7 +203,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">房产用途</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="property">
+                <select name="city" lay-verify="required|mustuse" class="property">
                   <option value=""></option>
                   <option value="0">自住</option>
                   <option value="1">出租</option>
@@ -212,7 +212,7 @@
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password"  placeholder="请输入用途" autocomplete="off" class="layui-input usetodo">
+                <input type="text" name="password" id = "mustuse"  placeholder="请输入用途" autocomplete="off" class="layui-input usetodo">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
             </div>

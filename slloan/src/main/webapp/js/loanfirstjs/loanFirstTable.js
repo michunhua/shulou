@@ -1,70 +1,70 @@
-layui.use('table', function() {
-	var table = layui.table;
-
-	// 第一个实例
-	table.render({
-		elem : '#demo',
-		height : 315,
-		url : '/demo/table/user/' // 数据接口
-		,
-		page : true // 开启分页
-		,
-		cols : [ [ // 表头
-		{
-			field : 'id',
-			title : '全选',
-			width : 80,
-			sort : true,
-			fixed : 'left'
-		}, {
-			field : 'user',
-			title : '申请编号',
-			width : 200
-		}, {
-			field : 'username',
-			title : '姓名',
-			width : 80
-		}, {
-			field : 'sex',
-			title : '申请金额',
-			width : 200,
-			sort : true
-		}, {
-			field : 'city',
-			title : '手机号码',
-			width : 200
-		}, {
-			field : 'sign',
-			title : '证件号码',
-			width : 200
-		}, {
-			field : 'experience',
-			title : '贷款期限',
-			width : 200,
-			sort : true
-		}, {
-			field : 'score',
-			title : '状态',
-			width : 80,
-			sort : true
-		}, {
-			field : 'classify',
-			title : '住房风地址',
-			width : 200
-		}, {
-			field : 'wealth',
-			title : '创建时间',
-			width : 200,
-			sort : true
-		}, {
-			field : 'wealth',
-			title : '操作',
-			width : 135,
-			sort : true
-		} ] ]
-	});
-
-});
+//layui.use('table', function() {
+//	var table = layui.table;
+//
+//	// 第一个实例
+//	table.render({
+//		elem : '#demo',
+//		height : 315,
+//		url : '/demo/table/user/' // 数据接口
+//		,
+//		page : true // 开启分页
+//		,
+//		cols : [ [ // 表头
+//		{
+//			field : 'id',
+//			title : '全选',
+//			width : 80,
+//			sort : true,
+//			fixed : 'left'
+//		}, {
+//			field : 'user',
+//			title : '申请编号',
+//			width : 200
+//		}, {
+//			field : 'username',
+//			title : '姓名',
+//			width : 80
+//		}, {
+//			field : 'sex',
+//			title : '申请金额',
+//			width : 200,
+//			sort : true
+//		}, {
+//			field : 'city',
+//			title : '手机号码',
+//			width : 200
+//		}, {
+//			field : 'sign',
+//			title : '证件号码',
+//			width : 200
+//		}, {
+//			field : 'experience',
+//			title : '贷款期限',
+//			width : 200,
+//			sort : true
+//		}, {
+//			field : 'score',
+//			title : '状态',
+//			width : 80,
+//			sort : true
+//		}, {
+//			field : 'classify',
+//			title : '住房风地址',
+//			width : 200
+//		}, {
+//			field : 'wealth',
+//			title : '创建时间',
+//			width : 200,
+//			sort : true
+//		}, {
+//			field : 'wealth',
+//			title : '操作',
+//			width : 135,
+//			sort : true
+//		} ] ]
+//	});
+//
+//});
 
 layui
 		.use(
@@ -123,7 +123,6 @@ layui
 
 				});
 
-log('table')
 
 // 自定义
 var log = console.log.bind(console)
@@ -157,7 +156,6 @@ var myFilter = function(data) {
 
 // 添加表格具体数据格
 var addTable = function(data) {
-	console.log('添加表格儿')
 	var datas = data
 	var len = (datas.lists).length
 	var pageElement = document.querySelector('.tab-data')
@@ -165,9 +163,7 @@ var addTable = function(data) {
 	totalPage.innerText = datas.totalPage
 	pageElement.innerHTML = null
     var sequence = []
-	console.log('回写数据长度', len)
 	for (var i = 0; i < len; i++) {
-		log('执行次数' +i)
 		var tr = document.createElement('tr')
 		var td = document.createElement('td')
 		var input = document.createElement('input')
@@ -266,7 +262,6 @@ var addTable = function(data) {
 
 // 发送数据方法
 var initAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -283,7 +278,6 @@ var initAjax = function(method, url, datas) {
 }
 
 var initData = function() {
-	console.log('初始化加载数据')
 	var method = 'GET'
 	var url = '/slloan/loan/loanlist?page=' + init.pages + '&limit='+ init.limit
 	var datas = {}
@@ -292,7 +286,6 @@ var initData = function() {
 	datas.username = localStorage.purusername
 	datas.city = localStorage.purcity
 	datas.parentnodeId = localStorage.purid
-	console.log('初始化加载数据233')
 	if (datas.parentnodeId) {
 		initAjax(method, url, datas)
 	} else {
@@ -302,7 +295,6 @@ var initData = function() {
 
 // 收集信息
 var collectData = function() {
-	log('收集数据')
 	var data = {}
 	data.userName = e('.username').value
 	data.iphone = e('.iphone').value
@@ -318,7 +310,6 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -326,7 +317,6 @@ var sendAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log(data)
 			addTable(data)
 		},
 		error : function() {
@@ -337,10 +327,8 @@ var sendAjax = function(method, url, datas) {
 
 // 发送数据
 var sendData = function(element) {
-	log('send data to server')
 	var evs = document.querySelector(element)
 	evs.addEventListener('click', function() {
-		log('data to send at time')
 		var method = 'GET'
 		var url = '/slloan/loan/firsttriallikeselect?page=' + init.pages + '&limit='+ init.limit
 		var data = collectData()
@@ -348,7 +336,6 @@ var sendData = function(element) {
 		data.username = localStorage.purusername
 		data.city = localStorage.purcity
 		data.parentnodeId = localStorage.purid
-		log(data)
 		sendAjax(method, url, data)
 	})
 }
@@ -356,7 +343,6 @@ var sendData = function(element) {
 // 查询
 // 发送数据方法
 var searchAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -364,7 +350,6 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				
 			} else {
@@ -393,11 +378,6 @@ var numberSearch = function(element) {
 						var indicate = event.target.classList
 						if (indicate == 'mark') {
 							localStorage.firstID = ''
-							console
-									.log(
-											event.target.parentNode.nextSibling.innerText,
-											'就这个数据')
-							console.log(event.target.innerText, '好的')
 							localStorage.firstID = event.target.parentNode.nextSibling.innerText
 							window.location.href = '../loan/loanjoins'
 						}
@@ -464,8 +444,6 @@ var findSave = function() {
 	var parentElement = e('.tab-data')
 	var definite = parentElement.querySelectorAll('.indicate')
 	var flags = es('.flag')
-	console.log(definite.length)
-	// console.log(flags[1].innerText)
 	for (var i = 0; i < definite.length; i++) {
 		if (definite[i].checked == true) {
 			if(!saveSend.includes(flags[i].innerText)) {
@@ -481,14 +459,12 @@ var findSave = function() {
 			}
 		}
 	}
-	console.log(saveSend)
 }
 
 // 全部数据选中
 var fullDataCheck = function(elements) {
 	var tent = es(elements)
 	var len = tent.length
-	console.log('fullcheck', tent, len)
 	for (var i = 0; i < len; i++) {
 		tent[i].checked = true
 	}
@@ -499,7 +475,6 @@ var fullDataCheck = function(elements) {
 var fullDataUncheck = function(elements) {
 	var tent = es(elements)
 	var len = tent.length
-	console.log('fullUncheck', tent, len)
 	for (var i = 0; i < len; i++) {
 		tent[i].checked = false
 	}
@@ -524,7 +499,6 @@ var fullSelection = function(element) {
 var single = function() {
 	var parentElement = e('.tab-data')
 	parentElement.addEventListener('click', function(event) {
-		console.log('单击')
 		if (event.target.classList.contains('indicate')) {
 			findSave()
 		}
@@ -533,16 +507,12 @@ var single = function() {
 
 //监听选中的个数等于全部时全选按钮为选中状态
 var listenSingle = function(select, element, arr) {
-	console.log('监听全部的选择')
 	var flag = arr.length
 	var intent = es(element)
 	var mark = intent.length
-	console.log(flag, mark, "长度相等吗？？")
 	if(flag == mark) {
-		console.log('相等执行 true')
 		e(select).checked = true
 	} else {
-		console.log('不相等执行 false')
 		e(select).checked = false
 	}
 }
@@ -553,12 +523,9 @@ var singleAdd = function() {
 	var parentElement = e('.tab-data')
 	var intent = e('#full')
 	var definite = es('.indicate')
-	console.log('一个接一个的点击')
 	parentElement.addEventListener('click', function() {
-		console.log('执行到这', definite.length)
 		listenSingle('#alls', '.indicate', saveSend) 
 		for (var i = 0; i < definite.length; i++) {
-			console.log('有没有选中的')
 			if (!definite[i].checked) {
 				result.push('1')
 			}
@@ -573,24 +540,17 @@ var singleAdd = function() {
 
 //全选按钮的状态
 var listenAllSel = function(item, index, element) {
-	console.log('这能执行吗？')
 	var intent = e(item)
 	var flag = e(index)
 	intent.addEventListener('click', function() {
 		var run = es(element)
 		var mark = flag.checked
-//		console.log("响应事件")
-//		console.log(mark, '这到底如何')
 		if(mark) {
-//			console.log("有选中的时间执行")
-//			console.log('执行选中几个', run)
 			for(var i = 0; i < run.length; i++) {
 				run[i].checked = true
 			}
 			findSave()
 		} else {
-//			console.log("不选中的时候只想")
-//			console.log('执行bu选中几个', run)
 			for(var i = 0; i < run.length; i++) {
 				run[i].checked = false
 			}
@@ -601,7 +561,6 @@ var listenAllSel = function(item, index, element) {
 
 // 批量后全选按钮不选中
 var unselected = function(element) {
-	log("_______改变选中状态______")
 	var intent = document.querySelector(element)
 	var flag = intent.checked 
 	if(flag) {
@@ -613,7 +572,6 @@ var unselected = function(element) {
 // 初审批量拒绝方法
 // 发送数据方法
 var refuseAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -621,7 +579,6 @@ var refuseAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('拒绝返回数据', data)
 			if (data.msg == 'success') {
 				saveSend.length = 0
 				initData()
@@ -638,7 +595,6 @@ var refuseAjax = function(method, url, datas) {
 var batchRefuse = function(element) {
 	var intent = e(element)
 	intent.addEventListener('click', function() {
-		console.log('refuse')
 		var method = "POST"
 		var url = "/slloan/financevoucher/refusegobackmortgage"
 		var datas = {}
@@ -647,8 +603,8 @@ var batchRefuse = function(element) {
 		datas.city = localStorage.purcity
 		datas.parentnodeId = localStorage.purid
 		var data = saveSend
-		data.push(datas)
 		if (data.length > 0) {
+			data.push(datas)
 			refuseAjax(method, url, data)
 		} else {
 			alert('至少选中一个')
@@ -659,7 +615,6 @@ var batchRefuse = function(element) {
 // 初审量通过方法
 // 发送数据方法
 var passAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -667,7 +622,6 @@ var passAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('通过返回数据', data)
 			if (data.msg == 'success') {
 				saveSend.length = 0
 				initData()
@@ -684,7 +638,6 @@ var passAjax = function(method, url, datas) {
 var batchPass = function(element) {
 	var intent = e(element)
 	intent.addEventListener('click', function() {
-		console.log('pass')
 		var method = "POST"
 		var url = "/slloan/financevoucher/pastgobackfinalreview"
 		var datas = {}
@@ -693,8 +646,8 @@ var batchPass = function(element) {
 		datas.city = localStorage.purcity
 		datas.parentnodeId = localStorage.purid
 		var data = saveSend
-		data.push(datas)
 		if (data.length > 0) {
+			data.push(datas)
 			passAjax(method, url, data)
 		} else {
 			alert('至少选中一个')
@@ -705,15 +658,12 @@ var batchPass = function(element) {
 
 //流转记录查询
 var hang_cirulationAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-          console.log(data.obj.a.length)
           var content = data.obj.b.applicationnumber
-          console.log(content)
           var tableString = ''
           if(data.obj.a.length) {
           	var flag = data.obj.a.length
@@ -743,13 +693,11 @@ var hang_cirulationAjax = function(method, url, datas) {
 
 //挂起方法
 var HangAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
         initData()
       }, 
       error: function() {
@@ -763,7 +711,6 @@ var Hang_cirulation = function(element) {
 	var intent = e(element)
 	intent.addEventListener('click', function(event) {
 		if(event.target.classList.contains("up")) {   
-			console.log('挂起')
 			var method = "GET"
 		    var url = "/slloan/loan/loanlist?page=" + init.pages + '&limit='+ init.limit
 		    var datas = {}
@@ -775,7 +722,6 @@ var Hang_cirulation = function(element) {
 			datas.parentnodeId = localStorage.purid
 			HangAjax(method, url, datas)
 		} else if(event.target.classList.contains("record")) {
-			console.log('流转记录')
 			var method = "GET"
 		    var url = "/slloan/sumiteregresses/selectwhole"
 		    var datas = {}
@@ -792,7 +738,6 @@ var Hang_cirulation = function(element) {
 
 //
 var __main = function() {
-	log("run")
 	sendData('#save-data')
 	initData()
 	listenAllSel('#full', "#alls", '.indicate')

@@ -31,6 +31,7 @@ var sendAjax = function(method, url, datas, callback) {
     		  alert(data.value)
     		  $('.lastPassword').val("")
     		  $('.newPassword').val("")
+    		  document.querySelector('#logout').click()
     	  }
     	 
       }
@@ -38,17 +39,21 @@ var sendAjax = function(method, url, datas, callback) {
     })
 }
 
-
-// 事件响应
-var envs = function(element) {
-  var ens = e(element)
-  ens.addEventListener('click', function() {
+// 提交数据
+var update = function() {
     var datas = collectData()
     console.log('running', datas)
     var method = 'POST'
     var url = '/slloan/user/updatepwd'
     var data = datas
     sendAjax(method, url, data, null)
+}
+
+// 提交事件响应
+var envs = function(element) {
+  var ens = e(element)
+  ens.addEventListener('click', function() {
+	  update()
   })
 }
 
@@ -60,7 +65,7 @@ var cancelBtn = function(element) {
 //    forms.reset()
 	  $('.lastPassword').val("")
 	  $('.newPassword').val("")
-	  
+	  window.history.back()
   })
 }
 

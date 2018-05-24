@@ -345,7 +345,6 @@ var Hang_cirulation = function(element) {
 	})
 }
 
-
 var __main = function() {
   initData()
   numberSearch(".tab-data")

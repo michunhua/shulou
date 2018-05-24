@@ -615,8 +615,8 @@ var batchRefuse = function(element) {
 		datas.city = localStorage.purcity
 		datas.parentnodeId = localStorage.purid
 		var data = saveSend
-		data.push(datas)
 		if (data.length > 0) {
+			data.push(datas)
 			refuseAjax(method, url, data)
 			unselected('#alls')
 		} else {
@@ -664,8 +664,8 @@ var batchPass = function(element) {
 		datas.city = localStorage.purcity
 		datas.parentnodeId = localStorage.purid
 		var data = saveSend
-		data.push(datas)
 		if (data.length > 0) {
+			data.push(datas)
 			passAjax(method, url, data)
 		} else {
 			alert('至少选中一个')

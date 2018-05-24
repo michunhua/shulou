@@ -21,6 +21,7 @@ var obtainRoleAjax = function(method, url, datas) {
          console.log(data.obj.length)
          var len = datas.obj.length
          for(var i = 0; i < len; i++) {
+           onloadUser()  
            var options = document.createElement('option')
            options.value = datas.obj[i].id + '&' + datas.obj[i].roleName
            options.innerText = datas.obj[i].roleName
@@ -272,7 +273,7 @@ obtainCityAjax(method, url, datas)
 
 var _main = function() {
 	obtainRole()		   // 默认载入角色
-	onloadUser()          // 默认加载用户数据
+//	onloadUser()          // 默认加载用户数据
 	saveData()			  // 保存修改数据
 	cancelData()		  // 取消按钮
 //	linkRoleCity()		  // 获取角色城市

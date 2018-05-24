@@ -29,10 +29,12 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 	        return '名称至少得2个字符啊';
 	      }
 	    }
-	    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-	    ,content: function(value){
-	      layedit.sync(editIndex);
-	    }
+		 ,mustuse: function(value){
+			 var contents = document.querySelector('#mustuse').value.length
+		     if(value ==  "3" & contents == 0){
+		       return '请填写其他用途';
+		     }
+		   }
 	  });
 	  
 	  //监听提交
@@ -71,7 +73,7 @@ var collectData = function() {
 	  data.newApproved = e('.new-approved').value
 	  data.state='a'
 	  data.ctime='b'
-		  data.id= localStorage.createID
+	  data.id = localStorage.createTemporaryId
   return data
 }
 
@@ -111,7 +113,6 @@ var sendData = function() {
     data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/housepropertydata'
-    log(data)
     if(!data.mark) {
         sendAjax(method, url, data)	
     }
@@ -125,7 +126,6 @@ var testsend = function() {
     data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/housepropertydata'
-    log(data)
     if(!data.mark) {
         sendAjax(method, url, data)	
     }
@@ -203,7 +203,6 @@ var initback = {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -211,7 +210,6 @@ log('send data method')
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -241,7 +239,7 @@ function sendsearchData(result) {
 	var url = '/slloan/loan/pper'
 	var data = {}
 	data.id = result
-	if(data.id & localStorage.commesta) {
+	if(data.id & localStorage.commest) {
 		searchAjax(method, url, data)
 	}
 }
@@ -254,7 +252,6 @@ var updateData = function() {
     data.id = localStorage.createID || localStorage.commest
     var method = 'POST'
     var url = '/slloan/loan/proupdate'
-    log(data)
     if(data.id) {
 			sendAjax(method, url, data)
 		}
@@ -267,7 +264,6 @@ var updatevalid = function() {
     data.id = localStorage.createID || localStorage.commest
     var method = 'POST'
     var url = '/slloan/loan/proupdate'
-    log(data)
     if(data.id) {
 			sendAjax(method, url, data)
 		}

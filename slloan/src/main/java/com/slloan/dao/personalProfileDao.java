@@ -19,7 +19,9 @@ public interface personalProfileDao{
 		
 		boolean delete(int id); 
 		
-
+	
+		PersonalProfile SelectByIdMarital(int id); 
+		
 		
 		List<PersonalProfile> findAll();
 

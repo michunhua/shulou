@@ -216,6 +216,27 @@ public class PersonalProfileController {
 		} else
 			return new Json(true, "success", isResult);
 	}
+	
+	/**
+	 * 按揭员查询已婚
+	 * 
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value = "/personalpmake", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json SelectById(HttpServletRequest req) {
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String uid = json.getString("id");
+		int id = Integer.parseInt(uid);
+		PersonalProfile isResult = personalprofileservice.SelectByIdMarital(id);
+		if (isResult.equals("1")) {
+			return new Json(false, "file", isResult);
+			
+		} else
+			return new Json(true, "success", isResult);
+	}
 
 	/**
 	 * 初审借款申请人个人资料

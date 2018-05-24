@@ -1,3 +1,6 @@
+$('input,select,textarea').prop('readonly',true);
+
+
 // 收集信息
 var collectData = function() {
   log('收集数据')

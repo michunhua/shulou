@@ -1,3 +1,5 @@
+$('input,select,textarea').prop('readonly',true);
+
 layui.use('table', function(){
   var table = layui.table;
 
@@ -39,7 +41,7 @@ var setSearchData = function(data) {
  
  
 //  finalNote.value = data.note_Description3
-//  financeNote.value = data.note_Description4
+  financeNote.value = data.note_Description4
   if(data.note_Description2 == "undefined" & data.note_Description2 == undefined|| data.note_Description2 == "null" || data.note_Description2 == null){
 	  firstNote.value = ""
   }else if(data.note_Description2 != "undefined" & data.note_Description2 != undefined || data.note_Description2 != "null" & data.note_Description2 == null){

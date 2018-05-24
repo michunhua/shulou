@@ -198,7 +198,7 @@
 	<!-- 按揭员回退按揭员状态 -->
 	<select id="getPersonalProfileCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='0' and city=#{2}
+		FROM recordsubmit_table WHERE state='0' and city=#{2} and username=#{0}
 		<!-- FROM recordsubmit_table WHERE state='0' and username=#{0} and rolename=#{1} 
 			and city=#{2} and parentnodeId=#{3} -->
 	</select>
@@ -228,7 +228,7 @@
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		<!-- FROM recordsubmit_table WHERE state='1' and username=#{0} and rolename=#{1} 
 			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='1' and city=#{2}
+		FROM recordsubmit_table WHERE state='1' and city=#{2} 
 	</select>
 	<!-- 终审状态 -->
 	<select id="getFinalreviewPageCount" resultType="Integer">
@@ -326,7 +326,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='0' and c.city=#{city}
+		where c.state='0' and c.city=#{city} and a.username = #{username}
 		<!-- ORDER BY case a.id when #{id} then 1 else 2 END,a.id -->
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
@@ -348,7 +348,7 @@
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
 		where c.state='1'
-		and c.city=#{city}
+		and c.city=#{city} and a.username = #{username}
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -366,7 +366,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='2' and c.city=#{city}
+		where c.state='2' and c.city=#{city} and a.username = #{username}
 
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
@@ -388,7 +388,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='3' and c.city=#{city}
+		where c.state='3' and c.city=#{city} and a.username = #{username}
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		
 		<if test="test =page !=null and limit !=''">
@@ -408,7 +408,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='9' and c.city=#{city}
+		where c.state='9' and c.city=#{city} and a.username = #{username}
 		order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -428,7 +428,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='4' and c.city=#{city}
+		where c.state='4' and c.city=#{city} and a.username = #{username}
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -491,7 +491,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='8' and c.city=#{city}
+		where c.state='8' and c.city=#{city} and a.username = #{username}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -591,8 +591,12 @@
 		resultType="com.slloan.entity.PersonalProfile">
 		select * from borrow_information where id = #{id}
 	</select>
+	<!-- 根据ID查记录 -->
+	<select id="SelectByIdMarital" parameterType="int"
+	resultType="com.slloan.entity.PersonalProfile">
+	select marital_status from borrow_information where id = #{id}
 
-
+	</select>
 	<!-- 根据ID查记录 -->
 	<select id="SelectToById" parameterType="int"
 		resultType="com.slloan.entity.PersonalProfile">

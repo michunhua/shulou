@@ -49,7 +49,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.linkf = e('.linkf-name').value
   data.linkfMate = e('.linkf-relationship').value
@@ -73,7 +72,6 @@ var testfocus = function(element, rule) {
 	span.innerText = '请按照要求正确填写'
 	span.style.color = 'red'
 	intent.addEventListener("keyup", function() {
-		console.log('12342134', flag)
 		if(intent.value.length < rule) {
 			intent.parentNode.appendChild(span)
 			intent.parentNode.classList.add('position')
@@ -98,7 +96,6 @@ var testfocus = function(element, rule) {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas, callback) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -126,16 +123,13 @@ var sendAjax = function(method, url, datas, callback) {
 
 // 提交按钮点击事件&发送数据
 var sendData = function() {
-  log('send data to server')
   var evs = e('#save-loaner')
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.temporaryId = localStorage.createTemporaryId
     data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/contactinformation'
-    log(data)
     if(!data.mark) {
     	sendAjax(method, url, data)	
     }
@@ -144,13 +138,11 @@ var sendData = function() {
 
 //验证通过后提交
 var testsend = function() {
-	log('data to send at time')
     var data = collectData()
     data.temporaryId = localStorage.createTemporaryId
     data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/contactinformation'
-    log(data)
     if(!data.mark) {
     	sendAjax(method, url, data)	
     }
@@ -206,13 +198,11 @@ var searchExport = function(back) {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
     data: {data:JSON.stringify(datas)},
     success: function(data) {
-    	console.log('返回数据', data)
     	if(data.msg == 'success') {
     		searchExport(data.obj)
     	} else {
@@ -249,15 +239,12 @@ function sendsearchData(result)  {
 
 //修改数据保存
 var updateData = function() {
-  log('send data to server')
   var evs = e('#save-loaner')
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID || localStorage.link
     var method = 'POST'
     var url = '/slloan/loan/contaupdate'
-    log(data)
     if(data.id) {
 			sendAjax(method, url, data)
 		}
@@ -266,12 +253,10 @@ var updateData = function() {
 
 //验证通过后保存修改数据
 var updatevalid = function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID || localStorage.link
     var method = 'POST'
     var url = '/slloan/loan/contaupdate'
-    log(data)
     if(data.id) {
 			sendAjax(method, url, data)
 		}
@@ -279,7 +264,6 @@ var updatevalid = function() {
 
 //
 var __main = function() {
-  log( "run")
 //  sendData()
   cancelBtn('#cancel')
   searchData()

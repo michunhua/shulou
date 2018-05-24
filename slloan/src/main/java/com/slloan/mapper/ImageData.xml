@@ -59,8 +59,9 @@ delete from imagedata
 <select id="financevoucherSelectToupload"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
 		select filepath,note,uploads,uploadtype,Subnode,city,Parentnode,spare,sparetwo from imagedata where
 		
-		 <if test="city !=null and city !=''"> city =#{city}</if>
-		<if test="uploadtype !=null and uploadtype !=''">and uploadtype=#{uploadtype}</if>
+		<if test="uploadtype !=null and uploadtype !=''"> uploadtype=#{uploadtype}</if>
+		 <if test="city !=null and city !=''">and city =#{city}</if>
+		
 		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute=#{uploadFtpRoute}</if>
 </select>
 <!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->

@@ -96,6 +96,12 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		return personalProfiledao.perupdate(personalProfile);
 
 	}
+	
+	@Override
+	public PersonalProfile SelectByIdMarital(int id) {
+
+		return personalProfiledao.SelectByIdMarital(id);
+	}
 
 	@Override
 	public PersonalProfile SelectById(int id) {

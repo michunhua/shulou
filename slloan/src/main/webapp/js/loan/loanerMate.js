@@ -29,10 +29,17 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 	        return '名称至少得2个字符啊';
 	      }
 	    }
-	    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-	    ,content: function(value){
-	      layedit.sync(editIndex);
-	    }
+		  ,IDnumber: function(value){
+		      if(value.length > 18){
+		        return '证件号码最多为18位';
+		      }
+		    }
+			 ,mustWrite: function(value){
+				 var contents = document.querySelector('#matherland').value.length
+			     if(value ==  "6" & contents == 0){
+			       return '请填写其他证件类型';
+			     }
+			   }
 	  });
 	  
 	  //监听提交
@@ -50,7 +57,6 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.cname = e('.ch-name').value
   data.certificate = e('.paperwork-type').value
@@ -68,7 +74,6 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -80,7 +85,6 @@ var sendAjax = function(method, url, datas) {
   			  time: 2000 
   			}, function(){
   				localStorage.loaner = data.value
-//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loancomm'
   			});
     	} else {
@@ -96,16 +100,13 @@ var sendAjax = function(method, url, datas) {
 
 // 提交按钮点击事件&发送数据
 var sendData = function(element) {
-  log('send data to server')
   var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.temporaryId = localStorage.createTemporaryId	
 	data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/loanApplyspouse'
-    log(data)
     if(!data.mark) {
         sendAjax(method, url, data)	
     }
@@ -114,13 +115,11 @@ var sendData = function(element) {
 
 //验证后提交
 var testsend = function() {
-	log('data to send at time')
     var data = collectData()
     data.temporaryId = localStorage.createTemporaryId	
 	data.mark = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/loanApplyspouse'
-    log(data)
     if(!data.mark) {
         sendAjax(method, url, data)	
     }
@@ -166,16 +165,12 @@ var searchExport = function(back) {
 		});
 }
 
-var initback = {
-		id: '23'
-}
 
-//searchExport(initback)
-
+// 婚姻状态
+var MarryState = ''
 //查询
 //发送数据方法
-var searchAjax = function(method, url, datas) {
-	log('send data method')
+var MarryStateAjax = function(method, url, datas) {
 	$.ajax({
 		type : method,
 		url : url,
@@ -183,9 +178,39 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				MarryState = data.obj.marital_status
+				if( MarryState == '0') {
+					console.log('已婚')
+				} else {
+					console.log('不婚')	
+				}
+				searchData()
+			} else {
+				alert('服务器错误')
+			}
+		},
+		error: function() {
+			alert('服务器错误')
+		}
+	})
+}
+
+//查询
+//发送数据方法
+var searchAjax = function(method, url, datas) {
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			console.log(MarryState)
+			if (data.msg == 'success' || MarryState == "1") {
+				if(data.msg == 'success') {
+					searchExport(data.obj)
+				}
 			} else {
 				alert('这页资料尚未填写')
 			}
@@ -194,6 +219,19 @@ var searchAjax = function(method, url, datas) {
 			alert('服务器错误')
 		}
 	})
+}
+
+
+
+//查询是否已婚
+var searchMarry = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/personalpmake'
+	var data = {}
+	data.id = localStorage.createID
+	if(data.id) {
+		MarryStateAjax(method, url, data)
+	}
 }
 
 
@@ -222,15 +260,12 @@ function sendsearchData(result) {
 
 //修改数据保存
 var updateData = function(element) {
-  log('send data to server')
   var evs = e(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/spoupdatea'
-    log(data)
     if(data.id || localStorage.loaner) {
 			sendAjax(method, url, data)
 		}
@@ -239,12 +274,10 @@ var updateData = function(element) {
 
 //验证后保存修改数据
 var updatevalid = function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.createID || localStorage.loaner
     var method = 'POST'
     var url = '/slloan/loan/spoupdatea'
-    log(data)
     if(data.id || localStorage.loaner) {
 			sendAjax(method, url, data)
 		}
@@ -252,10 +285,10 @@ var updatevalid = function() {
 
 //
 var __main = function() {
-  log( "run")
 //  sendData('#save-data')
   cancelBtn('#cancel')
-  searchData()
+  searchMarry()
+//  searchData()
 //  updateData('#save-data')
   sendsearchData(localStorage.createTemporaryId)
 }

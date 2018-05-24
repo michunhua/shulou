@@ -18,7 +18,6 @@ layui.use('laydate', function() {
 
 // 收集信息
 var collectData = function() {
-	log('收集数据')
 	var data = {}
 	// 固定值
 	data.cname = e('.ch-name').value
@@ -45,7 +44,6 @@ var sendAjax = function(method, url, datas, callback) {
 		},
 		success : function(data) {
 			if (data.msg == 'success') {
-				console.log('sadas')
 				layer.msg('保存成功', {
 					icon : 2,
 					time : 2000
@@ -73,7 +71,6 @@ var sendData = function(element) {
 		data.mark = localStorage.createID
 		var method = 'POST'
 		var url = '/slloan/loan/commonApplyspouse'
-		log(data)
 		if(!data.mark) {
 			sendAjax(method, url, data)	
 		}
@@ -104,8 +101,8 @@ var searchExport = function(back) {
 	  
 	  cname.value = back.name
 //	  certificate.value = back.id
-	  certificateType.value =back.id_Number
-	  documents.value =  back.id_Other
+	  certificateType.value = back.id_Number
+	  documents.value = back.id_Other
 	  untilName.value = back.uni_Name
 	  untilPhone.value = back.unit_Phone
 	  residence.value = back.home_Phone
@@ -129,7 +126,6 @@ var initback = {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -137,7 +133,6 @@ log('send data method')
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -180,7 +175,6 @@ var updateData = function(element) {
 	    data.id = localStorage.createID		
 		var method = 'POST'
 		var url = '/slloan/loan/cobupdate'
-		log(data)
 		if(data.id) {
 			sendAjax(method, url, data)
 		}

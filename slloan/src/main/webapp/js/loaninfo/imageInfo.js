@@ -203,7 +203,6 @@ var imageDisplay6 = function(element, result) {
 	if(result.凭证类) {
 		console.log('开始加入图片')
 		var len = result.凭证类.length
-		console.log(result.凭证类[0].filepath)
 		for(var i = 0; i < len; i++) {
 			var button1 = document.createElement('button')
 			var button2 = document.createElement('button')

@@ -310,7 +310,7 @@ var uploadCertificate = function(element) {
 						'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
 						'<input type="file"  name="file" onchange="document.getElementById("filepath1").value=this.value;"/>'+
 						'<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>'+
-						'<input type="button" class="layui-btn layui-btn-normal" onclick="updateUserInfo()"  value="提交" />'+
+						'<input type="button" id = "upimage" class="layui-btn layui-btn-normal" onclick="updateUserInfo()"  value="提交" />'+
 						'</fieldset>'+
 						'</form>'+
 						'<div id="imagedata1" class="nav-container">'+
@@ -323,6 +323,7 @@ var uploadCertificate = function(element) {
 			var mark = document.querySelector('#uid')
 			console.log(event.target.parentNode.classList.value)
 			mark.value = event.target.parentNode.classList.value
+			updataButton("#upimage")
 		} else if(event.target.classList.contains("record")) {
 			console.log('流转记录')
 		}
@@ -357,15 +358,19 @@ function updateUserInfo() {
   	  var len = data.length;
   	  console.log(len)
   	  if(len == undefined){
-  		  alert("操作成功！"+data.value);
-  		window.location.reload()
-  		  var file = data.obj[0].filepath
-      	console.log( data.obj[0])
-      	var udata = data.obj[0]
-      	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
-      	  $("#imagedata1").append(dd)
+  		  if(data.msg == "fail") {
+    			alert("操作失败！"+data.value);
+  		  } else {
+  	  		  alert("操作成功！"+data.value);
+  	  		window.location.reload()
+  	  		  var file = data.obj[0].filepath
+  	      	console.log( data.obj[0])
+  	      	var udata = data.obj[0]
+  	      	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
+//  	      	  $("#imagedata1").append(dd)  
+  		  }
   	  }else{
-  		  alert(data)
+  		  alert("不支持的文件类型,请选择后缀带有(jpg,png,jpge,bmp,png)格式")
   	  }
     },complete:function(msg){ 
         //请求完成后调用的回调函数（请求成功或失败时均调用）
@@ -439,6 +444,24 @@ var Hang_cirulation = function(element) {
 	})
 }
 
+	//限制上传点击次数
+	var updataImags = function(select) {
+		var intent = document.querySelector(select)
+		intent.disabled = 'disabled'
+		setTimeout(function() {
+			intent.disabled = ''
+		}, 3000)
+		console.log('上传图片中')
+	}
+
+	// 具体点击按钮
+	var updataButton = function(element) {
+		var intent = document.querySelector(element)
+		intent.addEventListener('click', function() {
+			console.log('click')
+			updataImags(element)
+		})
+	}
 
 var __main = function() {
   initData()

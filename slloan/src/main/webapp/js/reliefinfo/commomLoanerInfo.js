@@ -1,3 +1,5 @@
+$('input,select,textarea').prop('readonly',true);
+
 // 依赖库方法
 layui.use('laydate', function(){
   var laydate = layui.laydate;

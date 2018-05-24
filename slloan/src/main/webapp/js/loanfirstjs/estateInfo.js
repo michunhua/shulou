@@ -1,8 +1,5 @@
-log('estateInfo')
-
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.owner = e('.owner').value
   data.accounting = e('.accounting').value
@@ -33,7 +30,6 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -59,15 +55,12 @@ var sendAjax = function(method, url, datas) {
 
 // 发送数据
 var sendData = function() {
-  log('send data to server')
   var evs = document.querySelector('#save-loaner')
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.firstID
     var method = 'POST'
     var url = '/slloan/loan/proupdate'
-    log(data)
     if(data.id) {
         sendAjax(method, url, data)	
     }
@@ -136,7 +129,6 @@ var initback = {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -144,7 +136,6 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -180,7 +171,6 @@ var cancelBtn = function(element) {
 
 //
 var __main = function() {
-  log( "run")
   sendData()
   cancelBtn("#cancel")
   searchData()

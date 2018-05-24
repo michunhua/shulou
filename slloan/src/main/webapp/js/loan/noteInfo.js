@@ -61,6 +61,9 @@ var sendAjax = function(method, url, datas, callback) {
 //设置页面数据
 var searchExport = function(data) {
 	recordNote = e('.note')
+	recordNotes = e('.first-note')
+	recordNotess = e('.final-note')
+	recordNotees = e('.financeNote')
 	
 //	recordNote.value = back.note_Description1
 	if(data.note_Description1 != "undefined" & data.note_Description1 != undefined || data.note_Description1 != "null" & data.note_Description1 == null){
@@ -68,12 +71,23 @@ var searchExport = function(data) {
 	  }else if(data.note_Description1 != "undefined" & data.note_Description1 == undefined || data.note_Description1 == "null" & data.note_Description1 == null){
 		  recordNote.value = ""
 	  }
+	if(data.note_Description2 && (data.note_Description2 !== "null")) {
+		e('#record-first').style.display = 'block'
+		recordNotes.value = data.note_Description2
+	}
+	if(data.note_Description3 && (data.note_Description3 !== "null")) {
+		e('#record-final').style.display = 'block'
+		recordNotess.value = data.note_Description3
+	}
+	if(data.note_Description4 && (data.note_Description4 !== "null")) {
+		e('#record-fiance').style.display = 'block'
+		recordNotees.value = data.note_Description4
+	}
 }
 
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -81,7 +95,6 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -127,7 +140,6 @@ function sendsearchData(result) {
 
 // 提交方法
 var submitAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -135,7 +147,6 @@ var submitAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-		console.log('返回数据', data)
 		localStorage.createID = ""
 	    localStorage.createTemporaryId = ""
     	if(data.msg == 'success') {
@@ -170,8 +181,7 @@ var sendData = function(element) {
     data.temporaryId = localStorage.createTemporaryId
     var method = 'POST'
     var url = '/slloan/loan/notedescription'
-    log(data)
-    if(data.temporaryId & (localStorage.createID == "")) {
+    if(data.temporaryId && (localStorage.createID == "")) {
         sendAjax(method, url, data)	
     }
   })
@@ -214,7 +224,6 @@ var updateData = function(element) {
     data.id = localStorage.createID
     var method = 'POST'
     var url = '/slloan/loan/updatenote'
-    log(data)
     if(data.id) {
 			sendAjax(method, url, data)
 		}
@@ -223,7 +232,6 @@ var updateData = function(element) {
 
 //
 var __main = function() {
-  log( "run")
   sendData('#save-note')
   cancelBtn('#cancel')
   submitBtn('#submit')

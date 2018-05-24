@@ -164,7 +164,7 @@
             <div class="layui-form-item">
               <label class="layui-form-label">证件类型</label>
               <div class="layui-input-inline">
-                <select name="city" lay-verify="required" class="certificate">
+                <select name="city" lay-verify="required|mustWrite" class="certificate">
                   <option value="0">居民身份证</option>
                   <option value="1">护照</option>
                   <option value="2">户口薄</option>
@@ -175,7 +175,7 @@
                 </select>
               </div>
               <div class="layui-input-inline">
-                <input type="text" name="password" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input certificate-type">
+                <input type="text" name="password" id = "matherland" placeholder="" autocomplete="off" class="layui-input certificate-type">
               </div>
               <div class="layui-form-mid layui-word-aux write"> * </div>
               <label class="layui-form-label">证件号码</label>

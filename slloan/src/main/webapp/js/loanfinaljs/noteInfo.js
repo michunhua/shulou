@@ -1,7 +1,6 @@
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.note = e('.note').value
   data.recordFirst = e('.first-trial').value
@@ -18,7 +17,6 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -44,15 +42,12 @@ var sendAjax = function(method, url, datas) {
 
 // 发送数据
 var sendData = function(element) {
-  log('send data to server')
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var data = collectData()
     data.id = localStorage.finalID
     var method = 'POST'
     var url = '/slloan/loan/updatenotethere'
-    log(data)
     sendAjax(method, url, data)
   })
 }
@@ -62,11 +57,16 @@ var searchExport = function(back) {
 	recordNote = e('.note')
 	recordFirst = e('.first-trial')
 	recorFinal = e('.final-trial')
+	recorFinals = e('.financeNote')
 	
 	recordNote.value = back.note_Description1
 	recordFirst.value = back.note_Description2
 	recorFinal.value = back.note_Description3
-	
+
+	  if(back.note_Description4 && back.note_Description4 != "null") {
+		  e('#final-record').style.display = 'block'
+		  recorFinals.value = back.note_Description4
+	  }
 	
 	 if(back.note_Description2 == "undefined" & back.note_Description2 == undefined|| back.note_Description2 == "null" || back.note_Description2 == null){
 		 recordFirst.value = ""
@@ -97,7 +97,6 @@ var initback = {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -105,7 +104,6 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -145,14 +143,13 @@ var cancelBtn = function(element) {
 
 //提交方法
 var submitAjax = function(method, url, datas) {
-	  log('send data method')
 	  $.ajax({
 	    type: method,
 	    url: url,
 	    data: {data:JSON.stringify(datas)},
 	    success: function(data) {
 	    	if(data.msg == 'success') {
-	    		layer.msg('保存成功', {
+	    		layer.msg('提交成功', {
 	  			  icon: 2,
 	  			  time: 2000 
 	  			}, function(){
@@ -188,7 +185,6 @@ var submitBtn = function(element) {
 
 // 回退方法
 var backAjax = function(method, url, datas) {
-	  log('send data method')
 	  $.ajax({
 	    type: method,
 	    url: url,
@@ -228,7 +224,6 @@ var backBtn = function(element) {
 
 //
 var __main = function() {
-  log( "run")
   sendData('#save-note')
   cancelBtn('#cancel')
   searchData()

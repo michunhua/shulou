@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.PersonalProfile;
 import com.slloan.entity.SpousesOfBorrowers;
+import com.slloan.service.inter.PersonalProfileService;
 import com.slloan.service.inter.PropertyInformationService;
 import com.slloan.service.inter.SpousesOfBorrowersService;
 import com.slloan.util.DateUtils;
@@ -41,6 +43,10 @@ public class SpousesOfBorrowersController {
 
 	@Autowired
 	private SpousesOfBorrowersService spousesofborrowers;
+	
+	@Autowired
+	private PersonalProfileService personalprofileservice;
+
 
 	@ResponseBody
 	@RequestMapping("/loanApplyspouse")
@@ -48,7 +54,7 @@ public class SpousesOfBorrowersController {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
-
+		
 		String name = obj.getString("cname"); // 共同借款人配偶姓名戦
 		String id_Type = obj.getString("certificate"); // 身份证件类型
 		String id_Other = obj.getString("certificateType"); // 其他
@@ -107,12 +113,23 @@ public class SpousesOfBorrowersController {
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String uid = json.getString("id");
 		int id = Integer.parseInt(uid);
-		SpousesOfBorrowers isResult = spousesofborrowers.SelectById(id);
+		PersonalProfile isResult = personalprofileservice.SelectByIdMarital(id);
+		if(isResult.equals("1")){
+			SpousesOfBorrowers isResults = spousesofborrowers.SelectById(id);
 
-		if (isResult != null) {
-			return new Json(true, "success", isResult);
-		} else
-			return new Json(true, "fail", isResult);
+			if (isResults != null) {
+				return new Json(true, "success", isResults);
+			} else
+				return new Json(true, "fail", isResults);
+		}else{
+			SpousesOfBorrowers isResults = spousesofborrowers.SelectById(id);
+
+			if (isResults != null) {
+				return new Json(true, "success", isResults);
+			} else
+				return new Json(true, "fail", isResults);
+		}
+
 	}
 
 	/**
