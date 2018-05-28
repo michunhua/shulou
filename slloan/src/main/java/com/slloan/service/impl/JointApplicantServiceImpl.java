@@ -25,6 +25,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 	public boolean save(JointApplicant jointApplicant) {
 
 		String name = jointApplicant.getName();// 共同借款人姓名
+		String application_relations = jointApplicant.getApplication_relations();
 		String phoneticize = jointApplicant.getPhoneticize();// 拼音、英文姓名
 		String id_type = jointApplicant.getId_type();// 身份证件类型
 		String Other_identity_types = jointApplicant.getOther_identity_types();// 输入身份证类型
@@ -68,7 +69,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = jointApplicant.getCtime();// 日期
 
-		JointApplicant joints= new JointApplicant(name, phoneticize, id_type, Other_identity_types,
+		JointApplicant joints= new JointApplicant(name,application_relations, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
@@ -83,6 +84,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 	@Override
 	public boolean update(JointApplicant jointApplicant) {
 		Integer id = jointApplicant.getId();
+		String application_relations = jointApplicant.getApplication_relations();//与借款人关系
 		String name = jointApplicant.getName();// 共同借款人姓名
 		String phoneticize = jointApplicant.getPhoneticize();// 拼音、英文姓名
 		String id_type = jointApplicant.getId_type();// 身份证件类型
@@ -127,7 +129,7 @@ public class JointApplicantServiceImpl implements JointApplicantService {
 													// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		String ctime = jointApplicant.getCtime();// 日期
 
-		JointApplicant joint = new JointApplicant(id,name, phoneticize, id_type, Other_identity_types,
+		JointApplicant joint = new JointApplicant(id,application_relations,name, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,

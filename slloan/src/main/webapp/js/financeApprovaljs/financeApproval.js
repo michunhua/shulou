@@ -1,70 +1,70 @@
-layui.use('table', function() {
-	var table = layui.table;
-
-	// 第一个实例
-	table.render({
-		elem : '#demo',
-		height : 315,
-		url : '/demo/table/user/' // 数据接口
-		,
-		page : true // 开启分页
-		,
-		cols : [ [ // 表头
-		{
-			field : 'id',
-			title : '全选',
-			width : 80,
-			sort : true,
-			fixed : 'left'
-		}, {
-			field : 'user',
-			title : '申请编号',
-			width : 200
-		}, {
-			field : 'username',
-			title : '姓名',
-			width : 80
-		}, {
-			field : 'sex',
-			title : '申请金额',
-			width : 200,
-			sort : true
-		}, {
-			field : 'city',
-			title : '手机号码',
-			width : 200
-		}, {
-			field : 'sign',
-			title : '证件号码',
-			width : 200
-		}, {
-			field : 'experience',
-			title : '贷款期限',
-			width : 200,
-			sort : true
-		}, {
-			field : 'score',
-			title : '状态',
-			width : 80,
-			sort : true
-		}, {
-			field : 'classify',
-			title : '住房风地址',
-			width : 200
-		}, {
-			field : 'wealth',
-			title : '创建时间',
-			width : 200,
-			sort : true
-		}, {
-			field : 'wealth',
-			title : '操作',
-			width : 135,
-			sort : true
-		} ] ]
-	});
-
-});
+//layui.use('table', function() {
+//	var table = layui.table;
+//
+//	// 第一个实例
+//	table.render({
+//		elem : '#demo',
+//		height : 315,
+//		url : '/demo/table/user/' // 数据接口
+//		,
+//		page : true // 开启分页
+//		,
+//		cols : [ [ // 表头
+//		{
+//			field : 'id',
+//			title : '全选',
+//			width : 80,
+//			sort : true,
+//			fixed : 'left'
+//		}, {
+//			field : 'user',
+//			title : '申请编号',
+//			width : 200
+//		}, {
+//			field : 'username',
+//			title : '姓名',
+//			width : 80
+//		}, {
+//			field : 'sex',
+//			title : '申请金额',
+//			width : 200,
+//			sort : true
+//		}, {
+//			field : 'city',
+//			title : '手机号码',
+//			width : 200
+//		}, {
+//			field : 'sign',
+//			title : '证件号码',
+//			width : 200
+//		}, {
+//			field : 'experience',
+//			title : '贷款期限',
+//			width : 200,
+//			sort : true
+//		}, {
+//			field : 'score',
+//			title : '状态',
+//			width : 80,
+//			sort : true
+//		}, {
+//			field : 'classify',
+//			title : '住房风地址',
+//			width : 200
+//		}, {
+//			field : 'wealth',
+//			title : '创建时间',
+//			width : 200,
+//			sort : true
+//		}, {
+//			field : 'wealth',
+//			title : '操作',
+//			width : 135,
+//			sort : true
+//		} ] ]
+//	});
+//
+//});
 
 // 依赖库方法
 layui.use('laydate', function() {
@@ -433,7 +433,6 @@ var findSave = function() {
 	var definite = parentElement.querySelectorAll('.indicate')
 	var flags = es('.flag')
 	console.log(definite.length)
-	// console.log(flags[1].innerText)
 	for (var i = 0; i < definite.length; i++) {
 		if (definite[i].checked == true) {
 			if(!saveSend.includes(flags[i].innerText)) {
@@ -547,18 +546,12 @@ var listenAllSel = function(item, index, element) {
 	intent.addEventListener('click', function() {
 		var run = es(element)
 		var mark = flag.checked
-//		console.log("响应事件")
-//		console.log(mark, '这到底如何')
 		if(mark) {
-//			console.log("有选中的时间执行")
-//			console.log('执行选中几个', run)
 			for(var i = 0; i < run.length; i++) {
 				run[i].checked = true
 			}
 			findSave()
 		} else {
-//			console.log("不选中的时候只想")
-//			console.log('执行bu选中几个', run)
 			for(var i = 0; i < run.length; i++) {
 				run[i].checked = false
 			}
@@ -569,7 +562,6 @@ var listenAllSel = function(item, index, element) {
 
 //批量后全选按钮不选中
 var unselected = function(element) {
-	log("_______改变选中状态______")
 	var intent = document.querySelector(element)
 	var flag = intent.checked 
 	if(flag) {
@@ -617,8 +609,11 @@ var batchRefuse = function(element) {
 		var data = saveSend
 		if (data.length > 0) {
 			data.push(datas)
-			refuseAjax(method, url, data)
-			unselected('#alls')
+			layer.confirm('确定批量审批拒绝?', {icon: 3, title:'注意'}, function(index){
+				refuseAjax(method, url, data)
+				unselected('#alls')
+	    		layer.close(index);
+	    	});
 		} else {
 			alert('至少选中一个')
 		}
@@ -666,7 +661,10 @@ var batchPass = function(element) {
 		var data = saveSend
 		if (data.length > 0) {
 			data.push(datas)
-			passAjax(method, url, data)
+			layer.confirm('确定批量审批通过?', {icon: 3, title:'注意'}, function(index){
+				passAjax(method, url, data)
+	    		layer.close(index);
+	    	});
 		} else {
 			alert('至少选中一个')
 		}

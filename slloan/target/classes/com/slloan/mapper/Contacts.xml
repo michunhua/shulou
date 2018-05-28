@@ -15,6 +15,7 @@
 		<result column="c_Telephone2" property="c_Telephone2"/>
 		<result column="state" property="state"/>
 		<result column="ctime" property="ctime" />
+		
 	</resultMap>
 		
 		<insert id="save" parameterType="com.slloan.entity.Contacts">
@@ -39,6 +40,11 @@
 		<!-- 根据ID查记录 -->
 		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.Contacts">
 				select * from contacts_table where state = #{id}
+		</select>
+		
+		<!-- 根据ID查记录判断contacts是否为空 -->
+		<select id="SelectByIdCon" parameterType="int"  resultType="com.slloan.entity.Contacts">
+				select contacts from contacts_table where state = #{id}
 		</select>
 		
 		<update id="updateadd" parameterType="com.slloan.entity.Contacts">

@@ -107,7 +107,6 @@ var sendAjax = function(method, url, datas, callback) {
   			  time: 2000 
   			}, function(){
   				localStorage.link = data.value
-//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loannote'
   			});
     	} else {
@@ -203,8 +202,11 @@ var searchAjax = function(method, url, datas) {
     url: url,
     data: {data:JSON.stringify(datas)},
     success: function(data) {
-    	if(data.msg == 'success') {
-    		searchExport(data.obj)
+    	console.log(data.obj == null)
+    	if(data.msg == 'success' && (data.obj != null)) {
+    		if(data.obj != null) {
+        		searchExport(data.obj)
+    		}
     	} else {
     		alert('这页资料尚未填写')
     	}

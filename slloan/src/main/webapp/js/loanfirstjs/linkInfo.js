@@ -92,12 +92,7 @@ var searchExport = function(back) {
 		});
 }
 
-var initback = {
-		id: '19',
-		start: '100'
-}
 
-//searchExport(initback)
 
 //查询
 //发送数据方法
@@ -108,7 +103,9 @@ var searchAjax = function(method, url, datas) {
     data: {data:JSON.stringify(datas)},
     success: function(data) {
     	if(data.msg == 'success') {
-    		searchExport(data.obj)
+    		if(data.obj != null) {
+    			searchExport(data.obj)
+    		}
     	} else {
     		alert('这页资料尚未填写')
     	}

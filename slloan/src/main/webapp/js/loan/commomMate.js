@@ -49,7 +49,6 @@ var sendAjax = function(method, url, datas, callback) {
 					time : 2000
 				}, function() {
 					localStorage.commmate = data.value
-//					sendsearchData(localStorage.createTemporaryId)
 					window.location.href = '../../slloan/loan/loanapply'
 				});
 			} else {
@@ -100,7 +99,6 @@ var searchExport = function(back) {
 	  salary = e('.salary')
 	  
 	  cname.value = back.name
-//	  certificate.value = back.id
 	  certificateType.value = back.id_Number
 	  documents.value = back.id_Other
 	  untilName.value = back.uni_Name
@@ -117,12 +115,6 @@ var searchExport = function(back) {
 		});
 }
 
-var initback = {
-		id: '23'
-}
-
-//searchExport(initback)
-
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
@@ -134,7 +126,9 @@ var searchAjax = function(method, url, datas) {
 		},
 		success : function(data) {
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				if(data.obj != null) {
+					searchExport(data.obj)
+				}
 			} else {
 				alert('这页资料尚未填写')
 			}

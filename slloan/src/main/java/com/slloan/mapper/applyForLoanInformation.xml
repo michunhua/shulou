@@ -21,6 +21,52 @@
 		<result column="parentnodeId" property="ParentnodeId" />
 		<result column="city" property="city" />
 		<result column="rolename" property="rolename" />
+		
+		<collection property="contacts" javaType="java.util.List"
+			ofType="com.slloan.entity.Contacts">
+			<id column="id" property="id" jdbcType="INTEGER" />
+			<result column="contacts" property="contacts"/>
+		<result column="contacts1" property="contacts1"/>
+		<result column="contacts2" property="contacts2"/>
+		<result column="relationship" property="relationship"/>
+		<result column="relationship1" property="relationship1"/>
+		<result column="relationship2" property="relationship2"/>
+		<result column="c_Telephone" property="c_Telephone"/>
+		<result column="c_Telephone1" property="c_Telephone1"/>
+		<result column="c_Telephone2" property="c_Telephone2"/>
+		<result column="state" property="state"/>
+		<result column="ctime" property="ctime" />
+		</collection>
+		<collection property="propert" javaType="java.util.List"
+			ofType="com.slloan.entity.PropertyInformation">
+			<id column="id" property="id" jdbcType="INTEGER" />
+			<result column="name" property="name" />
+		<result column="ownership_And_percentage" property="ownership_And_percentage" />
+		<result column="property_Address" property="property_Address" />
+		<result column="conStruction_Area" property="conStruction_Area" />
+		<result column="inner_Area" property="inner_Area" />
+		<result column="sales_Contract_Number" property="sales_Contract_Number" />
+		<result column="certificate_of_Title" property="certificate_of_Title" />
+		<result column="proPerty_for" property="proPerty_for" />
+		<result column="the_Assessed_Value" property="the_Assessed_Value" />
+		<result column="original_Loan_Bank" property="original_Loan_Bank" />
+		<result column="original_Loan_Amount" property="original_Loan_Amount" />
+		<result column="loan_Outstanding_Balance" property="loan_Outstanding_Balance" />
+		<result column="house_Account" property="house_Account" />
+		<result column="enterprise_scale" property="enterprise_scale" />
+		<result column="transaCtion_Price" property="transaCtion_Price" />
+		<result column="purchase_Deposit" property="purchase_Deposit" />
+		<result column="supervision_of_funds" property="supervision_of_funds" />
+		<result column="new_loan_Bank" property="new_loan_Bank" />
+		<result column="former_seniority" property="former_seniority" />
+		<result column="source_of_income" property="source_of_income" />
+		<result column="new_Loan_Approval_Amount" property="new_Loan_Approval_Amount" />
+		<result column="new_Loan_Bank_Account_Number" property="new_Loan_Bank_Account_Number" />
+		<result column="note_DescriPtion" property="note_DescriPtion" />
+		<result column="state" property="state" />
+		<result column="ctime" property="ctime" />
+		</collection>
+		
 	</resultMap>
 	<insert id="save" parameterType="com.slloan.entity.ApplyForLoanInformation">
 		INSERT INTO apply_for_loan_information (
@@ -109,4 +155,27 @@ FROM
 		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.ApplyForLoanInformation">
 				select * from apply_for_loan_information where state = #{id}
 		</select>
+		
+		 
+    <!-- 根据ID查记录判断 amount是否为空-->
+		<select id="SelectByIdApp" parameterType="int"  resultType="com.slloan.entity.ApplyForLoanInformation">
+				select amount from apply_for_loan_information where state = #{id}
+		</select>
+		
+		
+		
+	<!-- 根据ID查记录 -->
+	<select id="SelectByIdPro" parameterType="Map"
+		resultType="com.slloan.entity.ApplyForLoanInformation">
+		SELECT
+		a.`amount`,
+		b.contacts,
+		c.name
+		FROM
+		apply_for_loan_information a
+		LEFT JOIN property_information c ON (a.state = c.state)
+		LEFT JOIN contacts_table b ON (c.state = b.state)
+		WHERE
+		c.state = #{state}
+	</select>
 </mapper>

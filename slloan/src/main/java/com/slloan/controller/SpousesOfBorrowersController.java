@@ -43,10 +43,9 @@ public class SpousesOfBorrowersController {
 
 	@Autowired
 	private SpousesOfBorrowersService spousesofborrowers;
-	
+
 	@Autowired
 	private PersonalProfileService personalprofileservice;
-
 
 	@ResponseBody
 	@RequestMapping("/loanApplyspouse")
@@ -54,7 +53,7 @@ public class SpousesOfBorrowersController {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
-		
+
 		String name = obj.getString("cname"); // 共同借款人配偶姓名戦
 		String id_Type = obj.getString("certificate"); // 身份证件类型
 		String id_Other = obj.getString("certificateType"); // 其他
@@ -72,30 +71,29 @@ public class SpousesOfBorrowersController {
 		if (salary.length() > 0) {
 			monthly_Income = Double.parseDouble(salary);
 		}
-
 		SpousesOfBorrowers isResult = spousesofborrowers.SelectById(sid);
 		if (isResult != null) {
 			SpousesOfBorrowers splse = new SpousesOfBorrowers(sid, name, id_Type, id_Other, id_Number, uni_Name,
 					unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
-				boolean isResults = spousesofborrowers.spoupdate(splse);
-				if (isResults == true) {
-					return new Json(true, "success", isResults, "");// JSON.toJSONString(isResult);
-				} else
-					return new Json(false, "success", isResults, "");// JSON.toJSONString("fail");
+			boolean isResults = spousesofborrowers.spoupdate(splse);
+			if (isResults == true) {
+				return new Json(true, "success", isResults, "");// JSON.toJSONString(isResult);
+			} else
+				return new Json(false, "success", isResults, "");// JSON.toJSONString("fail");
+		} else {
+			SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Other, id_Number, uni_Name,
+					unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
+
+			boolean sp = spousesofborrowers.save(spouses);// 插入角色
+			if (sp == true) {
+				logger.info("数据插入成功!");
+				return new Json(true, "success", sp, state);
 			} else {
-				SpousesOfBorrowers spouses = new SpousesOfBorrowers(name, id_Type, id_Other, id_Number, uni_Name,
-						unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
+				logger.info("数据插入失败!");
+				return new Json(false, "fail", sp);
 
-				boolean sp = spousesofborrowers.save(spouses);// 插入角色
-				if (sp == true) {
-					logger.info("数据插入成功!");
-					return new Json(true, "success", sp, state);
-				} else {
-					logger.info("数据插入失败!");
-					return new Json(false, "fail", sp);
-
-				}
 			}
+		}
 	}
 
 	/***
@@ -113,23 +111,11 @@ public class SpousesOfBorrowersController {
 		JSONObject json = new JSONObject().fromObject(dataid);
 		String uid = json.getString("id");
 		int id = Integer.parseInt(uid);
-		PersonalProfile isResult = personalprofileservice.SelectByIdMarital(id);
-		if(isResult.equals("1")){
-			SpousesOfBorrowers isResults = spousesofborrowers.SelectById(id);
-
-			if (isResults != null) {
-				return new Json(true, "success", isResults);
-			} else
-				return new Json(true, "fail", isResults);
-		}else{
-			SpousesOfBorrowers isResults = spousesofborrowers.SelectById(id);
-
-			if (isResults != null) {
-				return new Json(true, "success", isResults);
-			} else
-				return new Json(true, "fail", isResults);
-		}
-
+		SpousesOfBorrowers isResults = spousesofborrowers.SelectById(id);
+		if (isResults != null) {
+			return new Json(true, "success", isResults);
+		} else
+			return new Json(true, "fail", isResults);
 	}
 
 	/**
@@ -153,14 +139,13 @@ public class SpousesOfBorrowersController {
 		String mobile_Phone = json.getString("mobile"); // 移动电话
 		String salary = json.getString("salary"); // 月薪（人民币）
 		String state = String.valueOf(id); // 状态
-											// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
+										// 0按揭员录单1待初审审批中2待终审审批中3待出账确认4待放款5待取证6待解押7待进押8待确认回款9待结算10已结清
 		int stateid = Integer.parseInt(state);
 		String ctime = DateUtils.getInDateTime(new Date());
 		Double monthly_Income = 0.0;
 		if (salary.length() > 0) {
 			monthly_Income = Double.parseDouble(salary);
 		}
-
 		SpousesOfBorrowers coborrow = new SpousesOfBorrowers(id, name, id_Type, id_Other, id_Number, uni_Name,
 				unit_Phone, home_Phone, mobile_Phone, monthly_Income, state, ctime);
 		SpousesOfBorrowers sp = spousesofborrowers.SelectById(stateid);

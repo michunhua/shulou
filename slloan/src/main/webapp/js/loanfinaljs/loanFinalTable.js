@@ -455,10 +455,11 @@ var refuseAjax = function(method, url, datas) {
 		}
 	})
 }
+
 //终审批量拒绝事件
 var batchRefuse  = function(element) {
 	var intent = e(element)
-	intent.addEventListener('click', function() {
+	intent.addEventListener('click', function() {		
 		var method = "POST"
 		var url = "/slloan/financevoucher/loaninalreviewbatch"
 		var datas = {}
@@ -469,7 +470,10 @@ var batchRefuse  = function(element) {
 		var data = saveSend
 	    if(data.length > 0) {
 	    	data.push(datas)
-			refuseAjax(method, url, data)	
+	    	layer.confirm('确定批量审批拒绝?', {icon: 3, title:'注意'}, function(index){
+	    		refuseAjax(method, url, data)
+	    		layer.close(index);
+	    	});
 	    } else {
 	    	alert('至少选中一个')
 	    }
@@ -514,7 +518,10 @@ var batchPass = function(element) {
 		var data = saveSend
 	    if(data.length > 0) {
 	    	data.push(datas)
-	    	passAjax(method, url, data)
+	    	layer.confirm('确定批量审批通过?', {icon: 3, title:'注意'}, function(index){
+	    		passAjax(method, url, data)
+	    		layer.close(index);
+	    	});
 	    } else {
 	    	alert('至少选中一个')
 	    }

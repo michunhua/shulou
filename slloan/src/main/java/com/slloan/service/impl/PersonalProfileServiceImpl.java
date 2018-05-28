@@ -193,86 +193,37 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	@Override
 	public Page<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param) {
 		Map<Object,Object> map = new HashMap<Object,Object>();
-//		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
 		ResultList<PersonalProfile> resulit = new ResultList<PersonalProfile>();
-//		 Iterator it = param.entrySet().iterator();  
-//		 while (it.hasNext()) {  
-//			   Map.Entry entry = (Map.Entry) it.next();  
-//			   Object key = entry.getKey();  
-//			   Object value = entry.getValue();  
-//			   map.put(key, value);
-			   /*if(key.equals("page")){
-				   Object value2 = entry.getValue();
-				   Object key2 = entry.getKey();
-				String str =(String)entry.getValue();
-				int currentPage = Integer.parseInt(str);
-				 //封装当前页数
-					pageBean.setCurrPage(currentPage);
-					//每页显示的数据
-					int pageSize = 10;
-					pageBean.setPageSize(pageSize);
-					//封装总记录数
-					int totalCount = personalProfiledao.getPersonalProfileCount("","","长沙","");
-					pageBean.setTotalCount(totalCount);
-					//封装总页数
-					double tc = totalCount;
-					Double num = Math.ceil(tc/pageSize);
-					pageBean.setTotalPage(num.intValue());
-					map.put(key2, (currentPage-1)*pageSize);
-			   }
-			   if(key.equals("limit")){
-				   Object value2 = entry.getValue();
-				   Object key2 = entry.getKey();
-				   map.put(key2, pageBean.getPageSize());
-			   }*/
-			   
-//			  }
-		
-		 
-//		return null;
-		
-//		return ;
 		Map<String,Object> map2 = new HashMap<String,Object>();
 		Page<PersonalProfile> pageBean = new Page<PersonalProfile>();
-		
 		if(param.get("name") !=null){
 			map.put("name", param.get("name"));
-//			map2.put("name",param.get("name"));
 			System.out.println("a: "+param.get("a"));
 		} if(param.get("id_number")!=null){
 			map.put("id_number", param.get("id_number"));
-//			map2.put("id_number", param.get("id_number"));
 			System.out.println("b: "+param.get("b"));
 		} if(param.get("mobile_phone")!=null){
 			map.put("mobile_phone", param.get("mobile_phone"));
-//			map2.put("mobile_phone", param.get("mobile_phone"));
 			System.out.println("c: "+param.get("c"));
 		} if(param.get("ctime")!=null){
 			map.put("ctime", param.get("ctime"));
-//			map2.put("ctime", param.get("ctime"));
 			System.out.println("d: "+param.get("d"));
 		} if(param.get("ctime2")!=null){
 			map.put("ctime2", param.get("ctime2"));
-//			map2.put("ctime2", param.get("ctime2"));
 			System.out.println("e: "+param.get("e"));
 		} if(param.get("amount")!=null){
 			map.put("amount", param.get("amount"));
-//			map2.put("amount", param.get("amount"));
 			System.out.println("f: "+param.get("f"));
 		} if(param.get("amount2")!=null){
 			map.put("amount2", param.get("amount2"));
-//			map2.put("amount2", param.get("amount2"));
 			System.out.println("g: "+param.get("g"));
 		}if(param.get("state")!=null){
 			map.put("state", param.get("state"));
-//			map2.put("state", param.get("state"));
 			System.out.println("g: "+param.get("g"));
 		}if(param.get("city")!=null){
 			map.put("city", param.get("city"));
-//			map2.put("city", param.get("city"));
 			System.out.println("g: "+param.get("g"));
 		}if(param.get("applicationnumber")!=null){
-//			map2.put("applicationnumber", param.get("applicationnumber"));
 			map.put("applicationnumber", param.get("applicationnumber"));
 			System.out.println("g: "+param.get("g"));
 		}if(param.get("page")!=null || param.get("city") !=null){
@@ -450,10 +401,6 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		return pageBean;
 }
 	
-	
-
-
-	
 	@Override
 	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -607,7 +554,7 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 		return personalProfiledao.getTransferloanPageCount(username,rolename,city,parentnodeId);
 	}
 	
-
+    
 	@Override
 	public Page<PersonalProfile> getLoanInformation(int currentPage, String username, String rolename, String city,String parentnodeId) {
 		Map<String,Object> map = new HashMap<String,Object>();

@@ -71,7 +71,7 @@ public class JointApplicantController {
 
 		String role_constant = req.getParameter("data"); // 例如按揭员名
 		JSONObject obj = new JSONObject().fromObject(role_constant);
-
+		String application_relations = obj.getString("hi");
 		String name=obj.getString("cname"); // 共同借款人姓名
 		String phoneticize=obj.getString("ename"); // 拼音、英文姓名
 		String id_type=obj.getString("paperwork"); // 身份证件类型
@@ -144,7 +144,7 @@ public class JointApplicantController {
 		
 		JointApplicant isResult = jointapplicant.SelectById(sid);
 		if(isResult != null){
-			JointApplicant joints= new JointApplicant(sid,name, phoneticize, id_type, Other_identity_types,
+			JointApplicant joints= new JointApplicant(sid,application_relations,name, phoneticize, id_type, Other_identity_types,
 					id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 					marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 					mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
@@ -158,7 +158,7 @@ public class JointApplicantController {
 					return new Json(false, "fail", booleanisResult);
 				}
 		}else{
-			JointApplicant joint= new JointApplicant(name, phoneticize, id_type, Other_identity_types,
+			JointApplicant joint= new JointApplicant(name,application_relations, phoneticize, id_type, Other_identity_types,
 					id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 					marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 					mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
@@ -191,6 +191,7 @@ public class JointApplicantController {
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
+		String application_relations = json.getString("hi");
 		String name=json.getString("cname"); // 共同借款人姓名
 		String phoneticize=json.getString("ename"); // 拼音、英文姓名
 		String id_type=json.getString("paperwork"); // 身份证件类型
@@ -261,7 +262,7 @@ public class JointApplicantController {
 		if (expenses.length() > 0) {
 			monthly_expenditure = Double.parseDouble(expenses);
 		}
-		JointApplicant joints= new JointApplicant(id,name, phoneticize, id_type, Other_identity_types,
+		JointApplicant joints= new JointApplicant(id,application_relations,name, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
@@ -277,7 +278,7 @@ public class JointApplicantController {
 				return new Json(false, "fail", isResult);
 			}
 		}else{
-			JointApplicant joint= new JointApplicant(name, phoneticize, id_type, Other_identity_types,
+			JointApplicant joint= new JointApplicant(name, application_relations,phoneticize, id_type, Other_identity_types,
 					id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 					marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 					mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,
@@ -344,6 +345,7 @@ public class JointApplicantController {
 		String dataid = req.getParameter("data");
 		JSONObject json = new JSONObject().fromObject(dataid);
 		Integer id = json.getInt("id");
+		String application_relations = json.getString("hi");
 		String name=json.getString("cname"); // 共同借款人姓名
 		String phoneticize=json.getString("ename"); // 拼音、英文姓名
 		String id_type=json.getString("paperwork"); // 身份证件类型
@@ -412,7 +414,7 @@ public class JointApplicantController {
 		if (expenses.length() > 0) {
 			monthly_expenditure = Double.parseDouble(expenses);
 		}
-		JointApplicant joints= new JointApplicant(id,name, phoneticize, id_type, Other_identity_types,
+		JointApplicant joints= new JointApplicant(id,application_relations,name, phoneticize, id_type, Other_identity_types,
 				id_number, country_and_region, other_Countries, sex, Local_domicile, household_registration,
 				marital_status, housing_condition_now, otherCensus, birthday, home_address_now, home_phone,
 				mobile_phone, email, present_address_zip_code, vocation, unit_industry, uni_name, unit_address,

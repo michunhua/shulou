@@ -12,7 +12,6 @@ layui.use('laydate', function(){
 
 // 收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.cname = e('.ch-name').value
   data.ename = e('.en-name').value
@@ -63,7 +62,6 @@ var collectData = function() {
 
 // 发送数据方法
 var sendAjax = function(method, url, datas) {
-  log('send data method')
   $.ajax({
     type: method,
     url: url,
@@ -72,7 +70,7 @@ var sendAjax = function(method, url, datas) {
     	if(data.msg == 'success') {
     		layer.msg('保存成功', {
   			  icon: 2,
-  			  time: 2000 
+  			  time: 2000
   			}, function(){
   				window.location.href = '../../slloan/loan/loanermass'
   			});
@@ -82,22 +80,18 @@ var sendAjax = function(method, url, datas) {
     },
     error: function(){
         alert('服务器错误')
-     }    
+     }
   })
 }
 
 
 // 发送数据
 var sendData = function(element) {
-  log('send data to server')
   var evs = document.querySelector(element)
   evs.addEventListener('click', function() {
-    log('data to send at time')
     var method = 'POST'
     var url = '/slloan/loan/joinupdates'
-    var data = collectData()    	
-    log(data)
-//    sendAjax(method, url, data, null)
+    var data = collectData()
     window.location.href = '../../slloan/loan/loaninfolom'
   })
 }
@@ -145,7 +139,7 @@ var searchExport = function(back) {
 	supportPeople = e('.support-people')
 	expenses = e('.expenses')
 	communication = e('.communication')
-	  
+
 	    //设置具体值
 		cname.value = back.name
 		ename.value = back.phoneticize
@@ -187,7 +181,7 @@ var searchExport = function(back) {
 		supportPeople.value = back.family_number
 		expenses.value =  back.monthly_expenditure
 		communication.value = back.monthly_expenditure
-		
+
 		// 下拉选项
 		  layui.use('form', function(){
 			  var form = layui.form;
@@ -198,6 +192,7 @@ var searchExport = function(back) {
 			  $(".marriage").val(back.marital_status);
 			  $(".housing").val(back.housing_condition_now);
 			  $(".communication").val(back.postal_address);
+			  $('.realationship').val(back.application_relations);
 			  form.render()
 			});
 }
@@ -205,7 +200,6 @@ var searchExport = function(back) {
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
-	log('send data method')
 	$.ajax({
 		type : method,
 		url : url,
@@ -213,7 +207,6 @@ var searchAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-			console.log('返回数据', data)
 			if (data.msg == 'success') {
 				searchExport(data.obj)
 			} else {
@@ -222,7 +215,7 @@ var searchAjax = function(method, url, datas) {
 		},
 	    error: function(){
 	        alert('服务器错误')
-	     }		
+	     }
 	})
 }
 
@@ -233,7 +226,7 @@ var searchData = function() {
 	var data = {}
 	data.id = localStorage.readID
 	if(data.id) {
-		searchAjax(method, url, data)	
+		searchAjax(method, url, data)
 	}
 }
 
@@ -243,14 +236,12 @@ var cancelBtn = function(element) {
   var evs = e(element)
   evs.addEventListener('click', function() {
     forms.reset()
-//    window.location.href = "/slloan/loan/loancreass"
     window.location.href = '../../slloan/loan/anin'
   })
 }
 
 //
 var __main = function() {
-  log( "run")
   searchData()
   sendData('#save-data')
   cancelBtn('#cancel')

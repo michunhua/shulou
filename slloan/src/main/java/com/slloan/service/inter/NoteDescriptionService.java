@@ -1,9 +1,11 @@
 package com.slloan.service.inter;
 
 import java.util.List;
+import java.util.Map;
 
 import com.slloan.entity.Contacts;
 import com.slloan.entity.NoteDescription;
+import com.slloan.entity.PersonalProfile;
 
 public interface NoteDescriptionService {
 	
@@ -26,4 +28,9 @@ public interface NoteDescriptionService {
 	boolean updatethere(NoteDescription contacts);
 
 	boolean updatefore(NoteDescription contacts);
+	
+
+
+
+
 }

@@ -180,11 +180,6 @@ var MarryStateAjax = function(method, url, datas) {
 		success : function(data) {
 			if (data.msg == 'success') {
 				MarryState = data.obj.marital_status
-				if( MarryState == '0') {
-					console.log('已婚')
-				} else {
-					console.log('不婚')	
-				}
 				searchData()
 			} else {
 				alert('服务器错误')

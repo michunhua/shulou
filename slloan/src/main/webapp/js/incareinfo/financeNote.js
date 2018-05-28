@@ -32,7 +32,6 @@ layui.use('table', function(){
 
 //设置查询数据
 var setSearchData = function(data) {
-  log('设置查询数据')
   note = e('.note')
   firstNote = e('.first-note')
   finalNote = e('.final-note')
@@ -82,7 +81,6 @@ var searchData = function() {
 
 //收集信息
 var collectData = function() {
-  log('收集数据')
   var data = {}
   data.note = e('.note').value
   data.recordFirst = e('.first-note').value
@@ -130,7 +128,6 @@ var saveBtn = function(element) {
 	  data.city = localStorage.purcity
 	  data.parentnodeId = localStorage.purid
 	  data.id = localStorage.financialID
-		console.log(data)
 		if(url) {
 			saveAjax(method, url, data)
 		}
@@ -175,7 +172,6 @@ var submitBtn = function(element) {
 		    var method = ''
 			var url = ''
 			var data = collectData()
-			console.log(data)
 			if(url) {
 				
 			}
@@ -212,7 +208,6 @@ var goBackBtn = function(element) {
 			    var method = ''
 				var url = ''
 				var data = collectData()
-				console.log(data)
 				if(url) {
 					
 				}
@@ -224,10 +219,7 @@ var goBackBtn = function(element) {
 
 var __main = function() {
 	searchData()
-//	saveBtn('#save-data')
 	cancelBtn("#cancel")
-//	submitBtn("#submit")
-//	goBackBtn("#go-back")
 }
 
 __main()

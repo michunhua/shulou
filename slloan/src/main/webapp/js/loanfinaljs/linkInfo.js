@@ -105,7 +105,9 @@ var searchAjax = function(method, url, datas) {
 		},
 		success : function(data) {
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				if(data.obj != null) {
+					searchExport(data.obj)
+				}
 			} else {
 				alert('这页资料尚未填写')
 			}

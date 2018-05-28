@@ -14,6 +14,8 @@ public interface PropertyInformationService {
 	
 	PropertyInformation findById(int id);
 	
+	PropertyInformation SelectByIdPro(int id);
+	
 	List<PropertyInformation> findAll();
 
 	PropertyInformation SelectById(int id);

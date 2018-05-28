@@ -28,10 +28,16 @@ var sendAjax = function(method, url, datas, callback) {
     	  }else if(newpassword == "" || newpassword == null){
     		  alert("请输入新密码")
     	  }else{
-    		  alert(data.value)
-    		  $('.lastPassword').val("")
-    		  $('.newPassword').val("")
-    		  document.querySelector('#logout').click()
+    		  if(data.msg == "success") {
+        		  alert(data.value)
+        		  $('.lastPassword').val("")
+        		  $('.newPassword').val("")
+        		  document.querySelector('#logout').click() 
+    		  } else {
+        		  alert(data.value)
+        		  $('.lastPassword').val("")
+        		  $('.newPassword').val("")
+    		  }
     	  }
     	 
       }

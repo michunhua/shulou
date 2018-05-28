@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class JointApplicant implements Serializable {
 
 	private Integer id;
+	private String application_relations;// 与借款人关系
 	private String name;// 共同借款人姓名
 	private String phoneticize;// 拼音、英文姓名
 	private String id_type;// 身份证件类型
@@ -60,7 +61,7 @@ public class JointApplicant implements Serializable {
 	
 	
 
-	public JointApplicant(Integer id, String name, String phoneticize, String id_type, String other_identity_types,
+	public JointApplicant(Integer id,String application_relations, String name, String phoneticize, String id_type, String other_identity_types,
 			String id_number, String country_and_region, String other_Countries, String sex, String local_domicile,
 			String household_registration, String marital_status, String housing_condition_now, String otherCensus,
 			String birthday, String home_address_now, String home_phone, String mobile_phone, String email,
@@ -72,6 +73,7 @@ public class JointApplicant implements Serializable {
 			String postal_address, String state, String ctime) {
 		super();
 		this.id = id;
+		this.application_relations = application_relations;
 		this.name = name;
 		this.phoneticize = phoneticize;
 		this.id_type = id_type;
@@ -118,7 +120,7 @@ public class JointApplicant implements Serializable {
 
 
 
-	public JointApplicant(String name, String phoneticize, String id_type, String other_identity_types,
+	public JointApplicant(String application_relations,String name, String phoneticize, String id_type, String other_identity_types,
 			String id_number, String country_and_region, String other_Countries, String sex, String local_domicile,
 			String household_registration, String marital_status, String housing_condition_now, String otherCensus,
 			String birthday, String home_address_now, String home_phone, String mobile_phone, String email,
@@ -129,6 +131,7 @@ public class JointApplicant implements Serializable {
 			double supportPeople, double other_income, String family_number, double monthly_expenditure,
 			String postal_address, String state, String ctime) {
 		super();
+		this.application_relations =application_relations;
 		this.name = name;
 		this.phoneticize = phoneticize;
 		this.id_type = id_type;
@@ -177,15 +180,19 @@ public class JointApplicant implements Serializable {
 
 	
 
+	
+	
+	
+
 	@Override
 	public String toString() {
-		return "JointApplicant [id=" + id + ", name=" + name + ", phoneticize="
-				+ phoneticize + ", id_type=" + id_type + ", Other_identity_types=" + Other_identity_types
-				+ ", id_number=" + id_number + ", country_and_region=" + country_and_region + ", other_Countries="
-				+ other_Countries + ", sex=" + sex + ", Local_domicile=" + Local_domicile + ", household_registration="
-				+ household_registration + ", marital_status=" + marital_status + ", housing_condition_now="
-				+ housing_condition_now + ", otherCensus=" + otherCensus + ", birthday=" + birthday
-				+ ", home_address_now=" + home_address_now + ", home_phone=" + home_phone + ", mobile_phone="
+		return "JointApplicant [id=" + id + ", application_relations=" + application_relations + ", name=" + name
+				+ ", phoneticize=" + phoneticize + ", id_type=" + id_type + ", Other_identity_types="
+				+ Other_identity_types + ", id_number=" + id_number + ", country_and_region=" + country_and_region
+				+ ", other_Countries=" + other_Countries + ", sex=" + sex + ", Local_domicile=" + Local_domicile
+				+ ", household_registration=" + household_registration + ", marital_status=" + marital_status
+				+ ", housing_condition_now=" + housing_condition_now + ", otherCensus=" + otherCensus + ", birthday="
+				+ birthday + ", home_address_now=" + home_address_now + ", home_phone=" + home_phone + ", mobile_phone="
 				+ mobile_phone + ", email=" + email + ", present_address_zip_code=" + present_address_zip_code
 				+ ", vocation=" + vocation + ", unit_industry=" + unit_industry + ", uni_name=" + uni_name
 				+ ", unit_address=" + unit_address + ", enterprise_scale=" + enterprise_scale
@@ -198,6 +205,20 @@ public class JointApplicant implements Serializable {
 				+ monthly_expenditure + ", postal_address=" + postal_address + ", state=" + state + ", ctime=" + ctime
 				+ "]";
 	}
+
+
+
+	public String getApplication_relations() {
+		return application_relations;
+	}
+
+
+
+	public void setApplication_relations(String application_relations) {
+		this.application_relations = application_relations;
+	}
+
+
 
 	public Integer getId() {
 		return id;

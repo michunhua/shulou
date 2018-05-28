@@ -70,13 +70,11 @@ public class ApplyForLoanInformationController {
 		String city = obj.getString("city");
 		String rolename = obj.getString("rolename");
 		int sid = Integer.parseInt(state);
-
 		ApplyForLoanInformation isResult = applyForLoanInformationservice.SelectById(sid);
 		if (isResult != null) {
 			ApplyForLoanInformation apples = new ApplyForLoanInformation(sid, amount, time_Limit, time_Limits,
 					borrowing_Variety, repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account,
 					repayment_Bank_Name, repayment_Account_Name, repayment_Account_Number, state, ctime);
-
 			boolean isResults = applyForLoanInformationservice.appUpdate(apples);
 			if (isResults == true) {
 				return new Json(true, "success", isResults);
@@ -118,6 +116,9 @@ public class ApplyForLoanInformationController {
 			return new Json(false, "fail", isResult);
 	}
 
+	
+	
+	
 	/**
 	 * 修改用户保存
 	 * 
@@ -147,7 +148,6 @@ public class ApplyForLoanInformationController {
 				repayment, receiving_Bank_Name, receiving_Account_Name, receiving_Account, repayment_Bank_Name,
 				repayment_Account_Name, repayment_Account_Number, state, ctime);
 		ApplyForLoanInformation con = applyForLoanInformationservice.SelectById(stateid);
-
 		if (con != null) {
 			boolean isResult = applyForLoanInformationservice.appUpdate(ap);
 			if (isResult == true) {

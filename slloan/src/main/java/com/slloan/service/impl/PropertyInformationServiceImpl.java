@@ -88,4 +88,10 @@ public class PropertyInformationServiceImpl implements PropertyInformationServic
 		return propertyInformationdao.save(preperty); 
 	}
 
+	@Override
+	public PropertyInformation SelectByIdPro(int id) {
+		// TODO Auto-generated method stub
+		return propertyInformationdao.SelectByIdPro(id);
+	}
+
 }

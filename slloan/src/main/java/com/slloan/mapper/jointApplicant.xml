@@ -45,12 +45,14 @@
 		<result column="postal_address" property="postal_address" />
 		<result column="state" property="state" />
 		<result column="ctime" property="ctime" />
+		<result column="application_relations" property="application_relations" />
 	</resultMap>
 
 	<insert id="save" parameterType="com.slloan.entity.JointApplicant">
 		INSERT INTO borrows_informations
 		(
 			name ,
+			application_relations,
 		phoneticize ,
 		id_type ,
 		Other_identity_types,
@@ -95,6 +97,7 @@
 		)
 		VALUES
 		(#{name},
+		#{application_relations},
 		#{phoneticize},
 		#{id_type},
 		#{Other_identity_types},
@@ -157,6 +160,7 @@
 				update borrows_informations 
 				<set>
 					<if test="name !=null and name !=''">name = #{name},</if>
+					<if test="application_relations !=null and application_relations !=''">application_relations = #{application_relations},</if>
           <if test="phoneticize !=null and phoneticize !=''">phoneticize=#{phoneticize},</if>
           <if test="id_type  !=null and id_type !=''">id_type=#{id_type},</if>
           <if test="Other_identity_types  !=null and Other_identity_types !=''">Other_identity_types=#{Other_identity_types},</if>

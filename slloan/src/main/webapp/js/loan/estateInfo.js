@@ -90,7 +90,6 @@ var sendAjax = function(method, url, datas, callback) {
   			  time: 2000 
   			}, function(){
   				localStorage.commest = data.value
-//  				sendsearchData(localStorage.createTemporaryId)
   				window.location.href = '../../slloan/loan/loanimag'
   			});
     	} else {
@@ -229,6 +228,7 @@ var searchData = function() {
 	var data = {}
 	data.id = localStorage.createID
 	if(data.id) {
+		console.log('默认查询')
 		searchAjax(method, url, data)
 	}
 }
@@ -240,6 +240,7 @@ function sendsearchData(result) {
 	var data = {}
 	data.id = result
 	if(data.id & localStorage.commest) {
+		console.log('保存后查询')
 		searchAjax(method, url, data)
 	}
 }

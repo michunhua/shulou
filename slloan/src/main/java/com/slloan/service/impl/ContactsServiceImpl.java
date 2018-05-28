@@ -97,4 +97,10 @@ public class ContactsServiceImpl implements ContactsService {
 		return circuLationRecordSubmitDao.firstTrial(noteExplain);
 	}
 
+	@Override
+	public Contacts SelectByIdCon(int id) {
+		// TODO Auto-generated method stub
+		return cntactsdao.SelectByIdCon(id);
+	}
+
 }

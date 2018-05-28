@@ -2,7 +2,9 @@ package com.slloan.service.impl;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import com.slloan.dao.ApplyForLoanInformationDao;
 import com.slloan.dao.districtDao;
 import com.slloan.entity.ApplyForLoanInformation;
 import com.slloan.entity.Contacts;
+import com.slloan.entity.Page;
+import com.slloan.entity.PersonalProfile;
 import com.slloan.service.inter.ApplyForLoanInformationService;
 import com.slloan.util.Json;
 
@@ -64,13 +68,6 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 		
 	}
 
-	
-	@Override
-	public List<ApplyForLoanInformation> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public boolean appUpdate(ApplyForLoanInformation applyForLoanInformation) {
 		
@@ -78,8 +75,6 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 			
 	}
 	
-	
-
 	@Override
 	public boolean select(ApplyForLoanInformation ap) {
 		// TODO Auto-generated method stub
@@ -91,6 +86,25 @@ public class ApplyForLoanInformationServiceImpl implements ApplyForLoanInformati
 		
 		return app.SelectById(id);
 	}
+
+	@Override
+	public ApplyForLoanInformation SelectByIdPro(int state) {
+	
+		return app.SelectByIdPro(state);
+	}
+
+	@Override
+	public ApplyForLoanInformation SelectByIdApp(int id) {
+		// TODO Auto-generated method stub
+		return app.SelectByIdApp(id);
+
+	}
+
+
+
+
+
+	
 
 
 }

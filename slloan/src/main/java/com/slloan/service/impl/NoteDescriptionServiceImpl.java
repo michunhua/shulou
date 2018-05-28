@@ -1,6 +1,8 @@
 package com.slloan.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.slloan.dao.NoteDescriptionDao;
 import com.slloan.entity.CoborrowerSpouse;
 import com.slloan.entity.NoteDescription;
+import com.slloan.entity.Page;
+import com.slloan.entity.PersonalProfile;
 import com.slloan.service.inter.NoteDescriptionService;
 
 @Service("notedescriptionserviceimpl")
@@ -82,4 +86,8 @@ public class NoteDescriptionServiceImpl implements NoteDescriptionService {
 		// TODO Auto-generated method stub
 		return notedescriptionDao.updatefore(contacts);
 	}
+
+
+
+
 }

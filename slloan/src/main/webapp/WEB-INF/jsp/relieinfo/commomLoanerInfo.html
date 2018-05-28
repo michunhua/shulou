@@ -153,6 +153,18 @@
           <!-- 表单部分 -->
           <form class="layui-form layui-form-pane" action="" id = "loaner">
             <div class="layui-form-item">
+              <label class="layui-form-label">与申请人关系</label>
+              <div class="layui-input-inline">
+                <select name="paperwork"  class="realationship">
+                  <option value="0">配偶</option>
+                  <option value="1">父母</option>
+                  <option value="2">子女</option>
+                  <option value="3">兄弟姐妹</option>
+                  <option value="4">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
               <label class="layui-form-label">中文名</label>
               <div class="layui-input-inline">
                 <input type="text" name="ctitle" placeholder="如 张三" autocomplete="off" class="layui-input ch-name">

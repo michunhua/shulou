@@ -1,45 +1,19 @@
-//layui.use('table', function(){
-//  var table = layui.table;
-//
-//  //第一个实例
-//  table.render({
-//    elem: '#demo'
-//    ,height: 315
-//    ,url: '/demo/table/user/' //数据接口
-//    ,page: true //开启分页
-//    ,cols: [[ //表头
-//      {field: 'id', title: '全选', width:80, sort: true, fixed: 'left'}
-//      ,{field: 'user', title: '申请编号', width:200}
-//      ,{field: 'username', title: '姓名', width:80}
-//      ,{field: 'sex', title: '申请金额', width:200, sort: true}
-//      ,{field: 'city', title: '手机号码', width:200}
-//      ,{field: 'sign', title: '证件号码', width: 200}
-//      ,{field: 'experience', title: '贷款期限', width: 200, sort: true}
-//      ,{field: 'score', title: '状态', width: 80, sort: true}
-//      ,{field: 'classify', title: '住房风地址', width: 200}
-//      ,{field: 'wealth', title: '创建时间', width: 200, sort: true}
-//      ,{field: 'wealth', title: '操作', width: 135, sort: true}
-//    ]]
-//  });
-//
-//});
-
-// 依赖库方法
+//依赖库方法
 layui.use('laydate', function(){
-  var laydate = layui.laydate;
+  var laydate = layui.laydate
 
-  //执行一个laydate实例
+  //执行一个 laydate 实例
   laydate.render({
-    elem: '#test1' //指定元素
-  });
+    elem: '#test1' 
+  })
   //日期
   laydate.render({
     elem: '#date'
-  });
+  })
   laydate.render({
 	    elem: '#dates'
-	  });
-});
+	  })
+})
 
 //过滤数据
 var myFilter = function(data) {
@@ -55,14 +29,12 @@ var myFilter = function(data) {
 // 添加表格具体数据格
 var addTable = function(data) {
     var datas = data
-//    var len = 
     var len = datas.lists
     var pageElement = document.querySelector('.tab-data')
     var totalPage = document.querySelector('.totalPage')
     totalPage.innerText = datas.totalPage
     pageElement.innerHTML = null
     for(var i = 0; i < len.length; i++) {
-      log(i)
       var tr = document.createElement('tr')
       var td0 = document.createElement('td')
       var a = document.createElement('a')
@@ -103,7 +75,6 @@ var addTable = function(data) {
 		td6.innerText = state
 		td7.innerText = address
 		td8.innerText = time
-//      td9.innerText = 9
       span1.classList.add('upload')
       span1.href = '#'
       span1.innerText = '[   上传     ]'
@@ -140,13 +111,11 @@ var testData = {
 
 //默认加载
 var sendAjax = function(method, url, datas, callback) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
         callback(data)
       }
     })
@@ -154,17 +123,14 @@ var sendAjax = function(method, url, datas, callback) {
 
 //默认查询
 var initData = function() {
-	console.log('初始化加载数据')
 	var method = 'GET'
 	var url = '/slloan/loan/LoanPressure?page='+init.pages+'&limit='+ init.limit
 	var datas = {}
-	 datas.rolename = localStorage.purrole
-	  datas.username = localStorage.purusername
-	  datas.city = localStorage.purcity
-	  datas.parentnodeId = localStorage.purid
-		console.log('初始化加载数据233')
+	datas.rolename = localStorage.purrole
+	datas.username = localStorage.purusername
+	datas.city = localStorage.purcity
+	datas.parentnodeId = localStorage.purid
 	sendAjax(method, url, datas, addTable)
-	console.log('执行没有？')
 }
 
 //收集数据
@@ -184,13 +150,11 @@ var collectData = function() {
 
 //查询方法
 var inquireAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
         addTable(data)
       },
       error: function() {
@@ -203,7 +167,6 @@ var inquireAjax = function(method, url, datas) {
 var envs = function(element) {
   var ens = e(element)
   ens.addEventListener('click', function() {
-    console.log('running', datas)
     var method = 'GET'
     var url = '/slloan/loan/receivingcertificate?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
@@ -231,7 +194,6 @@ var numberSearch = function(element) {
 			var indicate = event.target.classList
 			if(indicate == 'mark') {
 				localStorage.incareID = event.target.parentNode.nextSibling.innerText
-				console.log(localStorage.clearInfo)
 				window.location.href = '/slloan/loan/incareinfoloan'
 			}
 		})
@@ -295,40 +257,50 @@ var uploadCertificate = function(element) {
 	var intent = e(element)
 	intent.addEventListener('click', function(event) {
 		if(event.target.classList.contains("upload")) {
-			console.log('上传')
 			layer.open({
 				  title: '上传凭证'
 				  ,content: '<form  id="frm-reg"  enctype="multipart/form-data"><fieldset>'+
-						'<legend>上传凭证</legend>'+
-						'上传类型 <input type="text" id="uploadtype1" value="进押凭证" name="upload_type" /><br>'+
-						'用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> '+
-						'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
-						'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
-						'<input type="text" id="uid"  value="" name="uid" readonly="readonly" style = "display:none;"/><br/>'+
-						'角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>'+
-						'状态:<input type="text" id="specialState"  value="" name="state" readonly="readonly"/><br/>'+
-						'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
-						'<input type="file"  name="file" onchange="document.getElementById("filepath1").value=this.value;"/>'+
-						'<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>'+
-						'<input type="button" id = "upimage" class="layui-btn layui-btn-normal" onclick="updateUserInfo()"  value="提交" />'+
-						'</fieldset>'+
-						'</form>'+
-						'<div id="imagedata1" class="nav-container">'+
-						'</div></br>'
+					'<legend>上传凭证</legend>'+
+					'上传类型 <input type="text" id="uploadtype1" value="转账凭证" name="upload_type" /><br>'+
+					'用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> '+
+					'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
+					'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
+					'<input type="text" id="uid"  value="" name="uid" readonly="readonly" style = "display:none;"/><br/>'+
+					'角色名:<input type="text" id="rolename1"  value="" name="rolename" readonly="readonly"/><br/>'+
+					'状态:<input type="text" id="specialState"  value="" name="state" readonly="readonly"/><br/>'+
+					'备注 :<textarea type="text" id="note1"  value="" name="note"/></textarea><br/>  '+
+					'<input type="file"  name="file" onchange="document.getElementById("filepath1").value=this.value;"/>'+
+					'<input type="hidden" name="filepath" id="filepath1" onchange="alert(this.value)" value=""/>'+
+					'<input type="file" style="display: none;" id="aabbccddeeff"  name="file" onchange="document.getElementById("filepath2").value=this.value;"/>'+
+					'<input type="hidden" name="filepath" id="filepath2" onchange="alert(this.value)" value=""/>'+
+					'<div id="filewidth" style="width: 278px;margin-top: 4px;"></div>'+
+					'<input type="button" class="layui-btn layui-btn-normal" onclick="certificate()"  value="多个凭证上传" />'+
+					'<input type="button" id = "upimage" class="layui-btn layui-btn-normal" onclick="updateUserInfo()"  value="提交" />'+
+					
+					'</fieldset>'+
+					'</form>'+
+					'<div id="imagedata1" class="nav-container">'+
+					'</div></br>'
 				,btn: ['取消']
 				}); 
 			var worth = e('#specialState')
 			worth.value = event.target.parentNode.classList
 			userInitUpload("#username1", '#city1', '#id1', '#rolename1')
 			var mark = document.querySelector('#uid')
-			console.log(event.target.parentNode.classList.value)
 			mark.value = event.target.parentNode.classList.value
 			updataButton("#upimage")
 		} else if(event.target.classList.contains("record")) {
-			console.log('流转记录')
 		}
 	}) 
 } 
+
+function certificate(){
+	 var input = document.createElement('input');  
+	 	input.setAttribute('type', 'file');  
+	 	input.setAttribute('name', 'file');  
+	    input.setAttribute('style', ' height: 28px;');  
+	 document.getElementById('filewidth').appendChild(input );
+}
 
 //添加默认上传相关的用户值
 var userInitUpload = function(element, elements, elementss, elementes) {
@@ -348,7 +320,7 @@ var userInitUpload = function(element, elements, elementss, elementes) {
 function updateUserInfo() {
     var form = new FormData(document.getElementById("frm-reg"));  
     $.ajax({  
-    url: "/slloan/financevoucher/voucherupload",
+    url: "/slloan/financevoucher/forensicsincarceration",
     type:"post",  
     data:form,  
     cache: false,  
@@ -356,7 +328,6 @@ function updateUserInfo() {
     contentType: false,  
     success:function(data){
   	  var len = data.length;
-  	  console.log(len)
   	  if(len == undefined){
   		  if(data.msg == "fail") {
     			alert("操作失败！"+data.value);
@@ -364,7 +335,6 @@ function updateUserInfo() {
   	  		  alert("操作成功！"+data.value);
   	  		window.location.reload()
   	  		  var file = data.obj[0].filepath
-  	      	console.log( data.obj[0])
   	      	var udata = data.obj[0]
   	      	var dd = "<img   src='"+file+"' ><input type='button' onclick='uuuu("+data.obj[0].id+")'  value='提交' />";
 //  	      	  $("#imagedata1").append(dd)  
@@ -387,15 +357,12 @@ alert(udata)
 
 //流转记录查询
 var hang_cirulationAjax = function(method, url, datas) {
-  console.log(' send data ajax')
     $.ajax({
       type: method,
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-          console.log(data.obj.a.length)
           var content = data.obj.b.applicationnumber
-          console.log(content)
           var tableString = ''
           if(data.obj.a.length) {
           	var flag = data.obj.a.length
@@ -428,9 +395,7 @@ var Hang_cirulation = function(element) {
 	var intent = e(element)
 	intent.addEventListener('click', function(event) {
 		if(event.target.classList.contains("upload")) {   
-			console.log('挂起')
 		} else if(event.target.classList.contains("record")) {
-			console.log('流转记录')
 			var method = "GET"
 		    var url = "/slloan/sumiteregresses/selectwhole"
 		    var datas = {}
@@ -451,14 +416,12 @@ var Hang_cirulation = function(element) {
 		setTimeout(function() {
 			intent.disabled = ''
 		}, 3000)
-		console.log('上传图片中')
 	}
 
 	// 具体点击按钮
 	var updataButton = function(element) {
 		var intent = document.querySelector(element)
 		intent.addEventListener('click', function() {
-			console.log('click')
 			updataImags(element)
 		})
 	}

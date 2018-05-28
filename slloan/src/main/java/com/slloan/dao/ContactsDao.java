@@ -20,6 +20,8 @@ public interface ContactsDao {
 	
 	List<Contacts> findAll();  
 	
+	Contacts SelectByIdCon(int id);
+	
 	//查询ID
 	Contacts SelectById(int id);
 	

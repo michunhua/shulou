@@ -162,11 +162,6 @@ var searchExport = function(back) {
 		});
 }
 
-var initback = {
-		id: '21'
-}
-
-//searchExport(initback)
 
 //查询
 //发送数据方法

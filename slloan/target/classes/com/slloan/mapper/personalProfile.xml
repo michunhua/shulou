@@ -348,7 +348,7 @@
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
 		where c.state='1'
-		and c.city=#{city} and a.username = #{username}
+		and c.city=#{city} 
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -366,7 +366,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='2' and c.city=#{city} and a.username = #{username}
+		where c.state='2' and c.city=#{city} 
 
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
@@ -388,7 +388,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='3' and c.city=#{city} and a.username = #{username}
+		where c.state='3' and c.city=#{city} 
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		
 		<if test="test =page !=null and limit !=''">
@@ -408,7 +408,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='9' and c.city=#{city} and a.username = #{username}
+		where c.state='9' and c.city=#{city} 
 		order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -428,7 +428,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='4' and c.city=#{city} and a.username = #{username}
+		where c.state='4' and c.city=#{city}
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -491,7 +491,7 @@
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='8' and c.city=#{city} and a.username = #{username}
+		where c.state='8' and c.city=#{city} 
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>

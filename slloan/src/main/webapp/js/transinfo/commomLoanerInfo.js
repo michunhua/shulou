@@ -198,6 +198,7 @@ var searchExport = function(back) {
 			  $(".marriage").val(back.marital_status);
 			  $(".housing").val(back.housing_condition_now);
 			  $(".communication").val(back.postal_address);
+			  $('.realationship').val(back.application_relations);
 			  form.render()
 			});
 }

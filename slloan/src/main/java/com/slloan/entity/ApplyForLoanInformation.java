@@ -1,6 +1,7 @@
 package com.slloan.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 申请借款信息
@@ -31,6 +32,12 @@ public class ApplyForLoanInformation implements Serializable{
 	public ApplyForLoanInformation(){
 		
 	}
+	
+	private List<Contacts> contacts;
+
+	private List<PropertyInformation> propert;
+	
+
 	
 	
 

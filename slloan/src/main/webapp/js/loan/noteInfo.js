@@ -46,7 +46,6 @@ var sendAjax = function(method, url, datas, callback) {
   			}, function(){
   				localStorage.loanernote = data.value
   				sendsearchData(localStorage.createTemporaryId)
-//  				window.location.href = "/slloan/loan/loancrea"
   			});
     	} else {
     		alert('服务器错误')
@@ -65,21 +64,20 @@ var searchExport = function(data) {
 	recordNotess = e('.final-note')
 	recordNotees = e('.financeNote')
 	
-//	recordNote.value = back.note_Description1
 	if(data.note_Description1 != "undefined" & data.note_Description1 != undefined || data.note_Description1 != "null" & data.note_Description1 == null){
 		recordNote.value = data.note_Description1
 	  }else if(data.note_Description1 != "undefined" & data.note_Description1 == undefined || data.note_Description1 == "null" & data.note_Description1 == null){
 		  recordNote.value = ""
 	  }
-	if(data.note_Description2 && (data.note_Description2 !== "null")) {
+	if(data.note_Description2 && data.note_Description2 != "null") {
 		e('#record-first').style.display = 'block'
 		recordNotes.value = data.note_Description2
 	}
-	if(data.note_Description3 && (data.note_Description3 !== "null")) {
+	if(data.note_Description3 && data.note_Description3 != "null") {
 		e('#record-final').style.display = 'block'
 		recordNotess.value = data.note_Description3
 	}
-	if(data.note_Description4 && (data.note_Description4 !== "null")) {
+	if(data.note_Description4 && data.note_Description4 != "null") {
 		e('#record-fiance').style.display = 'block'
 		recordNotees.value = data.note_Description4
 	}
@@ -96,7 +94,9 @@ var searchAjax = function(method, url, datas) {
 		},
 		success : function(data) {
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				if(data.obj != null) {
+					searchExport(data.obj)	
+				}
 			} else {
 				alert('这页资料尚未填写')
 			}
@@ -136,6 +136,56 @@ function sendsearchData(result) {
 	if(data.id & localStorage.loanernote) {
 		searchAjax(method, url, data)
 	}
+}
+
+// 依据可否提交
+var submitForm = []
+
+//查询已填列表方法
+var searchListAjax = function(method, url, datas) {
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+    	if(data.amount !="null" && data.contacts!="null" && data.name !="null") {
+    		submitForm.push(data.amount.amount) 
+    		submitForm.push(data.contacts.contacts) 
+    		submitForm.push(data.name.name) 
+    	} 
+	 },
+     error: function(){
+         alert('服务器错误')
+      }	 
+	})
+}
+
+// 查询已填列表
+var searchList = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/notedescriptis'
+	var data = {}
+	data.id = localStorage.createTemporaryId || localStorage.createID
+	if(data.id) {
+		console.log('可提交查询')
+		searchListAjax(method, url, data)
+	}
+}
+
+//判断提交的依据必须存在
+var judgment = function(arr) {
+	var i = ''
+	arr.every(function(index) {
+		if(index && index != 'null' && index != 'undefined'){
+			i++
+		} else {
+			return false
+		}
+		return true
+	})
+	return i
 }
 
 // 提交方法
@@ -208,8 +258,30 @@ var submitBtn = function(element) {
 		data.city = localStorage.purcity
 		data.parentnodeId = localStorage.purid
 		data.id = localStorage.createID || localStorage.createTemporaryId
+		data.amount = submitForm[0]
+		data.contacts = submitForm[1]
+		data.name = submitForm[2]
 		if(data.id) {
-			submitAjax(method, url, data)
+			if(!data.amount) {
+				alert("请先填写申请借款信息必填资料后方可提交")
+				return false
+			}
+			
+			if(!data.contacts) {
+				alert("请先填写完联系人必填资料后方可提交")
+				return false
+			}
+			
+			if(!data.name) {
+				alert("请先填写完房产资料必填资料后方可提交")
+				return false
+			}
+			
+			if(judgment(submitForm)) {
+				submitAjax(method, url, data)
+			} else {
+				layer.msg("请先填写完必填资料后方可提交", {time: 3000})
+			}
 		} else {
 			layer.msg("请先填写完资料保存后提交", {time: 3000})
 		}
@@ -238,6 +310,7 @@ var __main = function() {
   searchData()
   updateData('#save-note')
   sendsearchData(localStorage.createTemporaryId)
+  searchList()
 }
 
 __main()

@@ -25,4 +25,6 @@ public interface propertyInformationDao {
 		
 		//查询ID
 		PropertyInformation SelectById(int id);
+		
+		PropertyInformation SelectByIdPro(int id);
 }

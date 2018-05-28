@@ -53,7 +53,7 @@ var collectData = function() {
   data.communication = e('.communication').value
   data.state = 'c'
   data.ctime ='d'
-  data.hi = 'hi'
+  data.hi = e('.realationship').value  
   data.id = localStorage.finalID
   return data
 }
@@ -190,6 +190,7 @@ var searchExport = function(back) {
 			  $(".marriage").val(back.marital_status);
 			  $(".housing").val(back.housing_condition_now);
 			  $(".communication").val(back.postal_address);
+			  $('.realationship').val(back.application_relations);
 			  form.render()
 			});
 }
@@ -205,7 +206,9 @@ var searchAjax = function(method, url, datas) {
 		},
 		success : function(data) {
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				if(data.obj != null) {
+					searchExport(data.obj)	
+				}
 			} else {
 				alert('这页资料尚未填写')
 			}

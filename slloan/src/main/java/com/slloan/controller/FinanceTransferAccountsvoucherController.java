@@ -93,6 +93,7 @@ public class FinanceTransferAccountsvoucherController {
 	private long maxSize;
 	InputStream input;
 	Set<String> setlist = new TreeSet<String>();
+	List<MultipartFile> fileupdate =new ArrayList<MultipartFile>();
 	ResultList<Object> resultList = new ResultList<Object>();
 	List<Object> list = new ArrayList<Object>();
 	@Autowired
@@ -109,7 +110,6 @@ public class FinanceTransferAccountsvoucherController {
 
 	/**
 	 * 转账凭证上传到FTP
-	 * 
 	 * @param tmpfile
 	 * @param req
 	 * @param res
@@ -117,713 +117,1231 @@ public class FinanceTransferAccountsvoucherController {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/transferaccountsvoucher", method = RequestMethod.POST)
-	@ResponseBody
-	public Json transferaccountsvoucher(@RequestParam(value = "file", required = false) MultipartFile[] tmpfile,
-			final HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		final String note = req.getParameter("note");// 备注
-		final String upload_type = req.getParameter("upload_type");// 上传类型
-		// final String filepath = req.getParameter("filepath");
-		final String city = req.getParameter("city");
-		String reqid = req.getParameter("uid");
-		String usernameid = req.getParameter("usernameid");
-		String username = req.getParameter("username");
-		String roleName = req.getParameter("rolename");
-		String t = req.getParameter("id");
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
-		String targetFileName = "";
-		Session session = null;
-		Channel channel = null;
-		for (final MultipartFile f : tmpfile) {
-			// FTPClient ftp = new FTPClient();
-			JSch jsch = new JSch();
-			try {
-				if (ftpPort <= 0) {
-					session = jsch.getSession(ftpUser, ftpIp);
-				} else {
-					session = jsch.getSession(ftpUser, ftpIp, ftpPort);
-				}
-
-				// 如果服务器连接不上，则抛出异常
-				if (session == null) {
-					throw new Exception("session is null");
-				}
-				// 设置登陆主机的密码
-				session.setPassword(ftpPwd);// 设置密码
-				// 设置第一次登陆的时候提示，可选值：(ask | yes | no)
-				session.setConfig("StrictHostKeyChecking", "no");
-				// 设置登陆超时时间
-				session.connect(30000);
-
-				// 创建sftp通信通道
-				channel = (Channel) session.openChannel(sftpp);
-				channel.connect(1000);
-				ChannelSftp sftp = (ChannelSftp) channel;
-				if (session != null) {
-					System.err.println("FTP站点连接成功！");
-					// reply = ftp.getReplyCode();
-					if (!FTPReply.isPositiveCompletion(reply)) {
-						ftp.disconnect();
-					}
-					// ftp.enterLocalPassiveMode();
-					final String tmpFileName = f.getOriginalFilename();
-					final int dot = tmpFileName.lastIndexOf(".");
-					String ext = "";// 文件名后缀
-					if (dot > -1) {
-						ext = tmpFileName.substring(dot + 1);
-					}
-					// jpeg,jpg,gif,png,bmp
-					if (filetype(f.getOriginalFilename())) {
-						targetFileName = renameFileName(city, upload_type, tmpFileName);// 重命名上传的文件名
-						ImageDataUpdate imagedata = new ImageDataUpdate();
-
-						if (req != null && ServletFileUpload.isMultipartContent(req)) {
-							// 判断是否文件上传
-							ServletRequestContext ctx = new ServletRequestContext(req);
-							// 获取上传文件尺寸大小
-							System.out.println(maxSize);
-							long requestsize = ctx.contentLength();
-							System.out.println("aaaa------------:  " + requestsize);
-							int filesize = fileSize;
-							if (requestsize > filesize) {
-								return new Json(false, "fail", "", CaptchaConstants.UPDATESIZE);
-							} else {
-								if (upload_type.equals("转账凭证") && requestsize > 0) {
-									System.out.println("转账凭证");
-									imagedata.setNote(note);// 备注
-									imagedata.setOriginalfilename(tmpFileName);// 原文件名
-									// imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-									// imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/transfer_accounts_image/"+targetFileName.trim());
-									// imagedata.setFilepath("");
-									imagedata.setFilepath("http://120.79.252.173:8080/ftp/transfer_accounts_image/"
-											+ targetFileName.trim());
-									// imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-									imagedata.setUploads(note);// 上传者
-									imagedata.setUploadtype(upload_type);// 上传类型
-									imagedata.setCity(city);
-									imagedata.setSubnode("已传");
-									imagedata.setParentnode(usernameid);// 用户名ID
-									imagedata.setSpare(username);// 用户名
-									imagedata.setSparetwo(roleName);// 角色名
-									String createData = DateUtils.getInDateTime((new Date()));// 日期
-									imagedata.setCreateData(createData);
-									imagedata.setUploadFtpRoute(reqid);
-									imagedataservice.imageDataAdd(imagedata);// 添加一条记录
-									sftp.cd(CaptchaConstants.TRANSFER_ACCOUNTS_IMAGE);
-									String sid = reqid;
-									int id = Integer.parseInt(sid);
-									boolean listimg = imagedataservice.tobeforensics(id);// 待取证
-
-									if (req != null && ServletFileUpload.isMultipartContent(req)) {
-										// 判断是否文件上传
-										ServletRequestContext ctx2 = new ServletRequestContext(req);
-										// 获取上传文件尺寸大小
-										// System.out.println(maxSize);
-										long requestsize2 = ctx.contentLength();
-										System.out.println(requestsize);
-										// String origFileName =
-										// renameFileName(city,upload_type,tmpFileName);
-										input = f.getInputStream();
-										System.out.println(input);
-										// readStream(input);
-										// boolean isResult =
-										// ftp.storeFile(targetFileName, input);
-
-										// boolean isResult = ftp.storeFile(new
-										// String(targetFileName.getBytes("utf-8"),"iso-8859-1"),
-										// input);
-										if (tmpFileName != "" || tmpFileName != null && dot >= 0) {
-											System.err.println("上传成功");
-											sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
-											// list.add(isResult);
-											// resultList.setLists(list);
-											// input.close();
-											// ftp.logout();
-											String filepath = targetFileName;// 原文件名
-											String parentnode = city;
-											String uploadtype = upload_type;
-											String Parentnode = usernameid;
-											String spare = username;
-											String sparetwo = roleName;
-											ImageDataUpdate imagedata2 = new ImageDataUpdate(city, uploadtype,
-													Parentnode, spare, sparetwo, createDate);
-											List<ImageDataUpdate> listimg2 = imagedataservice
-													.financevoucherSelectToupload(imagedata2);
-											String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-											circulation record = new circulation("5", "待取证", createDate, username, t,
-													city, sparetwo, updatedata, reqid);
-											boolean coan = circulationservice.save(record);
-											if (listimg2.size() > 0 && listimg == true && coan == true) {
-												// return new
-												// Json(true,"success",listimg);
-												return new Json(true, "success", listimg2,
-														CaptchaConstants.PENDING_LOAN_CONFIRMATION_UPLOAD_SUCCESS);
-											} else {
-												return new Json(false, "fail", listimg2,
-														CaptchaConstants.UPLOAD_FAILUREFAILURE_TO_CONFIR_A_LOAN);
-											}
-											// return new
-											// Json(true,"success",resultList,"上传成功");
-
-										} else {
-											System.err.println("上传失败！");
-											return new Json(false, "fail", resultList, CaptchaConstants.IMAGE_TYPE);
-										}
-									}
-
-									/*
-									 * //改成待待取证 CircuLationRecord
-									 * circuLationRecord = new
-									 * CircuLationRecord();//状态改成待取证
-									 * circuLationRecord.setState(5);//待取证
-									 * circuLationRecord.setFallbackname("待取证");
-									 * //待取证
-									 * circuLationRecord.setUsername("财务");
-									 * circuLationRecord.setCity("");
-									 * circuLationRecord.setParentnodeId("1");
-									 * circuLationRecord.setRolename("按揭");
-									 * boolean isResultInsert =
-									 * recordSubmitService.fallbackinsert(
-									 * circuLationRecord); if(isResultInsert ==
-									 * true){ return new
-									 * Json(true,"success",isResultInsert,"");
-									 * }else{ return new
-									 * Json(true,"fail",isResultInsert,""); }
-									 */
-
-								}
-								if (upload_type.equals("结算凭证") && requestsize > 0) {
-									System.out.println("结算凭证");
-									// ZipUtil1.unZip(shenfenzheng_image+"/"+targetFileName);
-									imagedata.setNote(note);// 备注
-									imagedata.setOriginalfilename(tmpFileName);// 原文件名
-									// imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-									// imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/settlement_voucher_image/"+targetFileName.trim());
-									imagedata.setFilepath("http://120.79.252.173:8080/ftp/settlement_voucher_image/"
-											+ targetFileName.trim());
-									// imagedata.setFilepath("");
-									// imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-									imagedata.setUploads(note);// 上传者
-									imagedata.setUploadtype(upload_type);// 上传类型
-									imagedata.setCity(city);
-									imagedata.setSubnode("已传");
-									imagedata.setParentnode(usernameid);// 用户名ID
-									imagedata.setSpare(username);// 用户名
-									imagedata.setSparetwo(roleName);// 角色名
-									String createData = DateUtils.getInDateTime((new Date()));// 日期
-									imagedata.setCreateData(createData);
-									imagedata.setUploadFtpRoute(reqid);
-									imagedataservice.imageDataAdd(imagedata);
-									sftp.cd(CaptchaConstants.SETTLEMENT_VOUCHER_IMAGE);
-									String sid = reqid;
-									int id = Integer.parseInt(sid);
-									boolean listimg = imagedataservice.tobesettled(id);
-
-									if (req != null && ServletFileUpload.isMultipartContent(req)) {
-										// 判断是否文件上传
-										ServletRequestContext ctx2 = new ServletRequestContext(req);
-										// 获取上传文件尺寸大小
-										// System.out.println(maxSize);
-										long requestsize2 = ctx.contentLength();
-										System.out.println(requestsize);
-										// ftp.setFileType(FTP.BINARY_FILE_TYPE);
-										// String origFileName =
-										// renameFileName(city,upload_type,tmpFileName);
-										InputStream input = f.getInputStream();
-										System.out.println(input);
-										// readStream(input);
-										// boolean isResult =
-										// ftp.storeFile(targetFileName, input);
-										sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
-										if (req != null && ServletFileUpload.isMultipartContent(req)) {
-											System.err.println("上传成功");
-											// list.add(isResult);
-											// resultList.setLists(list);
-											// input.close();
-											// ftp.logout();
-											String filepath = targetFileName;// 原文件名
-											String parentnode = city;
-											String uploadtype = upload_type;
-											String Parentnode = usernameid;
-											String spare = username;
-											String sparetwo = roleName;
-											ImageDataUpdate imagedata2 = new ImageDataUpdate(city, uploadtype,
-													Parentnode, spare, sparetwo, createDate);
-											List<ImageDataUpdate> listimg2 = imagedataservice
-													.financevoucherSelectToupload2(imagedata2);
-											String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-											circulation record = new circulation("10", "待取证", createDate, username, t,
-													city, sparetwo, updatedata, reqid);
-											boolean coan = circulationservice.save(record);
-											if (listimg2.size() > 0 && listimg == true && coan == true) {
-												// return new
-												// Json(true,"success",listimg);
-												return new Json(true, "success", listimg2,
-														CaptchaConstants.UPLOAD_SUCCESS_ALREADY_CLEAR);
-											} else {
-												return new Json(false, "fail", listimg2,
-														CaptchaConstants.UPLOAD_FAILURE_WAIT_FOR_INFORMATION_TO_VIEW_FAILURE);
-											}
-											// return new
-											// Json(true,"success",resultList,"上传成功");
-
-										} else {
-											System.err.println("上传失败！");
-											return new Json(false, "fail", resultList, CaptchaConstants.IMAGE_TYPE);
-										}
-									}
-								}
-							}
-
+	  @RequestMapping(value = "/transferaccountsvoucher",method=RequestMethod.POST)
+	    @ResponseBody
+		public Json transferaccountsvoucher(@RequestParam(value="file",required=false)MultipartFile[] tmpfile,
+	  			final HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException{
+	    	final String note = req.getParameter("note");//备注
+	    	final String upload_type = req.getParameter("upload_type");//上传类型
+//	    	final	String filepath = req.getParameter("filepath");
+	    	final	String city = req.getParameter("city");
+	    	String reqid= req.getParameter("uid");
+	    	String usernameid = req.getParameter("usernameid");
+			String username = req.getParameter("username");
+			String roleName = req.getParameter("rolename");
+			String t = req.getParameter("id");
+		  
+//		  final String note = "结算凭证备注";//备注
+//	    	final String upload_type = "转账凭证";//上传类型
+////	    	final	String filepath = req.getParameter("filepath");
+//	    	final	String city = "长沙";
+//	    	String reqid= "25";
+//	    	String usernameid = "26";
+//			String username = "张三";
+//			String roleName = "系统管理员";
+//			String t = "22";
+			
+			String createDate = DateUtils.getInDateTime((new Date()));//日期
+	    	String targetFileName = "";
+	    	Session session = null;
+			Channel channel = null;
+	    	for(final MultipartFile f:tmpfile){
+//	    	        FTPClient ftp = new FTPClient();
+	    	        JSch jsch = new JSch();
+	    	        try {
+	    	        	if(ftpPort <= 0){
+    	    	        	session = jsch.getSession(ftpUser, ftpIp);
+    		        	}else{
+    		        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+    		        	}
+    	        	
+    	        	//如果服务器连接不上，则抛出异常
+    	     		if (session == null) {
+    	     			throw new Exception("session is null");
+    	     		}
+    	     		//设置登陆主机的密码
+    	    		session.setPassword(ftpPwd);//设置密码   
+    	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+    	    		session.setConfig("StrictHostKeyChecking", "no");
+    	    		//设置登陆超时时间   
+    	    		session.connect(30000);
+    	    		
+    	    		//创建sftp通信通道
+    				channel = (Channel) session.openChannel(sftpp);
+    				channel.connect(1000);
+    				ChannelSftp sftp = (ChannelSftp) channel;
+	    	         if(session !=null){
+	    	        	 System.err.println("FTP站点连接成功！");
+//	    	        	 reply = ftp.getReplyCode();
+	     	            if (!FTPReply.isPositiveCompletion(reply)) {
+	     	                ftp.disconnect();
+	     	            }
+//	     	            ftp.enterLocalPassiveMode();
+	     	            final String tmpFileName = f.getOriginalFilename();
+	         	   	 	final int dot = tmpFileName.lastIndexOf(".");
+	         	   	 String ext = "" ;//文件名后缀
+	         	 		if(dot >-1){
+	         	 			ext = tmpFileName.substring(dot+1);
+	         	 		}
+	         	 		//jpeg,jpg,gif,png,bmp
+	         	 		if(filetype(f.getOriginalFilename())){
+//	         	 			 targetFileName = renameFileName(city,upload_type,tmpFileName);// 重命名上传的文件名
+	         	 			  ImageDataUpdate imagedata = new ImageDataUpdate();
+	         	 
+	         	 			if(req !=null && ServletFileUpload.isMultipartContent(req)){
+	             	 			//判断是否文件上传
+	             	 			ServletRequestContext ctx = new ServletRequestContext(req);
+	             	 			//获取上传文件尺寸大小
+//	             	 			System.out.println(maxSize);
+	             	 			long requestsize = ctx.contentLength();
+	             	 			System.out.println("aaaa------------:  "+requestsize);
+	             	 			int filesize = fileSize;
+	             	 			if(requestsize >filesize){
+	             	 				return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
+	             	 			}else{
+	             	 				 if(upload_type.equals("转账凭证") && requestsize >0 ){
+	             	 				MultipartFile mfile = null;
+	             	 				for (int i = 0; i < tmpfile.length; i++) {
+//	             	 					if(tmpfile.length>0){
+	             	 						mfile = tmpfile[i];
+	             	 						if(mfile.getSize()>1){
+	             	 							
+//	             	 						}
+//		             	 					resultList.setLists(list);
+		             	 					fileupdate.add(mfile);
+		             	 					 targetFileName = renameFileName(city,upload_type,mfile.getOriginalFilename());// 重命名上传的文件名
+		             	 					System.out.println(mfile.getOriginalFilename());
+		             	 					System.out.println(mfile.getSize());
+		     	                     		System.out.println("转账凭证");
+		     	                     		imagedata.setNote(note);//备注
+		     	                         	imagedata.setOriginalfilename(mfile.getOriginalFilename());//原文件名
+//		     	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//		     	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/transfer_accounts_image/"+targetFileName.trim());
+//		     	                         	imagedata.setFilepath("");
+		     	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/transfer_accounts_image/"+targetFileName.trim());
+//		     	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+		     	                         	imagedata.setUploads(note);//上传者
+		     	                         	imagedata.setUploadtype(upload_type);//上传类型
+		     	                         	imagedata.setCity(city);
+		     	                         	imagedata.setSubnode("已传");
+		     	                         	imagedata.setParentnode(usernameid);//用户名ID
+		     	                         	imagedata.setSpare(username);//用户名
+		     	                         	imagedata.setSparetwo(roleName);//角色名
+		     	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+		     	                         	imagedata.setCreateData(createData);
+		     	                         	imagedata.setUploadFtpRoute(reqid);
+		     	                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+		     	                         	sftp.cd(CaptchaConstants.TRANSFER_ACCOUNTS_IMAGE);
+		     	                         	sftp.put(mfile.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件
+	             	 					}else{
+	             	 						continue;
+	             	 					}
+	             	 					 
+	     	                     		}
+	             	 				}
+	             	 				String sid = reqid;
+     	                	    	int id = Integer.parseInt(sid);
+     	                	    boolean listimg= imagedataservice.tobeforensics(id);//待取证
+     	                	    
+     	                	    if(req !=null && ServletFileUpload.isMultipartContent(req)){
+     		         	 			//判断是否文件上传
+     		         	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+     		         	 			//获取上传文件尺寸大小
+//     		         	 			System.out.println(maxSize);
+     		         	 			long requestsize2 = ctx.contentLength();
+     		         	 			System.out.println(requestsize);
+//     		          	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+     		          	             input = f.getInputStream();
+     		          	            System.out.println(input);
+//     		          	            readStream(input);
+//     		          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+//     		          	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
+     		          	      if(fileupdate.size()>0){
+     		          	        	 System.err.println("上传成功");
+//     		          	        	sftp.put(f.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件
+//     		          	        	 list.add(isResult);
+//     		          	        	resultList.setLists(list);
+//     		          	        	  input.close();
+//     		          	        	  ftp.logout();
+     		          	        	String filepath =targetFileName;//原文件名
+     		                    	String parentnode =city;
+     		                    	String uploadtype = upload_type;
+     		                    	String Parentnode = usernameid;
+     		                    	String spare = username;
+     		                    	String sparetwo = roleName;
+     		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
+     		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
+     		            			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+     		                        circulation record = new  circulation("5","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+     		                    	boolean coan = circulationservice.save(record);
+     		                        if(listimg2.size()> 0 && listimg ==true && coan== true){
+//     		                    		return new Json(true,"success",listimg);
+     		                    		  return new Json(true,"success",listimg2,CaptchaConstants.PENDING_LOAN_CONFIRMATION_UPLOAD_SUCCESS);
+//     		                    		 return new Json(true, "success", listimg2,CaptchaConstants.PENDING_LOAN_CONFIRMATION_UPLOAD_SUCCESS);
+     		                    	}else{
+     		                    		return new Json(false,"fail",listimg2,CaptchaConstants.UPLOAD_FAILUREFAILURE_TO_CONFIR_A_LOAN);
+     		                    	}
+//     		          	        	  return new Json(true,"success",resultList,"上传成功");
+     		          	        	  
+     		          	        	  
+     		          	          }else{
+     		          	        	  System.err.println("上传失败！"); 
+     		          	        	  return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+     		          	          }
+     		         	 		}
+	     	         	 			
+	             	 			}
+	         	 			
+//	             	 			}
+	         	 			}
+	         	 			
+	         	 		}else{
+	         	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+	         	 		}
+	     	            
+	         	 		
+//		     	         getPhont(origFileName);
+		 	           
+	    	         }else{
+	    	        	 System.err.println("FTP连接失败");
+	    	        	 String str = "FTP连接失败";
+	    	        	 list.add(str);
+	    	        	 resultList.setLists(list);
+	    	        	 return new Json(false,"fail","","FTP连接失败");
+	    	         }
+	    	            
+//	    	            
+	    	        } catch (Exception e) {
+//	    	            e.printStackTrace();
+	    	            return new Json(false,"fail",e.getMessage(),"连接异常");
+	    	        } finally {
+	    	            if (ftp.isConnected()) {
+	    	                try {
+	    	                    ftp.disconnect();
+	    	                } catch (IOException ioe) {
+	    	                    ioe.printStackTrace();
+	    	                }
+	    	            }
+	    	        }
+	    	        session.disconnect();
+	    			channel.disconnect();
+	    			 input.close();
+	 	        	  ftp.logout();
+	    	    }
+			return null;
+	  }
+	  
+	  
+	  /**
+		 * 结算凭证上传到FTP
+		 * @param tmpfile
+		 * @param req
+		 * @param res
+		 * @return
+		 * @throws ServletException
+		 * @throws IOException
+		 */
+		  @RequestMapping(value = "/transferaccountsvoucherclearing",method=RequestMethod.POST)
+		    @ResponseBody
+			public Json transferaccountsvoucherclearing(@RequestParam(value="file",required=false)MultipartFile[] tmpfile,
+		  			final HttpServletRequest req,HttpServletResponse res) throws ServletException, IOException{
+		    	final String note = req.getParameter("note");//备注
+		    	final String upload_type = req.getParameter("upload_type");//上传类型
+//		    	final	String filepath = req.getParameter("filepath");
+		    	final	String city = req.getParameter("city");
+		    	String reqid= req.getParameter("uid");
+		    	String usernameid = req.getParameter("usernameid");
+				String username = req.getParameter("username");
+				String roleName = req.getParameter("rolename");
+				String t = req.getParameter("id");
+			  
+//			  final String note = "结算凭证备注";//备注
+//		    	final String upload_type = "结算凭证";//上传类型
+////		    	final	String filepath = req.getParameter("filepath");
+//		    	final	String city = "长沙";
+//		    	String reqid= "25";
+//		    	String usernameid = "26";
+//				String username = "张三";
+//				String roleName = "系统管理员";
+//				String t = "22";
+				
+				String createDate = DateUtils.getInDateTime((new Date()));//日期
+		    	String targetFileName = "";
+		    	Session session = null;
+				Channel channel = null;
+		    	for(final MultipartFile f:tmpfile){
+//		    	        FTPClient ftp = new FTPClient();
+		    	        JSch jsch = new JSch();
+		    	        try {
+		    	        	if(ftpPort <= 0){
+	    	    	        	session = jsch.getSession(ftpUser, ftpIp);
+	    		        	}else{
+	    		        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+	    		        	}
+	    	        	
+	    	        	//如果服务器连接不上，则抛出异常
+	    	     		if (session == null) {
+	    	     			throw new Exception("session is null");
+	    	     		}
+	    	     		//设置登陆主机的密码
+	    	    		session.setPassword(ftpPwd);//设置密码   
+	    	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+	    	    		session.setConfig("StrictHostKeyChecking", "no");
+	    	    		//设置登陆超时时间   
+	    	    		session.connect(30000);
+	    	    		
+	    	    		//创建sftp通信通道
+	    				channel = (Channel) session.openChannel(sftpp);
+	    				channel.connect(1000);
+	    				ChannelSftp sftp = (ChannelSftp) channel;
+		    	         if(session !=null){
+		    	        	 System.err.println("FTP站点连接成功！");
+//		    	        	 reply = ftp.getReplyCode();
+		     	            if (!FTPReply.isPositiveCompletion(reply)) {
+		     	                ftp.disconnect();
+		     	            }
+//		     	            ftp.enterLocalPassiveMode();
+		     	            final String tmpFileName = f.getOriginalFilename();
+		         	   	 	final int dot = tmpFileName.lastIndexOf(".");
+		         	   	 String ext = "" ;//文件名后缀
+		         	 		if(dot >-1){
+		         	 			ext = tmpFileName.substring(dot+1);
+		         	 		}
+		         	 		//jpeg,jpg,gif,png,bmp
+		         	 		if(filetype(f.getOriginalFilename())){
+//		         	 			 targetFileName = renameFileName(city,upload_type,tmpFileName);// 重命名上传的文件名
+		         	 			  ImageDataUpdate imagedata = new ImageDataUpdate();
+		         	 
+		         	 			if(req !=null && ServletFileUpload.isMultipartContent(req)){
+		             	 			//判断是否文件上传
+		             	 			ServletRequestContext ctx = new ServletRequestContext(req);
+		             	 			//获取上传文件尺寸大小
+		             	 			System.out.println(maxSize);
+		             	 			long requestsize = ctx.contentLength();
+		             	 			System.out.println("aaaa------------:  "+requestsize);
+		             	 			int filesize = fileSize;
+		             	 			if(requestsize >filesize){
+		             	 				return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
+		             	 			}else{
+		             	 				
+	     	                	   MultipartFile mfile2 = null;
+	     	                	  if(upload_type.equals("结算凭证")&& requestsize >0 ){
+	            	 				for (int i = 0; i < tmpfile.length; i++) {
+	            	 					 mfile2 = tmpfile[i];
+	            	 					if(mfile2.getSize()>1){
+	            	 						fileupdate.add(mfile2);
+		             	 					 targetFileName = renameFileName(city,upload_type,mfile2.getOriginalFilename());// 重命名上传的文件名
+		             	 					System.out.println(mfile2.getOriginalFilename());
+		             	 					System.out.println(mfile2.getSize());
+		     	                     		System.out.println("结算凭证");
+//		     	                     		 ZipUtil1.unZip(shenfenzheng_image+"/"+targetFileName);
+		     	                     		imagedata.setNote(note);//备注
+		     	                         	imagedata.setOriginalfilename(mfile2.getOriginalFilename());//原文件名
+//		     	                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//		     	                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/settlement_voucher_image/"+targetFileName.trim());
+		     	                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/settlement_voucher_image/"+targetFileName.trim());
+//		     	                         	imagedata.setFilepath("");
+//		     	                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+		     	                         	imagedata.setUploads(note);//上传者
+		     	                         	imagedata.setUploadtype(upload_type);//上传类型
+		     	                         	imagedata.setCity(city);
+		     	                         	imagedata.setSubnode("已传");
+		     	                         	imagedata.setParentnode(usernameid);//用户名ID
+		     	                         	imagedata.setSpare(username);//用户名
+		     	                         	imagedata.setSparetwo(roleName);//角色名
+		     	                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+		     	                         	imagedata.setCreateData(createData);
+		     	                         	imagedata.setUploadFtpRoute(reqid);
+		     	                         	imagedataservice.imageDataAdd(imagedata);
+		     	                         	sftp.cd(CaptchaConstants.SETTLEMENT_VOUCHER_IMAGE);
+		     	                         	sftp.put(mfile2.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件
+	            	 					}else{
+	            	 						continue;
+	            	 					}
+	            	 					
+		     	         	 				
+		     	                         	
+//		     	                        	String sid = reqid;
+//		     	                	    	int id = Integer.parseInt(sid);
+//		     	                	    boolean listimg= imagedataservice.tobesettled(id);
+		     	                	    
+		     	                	   
+		     	                     	}
+	            	 				}
+				     	                	 String sid = reqid;
+			  	                	    	int id = Integer.parseInt(sid);
+			  	                	    boolean listimg= imagedataservice.tobeforensics(id);//待取证
+		     	         	 		 if(req !=null && ServletFileUpload.isMultipartContent(req)){
+		     		         	 			//判断是否文件上传
+		     		         	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+		     		         	 			//获取上传文件尺寸大小
+//		     		         	 			System.out.println(maxSize);
+		     		         	 			long requestsize2 = ctx.contentLength();
+		     		         	 			System.out.println(requestsize);
+//		     		         	 			 ftp.setFileType(FTP.BINARY_FILE_TYPE);
+//		     		          	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+		     		          	            InputStream input = f.getInputStream();
+		     		          	            System.out.println(input);
+//		     		          	            readStream(input);
+//		     		          	          boolean isResult =  ftp.storeFile(targetFileName, input);
+		     		          	          
+		     		          	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
+		     		          	        	 System.err.println("上传成功");
+//		     		          	        	 list.add(isResult);
+//		     		          	        	resultList.setLists(list);
+//		     		          	        	  input.close();
+//		     		          	        	  ftp.logout();
+		     		          	        	String filepath =targetFileName;//原文件名
+		     		                    	String parentnode =city;
+		     		                    	String uploadtype = upload_type;
+		     		                    	String Parentnode = usernameid;
+		     		                    	String spare = username;
+		     		                    	String sparetwo = roleName;
+		     		                    	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
+		     		                        List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload2(imagedata2);
+		     		                        String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+		     		                        circulation record = new  circulation("10","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+		     		                        boolean coan = circulationservice.save(record);
+		     		                        if(listimg2.size()> 0 && listimg ==true && coan == true){
+		     		                    		//return new Json(true,"success",listimg);
+		     		                    		  return new Json(true,"success",listimg2,CaptchaConstants.UPLOAD_SUCCESS_ALREADY_CLEAR);
+		     		                    	}else{
+		     		                    		return new Json(false,"fail",listimg2,CaptchaConstants.UPLOAD_FAILURE_WAIT_FOR_INFORMATION_TO_VIEW_FAILURE);
+		     		                    	}
+//		     		          	        	  return new Json(true,"success",resultList,"上传成功");
+		     		          	        	  
+		     		          	          }else{
+		     		          	        	  System.err.println("上传失败！"); 
+		     		          	        	  return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+		     		          	          }
+		     		         	 		}
+		             	 			}
+		         	 			
+//		             	 			}
+		         	 			}
+		         	 			
+		         	 		}else{
+		         	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+		         	 		}
+		     	            
+		         	 		
+//			     	         getPhont(origFileName);
+			 	           
+		    	         }else{
+		    	        	 System.err.println("FTP连接失败");
+		    	        	 String str = "FTP连接失败";
+		    	        	 list.add(str);
+		    	        	 resultList.setLists(list);
+		    	        	 return new Json(false,"fail","","FTP连接失败");
+		    	         }
+		    	            
+//		    	            
+		    	        } catch (Exception e) {
+//		    	            e.printStackTrace();
+		    	            return new Json(false,"fail",e.getMessage(),"连接异常");
+		    	        } finally {
+		    	            if (ftp.isConnected()) {
+		    	                try {
+		    	                    ftp.disconnect();
+		    	                } catch (IOException ioe) {
+		    	                    ioe.printStackTrace();
+		    	                }
+		    	            }
+		    	        }
+		    	        session.disconnect();
+		    			channel.disconnect();
+		    			 input.close();
+		 	        	  ftp.logout();
+		    	    }
+				return null;
+		  }
+		  /**
+		   *  回款凭证上传
+		   * @param req 参数
+		   * @param res
+		   * @return JSON			
+		   */
+		  @RequestMapping(value="/voucherupload",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+		  @ResponseBody
+		  public Json reimbursement_Voucher(
+				  @RequestParam(value="file",required=false) MultipartFile[]tmpfile,
+				  HttpServletRequest req , HttpServletResponse res){
+			  String note = req.getParameter("note");
+			  String usernameid = req.getParameter("usernameid");
+			  String username = req.getParameter("username");
+			  String roleName = req.getParameter("rolename");
+			  String upload_type= req.getParameter("upload_type");
+			  String createDate = DateUtils.getInDateTime((new Date()));//日期
+			  String city = req.getParameter("city");
+			  String t = req.getParameter("id");
+			  String targetFileName = "";
+			  String reqid= req.getParameter("state");
+//			  final String note = "备注随便说点什么";
+//		    	final	String city = "长沙";
+//				String usernameid = "40";//用户ID
+//				String reqid= "25";
+//				String username = "bb";
+//				String roleName = "系统管理员";
+//				String uid = "28";
+//				final String upload_type= "回款确认";//上传类型
+//				 String reqid= "3";
+			  Session session = null;
+				Channel channel = null;
+			  for(MultipartFile f:tmpfile){
+				  JSch jsch = new JSch();
+				  try {
+					  if(ftpPort <= 0){
+		    	        	session = jsch.getSession(ftpUser, ftpIp);
+			        	}else{
+			        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+			        	}
+		        	
+		        	//如果服务器连接不上，则抛出异常
+		     		if (session == null) {
+		     			throw new Exception("session is null");
+		     		}
+		     		//设置登陆主机的密码
+		    		session.setPassword(ftpPwd);//设置密码   
+		    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+		    		session.setConfig("StrictHostKeyChecking", "no");
+		    		//设置登陆超时时间   
+		    		session.connect(30000);
+		    		
+		    		//创建sftp通信通道
+					channel = (Channel) session.openChannel(sftpp);
+					channel.connect(1000);
+					ChannelSftp sftp = (ChannelSftp) channel;
+					if(session !=null){
+						System.err.println("FTP站点连接成功");
+						reply = ftp.getReplyCode();
+						if(!FTPReply.isPositiveCompletion(reply)){
+							ftp.disconnect();
 						}
-
-					} else {
-						return new Json(false, "fail", resultList, CaptchaConstants.IMAGE_TYPE);
+						ftp.enterLocalPassiveMode();
+						String tmpFileName = f.getOriginalFilename();
+						int dot = tmpFileName.lastIndexOf(".");
+						String ext = "";
+						if(dot >-1){
+							ext = tmpFileName.substring(dot+1);
+						}
+						if(filetype(f.getOriginalFilename())){
+							targetFileName = renameFileName(city, upload_type, tmpFileName);//重命名上传文件名
+							ImageDataUpdate imagedata = new ImageDataUpdate();
+							if(req !=null && ServletFileUpload.isMultipartContent(req)){
+								//判断是否有文件上传
+								ServletRequestContext ctx = new ServletRequestContext(req);
+								//获取上传文件尺寸大小
+								long requestsize = ctx.contentLength();
+								System.out.println("上传文件大小: "+requestsize);
+								if(requestsize > fileSize){
+									
+								}else{
+									MultipartFile mfile3 = null;
+									
+									if(upload_type.equals("回款确认") && requestsize>0){
+										for (int i = 0; i < tmpfile.length; i++) {
+											 mfile3 = tmpfile[i];
+											if(mfile3.getSize()>1){
+												 fileupdate.add(mfile3);
+			             	 					 targetFileName = renameFileName(city,upload_type,mfile3.getOriginalFilename());// 重命名上传的文件名
+			             	 					System.out.println(mfile3.getOriginalFilename());
+			             	 					System.out.println(mfile3.getSize());
+			             	 					System.out.println("回款确认");
+												imagedata.setNote(note);//备注
+					                         	imagedata.setOriginalfilename(mfile3.getOriginalFilename());//原文件名
+//					                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//					                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/return_confirmation/"+targetFileName.trim());
+					                        	imagedata.setFilepath("http://120.79.252.173:8080/ftp/return_confirmation/"+targetFileName.trim());
+//					                         	imagedata.setFilepath("");
+//					                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+					                         	imagedata.setUploads(note);//上传者
+					                         	imagedata.setUploadtype(upload_type);//上传类型
+					                         	imagedata.setCity(city);
+					                         	imagedata.setSubnode("己传");
+					                         	imagedata.setParentnode(usernameid);//用户名ID
+					                         	imagedata.setSpare(username);//用户名
+					                         	imagedata.setSparetwo(roleName);//角色名
+					                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+					                         	imagedata.setCreateData(createData);
+					                         	imagedata.setUploadFtpRoute(reqid);
+					                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+					                         	sftp.cd(CaptchaConstants.RETURN_CONFIRMATION);
+					                         	sftp.put(mfile3.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
+											}else{
+												continue;
+											}
+										}
+									}
+			                         	if(req !=null && ServletFileUpload.isMultipartContent(req)){
+			                 	 			//判断是否文件上传
+			                 	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+			                 	 			//获取上传文件尺寸大小
+//			                 	 			System.out.println(maxSize);
+			                 	 			long requestsize2 = ctx2.contentLength();
+			                 	 			System.out.println(requestsize2);
+//			                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+			                  	            InputStream input = f.getInputStream();
+			                  	            System.out.println(input);
+//			                  	            readStream(input);
+//			                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
+			                  	       
+				                	    
+//			                  	        boolean isResult =  ftp.storeFile(new String(targetFileName.getBytes("GBK"),"iso-8859-1"), input);
+//			                  	          sftp.put(f.getInputStream(),new String(targetFileName.getBytes("UTF-8")));  //上传文件  
+			                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
+			                  	        	 System.err.println("上传成功");
+//			                  	        	  input.close();
+//			                  	        	  ftp.logout();
+			                  	        	String filepath =targetFileName;//原文件名
+			                            	String parentnode =city;
+			                            	String uploadtype = upload_type;
+			                            	String Parentnode = usernameid;
+			                            	String spare = username;
+			                            	String sparetwo = roleName;
+			                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
+			                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
+			                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+				                        circulation record = new  circulation("9","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+				                        boolean coan = circulationservice.save(record);	
+				                        String sid = reqid;
+			                	    	int id = Integer.parseInt(sid);
+			                	    boolean listimg= imagedataservice.loanClearing(id);//待解压
+			                            if(listimg2.size()> 0 && listimg == true && coan == true){
+			                            		//return new Json(true,"success",listimg);
+			                            		  return new Json(true,"success",listimg2,CaptchaConstants.UPLOAD_SUCCESS_PENDING_AUDIT);
+			                            	}else{
+			                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
+			                            	}
+			                  	        	  
+			                  	          }else{
+			                  	        	  System.err.println("上传失败！"); 
+			                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
+			                  	          }
+			                 	 		}else{
+//			            					System.out.println("FTP连接失败");
+			            					 return new Json(false,"fail","",CaptchaConstants.CONNECTION_FAILED);
+			            				}
+			                         	
+									}
+			                  	          String sid = reqid;
+				                	    	int id = Integer.parseInt(sid);
+				                	    boolean listimg= imagedataservice.WaitForensics(id);//待解压
+				                	    
+			                         	if(req !=null && ServletFileUpload.isMultipartContent(req)){
+			                 	 			//判断是否文件上传
+			                 	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+			                 	 			//获取上传文件尺寸大小
+//			                 	 			System.out.println(maxSize);
+			                 	 			long requestsize2 = ctx2.contentLength();
+			                 	 			System.out.println(requestsize2);
+//			                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+			                  	            InputStream input = f.getInputStream();
+			                  	            System.out.println(input);
+//			                  	            readStream(input);
+//			                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
+			                 	 		}else{
+			            					System.out.println("FTP连接失败");
+			            				}
+							}
+						}else{
+	        	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+	        	 		}
+						
 					}
-
-					// getPhont(origFileName);
-
-				} else {
-					System.err.println("FTP连接失败");
-					String str = "FTP连接失败";
-					list.add(str);
-					resultList.setLists(list);
-					return new Json(false, "fail", "", "FTP连接失败");
-				}
-
-				//
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return new Json(false, "fail", e.getMessage(), "连接异常");
-			} finally {
-				if (ftp.isConnected()) {
-					try {
-						ftp.disconnect();
-					} catch (IOException ioe) {
-						ioe.printStackTrace();
+				} catch (Exception e) {
+					return new Json(false,"fail",e.getMessage(),"连接异常");
+				}finally {
+		            if (ftp.isConnected()) {
+		                try {
+		                    ftp.disconnect();
+		                } catch (IOException ioe) {
+		                    ioe.printStackTrace();
+		                }
+		            }
+		        }
+			  }
+			return null;
+			  
+		  }
+		  /**
+		   *  进押凭证上传
+		   * @param req 参数
+		   * @param res
+		   * @return JSON			
+		   */
+		  @RequestMapping(value="/forensicsincarceration",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+		  @ResponseBody
+		  public Json forensicsincarceration(
+				  @RequestParam(value="file",required=false) MultipartFile[]tmpfile,
+				  HttpServletRequest req , HttpServletResponse res){
+			  String note = req.getParameter("note");
+			  String usernameid = req.getParameter("usernameid");
+				String username = req.getParameter("username");
+				String roleName = req.getParameter("rolename");
+			  String upload_type= req.getParameter("upload_type");
+			  String createDate = DateUtils.getInDateTime((new Date()));//日期
+//			  String filepath = req.getParameter("filepath");
+			  String city = req.getParameter("city");
+			  String t = req.getParameter("id");
+			  String targetFileName = "";
+			  String reqid= req.getParameter("state");
+//			  String note = req.getParameter("note");
+//			  String usernameid = req.getParameter("usernameid");
+//				String username = req.getParameter("username");
+//				String roleName = req.getParameter("rolename");
+//			  String upload_type= req.getParameter("upload_type");
+			  
+//			  String createDate = DateUtils.getInDateTime((new Date()));//日期
+//			  String city = req.getParameter("city");
+//			  String t = "25";
+//			  String targetFileName = "";
+////			  String reqid= req.getParameter("state");
+//			  final String note = "备注随便说点什么";
+//		    	final	String city = "长沙";
+//				String usernameid = "40";//用户ID
+//				String reqid= "25";
+//				String username = "bb";
+//				String roleName = "系统管理员";
+//				String uid = "28";
+//				final String upload_type= "进押凭证";//上传类型
+			  Session session = null;
+				Channel channel = null;
+			  for(MultipartFile f:tmpfile){
+				  JSch jsch = new JSch();
+				  try {
+					  if(ftpPort <= 0){
+		    	        	session = jsch.getSession(ftpUser, ftpIp);
+			        	}else{
+			        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+			        	}
+		        	
+		        	//如果服务器连接不上，则抛出异常
+		     		if (session == null) {
+		     			throw new Exception("session is null");
+		     		}
+		     		//设置登陆主机的密码
+		    		session.setPassword(ftpPwd);//设置密码   
+		    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+		    		session.setConfig("StrictHostKeyChecking", "no");
+		    		//设置登陆超时时间   
+		    		session.connect(30000);
+		    		
+		    		//创建sftp通信通道
+					channel = (Channel) session.openChannel(sftpp);
+					channel.connect(1000);
+					ChannelSftp sftp = (ChannelSftp) channel;
+					if(session !=null){
+						System.err.println("FTP站点连接成功");
+						reply = ftp.getReplyCode();
+						if(!FTPReply.isPositiveCompletion(reply)){
+							ftp.disconnect();
+						}
+						ftp.enterLocalPassiveMode();
+						String tmpFileName = f.getOriginalFilename();
+						int dot = tmpFileName.lastIndexOf(".");
+						String ext = "";
+						if(dot >-1){
+							ext = tmpFileName.substring(dot+1);
+						}
+						if(filetype(f.getOriginalFilename())){
+							targetFileName = renameFileName(city, upload_type, tmpFileName);//重命名上传文件名
+							ImageDataUpdate imagedata = new ImageDataUpdate();
+							if(req !=null && ServletFileUpload.isMultipartContent(req)){
+								//判断是否有文件上传
+								ServletRequestContext ctx = new ServletRequestContext(req);
+								//获取上传文件尺寸大小
+								long requestsize = ctx.contentLength();
+								System.out.println("上传文件大小: "+requestsize);
+								if(requestsize > fileSize){
+									return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
+								}else{
+									MultipartFile mfile7 = null;
+									if(upload_type.equals("进押凭证")&& requestsize>0){
+										for (int i = 0; i < tmpfile.length; i++) {
+											mfile7 = tmpfile[i];
+											if(mfile7.getSize()>1){
+//			             	 					resultList.setLists(list);
+			             	 					fileupdate.add(mfile7);
+			             	 					 targetFileName = renameFileName(city,upload_type,mfile7.getOriginalFilename());// 重命名上传的文件名
+			             	 					System.out.println(mfile7.getOriginalFilename());
+			             	 					System.out.println(mfile7.getSize());
+			             	 					System.out.println("进押凭证");
+												imagedata.setNote(note);//备注
+					                         	imagedata.setOriginalfilename(mfile7.getOriginalFilename());//原文件名
+//					                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//					                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/entervoucher/"+targetFileName.trim());
+					                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/entervoucher/"+targetFileName.trim());
+//					                         	imagedata.setFilepath("");
+//					                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+					                         	imagedata.setUploads(note);//上传者
+					                         	imagedata.setUploadtype(upload_type);//上传类型
+					                         	imagedata.setCity(city);
+					                         	imagedata.setSubnode("己传");
+					                         	imagedata.setParentnode(usernameid);//用户名ID
+					                         	imagedata.setSpare(username);//用户名
+					                         	imagedata.setSparetwo(roleName);//角色名
+					                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+					                         	imagedata.setCreateData(createData);
+					                         	imagedata.setUploadFtpRoute(reqid);
+					                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+					                         	sftp.cd(CaptchaConstants.ENTERVOUCHER);
+					                         	 sftp.put(mfile7.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件 
+											}else{
+												continue;
+											  }
+											}
+										}
+				                	    if(req !=null && ServletFileUpload.isMultipartContent(req)){
+			                 	 			//判断是否文件上传
+			                 	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+			                 	 			//获取上传文件尺寸大小
+//			                 	 			System.out.println(maxSize);
+			                 	 			long requestsize2 = ctx2.contentLength();
+			                 	 			System.out.println(requestsize2);
+//			                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+			                  	            InputStream input = f.getInputStream();
+			                  	            System.out.println(input);
+//			                  	            readStream(input);
+//			                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
+			                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
+			                  	        	 System.err.println("上传成功");
+			                  	        	String filepath =targetFileName;//原文件名
+			                            	String parentnode =city;
+			                            	String uploadtype = upload_type;
+			                            	String Parentnode = usernameid;
+			                            	String spare = username;
+			                            	String sparetwo = roleName;
+			                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
+			                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
+			                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+			                            circulation record = new  circulation("8","待进押",createDate,username,t,city,sparetwo,updatedata,reqid);
+			                			boolean coan = circulationservice.save(record);		
+			                			String sid = reqid;
+			                	    	int id = Integer.parseInt(sid);
+			                	    boolean listimg= imagedataservice.pendingconfirmation(id);//待解压
+			                            if(listimg2.size()> 0 && listimg == true && coan == true){
+			                            		//return new Json(true,"success",listimg);
+			                            		  return new Json(true,"success",listimg2,"上传成功-- 待确认回款审核");
+			                            	}else{
+			                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
+			                            	}
+			                  	        	  
+			                  	          }else{
+			                  	        	  System.err.println("上传失败！"); 
+			                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
+			                  	          }
+			                 	 		}else{
+			            					System.out.println("FTP连接失败");
+			            				}
+		                         	
+									}
+							}
+						}else{
+	        	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+	        	 		}
+						
 					}
-				}
-			}
-			session.disconnect();
-			channel.disconnect();
-			input.close();
-			ftp.logout();
-		}
-		return null;
-	}
-
-	/**
-	 * 回款&取证&解押&进押凭证上传
-	 * 
-	 * @param req
-	 *            参数
-	 * @param res
-	 * @return JSON
-	 */
-	@RequestMapping(value = "/voucherupload", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
-	@ResponseBody
-	public Json reimbursement_Voucher(@RequestParam(value = "file", required = false) MultipartFile[] tmpfile,
-			HttpServletRequest req, HttpServletResponse res) {
-		String note = req.getParameter("note");
-		String usernameid = req.getParameter("usernameid");
-		String username = req.getParameter("username");
-		String roleName = req.getParameter("rolename");
-		String upload_type = req.getParameter("upload_type");
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
-		// String filepath = req.getParameter("filepath");
-		String city = req.getParameter("city");
-		String t = req.getParameter("id");
-		String targetFileName = "";
-		String reqid = req.getParameter("state");
-		Session session = null;
-		Channel channel = null;
-		for (MultipartFile f : tmpfile) {
-			JSch jsch = new JSch();
-			try {
-				if (ftpPort <= 0) {
-					session = jsch.getSession(ftpUser, ftpIp);
-				} else {
-					session = jsch.getSession(ftpUser, ftpIp, ftpPort);
-				}
-
-				// 如果服务器连接不上，则抛出异常
-				if (session == null) {
-					throw new Exception("session is null");
-				}
-				// 设置登陆主机的密码
-				session.setPassword(ftpPwd);// 设置密码
-				// 设置第一次登陆的时候提示，可选值：(ask | yes | no)
-				session.setConfig("StrictHostKeyChecking", "no");
-				// 设置登陆超时时间
-				session.connect(30000);
-
-				// 创建sftp通信通道
+				} catch (Exception e) {
+					return new Json(false,"fail",e.getMessage(),"连接异常");
+				}finally {
+		            if (ftp.isConnected()) {
+		                try {
+		                    ftp.disconnect();
+		                } catch (IOException ioe) {
+		                    ioe.printStackTrace();
+		                }
+		            }
+		        }
+			  }
+			return null;
+			  
+		  }
+		  /**
+		   *  解押凭证上传
+		   * @param req 参数
+		   * @param res
+		   * @return JSON			
+		   */
+		  @RequestMapping(value="/forensicsrelief",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+		  @ResponseBody
+		  public Json forensicsrelief(
+				  @RequestParam(value="file",required=false) MultipartFile[]tmpfile,
+				  HttpServletRequest req , HttpServletResponse res){
+			  String note = req.getParameter("note");
+			  String usernameid = req.getParameter("usernameid");
+				String username = req.getParameter("username");
+				String roleName = req.getParameter("rolename");
+			  String upload_type= req.getParameter("upload_type");
+			  String createDate = DateUtils.getInDateTime((new Date()));//日期
+//			  String filepath = req.getParameter("filepath");
+			  String city = req.getParameter("city");
+			  String t = req.getParameter("id");
+			  String targetFileName = "";
+			  String reqid= req.getParameter("state");
+//			  String createDate = DateUtils.getInDateTime((new Date()));//日期
+//			  String city = req.getParameter("city");
+//			  String t = "25";
+//			  String targetFileName = "";
+////			  String reqid= req.getParameter("state");
+//			  final String note = "备注随便说点什么";
+//		    	final	String city = "长沙";
+//				String usernameid = "40";//用户ID
+//				String reqid= "25";
+//				String username = "bb";
+//				String roleName = "系统管理员";
+//				String uid = "28";
+//				final String upload_type= "解押凭证";//上传类型
+			  Session session = null;
+				Channel channel = null;
+			  for(MultipartFile f:tmpfile){
+				  JSch jsch = new JSch();
+				  try {
+					  if(ftpPort <= 0){
+		    	        	session = jsch.getSession(ftpUser, ftpIp);
+			        	}else{
+			        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+			        	}
+		        	
+		        	//如果服务器连接不上，则抛出异常
+		     		if (session == null) {
+		     			throw new Exception("session is null");
+		     		}
+		     		//设置登陆主机的密码
+		    		session.setPassword(ftpPwd);//设置密码   
+		    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+		    		session.setConfig("StrictHostKeyChecking", "no");
+		    		//设置登陆超时时间   
+		    		session.connect(30000);
+		    		
+		    		//创建sftp通信通道
+					channel = (Channel) session.openChannel(sftpp);
+					channel.connect(1000);
+					ChannelSftp sftp = (ChannelSftp) channel;
+					if(session !=null){
+						System.err.println("FTP站点连接成功");
+						reply = ftp.getReplyCode();
+						if(!FTPReply.isPositiveCompletion(reply)){
+							ftp.disconnect();
+						}
+						ftp.enterLocalPassiveMode();
+						String tmpFileName = f.getOriginalFilename();
+						int dot = tmpFileName.lastIndexOf(".");
+						String ext = "";
+						if(dot >-1){
+							ext = tmpFileName.substring(dot+1);
+						}
+						if(filetype(f.getOriginalFilename())){
+							targetFileName = renameFileName(city, upload_type, tmpFileName);//重命名上传文件名
+							ImageDataUpdate imagedata = new ImageDataUpdate();
+							if(req !=null && ServletFileUpload.isMultipartContent(req)){
+								//判断是否有文件上传
+								ServletRequestContext ctx = new ServletRequestContext(req);
+								//获取上传文件尺寸大小
+								long requestsize = ctx.contentLength();
+								System.out.println("上传文件大小: "+requestsize);
+								if(requestsize > fileSize){
+									return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
+								}else{
+									if(upload_type.equals("解押凭证")&& requestsize>0){
+										MultipartFile mfile6 = null;	
+										for (int i = 0; i < tmpfile.length; i++) {
+											mfile6 = tmpfile[i];
+											if(mfile6.getSize()>1){
+												fileupdate.add(mfile6);
+			             	 					 targetFileName = renameFileName(city,upload_type,mfile6.getOriginalFilename());// 重命名上传的文件名
+			             	 					System.out.println(mfile6.getOriginalFilename());
+			             	 					System.out.println(mfile6.getSize());
+											System.out.println("解押凭证");
+											imagedata.setNote(note);//备注
+				                         	imagedata.setOriginalfilename(mfile6.getOriginalFilename());//原文件名
+//				                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//				                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/solutionvoucher/"+targetFileName.trim());
+				                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/solutionvoucher/"+targetFileName.trim());
+//				                         	imagedata.setFilepath("");
+//				                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+				                         	imagedata.setUploads(note);//上传者
+				                         	imagedata.setUploadtype(upload_type);//上传类型
+				                         	imagedata.setCity(city);
+				                         	imagedata.setSubnode("己传");
+				                         	imagedata.setParentnode(usernameid);//用户名ID
+				                         	imagedata.setSpare(username);//用户名
+				                         	imagedata.setSparetwo(roleName);//角色名
+				                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+				                         	imagedata.setCreateData(createData);
+				                         	imagedata.setUploadFtpRoute(reqid);
+				                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+				                         	sftp.cd(CaptchaConstants.SOLUTIONVOUCHER);
+				                         	sftp.put(mfile6.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
+											}else{
+												continue;
+											}
+										}
+									}
+									
+									if(req !=null && ServletFileUpload.isMultipartContent(req)){
+		                 	 			//判断是否文件上传
+		                 	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+		                 	 			//获取上传文件尺寸大小
+//		                 	 			System.out.println(maxSize);
+		                 	 			long requestsize2 = ctx2.contentLength();
+		                 	 			System.out.println(requestsize2);
+//		                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+		                  	            InputStream input = f.getInputStream();
+		                  	            System.out.println(input);
+		                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
+		                  	        	 System.err.println("上传成功");
+//		                  	        	  input.close();
+//		                  	        	  ftp.logout();
+		                  	        	String filepath =targetFileName;//原文件名
+		                            	String parentnode =city;
+		                            	String uploadtype = upload_type;
+		                            	String Parentnode = usernameid;
+		                            	String spare = username;
+		                            	String sparetwo = roleName;
+		                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
+		                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
+		                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+		                            circulation record = new  circulation("7","待解押",createDate,username,t,city,sparetwo,updatedata,reqid);
+		                			boolean coan = circulationservice.save(record);	
+		                			String sid = reqid;
+		                	    	int id = Integer.parseInt(sid);
+		                	    boolean listimg= imagedataservice.tobedetained(id);//待解压
+		                            if(listimg2.size()> 0 && listimg == true && coan == true){
+		                            		//return new Json(true,"success",listimg);
+		                            		  return new Json(true,"success",listimg2,"上传成功-- 待进押凭证审核");
+		                            	}else{
+		                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
+		                            	}
+		                  	        	  
+		                  	          }else{
+		                  	        	  System.err.println("上传失败！"); 
+		                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
+		                  	          }
+		                 	 		}else{
+		            					System.out.println("FTP连接失败");
+		            				}
+		                	    
+									}
+								
+				                	    
+			                         	
+							}
+						}else{
+	        	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+	        	 		}
+						
+					}
+				} catch (Exception e) {
+//					e.printStackTrace();
+					return new Json(false,"fail",e.getMessage(),"连接异常");
+				}finally {
+		            if (ftp.isConnected()) {
+		                try {
+		                    ftp.disconnect();
+		                } catch (IOException ioe) {
+		                    ioe.printStackTrace();
+		                }
+		            }
+		        }
+			  }
+			return null;
+			  
+		  }
+	  /**
+	   *  取证凭证上传
+	   * @param req 参数
+	   * @param res
+	   * @return JSON			
+	   */
+	  @RequestMapping(value="/forensics",method=RequestMethod.POST,produces="application/json;charset=utf-8")
+	  @ResponseBody
+	  public Json Forensics(
+			  @RequestParam(value="file",required=false) MultipartFile[]tmpfile,
+			  HttpServletRequest req , HttpServletResponse res){
+		  String note = req.getParameter("note");
+		  String usernameid = req.getParameter("usernameid");
+		  String username = req.getParameter("username");
+		  String roleName = req.getParameter("rolename");
+		  String upload_type= req.getParameter("upload_type");
+		  String createDate = DateUtils.getInDateTime((new Date()));//日期
+//		  String filepath = req.getParameter("filepath");
+		  String city = req.getParameter("city");
+		  String t = req.getParameter("id");
+		  String targetFileName = "";
+		  String reqid= req.getParameter("state");
+//		  String createDate = DateUtils.getInDateTime((new Date()));//日期
+//		  String city = req.getParameter("city");
+//		  String t = "25";
+//		  String targetFileName = "";
+//		  String reqid= req.getParameter("state");
+//		  final String note = "备注随便说点什么";
+//	    	final	String city = "长沙";
+//			String usernameid = "40";//用户ID
+//			String reqid= "25";
+//			String username = "bb";
+//			String roleName = "系统管理员";
+//			String uid = "28";
+//			final String upload_type= "取证凭证";//上传类型
+		  Session session = null;
+			Channel channel = null;
+		  for(MultipartFile f:tmpfile){
+			  JSch jsch = new JSch();
+			  try {
+				  if(ftpPort <= 0){
+	    	        	session = jsch.getSession(ftpUser, ftpIp);
+		        	}else{
+		        		session = jsch.getSession(ftpUser, ftpIp,ftpPort);
+		        	}
+	        	
+	        	//如果服务器连接不上，则抛出异常
+	     		if (session == null) {
+	     			throw new Exception("session is null");
+	     		}
+	     		//设置登陆主机的密码
+	    		session.setPassword(ftpPwd);//设置密码   
+	    		//设置第一次登陆的时候提示，可选值：(ask | yes | no)
+	    		session.setConfig("StrictHostKeyChecking", "no");
+	    		//设置登陆超时时间   
+	    		session.connect(30000);
+	    		
+	    		//创建sftp通信通道
 				channel = (Channel) session.openChannel(sftpp);
 				channel.connect(1000);
 				ChannelSftp sftp = (ChannelSftp) channel;
-				if (session != null) {
+				if(session !=null){
 					System.err.println("FTP站点连接成功");
 					reply = ftp.getReplyCode();
-					if (!FTPReply.isPositiveCompletion(reply)) {
+					if(!FTPReply.isPositiveCompletion(reply)){
 						ftp.disconnect();
 					}
 					ftp.enterLocalPassiveMode();
 					String tmpFileName = f.getOriginalFilename();
 					int dot = tmpFileName.lastIndexOf(".");
 					String ext = "";
-					if (dot > -1) {
-						ext = tmpFileName.substring(dot + 1);
+					if(dot >-1){
+						ext = tmpFileName.substring(dot+1);
 					}
-					if (filetype(f.getOriginalFilename())) {
-						targetFileName = renameFileName(city, upload_type, tmpFileName);// 重命名上传文件名
+					if(filetype(f.getOriginalFilename())){
+						targetFileName = renameFileName(city, upload_type, tmpFileName);//重命名上传文件名
 						ImageDataUpdate imagedata = new ImageDataUpdate();
-						if (req != null && ServletFileUpload.isMultipartContent(req)) {
-							// 判断是否有文件上传
+						if(req !=null && ServletFileUpload.isMultipartContent(req)){
+							//判断是否有文件上传
 							ServletRequestContext ctx = new ServletRequestContext(req);
-							// 获取上传文件尺寸大小
+							//获取上传文件尺寸大小
 							long requestsize = ctx.contentLength();
-							System.out.println("上传文件大小: " + requestsize);
-							if (requestsize > fileSize) {
-
-							} else {
-								if (upload_type.equals("回款确认") && requestsize > 0) {
-									System.out.println("回款确认");
-									imagedata.setNote(note);// 备注
-									imagedata.setOriginalfilename(tmpFileName);// 原文件名
-									// imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-									// imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/return_confirmation/"+targetFileName.trim());
-									imagedata.setFilepath("http://120.79.252.173:8080/ftp/return_confirmation/"
-											+ targetFileName.trim());
-									// imagedata.setFilepath("");
-									// imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-									imagedata.setUploads(note);// 上传者
-									imagedata.setUploadtype(upload_type);// 上传类型
-									imagedata.setCity(city);
-									imagedata.setSubnode("己传");
-									imagedata.setParentnode(usernameid);// 用户名ID
-									imagedata.setSpare(username);// 用户名
-									imagedata.setSparetwo(roleName);// 角色名
-									String createData = DateUtils.getInDateTime((new Date()));// 日期
-									imagedata.setCreateData(createData);
-									imagedata.setUploadFtpRoute(reqid);
-									imagedataservice.imageDataAdd(imagedata);// 添加一条记录
-									sftp.cd(CaptchaConstants.RETURN_CONFIRMATION);
-
-									String sid = reqid;
-									int id = Integer.parseInt(sid);
-									boolean listimg = imagedataservice.loanClearing(id);// 待解压
-
-									if (req != null && ServletFileUpload.isMultipartContent(req)) {
-										// 判断是否文件上传
-										ServletRequestContext ctx2 = new ServletRequestContext(req);
-										// 获取上传文件尺寸大小
-										// System.out.println(maxSize);
-										long requestsize2 = ctx2.contentLength();
-										System.out.println(requestsize2);
-										// String origFileName =
-										// renameFileName(city,upload_type,tmpFileName);
-										InputStream input = f.getInputStream();
-										System.out.println(input);
-										// readStream(input);
-										// boolean isResult =
-										// ftp.storeFile(targetFileName, input);
-
-										// boolean isResult = ftp.storeFile(new
-										// String(targetFileName.getBytes("utf-8"),"iso-8859-1"),
-										// input);
-										sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
-										if (req != null && ServletFileUpload.isMultipartContent(req)) {
-											System.err.println("上传成功");
-											// input.close();
-											// ftp.logout();
-											String filepath = targetFileName;// 原文件名
-											String parentnode = city;
-											String uploadtype = upload_type;
-											String Parentnode = usernameid;
-											String spare = username;
-											String sparetwo = roleName;
-											ImageDataUpdate imagedata2 = new ImageDataUpdate(city, uploadtype,
-													Parentnode, spare, sparetwo, createDate);
-											List<ImageDataUpdate> listimg2 = imagedataservice
-													.financevoucherSelectToupload(imagedata2);
-											String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-											circulation record = new circulation("9", "待取证", createDate, username, t,
-													city, sparetwo, updatedata, reqid);
-											boolean coan = circulationservice.save(record);
-											if (listimg2.size() > 0 && listimg == true) {
-												// return new
-												// Json(true,"success",listimg);
-												return new Json(true, "success", listimg2,
-														CaptchaConstants.UPLOAD_SUCCESS_PENDING_AUDIT);
-											} else {
-												return new Json(false, "fail", listimg2, CaptchaConstants.FILE_TYPE);
-											}
-
-										} else {
-											System.err.println("上传失败！");
-											return new Json(false, "fail", "", CaptchaConstants.IMAGE_TYPE);
+							System.out.println("上传文件大小: "+requestsize);
+							if(requestsize > fileSize){
+								return new Json(false,"fail","",CaptchaConstants.UPDATESIZE);
+							}else{
+								if(upload_type.equals("取证凭证")&& requestsize > 0){
+									MultipartFile mfile4 = null;
+									for (int i = 0; i < tmpfile.length; i++) {
+										mfile4 = tmpfile[i];
+										if(mfile4.getSize()>1){
+											resultList.setLists(list);
+		             	 					fileupdate.add(mfile4);
+		             	 					 targetFileName = renameFileName(city,upload_type,mfile4.getOriginalFilename());// 重命名上传的文件名
+		             	 					System.out.println(mfile4.getOriginalFilename());
+		             	 					System.out.println(mfile4.getSize());
+		             	 					System.out.println("取证凭证");
+											imagedata.setNote(note);//备注
+				                         	imagedata.setOriginalfilename(mfile4.getOriginalFilename());//原文件名
+//				                         	imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
+//				                         	imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/obtain_evidence/"+targetFileName.trim());
+				                         	imagedata.setFilepath("http://120.79.252.173:8080/ftp/obtain_evidence/"+targetFileName.trim());
+//				                         	imagedata.setFilepath("");
+//				                         	imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
+				                         	imagedata.setUploads(note);//上传者
+				                         	imagedata.setUploadtype(upload_type);//上传类型
+				                         	imagedata.setCity(city);
+				                         	imagedata.setSubnode("己传");
+				                         	imagedata.setParentnode(usernameid);//用户名ID
+				                         	imagedata.setSpare(username);//用户名
+				                         	imagedata.setSparetwo(roleName);//角色名
+				                         	imagedata.setUploadFtpRoute(reqid);
+				                         	String createData = DateUtils.getInDateTime((new Date()));//日期
+				                         	imagedata.setCreateData(createData);
+				                         	imagedataservice.imageDataAdd(imagedata);//添加一条记录
+				                         	sftp.cd(CaptchaConstants.OBTAIN_EVIDENCE);
+				                         	sftp.put(mfile4.getInputStream(),new String(targetFileName.getBytes("GBK")));  //上传文件  
+										}else{
+											continue;
 										}
-									} else {
-										// System.out.println("FTP连接失败");
-										return new Json(false, "fail", "", CaptchaConstants.CONNECTION_FAILED);
-									}
-
-								}
-								if (upload_type.equals("取证凭证") && requestsize > 0) {
-									System.out.println("取证凭证");
-									imagedata.setNote(note);// 备注
-									imagedata.setOriginalfilename(tmpFileName);// 原文件名
-									// imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-									// imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/obtain_evidence/"+targetFileName.trim());
-									imagedata.setFilepath(
-											"http://120.79.252.173:8080/ftp/obtain_evidence/" + targetFileName.trim());
-									// imagedata.setFilepath("");
-									// imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-									imagedata.setUploads(note);// 上传者
-									imagedata.setUploadtype(upload_type);// 上传类型
-									imagedata.setCity(city);
-									imagedata.setSubnode("己传");
-									imagedata.setParentnode(usernameid);// 用户名ID
-									imagedata.setSpare(username);// 用户名
-									imagedata.setSparetwo(roleName);// 角色名
-									imagedata.setUploadFtpRoute(reqid);
-									String createData = DateUtils.getInDateTime((new Date()));// 日期
-									imagedata.setCreateData(createData);
-									imagedataservice.imageDataAdd(imagedata);// 添加一条记录
-									sftp.cd(CaptchaConstants.OBTAIN_EVIDENCE);
-									String sid = reqid;
-									int id = Integer.parseInt(sid);
-									boolean listimg = imagedataservice.WaitForensics(id);// 待解压
-
-									if (req != null && ServletFileUpload.isMultipartContent(req)) {
-										// 判断是否文件上传
-										ServletRequestContext ctx2 = new ServletRequestContext(req);
-										// 获取上传文件尺寸大小
-										// System.out.println(maxSize);
-										long requestsize2 = ctx2.contentLength();
-										System.out.println(requestsize2);
-										// String origFileName =
-										// renameFileName(city,upload_type,tmpFileName);
-										InputStream input = f.getInputStream();
-										System.out.println(input);
-										// readStream(input);
-										// boolean isResult =
-										// ftp.storeFile(targetFileName, input);
-
-										sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
-										if (req != null && ServletFileUpload.isMultipartContent(req)) {
-											System.err.println("上传成功");
-											// input.close();
-											// ftp.logout();
-											String filepath = targetFileName;// 原文件名
-											String parentnode = city;
-											String uploadtype = upload_type;
-											String Parentnode = usernameid;
-											String spare = username;
-											String sparetwo = roleName;
-											ImageDataUpdate imagedata2 = new ImageDataUpdate(city, uploadtype,
-													Parentnode, spare, sparetwo, createDate);
-											List<ImageDataUpdate> listimg2 = imagedataservice
-													.financevoucherSelectToupload(imagedata2);
-											String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-											circulation record = new circulation("6", "待取证", createDate, username, t,
-													city, sparetwo, updatedata, reqid);
-											boolean coan = circulationservice.save(record);
-											if (listimg2.size() > 0 && listimg == true && coan == true) {
-												// return new
-												// Json(true,"success",listimg);
-												return new Json(true, "success", listimg2, "上传成功-- 待进解压凭证审核");
-											} else {
-												return new Json(false, "fail", listimg2, CaptchaConstants.FILE_TYPE);
-											}
-
-										} else {
-											System.err.println("上传失败！");
-											return new Json(false, "fail", "", CaptchaConstants.IMAGE_TYPE);
-										}
-									} else {
-										System.out.println("FTP连接失败");
-									}
-
-								}
-								if (upload_type.equals("解押凭证") && requestsize > 0) {
-									System.out.println("解押凭证");
-									imagedata.setNote(note);// 备注
-									imagedata.setOriginalfilename(tmpFileName);// 原文件名
-									// imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-									// imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/solutionvoucher/"+targetFileName.trim());
-									imagedata.setFilepath(
-											"http://120.79.252.173:8080/ftp/solutionvoucher/" + targetFileName.trim());
-									// imagedata.setFilepath("");
-									// imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-									imagedata.setUploads(note);// 上传者
-									imagedata.setUploadtype(upload_type);// 上传类型
-									imagedata.setCity(city);
-									imagedata.setSubnode("己传");
-									imagedata.setParentnode(usernameid);// 用户名ID
-									imagedata.setSpare(username);// 用户名
-									imagedata.setSparetwo(roleName);// 角色名
-									String createData = DateUtils.getInDateTime((new Date()));// 日期
-									imagedata.setCreateData(createData);
-									imagedata.setUploadFtpRoute(reqid);
-									imagedataservice.imageDataAdd(imagedata);// 添加一条记录
-									sftp.cd(CaptchaConstants.SOLUTIONVOUCHER);
-									String sid = reqid;
-									int id = Integer.parseInt(sid);
-									boolean listimg = imagedataservice.tobedetained(id);// 待进压
-
-									if (req != null && ServletFileUpload.isMultipartContent(req)) {
-										// 判断是否文件上传
-										ServletRequestContext ctx2 = new ServletRequestContext(req);
-										// 获取上传文件尺寸大小
-										// System.out.println(maxSize);
-										long requestsize2 = ctx2.contentLength();
-										System.out.println(requestsize2);
-										// String origFileName =
-										// renameFileName(city,upload_type,tmpFileName);
-										InputStream input = f.getInputStream();
-										System.out.println(input);
-										// readStream(input);
-										// boolean isResult =
-										// ftp.storeFile(targetFileName, input);
-
-										sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
-										if (req != null && ServletFileUpload.isMultipartContent(req)) {
-											System.err.println("上传成功");
-											// input.close();
-											// ftp.logout();
-											String filepath = targetFileName;// 原文件名
-											String parentnode = city;
-											String uploadtype = upload_type;
-											String Parentnode = usernameid;
-											String spare = username;
-											String sparetwo = roleName;
-											ImageDataUpdate imagedata2 = new ImageDataUpdate(city, uploadtype,
-													Parentnode, spare, sparetwo, createDate);
-											List<ImageDataUpdate> listimg2 = imagedataservice
-													.financevoucherSelectToupload(imagedata2);
-											String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-											circulation record = new circulation("7", "待解押", createDate, username, t,
-													city, sparetwo, updatedata, reqid);
-											boolean coan = circulationservice.save(record);
-
-											if (listimg2.size() > 0 && listimg == true && coan == true) {
-												// return new
-												// Json(true,"success",listimg);
-												return new Json(true, "success", listimg2, "上传成功-- 待进押凭证审核");
-											} else {
-												return new Json(false, "fail", listimg2, CaptchaConstants.FILE_TYPE);
-											}
-
-										} else {
-											System.err.println("上传失败！");
-											return new Json(false, "fail", "", CaptchaConstants.IMAGE_TYPE);
-										}
-									} else {
-										System.out.println("FTP连接失败");
-									}
-
-								}
-								if (upload_type.equals("进押凭证") && requestsize > 0) {
-									System.out.println("进押凭证");
-									imagedata.setNote(note);// 备注
-									imagedata.setOriginalfilename(tmpFileName);// 原文件名
-									// imagedata.setFilepath(req.getContextPath()+"/imagedatafile/"+str);
-									// imagedata.setFilepath("http://"+req.getServerName()+":"+req.getServerPort()+"/ftp/entervoucher/"+targetFileName.trim());
-									imagedata.setFilepath(
-											"http://120.79.252.173:8080/ftp/entervoucher/" + targetFileName.trim());
-									// imagedata.setFilepath("");
-									// imagedata.setFilepath(targetDirectory+"/"+targetFileName);//上传路径
-									imagedata.setUploads(note);// 上传者
-									imagedata.setUploadtype(upload_type);// 上传类型
-									imagedata.setCity(city);
-									imagedata.setSubnode("己传");
-									imagedata.setParentnode(usernameid);// 用户名ID
-									imagedata.setSpare(username);// 用户名
-									imagedata.setSparetwo(roleName);// 角色名
-									String createData = DateUtils.getInDateTime((new Date()));// 日期
-									imagedata.setCreateData(createData);
-									imagedata.setUploadFtpRoute(reqid);
-									imagedataservice.imageDataAdd(imagedata);// 添加一条记录
-									sftp.cd(CaptchaConstants.ENTERVOUCHER);
-
-									String sid = reqid;
-									int id = Integer.parseInt(sid);
-									boolean listimg = imagedataservice.pendingconfirmation(id);// 待确认回款
-
-									if (req != null && ServletFileUpload.isMultipartContent(req)) {
-										// 判断是否文件上传
-										ServletRequestContext ctx2 = new ServletRequestContext(req);
-										// 获取上传文件尺寸大小
-										// System.out.println(maxSize);
-										long requestsize2 = ctx2.contentLength();
-										System.out.println(requestsize2);
-										// String origFileName =
-										// renameFileName(city,upload_type,tmpFileName);
-										InputStream input = f.getInputStream();
-										System.out.println(input);
-										// readStream(input);
-										// boolean isResult =
-										// ftp.storeFile(targetFileName, input);
-
-										sftp.put(f.getInputStream(), new String(targetFileName.getBytes("GBK"))); // 上传文件
-										if (req != null && ServletFileUpload.isMultipartContent(req)) {
-											System.err.println("上传成功");
-											String filepath = targetFileName;// 原文件名
-											String parentnode = city;
-											String uploadtype = upload_type;
-											String Parentnode = usernameid;
-											String spare = username;
-											String sparetwo = roleName;
-											ImageDataUpdate imagedata2 = new ImageDataUpdate(city, uploadtype,
-													Parentnode, spare, sparetwo, createDate);
-											List<ImageDataUpdate> listimg2 = imagedataservice
-													.financevoucherSelectToupload(imagedata2);
-											String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-											circulation record = new circulation("8", "待进押", createDate, username, t,
-													city, sparetwo, updatedata, reqid);
-											boolean coan = circulationservice.save(record);
-											if (listimg2.size() > 0 && listimg == true && coan == true) {
-												// return new
-												// Json(true,"success",listimg);
-												return new Json(true, "success", listimg2, "上传成功-- 待确认回款审核");
-											} else {
-												return new Json(false, "fail", listimg2, CaptchaConstants.FILE_TYPE);
-											}
-
-										} else {
-											System.err.println("上传失败！");
-											return new Json(false, "fail", "", CaptchaConstants.IMAGE_TYPE);
-										}
-									} else {
-										System.out.println("FTP连接失败");
 									}
 								}
-							}
-
+								
+	                	    
+                         	if(req !=null && ServletFileUpload.isMultipartContent(req)){
+                 	 			//判断是否文件上传
+                 	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
+                 	 			//获取上传文件尺寸大小
+//                 	 			System.out.println(maxSize);
+                 	 			long requestsize2 = ctx2.contentLength();
+                 	 			System.out.println(requestsize2);
+//                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
+                  	            InputStream input = f.getInputStream();
+                  	            System.out.println(input);
+//                  	            readStream(input);
+//                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
+                  	       
+	                	    
+                  	          
+                  	          if(req !=null && ServletFileUpload.isMultipartContent(req)){
+                  	        	 System.err.println("上传成功");
+//                  	        	  input.close();
+//                  	        	  ftp.logout();
+                  	        	String filepath =targetFileName;//原文件名
+                            	String parentnode =city;
+                            	String uploadtype = upload_type;
+                            	String Parentnode = usernameid;
+                            	String spare = username;
+                            	String sparetwo = roleName;
+                            	ImageDataUpdate imagedata2 = new ImageDataUpdate(city,uploadtype,Parentnode,spare,sparetwo,createDate);
+                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
+                			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+                            circulation record = new  circulation("6","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
+                			boolean coan = circulationservice.save(record);	
+                			String sid = reqid;
+                	    	int id = Integer.parseInt(sid);
+                	    boolean listimg= imagedataservice.WaitForensics(id);//待解压
+                            if(listimg2.size()> 0 && listimg == true && coan == true){
+                            		//return new Json(true,"success",listimg);
+                            		  return new Json(true,"success",listimg2,"上传成功-- 待进解压凭证审核");
+                            	}else{
+                            		return new Json(false,"fail",listimg2,CaptchaConstants.FILE_TYPE);
+                            	}
+                  	        	  
+                  	          }else{
+                  	        	  System.err.println("上传失败！"); 
+                  	        	  return new Json(false,"fail","",CaptchaConstants.IMAGE_TYPE);
+                  	          }
+                 	 		}else{
+            					System.out.println("FTP连接失败");
+            				}
+		                         	
+								}
 						}
-					} else {
-						return new Json(false, "fail", resultList, CaptchaConstants.IMAGE_TYPE);
-					}
-
+					}else{
+        	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
+        	 		}
+					
 				}
 			} catch (Exception e) {
-				// e.printStackTrace();
-				return new Json(false, "fail", e.getMessage(), "连接异常");
-			} finally {
-				if (ftp.isConnected()) {
-					try {
-						ftp.disconnect();
-					} catch (IOException ioe) {
-						ioe.printStackTrace();
-					}
-				}
-			}
-		}
+//				e.printStackTrace();
+				return new Json(false,"fail",e.getMessage(),"连接异常");
+			}finally {
+	            if (ftp.isConnected()) {
+	                try {
+	                    ftp.disconnect();
+	                } catch (IOException ioe) {
+	                    ioe.printStackTrace();
+	                }
+	            }
+	        }
+		  }
 		return null;
-
-	}
-
+		  
+	  }
 	/**
 	 * 根据 上传类型 原文件名 上传者姓名查所上传的
 	 * 

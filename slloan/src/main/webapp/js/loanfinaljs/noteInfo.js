@@ -59,38 +59,25 @@ var searchExport = function(back) {
 	recorFinal = e('.final-trial')
 	recorFinals = e('.financeNote')
 	
-	recordNote.value = back.note_Description1
-	recordFirst.value = back.note_Description2
-	recorFinal.value = back.note_Description3
+
 
 	  if(back.note_Description4 && back.note_Description4 != "null") {
 		  e('#final-record').style.display = 'block'
 		  recorFinals.value = back.note_Description4
 	  }
 	
-	 if(back.note_Description2 == "undefined" & back.note_Description2 == undefined|| back.note_Description2 == "null" || back.note_Description2 == null){
-		 recordFirst.value = ""
-	  }else if(back.note_Description2 != "undefined" & back.note_Description2 != undefined || back.note_Description2 != "null" & back.note_Description2 == null){
+	  if(back.note_Description3 && back.note_Description3 != "null") {
+		  recorFinal.value = back.note_Description3
+	  }
+	  
+	  if(back.note_Description2 && back.note_Description2 != "null") {
 		  recordFirst.value = back.note_Description2
 	  }
 	  
-	  if(back.note_Description1 != "undefined" & back.note_Description1 != undefined || back.note_Description1 != "null" & back.note_Description1 == null){
+	  if(back.note_Description1 && back.note_Description1 != "null") {
 		  recordNote.value = back.note_Description1
-	  }else if(back.note_Description1 != "undefined" & back.note_Description1 == undefined || back.note_Description1 == "null" & back.note_Description1 == null){
-		  recordNote.value = ""
-	  }
-	  if(back.note_Description3 != "undefined" & back.note_Description3 != undefined || back.note_Description3 != "null" & back.note_Description3 == null){
-		  recorFinal.value = back.note_Description3
-	  }else if(back.note_Description3 != "undefined" & back.note_Description3 == undefined || back.note_Description3 == "null" & back.note_Description3 == null){
-		  recorFinal.value = ""
 	  }
 }
-
-var initback = {
-		id: '17'
-}
-
-//searchExport(initback)
 
 
 
@@ -105,7 +92,9 @@ var searchAjax = function(method, url, datas) {
 		},
 		success : function(data) {
 			if (data.msg == 'success') {
-				searchExport(data.obj)
+				if(data.obj != null) {
+					searchExport(data.obj)
+				}
 			} else {
 				alert('这页资料尚未填写')
 			}
@@ -215,7 +204,7 @@ var backBtn = function(element) {
 				var url = '/slloan/loan/loannotllback'
 				var data = collectData()
 				data.id=localStorage.finalID
-				submitAjax(method, url, data)
+				backAjax(method, url, data)
 			  layer.close(index);
 			});
 	})

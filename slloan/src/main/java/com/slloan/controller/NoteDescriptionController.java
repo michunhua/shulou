@@ -1,6 +1,9 @@
 package com.slloan.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,14 +17,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.slloan.entity.ApplyForLoanInformation;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.Contacts;
 import com.slloan.entity.NoteDescription;
 import com.slloan.entity.PersonalProfile;
+import com.slloan.entity.PropertyInformation;
 import com.slloan.entity.circulation;
+import com.slloan.service.inter.ApplyForLoanInformationService;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
+import com.slloan.service.inter.ContactsService;
 import com.slloan.service.inter.NoteDescriptionService;
 import com.slloan.service.inter.PersonalProfileService;
+import com.slloan.service.inter.PropertyInformationService;
 import com.slloan.service.inter.circulationService;
 import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
@@ -47,6 +55,15 @@ public class NoteDescriptionController {
 	private circulationService circulationservice;
 	@Autowired
 	private PersonalProfileService personalproFileService;
+	
+	@Autowired
+	private ApplyForLoanInformationService applyForLoanInformationservice;
+	
+	@Autowired
+	private ContactsService contactsservice;
+	
+	@Autowired
+	private PropertyInformationService propertyinformationservice;
 
 	@ResponseBody
 	@RequestMapping("/notedescription")
@@ -130,6 +147,38 @@ public class NoteDescriptionController {
 				return new Json(true, "success", contactcd);
 		
 	}
+	
+	
+	/***
+	 * 根据ID查所有联系人信息
+	 * 
+	 * @param req
+	 * @param amount 
+	 * @return
+	 */
+	@RequestMapping(value = "/notedescriptis", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> UserSelectByIds(HttpServletRequest req) {
+
+		System.out.println("======================================");
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		Contacts con = new Contacts();
+		PropertyInformation pro = new PropertyInformation();
+		String stateid = json.getString("id");
+		int id = Integer.parseInt(stateid);
+		ApplyForLoanInformation amount = applyForLoanInformationservice.SelectByIdApp(id);
+		Contacts contacts = contactsservice.SelectByIdCon(id);
+		PropertyInformation name = propertyinformationservice.SelectByIdPro(id);
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		map.put("amount", amount);
+		map.put("contacts", contacts);
+		map.put("name", name);
+		return map;
+		
+	}
+	
+
 
 	/**
 	 * 修改用户保存
@@ -400,7 +449,6 @@ public class NoteDescriptionController {
 //		}
 	}
 
-
 	/**
 	 * 贷款创建备注提交到贷款初审
 	 * 
@@ -426,18 +474,26 @@ public class NoteDescriptionController {
 				parentnodeId, city, rolename, spare1, id);
 		circulation record = new circulation("1", fallbackname, createDate, username, parentnodeId, city, rolename,
 				updatedata, sid);
-		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
-		boolean coan = circulationservice.save(record);
-		if (isResultInsert == true && coan == true) {
-			System.out.println("插入流程表成功");
-			return new Json(true, "success", isResultInsert, "");
-		} else {
-			System.out.println("失败");
-			return new Json(false, "fail", isResultInsert, "");
+		ApplyForLoanInformation applys = applyForLoanInformationservice.SelectByIdPro(id);			
+		if(applys != null){
+			boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
+			boolean coan = circulationservice.save(record);
+			if (isResultInsert == true && coan == true) {
+				System.out.println("插入流程表成功");
+				return new Json(true, "success", isResultInsert, "");
+			} else {
+				System.out.println("失败");
+				return new Json(false, "fail", isResultInsert, "");
+			}
+		}else{
+			return new Json(false, "fail");
 		}
+		
 
 		// return "redirect:/loan/loancrea";// 提交到贷款初审
 	}
+
+	
 
 
 //	/**

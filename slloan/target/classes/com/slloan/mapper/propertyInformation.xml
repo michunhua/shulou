@@ -66,6 +66,11 @@ VALUES
 		<select id="SelectById" parameterType="int"  resultType="com.slloan.entity.PropertyInformation">
 				select * from property_information where state = #{id}
 		</select>
+		
+		<!-- 根据ID查记录 -->
+		<select id="SelectByIdPro" parameterType="int"  resultType="com.slloan.entity.PropertyInformation">
+				select name from property_information where state = #{id}
+		</select>
      
     <update id="proupdate" parameterType="com.slloan.entity.PropertyInformation">   
     update property_information  

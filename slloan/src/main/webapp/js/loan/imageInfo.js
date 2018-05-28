@@ -435,7 +435,10 @@ var deleteImage = function(element, select) {
 			data.username = localStorage.purusername
 			data.rolename = localStorage.purrole
 			data.id = localStorage.createID || localStorage.createTemporaryId
-	        imagesAjax(method, url, data)
+			layer.confirm('确定删除?', {icon: 3, title:'注意'}, function(index){
+				imagesAjax(method, url, data)
+	    		layer.close(index);
+	    	});
 		}
 	})
 }
