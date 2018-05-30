@@ -629,7 +629,9 @@ var passAjax = function(method, url, datas) {
 				saveSend.length = 0
 				initData()
 				unselected('#alls')
-			}
+			} else if(data.msg == 'fail'){
+	    		alert(data.value)
+	    	}
 		},
 		error: function() {
 			alert('服务器错误')

@@ -108,4 +108,5 @@ public interface UserDao extends BaseDao<UserLogin>{
 	    public UserLogin selectroleUserName(Map<Object,Object>map);
 	    
 	    public boolean updateUserCity (Map<String,Object>map);
+	    public UserLogin selectRandomNumber(Map<String,Object> map);
 }

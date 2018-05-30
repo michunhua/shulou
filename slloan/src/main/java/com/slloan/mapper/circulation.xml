@@ -44,6 +44,15 @@
 		ORDER BY id
 
 	</select>
+	<select id="selectRandomNumbersecond" resultType="com.slloan.entity.circulation" parameterType="Map">
+	 	SELECT * FROM the_circulation 
+	 	<where>
+	 		<if test="spare !=null and spare !=''">spare =#{spare}</if>
+	 		<if test="city !=null and city !=''">and city = #{city}</if>
+			<if test="rolename !=null and rolename !=''">and rolename like concat('%',#{rolename},'%')</if> 
+	 	</where>
+	 	ORDER BY  RAND() LIMIT 1;
+	 </select>
 	
 	
 </mapper>

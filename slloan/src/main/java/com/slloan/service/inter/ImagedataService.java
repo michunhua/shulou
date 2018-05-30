@@ -76,15 +76,16 @@ public interface ImagedataService {
 		 boolean FirsttrialbatchPast(List batchPast);
 		 boolean loanFinalReviewPast(List loanFinalReviewpast);
 		 boolean loanFinalReviewRefuse(List loanFinalRefuse);
-		 boolean WaitForensics(int id);
+		 boolean WaitForensics(Map<Object,Object>param);
 		 boolean tobesettled(int id);
-		 boolean tobeforensics(int id);//待取证
-		 boolean tobedetained(int id);//待进押
-		 boolean pendingconfirmation(int id);//待确认回款
-		 boolean loanClearing(int id);//待结算
+		 boolean tobeforensics(Map<Object,Object>param);//待取证
+		 boolean tobedetained(Map<Object,Object>param);//待进押
+		 boolean pendingconfirmation(Map<Object,Object>param);//待确认回款
+		 boolean loanClearing(Map<Object,Object>param);//待结算
 		 
 		  ObjectSeq addSeq();
 		  
 		 ImageDataUpdate imagedataUpdateNote(ImageDataUpdate image);
 		 public ImageDataUpdate selectByDelId(String spare,String upload,String filepath);
+		 public boolean initialbatch(Map<Object,Object> image);
 }

@@ -278,7 +278,10 @@ var submitBtn = function(element) {
 			}
 			
 			if(judgment(submitForm)) {
-				submitAjax(method, url, data)
+			    layer.confirm('确定提交?', {icon: 3, title:'注意'}, function(index){
+				  submitAjax(method, url, data)
+				  layer.close(index);
+				});
 			} else {
 				layer.msg("请先填写完必填资料后方可提交", {time: 3000})
 			}

@@ -96,7 +96,26 @@ public class CircuLationRecord implements Serializable{
 		this.createDate = createDate;
 	}
 
+	public CircuLationRecord(String submit, String city, int state) {
+		super();
+		this.submit = submit;
+		this.city = city;
+		this.state = state;
+	}
 
+
+	public CircuLationRecord(String fallbackname, int state,String updatedate,String username,String ParentnodeId,String rolename, int id) {
+//		super();
+		this.fallbackname = fallbackname;
+//		this.city = city;
+		this.state = state;
+		this.updatedate = updatedate;
+		this.username = username;
+		this.ParentnodeId = ParentnodeId;
+		this.rolename = rolename;
+		this.id = id;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

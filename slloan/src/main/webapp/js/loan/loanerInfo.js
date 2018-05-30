@@ -43,25 +43,25 @@ layui.use(['form', 'layedit', 'laydate'], function(){
 		 ,mustWrite: function(value){
 			 var contents = document.querySelector('#matherland').value.length
 		     if(value ==  6 & contents == 0){
-		       return '请填写其他证件类型';
+		       return '已选其他,请在已选中的右边输入框填写.';
 		     }
 		   }
 		 ,mustland: function(value){
 			 var contents = document.querySelector('#haveland').value.length
 		     if(value ==  3 & contents == 0 ){
-		       return '请填写其他国家或地区';
+		       return '已选其他,请在已选中的右边输入框填写.';
 		     }
 		   }
 		 ,mustcensus: function(value){
 			 var contents = document.querySelector('#havecensus').value.length
 		     if(value ==  2 & contents == 0){
-		       return '请填写其他户籍';
+		       return '已选其他,请在已选中的右边输入框填写.';
 		     }
 		   }
 		 ,musthouse: function(value){
 			 var contents = document.querySelector('#havehouse').value.length
 		     if(value ==  6 & contents == 0){
-		       return '请填写其他住房情况';
+		       return '已选其他,请在已选中的y右边输入框填写。';
 		     }
 		   }
 	  });

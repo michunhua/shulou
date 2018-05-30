@@ -92,7 +92,7 @@ data: {data:JSON.stringify(datas)},
 success: function(data) {
 	if(data.msg == 'success') {
 		searchExport(data.obj)
-	} else {
+	}else {
 		alert('这页资料尚未填写')
 	}
 },

@@ -80,14 +80,14 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	public boolean updatefallbackinsert(CircuLationRecord circuLationRecord) {
 		String fallbackname =circuLationRecord.getFallbackname();
 		int state =circuLationRecord.getState();
-		String updatedate = circuLationRecord.getUpdatedate();
+		String updatedate =DateUtils.getInDateTime2((new Date()));
 		int id =circuLationRecord.getId();
-//		String username = circuLationRecord.getUsername();
-//		String rolename =circuLationRecord.getRolename();//obj.getString("rolename");
-//		String city =circuLationRecord.getCity();//obj.getString("city");
-//		 String parentnodeId =circuLationRecord.getParentnodeId();// obj.getString("parentnodeId");
+		String username = circuLationRecord.getUsername();
+		String rolename =circuLationRecord.getRolename();//obj.getString("rolename");
+		String city =circuLationRecord.getCity();//obj.getString("city");
+		 String parentnodeId =circuLationRecord.getParentnodeId();// obj.getString("parentnodeId");
 		
-		CircuLationRecord c = new CircuLationRecord(fallbackname,state,updatedate,id);
+		CircuLationRecord c = new CircuLationRecord(fallbackname,state,updatedate,username,parentnodeId,rolename,id);
 		
 		return recordSubmitDao.updatefallbackinsert(c);
 	}
@@ -142,4 +142,6 @@ public class CircuLationRecordSubmitServiceImpl implements CircuLationRecordSubm
 	public boolean updateDateStateCancel(String id) {
 		return recordSubmitDao.updateDateStateCancel(id);
 	}
+	
+	
 }

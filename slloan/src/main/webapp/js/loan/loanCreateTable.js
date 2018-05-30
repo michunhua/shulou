@@ -98,7 +98,7 @@ layui.use('laydate', function(){
 //过滤数据
 var myFilter = function(data) {
 	var result = ""
-	if(data) {
+	if(data && data != 'null' && data != 'undefined') {
 		return data
 	} else {
 		return  result
@@ -136,7 +136,7 @@ var addTable = function(data) {
 		var userName = myFilter(datas.lists[i].applyfor[0].amount)
 		var phone = myFilter(datas.lists[i].mobile_phone)
 		var number = myFilter(datas.lists[i].id_number)
-		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit) + datas.lists[i].applyfor[0].time_Limits
+		var limit = myFilter(datas.lists[i].applyfor[0].time_Limit) + myFilter(datas.lists[i].applyfor[0].time_Limits)
 		var state = myFilter(datas.lists[i].notes[0].fallbackname)
 		var state_number = data.lists[i].state
 		var address = myFilter(datas.lists[i].home_address_now)
@@ -149,7 +149,13 @@ var addTable = function(data) {
 		td1.classList.add('flag')
 		td1a.innerText = ID
 		td1.innerText = userid
-		td2.innerText = userName + ' 元'
+		
+		if(userName) {
+			td2.innerText = userName + ' 元'
+		} else {
+			td2.innerText = userName
+		}
+		
 		td3.innerText = phone
 		td4.innerText = number
 		td5.innerText = limit

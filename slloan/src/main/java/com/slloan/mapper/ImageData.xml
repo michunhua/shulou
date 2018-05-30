@@ -63,6 +63,7 @@ delete from imagedata
 		 <if test="city !=null and city !=''">and city =#{city}</if>
 		
 		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute=#{uploadFtpRoute}</if>
+		ORDER BY id desc
 </select>
 <!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
 <select id="financevoucherSelectTouploadAdmin"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
@@ -71,6 +72,7 @@ delete from imagedata
 <!-- 		 <if test="city !=null and city !=''"> city =#{city}</if> -->
 		<if test="uploadtype !=null and uploadtype !=''"> uploadtype=#{uploadtype}</if>
 		<if test="uploadFtpRoute !=null and uploadFtpRoute !=''">and uploadFtpRoute=#{uploadFtpRoute}</if>
+		ORDER BY id desc
 </select>
 <!-- 转账凭证&结算凭证上传文件上传改为已传  {sparetwo=按揭员, uploadtype=身份证明, spare=张三, Parentnode=289, city=aa}-->
 <select id="financevoucherSelectToupload2"  parameterType="Map"  resultType="com.slloan.entity.ImageDataUpdate">
@@ -83,6 +85,7 @@ delete from imagedata
 		
 		<if test="id !=null and id !=''">and id=#{id}</if>
 		<if test="filepath !=null and filepath !=''">and filepath like CONCAT('%', #{filepath}, '%')</if>
+		ORDER BY id desc
 </select>
 <!--贷款终审列表审批是否通过  -->
 <update id="loanFinalReviewRefuse" parameterType="java.util.List">
@@ -121,24 +124,40 @@ delete from imagedata
 	update recordsubmit_table set fallbackname  = '已结清'  , state = '10' where submit=#{id}
 </update> 
 
-<update id="WaitForensics" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待解押'  , state = '6' where submit=#{id}
+<update id="WaitForensics" parameterType="Map" >
+	update recordsubmit_table set fallbackname  = '待解押'  , state = '6',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename}
+	where submit=#{id}
 </update> 
 
-<update id="tobedetained" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待进押'  , state = '7' where submit=#{id}
+<update id="tobedetained" parameterType="Map" >
+	update recordsubmit_table set fallbackname  = '待进押'  , state = '7',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename}
+	where submit=#{id}
 </update>
-<update id="tobeforensics" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待取证'  , state = '5' where submit=#{id}
+<update id="tobeforensics" parameterType="Map" >
+	update recordsubmit_table set fallbackname  = '待取证'  , state = '5',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename}
+    where submit=#{id}
 </update>
 
-<update id="pendingconfirmation" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待确认回款'  , state = '8' where submit=#{id}
+<update id="pendingconfirmation" parameterType="Map" >
+	update recordsubmit_table set fallbackname  = '待确认回款'  , state = '8',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename} where submit=#{id}
 </update>
 
-<update id="loanClearing" parameterType="int" >
-	update recordsubmit_table set fallbackname  = '待结算'  , state = '9' where submit=#{id}
+<update id="loanClearing" parameterType="Map" >
+	update recordsubmit_table set fallbackname  = '待结算'  , state = '9',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename}
+	 where submit=#{id}
 </update>
+
+<update id="initialbatch" parameterType="Map" >
+	update recordsubmit_table set fallbackname  = '初审审批回退'  , state = '0',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename}
+	where submit=#{id}
+</update>
+
 <!--
 财务列表审批是否通过 
  财务审核通过待放款 -->
@@ -180,4 +199,5 @@ delete from imagedata
 			<if test="filepath !=null and filepath !=''">and filepath like concat('%',#{filepath},'%')</if>
 		</where>
 </select>
+
 </mapper>

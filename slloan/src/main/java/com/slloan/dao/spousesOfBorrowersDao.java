@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.slloan.entity.ApplyForLoanInformation;
+import com.slloan.entity.PropertyInformation;
 import com.slloan.entity.SpousesOfBorrowers;
 
 
@@ -22,4 +23,6 @@ public interface spousesOfBorrowersDao {
 	List<SpousesOfBorrowers> findAll();
 	
 	SpousesOfBorrowers SelectById(int id);
+	
+	SpousesOfBorrowers SelectByIdSpo(int id);
 }

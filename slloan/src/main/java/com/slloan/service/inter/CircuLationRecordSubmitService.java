@@ -64,4 +64,6 @@ public interface CircuLationRecordSubmitService {
 	public boolean updateDateState(String id);//挂起
 	CircuLationRecord selectByidHangup(CircuLationRecord submit);
 	public boolean updateDateStateCancel(String id);
+	
+	
 }

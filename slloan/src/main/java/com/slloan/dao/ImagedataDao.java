@@ -67,12 +67,13 @@ public interface ImagedataDao {
 		 boolean loanFinalReviewPast(List loanfianl);
 		 boolean loanFinalReviewRefuse(List loanFinalRefuse);
 		 
-		 boolean WaitForensics(int id);//待取证
+		 
+		 boolean WaitForensics(Map<Object,Object> param);//待取证
 		 boolean tobesettled(int id);//已结清
-		 boolean tobedetained(int id);//待进押
-		 boolean tobeforensics(int id);//待取证
-		 boolean pendingconfirmation(int id);//待取证
-		 boolean loanClearing(int id);//待结算
+		 boolean tobedetained(Map<Object,Object> param);//待进押
+		 boolean tobeforensics(Map<Object,Object> param);//待取证
+		 boolean pendingconfirmation(Map<Object,Object> param);//待取证
+		 boolean loanClearing(Map<Object,Object> param);//待结算
 		 
 		 ImageDataUpdate imagedataUpdateNote(Map<String,Object> image);
 		 /**
@@ -82,4 +83,5 @@ public interface ImagedataDao {
 			 */
 			public List<ImageDataUpdate> financevoucherSelectTouploadAdmin(Map<String,Object> param);
 			public ImageDataUpdate selectByDelId(Map<String,Object> image);
+			public boolean initialbatch(Map<Object,Object> image);
 }

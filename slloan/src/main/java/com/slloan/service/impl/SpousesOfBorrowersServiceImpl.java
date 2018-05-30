@@ -76,4 +76,10 @@ public class SpousesOfBorrowersServiceImpl implements SpousesOfBorrowersService 
 		return spousesOfBorrowersDao.SelectById(id);
 	}
 
+	@Override
+	public SpousesOfBorrowers SelectByIdSpo(int id) {
+		// TODO Auto-generated method stub
+		return spousesOfBorrowersDao.SelectByIdSpo(id);
+	}
+
 }

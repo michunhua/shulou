@@ -183,7 +183,15 @@ public class circulationServiceImpl implements circulationService{
 		map.put("state", param.getState());
 		return recordSubmitDao.findById(map);
 	}
-
+		
+	@Override
+	public circulation selectRandomNumbersecond(String spare, String city,String rolename) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("spare", spare);
+		param.put("city", city);
+		param.put("rolename", rolename);
+		return recordSubmitDao.selectRandomNumbersecond(param);
+	}
 
 
 }

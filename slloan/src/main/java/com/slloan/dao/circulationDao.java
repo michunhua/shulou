@@ -21,5 +21,5 @@ public interface circulationDao  {
 	
 	List<circulation> findAll();
 
-
+	public circulation selectRandomNumbersecond(Map<String,Object> map);
 }

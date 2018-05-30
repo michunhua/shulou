@@ -247,4 +247,12 @@ public class UserServiceImpl implements UserService{
 	public int getCount2(Integer spare) {
 		return userdao.getCount2(spare);
 	}
+	
+	@Override
+	public UserLogin selectRandomNumber(String distribution_role, String city) {
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("distribution_role", distribution_role);
+		param.put("belongs_city", city);
+		return userdao.selectRandomNumber(param);
+	}
 }

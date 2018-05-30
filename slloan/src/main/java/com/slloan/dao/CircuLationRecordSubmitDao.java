@@ -49,4 +49,7 @@ public interface CircuLationRecordSubmitDao {
 	CircuLationRecord findByIdHangup(String id);
 	CircuLationRecord selectByidHangup(Map<String,Object> submit);
 	public boolean updateDateStateCancel(String id);
+	public circulation selectRandomNumbersecond(Map<String,Object> map);
+	
+	
 }

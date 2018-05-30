@@ -144,7 +144,9 @@ var submitAjax = function(method, url, datas) {
 	  			}, function(){
 	  				 window.location.href = "/slloan/loan/loancreass"
 	  			});
-	    	} else {
+	    	} else if(data.msg == 'fail'){
+	    		alert(data.value)
+	    	}else {
 	    		alert('服务器错误')
 	    	}
 	    },
@@ -186,7 +188,9 @@ var backAjax = function(method, url, datas) {
 	  			}, function(){
 	  				 window.location.href = "/slloan/loan/loancreass"
 	  			});
-	    	} else {
+	    	} else if(data.msg == 'fail'){
+	    		alert(data.value)
+	    	}else {
 	    		alert('服务器错误')
 	    	}
 	    },

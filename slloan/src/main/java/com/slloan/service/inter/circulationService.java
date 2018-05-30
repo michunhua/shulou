@@ -22,5 +22,8 @@ public interface circulationService {
 	
 	boolean save2(circulation circul); 
 	
-	List<circulation> findById2(circulation param); 
+	List<circulation> findById2(circulation param);
+	
+	public circulation selectRandomNumbersecond(String spare, String city, String rolename);
+
 }

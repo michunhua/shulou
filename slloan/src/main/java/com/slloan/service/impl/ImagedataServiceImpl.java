@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -172,8 +173,16 @@ public class ImagedataServiceImpl implements ImagedataService {
 		return imagedatadao.loanFinalReviewRefuse(loanFinalRefuse);
 	}
 	@Override
-	public boolean WaitForensics(int id) {
-		return imagedatadao.WaitForensics(id);
+	public boolean WaitForensics(Map<Object,Object>param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = param.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry)it.next();
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+			map.put(key, value);
+		}
+		return imagedatadao.WaitForensics(map);
 	}
 	@Override
 	public boolean tobesettled(int id) {
@@ -181,20 +190,52 @@ public class ImagedataServiceImpl implements ImagedataService {
 	}
 	
 	@Override
-	public boolean tobeforensics(int id) {
-		return imagedatadao.tobeforensics(id);
+	public boolean tobeforensics(Map<Object,Object>param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = param.entrySet().iterator();
+			while(it.hasNext()){
+				Map.Entry entry = (Map.Entry) it.next();
+				Object key = entry.getKey();
+				Object value = entry.getValue();
+				map.put(key, value);
+			}
+		return imagedatadao.tobeforensics(map);
 	}
 	@Override
-	public boolean tobedetained(int id) {
-		return imagedatadao.tobedetained(id);
+	public boolean tobedetained(Map<Object,Object>param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = param.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry)it.next();
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+			map.put(key, value);
+		}
+		return imagedatadao.tobedetained(map);
 	}
 	@Override
-	public boolean pendingconfirmation(int id) {
-		return imagedatadao.pendingconfirmation(id);
+	public boolean pendingconfirmation(Map<Object,Object> param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = param.entrySet().iterator();
+			while(it.hasNext()){
+				Map.Entry entry = (Map.Entry)it.next();
+				Object key = entry.getKey();
+				Object value = entry.getValue();
+				map.put(key, value);
+			}
+		return imagedatadao.pendingconfirmation(map);
 	}
 	@Override
-	public boolean loanClearing(int id) {
-		return imagedatadao.loanClearing(id);
+	public boolean loanClearing(Map<Object,Object> param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = param.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry)it.next();
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+			map.put(key, value);
+		}
+		return imagedatadao.loanClearing(map);
 	}
 
 	@Override
@@ -219,5 +260,17 @@ public class ImagedataServiceImpl implements ImagedataService {
 		map.put("uploadFtpRoute", upload);
 		map.put("filepath", filepath);
 		return imagedatadao.selectByDelId(map);
+	}
+	@Override
+	public boolean initialbatch(Map<Object, Object> image) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = image.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry) it.next();
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+			map.put(key, value);
+		}
+		return imagedatadao.initialbatch(map);
 	}
 }

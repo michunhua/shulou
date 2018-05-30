@@ -327,6 +327,7 @@ var uploadCertificate = function(element) {
 		}
 	}) 
 } 
+
 function certificate(){
 	 var input = document.createElement('input');  
 	 	input.setAttribute('type', 'file');  
@@ -334,6 +335,7 @@ function certificate(){
 	    input.setAttribute('style', ' height: 28px;');  
 	 document.getElementById('filewidth').appendChild(input );
 }
+
 function myFunction(){
 	var node=document.getElementById("aabbccddeeff").dis;
 	var textnode=document.createTextNode("Water");
@@ -341,6 +343,7 @@ function myFunction(){
 	document.getElementById("aabbccddeeff").appendChild(node);
 	document.getElementById("aabbccddeeff").style.display="block";
 }
+
 // 获取 Id 给到 状态值
 var gainIdToState = function() {
 	
@@ -474,12 +477,12 @@ function updateUserInfo() {
 	}
 
 var __main = function() {
-initData()
-//envs('#save-data')
-  numberSearch('.tab-data')
-uploadCertificate(".tab-data")
-envs('#save-data')
-Hang_cirulation('.tab-data')
+	initData()
+	//envs('#save-data')
+	numberSearch('.tab-data')
+	uploadCertificate(".tab-data")
+	envs('#save-data')
+	Hang_cirulation('.tab-data')
 }
 
 __main()

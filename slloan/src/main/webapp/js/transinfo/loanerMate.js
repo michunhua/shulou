@@ -102,8 +102,6 @@ success: function(data) {
 	console.log('返回数据', data)
 	if(data.msg == 'success') {
 		searchExport(data.obj)
-	} else {
-		alert('这页资料尚未填写')
 	}
 },
 error: function(){

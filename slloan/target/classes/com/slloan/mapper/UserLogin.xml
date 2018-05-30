@@ -153,4 +153,15 @@
       <update id="updateUserCity"  parameterType="Map">
 	 		update user_Login set distribution_Role =#{rolename},belongs_City=#{city},r_id=#{rid} where id=#{id}
 	 </update>
+	 
+	 <select id="selectRandomNumber" resultType="com.slloan.entity.UserLogin" parameterType="Map">
+	 	SELECT * FROM user_Login 
+<!-- 	 	where distribution_role LIKE '%初审%'  and belongs_city = '山西'  ORDER BY  RAND() LIMIT 1; -->
+	 	<where>
+	 		<if test="distribution_role !=null and distribution_role !=''">distribution_role LIKE concat('%',#{distribution_role},'%')</if>
+	 		<if test="belongs_city !=null and belongs_city !=''">and belongs_city = #{belongs_city}</if>
+<!-- 			<if test="belongs_city !=null and belongs_city !=''">and belongs_city = '山西'</if> -->
+	 	</where>
+	 	ORDER BY  RAND() LIMIT 1;
+	 </select>
 </mapper>

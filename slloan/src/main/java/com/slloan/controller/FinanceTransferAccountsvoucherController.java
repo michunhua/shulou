@@ -42,9 +42,11 @@ import com.slloan.constants.CaptchaConstants;
 import com.slloan.entity.CircuLationRecord;
 import com.slloan.entity.ImageDataUpdate;
 import com.slloan.entity.ResultList;
+import com.slloan.entity.UserLogin;
 import com.slloan.entity.circulation;
 import com.slloan.service.inter.CircuLationRecordSubmitService;
 import com.slloan.service.inter.ImagedataService;
+import com.slloan.service.inter.UserService;
 import com.slloan.service.inter.circulationService;
 import com.slloan.util.DateUtils;
 import com.slloan.util.Json;
@@ -53,61 +55,63 @@ import net.sf.json.JSONObject;
 
 /**
  * 财务凭证&结算上传到FTP
- * 
  * @author Administrator
  *
  */
-@Controller(value = "financeTransferaccountsvouchercontroller")
-@RequestMapping(value = "financevoucher")
+@Controller(value="financeTransferaccountsvouchercontroller")
+@RequestMapping(value="financevoucher")
 public class FinanceTransferAccountsvoucherController {
-
+	
 	@Value("${ftpIp}")
-	public String ftpIp;// IP
-
+	public String ftpIp;//IP
+	
 	@Value("${ftpPort}")
-	public int ftpPort;// 端口
-
+	public int ftpPort;//端口
+	
 	@Value("${ftpUser}")
-	public String ftpUser;// 用户名
-
+	public String ftpUser;//用户名
+	
 	@Value("${ftpPwd}")
-	public String ftpPwd;// 密码
-
+	public String ftpPwd;//密码
+	
 	@Value("${fileSize}")
 	public int fileSize;
-
+	
 	@Value("${sftp}")
 	public String sftpp;
-
+	
 	FileInputStream fis = null;
-	static ZipFile zf;
+	static ZipFile zf ;
 	static List<Long> filesize;
-	static Long sum = 0l;// 文件总大小
-	static StringBuffer sb;
-	Iterator it;// 定义一个迭代器
+	static Long sum = 0l;//文件总大小
+	static StringBuffer sb ;
+	Iterator it ;//定义一个迭代器	
 	static String filenameimage;
-	FTPClient ftp = new FTPClient();
-	File target;
-	String filename2;
-	static int reply;
-	private long maxSize;
-	InputStream input;
+	 FTPClient ftp = new FTPClient();
+	 File target;
+	 String filename2;
+	 static int reply;
+	 private long maxSize;
+	 InputStream input;
 	Set<String> setlist = new TreeSet<String>();
-	List<MultipartFile> fileupdate =new ArrayList<MultipartFile>();
 	ResultList<Object> resultList = new ResultList<Object>();
+	List<MultipartFile> fileupdate =new ArrayList<MultipartFile>();
 	List<Object> list = new ArrayList<Object>();
 	@Autowired
 	private ImagedataService imagedataservice;
-
+	
 	@Autowired
 	private CircuLationRecordSubmitService recordSubmitService;
-
+	
 	@Autowired
 	private circulationService cService;
-
+	
 	@Autowired
 	private circulationService circulationservice;
-
+	
+	@Autowired
+	private UserService userservice;
+	
 	/**
 	 * 转账凭证上传到FTP
 	 * @param tmpfile
@@ -206,8 +210,6 @@ public class FinanceTransferAccountsvoucherController {
 	             	 						mfile = tmpfile[i];
 	             	 						if(mfile.getSize()>1){
 	             	 							
-//	             	 						}
-//		             	 					resultList.setLists(list);
 		             	 					fileupdate.add(mfile);
 		             	 					 targetFileName = renameFileName(city,upload_type,mfile.getOriginalFilename());// 重命名上传的文件名
 		             	 					System.out.println(mfile.getOriginalFilename());
@@ -239,9 +241,26 @@ public class FinanceTransferAccountsvoucherController {
 	             	 					 
 	     	                     		}
 	             	 				}
-	             	 				String sid = reqid;
-     	                	    	int id = Integer.parseInt(sid);
-     	                	    boolean listimg= imagedataservice.tobeforensics(id);//待取证
+	             	 				circulation userLogin = circulationservice.selectRandomNumbersecond(reqid,city,"按揭员");
+	             	 				 boolean listimg = false;
+	             	 				if(userLogin !=null){
+	             	 					System.out.println(userLogin.getId());
+	              	 					System.out.println(userLogin.getCity());
+	              	 					System.out.println(userLogin.getRolename());
+	              	 					String userName = userLogin.getUsername();
+//	             	 					int intid = userLogin.getId();
+	             	 					String ParentnodeId = userLogin.getParentnodeId();
+	             	 					String roleName2= userLogin.getRolename();
+	             	 					String sid = reqid;
+	     	                	    	int id = Integer.parseInt(sid);
+	     	                	    	Map<Object,Object> map = new HashMap<Object,Object>();
+	     	                	    		map.put("username",userName);
+	     	                	    		map.put("parentnodeId", ParentnodeId);
+	     	                	    		map.put("rolename", roleName2);
+	     	                	    		map.put("id", id);
+	     	                	     listimg= imagedataservice.tobeforensics(map);//待取证
+	             	 				}
+	             	 				
      	                	    
      	                	    if(req !=null && ServletFileUpload.isMultipartContent(req)){
      		         	 			//判断是否文件上传
@@ -470,7 +489,7 @@ public class FinanceTransferAccountsvoucherController {
 	            	 				}
 				     	                	 String sid = reqid;
 			  	                	    	int id = Integer.parseInt(sid);
-			  	                	    boolean listimg= imagedataservice.tobeforensics(id);//待取证
+			  	                	    boolean listimg= imagedataservice.tobesettled(id);//待取证
 		     	         	 		 if(req !=null && ServletFileUpload.isMultipartContent(req)){
 		     		         	 			//判断是否文件上传
 		     		         	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
@@ -702,10 +721,27 @@ public class FinanceTransferAccountsvoucherController {
 			                            List<ImageDataUpdate> listimg2= imagedataservice.financevoucherSelectToupload(imagedata2);
 			                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 				                        circulation record = new  circulation("9","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
-				                        boolean coan = circulationservice.save(record);	
-				                        String sid = reqid;
-			                	    	int id = Integer.parseInt(sid);
-			                	    boolean listimg= imagedataservice.loanClearing(id);//待解压
+				                        boolean coan = circulationservice.save(record);
+				                        
+				                        circulation userLogin = circulationservice.selectRandomNumbersecond(reqid,city,"财务审批");
+				                        boolean listimg = false;
+		             	 				if(userLogin !=null){
+		             	 					System.out.println(userLogin.getId());
+		              	 					System.out.println(userLogin.getCity());
+		              	 					System.out.println(userLogin.getRolename());
+		              	 					String userName = userLogin.getUsername();
+//		             	 					int intid = userLogin.getId();
+		             	 					String ParentnodeId = userLogin.getParentnodeId();
+		             	 					String roleName2= userLogin.getRolename();
+		             	 					String sid = reqid;
+				                	    	int id = Integer.parseInt(sid);
+				                	    	Map<Object,Object> map = new HashMap<Object,Object>();
+				                	    	map.put("username",userName);
+	     	                	    		map.put("parentnodeId", ParentnodeId);
+	     	                	    		map.put("rolename", roleName2);
+	     	                	    		map.put("id", id);
+	     	                	    		 listimg= imagedataservice.loanClearing(map);//待解压
+		             	 				}
 			                            if(listimg2.size()> 0 && listimg == true && coan == true){
 			                            		//return new Json(true,"success",listimg);
 			                            		  return new Json(true,"success",listimg2,CaptchaConstants.UPLOAD_SUCCESS_PENDING_AUDIT);
@@ -723,25 +759,6 @@ public class FinanceTransferAccountsvoucherController {
 			            				}
 			                         	
 									}
-			                  	          String sid = reqid;
-				                	    	int id = Integer.parseInt(sid);
-				                	    boolean listimg= imagedataservice.WaitForensics(id);//待解压
-				                	    
-			                         	if(req !=null && ServletFileUpload.isMultipartContent(req)){
-			                 	 			//判断是否文件上传
-			                 	 			ServletRequestContext ctx2 = new ServletRequestContext(req);
-			                 	 			//获取上传文件尺寸大小
-//			                 	 			System.out.println(maxSize);
-			                 	 			long requestsize2 = ctx2.contentLength();
-			                 	 			System.out.println(requestsize2);
-//			                  	            String origFileName =  renameFileName(city,upload_type,tmpFileName);
-			                  	            InputStream input = f.getInputStream();
-			                  	            System.out.println(input);
-//			                  	            readStream(input);
-//			                  	          boolean isResult =  ftp.storeFile(targetFileName, input);
-			                 	 		}else{
-			            					System.out.println("FTP连接失败");
-			            				}
 							}
 						}else{
 	        	 			 return new Json(false,"fail",resultList,CaptchaConstants.IMAGE_TYPE);
@@ -916,9 +933,27 @@ public class FinanceTransferAccountsvoucherController {
 			                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 			                            circulation record = new  circulation("8","待进押",createDate,username,t,city,sparetwo,updatedata,reqid);
 			                			boolean coan = circulationservice.save(record);		
-			                			String sid = reqid;
-			                	    	int id = Integer.parseInt(sid);
-			                	    boolean listimg= imagedataservice.pendingconfirmation(id);//待解压
+			                			
+			                			circulation userLogin = circulationservice.selectRandomNumbersecond(reqid,city,"初审");
+			                			boolean listimg = false;
+			                			if(userLogin !=null){
+			                				System.out.println(userLogin.getId());
+		              	 					System.out.println(userLogin.getCity());
+		              	 					System.out.println(userLogin.getRolename());
+		              	 					String userName = userLogin.getUsername();
+//		             	 					int intid = userLogin.getId();
+		             	 					String ParentnodeId = userLogin.getParentnodeId();
+		             	 					String roleName2= userLogin.getRolename();
+			                				String sid = reqid;
+				                	    	int id = Integer.parseInt(sid);
+				                	
+				                	    Map<Object,Object> map = new HashMap<Object,Object>();
+     	                	    		map.put("username",userName);
+     	                	    		map.put("parentnodeId", ParentnodeId);
+     	                	    		map.put("rolename", roleName2);
+     	                	    		map.put("id", id);
+     	                	    		listimg = imagedataservice.pendingconfirmation(map);//待解压
+			                			}	
 			                            if(listimg2.size()> 0 && listimg == true && coan == true){
 			                            		//return new Json(true,"success",listimg);
 			                            		  return new Json(true,"success",listimg2,"上传成功-- 待确认回款审核");
@@ -1103,9 +1138,31 @@ public class FinanceTransferAccountsvoucherController {
 		                            String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
 		                            circulation record = new  circulation("7","待解押",createDate,username,t,city,sparetwo,updatedata,reqid);
 		                			boolean coan = circulationservice.save(record);	
-		                			String sid = reqid;
-		                	    	int id = Integer.parseInt(sid);
-		                	    boolean listimg= imagedataservice.tobedetained(id);//待解压
+		                			
+		                			circulation userLogin = circulationservice.selectRandomNumbersecond(reqid,city,"按揭员");
+									 boolean listimg = false;
+									 Map<Object,Object> map = new HashMap<Object,Object>();
+									 if(userLogin !=null){
+										 System.out.println(userLogin.getId());
+										 System.out.println(userLogin.getId());
+		              	 					System.out.println(userLogin.getCity());
+		              	 					System.out.println(userLogin.getRolename());
+		              	 					String userName = userLogin.getUsername();
+//		             	 					int intid = userLogin.getId();
+		             	 					String ParentnodeId = userLogin.getParentnodeId();
+		             	 					String roleName2= userLogin.getRolename();
+		             	 					String sid = reqid;
+				                	    	int id = Integer.parseInt(sid);
+				                	    	map.put("username",userName);
+	     	                	    		map.put("parentnodeId", ParentnodeId);
+	     	                	    		map.put("rolename", roleName2);
+	     	                	    		map.put("id", id);
+				                	     listimg= imagedataservice.tobedetained(map);//待解压
+				                	     
+									 }
+		                			
+		                			
+		                			
 		                            if(listimg2.size()> 0 && listimg == true && coan == true){
 		                            		//return new Json(true,"success",listimg);
 		                            		  return new Json(true,"success",listimg2,"上传成功-- 待进押凭证审核");
@@ -1301,9 +1358,29 @@ public class FinanceTransferAccountsvoucherController {
                 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
                             circulation record = new  circulation("6","待取证",createDate,username,t,city,sparetwo,updatedata,reqid);
                 			boolean coan = circulationservice.save(record);	
-                			String sid = reqid;
-                	    	int id = Integer.parseInt(sid);
-                	    boolean listimg= imagedataservice.WaitForensics(id);//待解压
+                			
+                			circulation userLogin = circulationservice.selectRandomNumbersecond(reqid,city,"按揭员");
+                			 boolean listimg = false;
+                			 if(userLogin !=null){
+          	 					System.out.println(userLogin.getId());
+          	 					System.out.println(userLogin.getCity());
+          	 					System.out.println(userLogin.getRolename());
+          	 					String userName = userLogin.getUsername();
+//          	 					int intid = userLogin.getId();
+          	 					String ParentnodeId = userLogin.getParentnodeId();
+          	 					String roleName2= userLogin.getRolename();
+          	 					String sid = reqid;
+                    	    	int id = Integer.parseInt(sid);
+                    	    	Map<Object,Object> map = new HashMap<Object,Object>();
+	                	    		map.put("username",userName);
+	                	    		map.put("parentnodeId", ParentnodeId);
+	                	    		map.put("rolename", roleName2);
+	                	    		map.put("id", id);
+                    	     listimg= imagedataservice.WaitForensics(map);//待解压
+          	 					
+                			 }
+                			
+                			
                             if(listimg2.size()> 0 && listimg == true && coan == true){
                             		//return new Json(true,"success",listimg);
                             		  return new Json(true,"success",listimg2,"上传成功-- 待进解压凭证审核");
@@ -1340,635 +1417,653 @@ public class FinanceTransferAccountsvoucherController {
 	        }
 		  }
 		return null;
-		  
 	  }
-	/**
-	 * 根据 上传类型 原文件名 上传者姓名查所上传的
-	 * 
-	 * @param req
-	 * @param res
-	 * @return 对象
-	 */
-	@RequestMapping(value = "/selectuploadsupdatetype", method = RequestMethod.GET)
-	@ResponseBody
-	public Json selectUploadsUpdateType(HttpServletRequest req, HttpServletResponse res) {
-		res.setContentType("text/html; charset=utf-8");
-		String createDate = DateUtils.getInDateTime((new Date()));// 日期
-		String data = req.getParameter("data");
-		JSONObject jsonobj = new JSONObject().fromObject(data);
-		String uploadtype = jsonobj.getString("uploadtype");// 原文件名
-		String city = jsonobj.getString("city");
-		String sparetwo = jsonobj.getString("rolename");// 角色名
-		String spare = jsonobj.getString("username");// 用户名
-		String Parentnode = jsonobj.getString("usernameid");// 用户ID
-		String[] splist = uploadtype.split(",");
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		ResultList<ImageDataUpdate> result = new ResultList<ImageDataUpdate>();
-		Map<String, List<ImageDataUpdate>> listmap = new HashMap<String, List<ImageDataUpdate>>();
-		for (String s : splist) {
-			String strplist = s.replace("[", " ").replace("]", " ").replace("\"", " ").trim();
-			if (strplist.equals("转账凭证")) {
-				ImageDataUpdate imagedata = new ImageDataUpdate(city, strplist, Parentnode, spare, sparetwo,
-						createDate);
-				List<ImageDataUpdate> listimg = imagedataservice.financevoucherSelectToupload(imagedata);
-				result.setLists(listimg);
-				listmap.put("转账凭证", listimg);
-			} else if (strplist.equals("结算凭证")) {
-				ImageDataUpdate imagedata = new ImageDataUpdate(city, strplist, Parentnode, spare, sparetwo,
-						createDate);
-				List<ImageDataUpdate> listimg = imagedataservice.financevoucherSelectToupload(imagedata);
-				result.setLists(listimg);
-				listmap.put("结算凭证", listimg);
-			} else if (strplist.equals("回款确认")) {
-				ImageDataUpdate imagedata = new ImageDataUpdate(city, strplist, Parentnode, spare, sparetwo,
-						createDate);
-				List<ImageDataUpdate> listimg = imagedataservice.financevoucherSelectToupload(imagedata);
-				result.setLists(listimg);
-				listmap.put("回款确认", listimg);
-			} else if (strplist.equals("取证凭证")) {
-				ImageDataUpdate imagedata = new ImageDataUpdate(city, strplist, Parentnode, spare, sparetwo,
-						createDate);
-				List<ImageDataUpdate> listimg = imagedataservice.financevoucherSelectToupload(imagedata);
-				result.setLists(listimg);
-				listmap.put("取证凭证", listimg);
-			} else if (strplist.equals("解押凭证")) {
-				ImageDataUpdate imagedata = new ImageDataUpdate(city, strplist, Parentnode, spare, sparetwo,
-						createDate);
-				List<ImageDataUpdate> listimg = imagedataservice.financevoucherSelectToupload(imagedata);
-				result.setLists(listimg);
-				listmap.put("解押凭证", listimg);
-			} else if (strplist.equals("进押凭证")) {
-				ImageDataUpdate imagedata = new ImageDataUpdate(city, strplist, Parentnode, spare, sparetwo,
-						createDate);
-				List<ImageDataUpdate> listimg = imagedataservice.financevoucherSelectToupload(imagedata);
-				result.setLists(listimg);
-				listmap.put("进押凭证", listimg);
+	  
+	  /**
+	     * 根据 上传类型 原文件名  上传者姓名查所上传的
+	     * @param req
+	     * @param res
+	     * @return 对象
+	     */
+	    @RequestMapping(value="/selectuploadsupdatetype",method=RequestMethod.GET)
+	    @ResponseBody
+	    public Json selectUploadsUpdateType(HttpServletRequest req , HttpServletResponse res){
+    	res.setContentType("text/html; charset=utf-8");
+    	String createDate = DateUtils.getInDateTime((new Date()));//日期
+    	String data = req.getParameter("data");
+    	JSONObject jsonobj = new JSONObject().fromObject(data);
+    	String uploadtype = jsonobj.getString("uploadtype");//原文件名
+    	String city = jsonobj.getString("city");
+    	String sparetwo = jsonobj.getString("rolename");//角色名
+    	String spare = jsonobj.getString("username");//用户名
+    	String Parentnode = jsonobj.getString("usernameid");//用户ID
+    	String[] splist = uploadtype.split(",");
+    	Map<Object,Object> map = new HashMap<Object,Object>();
+    		ResultList<ImageDataUpdate> result = new ResultList<ImageDataUpdate>();
+    	Map<String,List<ImageDataUpdate>> listmap = new HashMap<String,List<ImageDataUpdate>>();
+    	for(String s :splist){
+    		String strplist = s.replace("[", " ").replace("]"," ").replace("\""," ").trim();
+    		if(strplist.equals("转账凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("转账凭证", listimg);
+    		}else if(strplist.equals("结算凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("结算凭证", listimg);
+    		}else if(strplist.equals("回款确认")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("回款确认", listimg);
+    		}else if(strplist.equals("取证凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("取证凭证", listimg);
+    		}else if(strplist.equals("解押凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("解押凭证", listimg);
+    		}else if(strplist.equals("进押凭证")){
+    			ImageDataUpdate imagedata = new ImageDataUpdate(city,strplist,Parentnode,spare,sparetwo,createDate);
+    		    List<ImageDataUpdate> listimg= imagedataservice.financevoucherSelectToupload(imagedata);
+    		    result.setLists(listimg);
+    		    listmap.put("进押凭证", listimg);
+    		}
+    	}
+    	 return new Json(true,"success",listmap,"财务凭证");
+    	
+	    }
+	    
+	    
+	    /**
+	     * 终审批量拒绝回退到初审
+	     * @param request
+	     * @param response
+	     * @return
+	     */
+	    @RequestMapping(value="/loaninalreviewbatch",method=RequestMethod.POST)
+	    @ResponseBody
+	    public Json loaninalreviewbatch(HttpServletRequest request,HttpServletResponse response){
+	    	String items = request.getParameter("data");
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	List<String> loanFinalRefuse = new ArrayList<String>();
+//	    	String id = jsonobj.getString("id");
+	    	String[] split= items.split(",");
+	    	String sid = null;
+	    	for(String s:split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			loanFinalRefuse.add(streplacee);
+	    		}
+	    		
+	    	}
+	    	
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+	    	
+	    	String t = null;
+	    	boolean coan = false;
+			for(String str: loanFinalRefuse){
+				t= str;
+				circulation record = new  circulation("1","待终回退到初审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				System.out.println(str);
+				coan = circulationservice.save2(record);
+				
+//				 UserLogin userLogin = userservice.selectRandomNumber("初审",cityindexof.trim());
+				 circulation userLogin = circulationservice.selectRandomNumbersecond(t,cityindexof.trim(),"初审");
+					if(userLogin !=null){
+//						for(UserLogin userLogin: user){
+						System.out.println(userLogin.getId());
+  	 					System.out.println(userLogin.getCity());
+  	 					System.out.println(userLogin.getRolename());
+  	 					String userName = userLogin.getUsername();
+// 	 					int intid = userLogin.getId();
+ 	 					String ParentnodeId = userLogin.getParentnodeId();
+ 	 					String roleName2= userLogin.getRolename();
+							Map<Object,Object> map = new HashMap<Object,Object>();
+		     	    		map.put("username",userName);
+		     	    		map.put("parentnodeId", ParentnodeId);
+		     	    		map.put("rolename", roleName2);
+		     	    		map.put("id", t);
+		     	    		imagedataservice.initialbatch(map);
+//						}
+					}else{
+						return new Json(false,"fail",userLogin,"无下一步操作人");
+					}
 			}
-		}
-		return new Json(true, "success", listmap, "财务凭证");
+			boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
+	    	if(isResult == true && coan){
+	    		return new Json(true,"success",isResult,"待终回退到初审审批中成功");
+	    	}else{
+	    		return new Json(false,"fail",isResult,"待终回退到初审审批中失败");
+	    	}
+	    }
+	    
+	    /**
+	     * 终审批量审批通到财务
+	     * @param request
+	     * @param response
+	     * @return
+	     */
+	    @RequestMapping(value="/loaninalreviewbatchpast",method=RequestMethod.POST)
+	    @ResponseBody
+	    public Json loaninalreviewbatchpast(HttpServletRequest request,HttpServletResponse response){
+	    	String items = request.getParameter("data");
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	String item = "[2,3,4]";
+//	    	JSONObject jsonobject = new JSONObject().fromObject(item);
+//	    	String id = jsonobject.getString("id");
+	    	List<String> loanFinal = new ArrayList<String>();
+	    	String [] split = items.split(",");
+	    	String sid = null;
+	    	for(String s : split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			loanFinal.add(streplacee);
+	    		}
+	    		
+	    		System.out.println(streplacee);
+	    	}
+	    	
+	    	
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+			String t = null;
+			boolean coan = false;
+			for(String str: loanFinal){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("3","终审审批通过待出账确认",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				 coan = circulationservice.save(record);
+				 
+				 UserLogin userLogin = userservice.selectRandomNumber("财务审批",cityindexof.trim());
+					if(userLogin !=null){
+//						for(UserLogin userLogin: user){
+							System.out.println(userLogin.getId());
+							System.out.println(userLogin.getBelongs_City());
+							System.out.println(userLogin.getDistribution_Role());
+							String userName = userLogin.getUserName();
+							int intid = userLogin.getId();
+							String ParentnodeId = String.valueOf(intid);
+							String roleName2= userLogin.getDistribution_Role();
+							Map<Object,Object> map = new HashMap<Object,Object>();
+		     	    		map.put("username",userName);
+		     	    		map.put("parentnodeId", ParentnodeId);
+		     	    		map.put("rolename", roleName2);
+		     	    		map.put("id", t);
+		     	    		imagedataservice.initialbatch(map);
+//						}
+					}else{
+						return new Json(false,"fail",userLogin,"无下一步操作人");
+					}
+			}
+			boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
+	    	if(isResult == true && coan== true){
+	    		return new Json(true,"success",isResult,"终审到待出账确认成功");
+	    	}else{
+	    		return new Json(false,"fail",isResult,"终审到待出账确认失败");
+	    	}
+	    }
+	    
+	    /**
+	     * 初审批量拒绝回退到按揭员
+	     * @param request
+	     * @param response
+	     * @return
+	     */
+	    @RequestMapping(value="/refusegobackmortgage",method=RequestMethod.POST)
+	    @ResponseBody
+	    public Json batchRefuse(HttpServletRequest request,HttpServletResponse response){
+	    	String items = request.getParameter("data");
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	String items = "[2,3,4]";
+//	    	JSONObject jsonobj = new JSONObject().fromObject(items);
+	    	List<String> batchRefuse = new ArrayList<String>();
+//	    	String id = jsonobj.getString("id");
+	    	String[] split= items.split(",");
+	    	String sid = null;
+	    	String NumberingId = null;
+	    	for(String s:split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+//	    		NumberingId = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			batchRefuse.add(streplacee);
+	    		}
+	    		
+	    	}
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+	    	String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+//			circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,updatedata,spare);
+	    	String t = null;
+	    	boolean coan = false;
+	    	
+			for(String str: batchRefuse){
+				NumberingId = str;
+				System.out.println(str);
+				t= str;
+		    	circulation record = new  circulation("0","贷款初审退回到贷款创建",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				coan = cService.save2(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(1);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
+					circulation userLogin = circulationservice.selectRandomNumbersecond(NumberingId,cityindexof.trim(),"按揭员");
+					if(userLogin !=null){
+//						for(UserLogin userLogin: user){
+						System.out.println(userLogin.getId());
+  	 					System.out.println(userLogin.getCity());
+  	 					System.out.println(userLogin.getRolename());
+  	 					String userName = userLogin.getUsername();
+// 	 					int intid = userLogin.getId();
+ 	 					String ParentnodeId = userLogin.getParentnodeId();
+ 	 					String roleName2= userLogin.getRolename();
+							Map<Object,Object> map = new HashMap<Object,Object>();
+		     	    		map.put("username",userName);
+		     	    		map.put("parentnodeId", ParentnodeId);
+		     	    		map.put("rolename", roleName2);
+		     	    		map.put("id", NumberingId);
+		     	    		imagedataservice.initialbatch(map);
+//						}
+					}else{
+						return new Json(false,"fail",userLogin,"无下一步操作人");
+					}
+			}
+			
+			
+	    	boolean isResult = imagedataservice.FirsttrialbatchRefuse(batchRefuse);
+	    	
+	    	if(isResult == true && coan == true){
+	    		return new Json(true,"success",isResult,"初审审批回退成功");
+	    	}else{
+	    		return new Json(false,"fail",isResult,"初审审批回退失败");
+	    	}
+	    }
+	    
+	    /**
+	     * 初审批通过待终审审批成功
+	     * @param request
+	     * @param response
+	     * @return
+	     */
+	    
+	    @RequestMapping(value="/pastgobackfinalreview",method=RequestMethod.POST)
+	    @ResponseBody
+	    public Json batchPast(HttpServletRequest request,HttpServletResponse response){
+	    	String item = request.getParameter("data");
+//	    	JSONObject jsonobj = new JSONObject().fromObject(item);
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+	    	List<String> batchPast = new ArrayList<String>();
+	    	String [] split = item.split(",");
+	    	String sid = null;
+	    	for(String s : split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			batchPast.add(streplacee);
+	    		}
+	    		
+	    		
+	    		
+	    	}
+	    
+			String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+//	    	circulation record = new  circulation("2","待终审审批中",createDate,"","","","");
+			String t = null;
+			boolean coan =false;
+			for(String str: batchPast){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("2","待终审审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				coan = circulationservice.save(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(1);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
+					
+					UserLogin userLogin = userservice.selectRandomNumber("终审",cityindexof.trim());
+					if(userLogin !=null){
+//						for(UserLogin userLogin: user){
+							System.out.println(userLogin.getId());
+							System.out.println(userLogin.getBelongs_City());
+							System.out.println(userLogin.getDistribution_Role());
+							String userName = userLogin.getUserName();
+							int intid = userLogin.getId();
+							String ParentnodeId = String.valueOf(intid);
+							String roleName2= userLogin.getDistribution_Role();
+							Map<Object,Object> map = new HashMap<Object,Object>();
+		     	    		map.put("username",userName);
+		     	    		map.put("parentnodeId", ParentnodeId);
+		     	    		map.put("rolename", roleName2);
+		     	    		map.put("id", t);
+		     	    		imagedataservice.initialbatch(map);
+//						}
+					}else{
+						return new Json(false,"fail",userLogin,"无下一步操作人");
+					}
+					
 
-	}
-
-	/**
-	 * 不用 修改待取证
-	 * 
-	 * @param req
-	 * @param res
-	 * @return 对象
-	 */
-	@RequestMapping(value = "/waitforensics", method = RequestMethod.POST)
-	@ResponseBody
-	public Json WaitForensics(HttpServletRequest req, HttpServletResponse res) {
-		// String data = req.getParameter("data");
-		// JSONObject jsonobj = new JSONObject().fromObject(data);
-		// String originalfilename = jsonobj.getString("file");//原文件名
-		// String parentnode = jsonobj.getString("city");
-		// String uploadtype = jsonobj.getString("upload_type");
-		String sid = req.getParameter("id");
-		int id = Integer.parseInt(sid);
-		// ImageDataUpdate imagedata = new
-		// ImageDataUpdate(originalfilename,parentnode,uploadtype);
-		boolean listimg = imagedataservice.WaitForensics(id);
-		if (listimg == true) {
-			return new Json(true, "success", listimg, "待放款到待取证修改成功");
-		} else {
-			return new Json(false, "fail", listimg, "待放款到待取证修改失改");
-		}
-	}
-
-	/**
-	 * 终审批量拒绝回退到初审
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/loaninalreviewbatch", method = RequestMethod.POST)
-	@ResponseBody
-	public Json loaninalreviewbatch(HttpServletRequest request, HttpServletResponse response) {
-		String items = request.getParameter("data");
-		String usernameindexof = null;
-		String rolenameindexof = null;
-		String cityindexof = null;
-		String parentnodeIdindexof = null;
-		// JSONObject jsonobj = new JSONObject().fromObject(items);
-		List<String> loanFinalRefuse = new ArrayList<String>();
-		// String id = jsonobj.getString("id");
-		String[] split = items.split(",");
-		String sid = null;
-		for (String s : split) {
-			String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ")
-					.replace("\"", " ").trim();
-			sid = streplacee;
-			if (streplacee.contains("username")) {
-				String username = sid;
-				usernameindexof = username.substring(username.lastIndexOf(":") + 1);
-				System.out.println(usernameindexof);
-			} else if (streplacee.contains("parentnodeId")) {
-				String parentnodeId = sid;
-				parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":") + 1);
-				System.out.println(parentnodeIdindexof);
-			} else if (streplacee.contains("city")) {
-				String city = sid;
-				cityindexof = city.substring(city.lastIndexOf(":") + 1);
+			}
+			boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
+			    	if(isResult == true && coan == true){
+			    		return new Json(true,"success",isResult,"初审批通过待终审审批");
+			    	}else{
+			    		return new Json(false,"fail",isResult,"初审批通过待终审审批失败");
+			    	}
+	    }
+	    
+	    
+	    /**
+	     *  财务批量审核通过 待放款
+	     * @param request 请求参数
+	     * @param response JSON格式
+	     * @return
+	     */
+	    @RequestMapping(value="/batchupdatestudent",method=RequestMethod.POST)
+		@ResponseBody
+		public Json batchUpdateStudent(HttpServletRequest request,HttpServletResponse response){
+	    	String items = request.getParameter("data");
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+	    	String [] split = items.split(",");
+	    	String sid = null;
+	    	List<String> updatelist = new ArrayList<String>();
+	    	for(String s:split){
+	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			updatelist.add(streplacee);
+	    		}
+	    		
+	    	}
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+			String t = null;
+			boolean coan = false;
+			for(String str: updatelist){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("4","待出账确认成功",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				 coan = circulationservice.save(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					System.out.println(cityindexof);
+					c.setState(3);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
+					UserLogin userLogin = userservice.selectRandomNumber("放款",cityindexof.trim());
+					if(userLogin !=null){
+//						for(UserLogin userLogin: user){
+							System.out.println(userLogin.getId());
+							System.out.println(userLogin.getBelongs_City());
+							System.out.println(userLogin.getDistribution_Role());
+							String userName = userLogin.getUserName();
+							int intid = userLogin.getId();
+							String ParentnodeId = String.valueOf(intid);
+							String roleName2= userLogin.getDistribution_Role();
+							Map<Object,Object> map = new HashMap<Object,Object>();
+		     	    		map.put("username",userName);
+		     	    		map.put("parentnodeId", ParentnodeId);
+		     	    		map.put("rolename", roleName2);
+		     	    		map.put("id", t);
+		     	    		imagedataservice.initialbatch(map);
+//						}
+					}else{
+						return new Json(false,"fail",userLogin,"无下一步操作人");
+					}
+					
+			}
+	    	boolean isResult = imagedataservice.batchUpdateStudent(updatelist);
+			
+			if(isResult == true && coan == true){
+	    		return new Json(true,"success",isResult,"待出账确认成功");
+	    	}else{
+	    		return new Json(false,"fail",isResult,"待出账确认失败");
+	    	}
+	    }
+	    
+	    
+	    /**
+	     * 财务批量审核拒绝退回到终审 
+	     * @param request 请求参数
+	     * @param response JSON格式
+	     * @return
+	     */
+	    @RequestMapping(value="batchupdateadopt")
+	    @ResponseBody
+	    public Json batchUpdateadopt(HttpServletRequest request,HttpServletResponse response){
+//	    	String items = request.getParameter("data");
+//	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	String id = obj.getString("id");
+//	    	String dt = id.replace("[\"","").replace("\"]","").replace("\"", "");
+//	    	List<String> adoptlist = new ArrayList<String>();
+//	    	String[] splist = dt.split(",");
+//	    	for(String s :splist){
+//	    		adoptlist.add(s);
+//	    	}
+	    	String items = request.getParameter("data");
+	    	String usernameindexof = null;
+	    	String rolenameindexof = null ;
+	    	String cityindexof= null;
+	    	String parentnodeIdindexof= null;
+//	    	JSONObject obj = new JSONObject().fromObject(items);
+//	    	String id = obj.getString("id");
+	    	List<String> updatelist = new ArrayList<String>();
+	    	String[] splist = items.split(",");
+	    	String sid = null;
+	    	for(String s :splist){
+	    		String streplacee = s.replace("["," ").replace("]"," ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
+	    		sid = streplacee;
+	    		if(streplacee.contains("username")){
+	    			String username = sid;
+	    			 usernameindexof = username.substring(username.lastIndexOf(":")+1);
+	    			System.out.println(usernameindexof);
+	    		}else if(streplacee.contains("parentnodeId")){
+	    			String parentnodeId = sid;
+	    			 parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":")+1);
+	    			System.out.println(parentnodeIdindexof);
+	    		}else if(streplacee.contains("city")){
+	    			String city = sid;
+	    			 cityindexof = city.substring(city.lastIndexOf(":")+1);
+	    			System.out.println(cityindexof);
+	    		}else if(streplacee.contains("rolename")){
+	    			String rolename = sid;
+	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
+	    			System.out.println(rolenameindexof);
+	    		}else{
+	    			updatelist.add(streplacee);
+	    		}
+	    		
+	    	}
+	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+	    	
+	    	String t = null;
+	    	boolean coan = false;
+			for(String str: updatelist){
+				System.out.println(str);
+				t= str;
+				circulation record = new  circulation("2","回退到终审成功",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				 coan = circulationservice.save2(record);
+				
+					
+					circulation userLogin = circulationservice.selectRandomNumbersecond(t,cityindexof.trim(),"终审");
+					if(userLogin !=null){
+//						for(UserLogin userLogin: user){
+						System.out.println(userLogin.getId());
+  	 					System.out.println(userLogin.getCity());
+  	 					System.out.println(userLogin.getRolename());
+  	 					String userName = userLogin.getUsername();
+// 	 					int intid = userLogin.getId();
+ 	 					String ParentnodeId = userLogin.getParentnodeId();
+ 	 					String roleName2= userLogin.getRolename();
+							Map<Object,Object> map = new HashMap<Object,Object>();
+		     	    		map.put("username",userName);
+		     	    		map.put("parentnodeId", ParentnodeId);
+		     	    		map.put("rolename", roleName2);
+		     	    		map.put("id", t);
+		     	    		imagedataservice.initialbatch(map);
+//						}
+					}
+			}
+			boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
+			 CircuLationRecord c  = new CircuLationRecord();
+				c.setSubmit(t);
+				c.setCity(cityindexof.trim());
 				System.out.println(cityindexof);
-			} else if (streplacee.contains("rolename")) {
-				String rolename = sid;
-				rolenameindexof = rolename.substring(rolename.lastIndexOf(":") + 1);
-				System.out.println(rolenameindexof);
-			} else {
-				loanFinalRefuse.add(streplacee);
-			}
-
-		}
-
-		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-
-		String t = null;
-		boolean coan = false;
-
-		for (String str : loanFinalRefuse) {
-			t = str;
-			circulation record = new circulation("1", "待终回退到初审审批中", createDate, usernameindexof, parentnodeIdindexof,
-					cityindexof, rolenameindexof, updatedata, t);
-			System.out.println(str);
-			coan = circulationservice.save2(record);
-			CircuLationRecord c = new CircuLationRecord();
-			c.setSubmit(t);
-			c.setCity(cityindexof.trim());
-			c.setState(2);
-			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-				boolean bo = recordSubmitService.updateDateStateCancel(t);
-			}
-		}
-		boolean isResult = imagedataservice.loanFinalReviewRefuse(loanFinalRefuse);
-		if (isResult == true && coan) {
-			return new Json(true, "success", isResult, "待终回退到初审审批中成功");
-		} else {
-			return new Json(false, "fail", isResult, "待终回退到初审审批中失败");
-		}
-	}
-
-	/**
-	 * 终审批量审批通到财务
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/loaninalreviewbatchpast", method = RequestMethod.POST)
-	@ResponseBody
-	public Json loaninalreviewbatchpast(HttpServletRequest request, HttpServletResponse response) {
-		String items = request.getParameter("data");
-		String usernameindexof = null;
-		String rolenameindexof = null;
-		String cityindexof = null;
-		String parentnodeIdindexof = null;
-		// String item = "[2,3,4]";
-		// JSONObject jsonobject = new JSONObject().fromObject(item);
-		// String id = jsonobject.getString("id");
-		List<String> loanFinal = new ArrayList<String>();
-		String[] split = items.split(",");
-		String sid = null;
-		for (String s : split) {
-			String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ")
-					.replace("\"", " ").trim();
-
-			sid = streplacee;
-			if (streplacee.contains("username")) {
-				String username = sid;
-				usernameindexof = username.substring(username.lastIndexOf(":") + 1);
-				System.out.println(usernameindexof);
-			} else if (streplacee.contains("parentnodeId")) {
-				String parentnodeId = sid;
-				parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":") + 1);
-				System.out.println(parentnodeIdindexof);
-			} else if (streplacee.contains("city")) {
-				String city = sid;
-				cityindexof = city.substring(city.lastIndexOf(":") + 1);
-				System.out.println(cityindexof);
-			} else if (streplacee.contains("rolename")) {
-				String rolename = sid;
-				rolenameindexof = rolename.substring(rolename.lastIndexOf(":") + 1);
-				System.out.println(rolenameindexof);
-			} else {
-				loanFinal.add(streplacee);
-			}
-
-			System.out.println(streplacee);
-		}
-
-		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-		String t = null;
-		boolean coan = false;
-		for (String str : loanFinal) {
-			System.out.println(str);
-			t = str;
-			circulation record = new circulation("3", "终审批量审批通到财务", createDate, usernameindexof, parentnodeIdindexof,
-					cityindexof, rolenameindexof, updatedata, t);
-			coan = cService.save2(record);
-			CircuLationRecord c = new CircuLationRecord();
-			c.setSubmit(t);
-			c.setCity(cityindexof.trim());
-			c.setState(2);
-			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-				boolean bo = recordSubmitService.updateDateStateCancel(t);
-			}
-		}
-		boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
-
-		// for(String str: loanFinal){
-		// System.out.println(str);
-		// t= str;
-		// circulation record = new
-		// circulation("3","终审审批通过待出账确认",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
-		// coan = circulationservice.save(record);
-		// }
-		//
-		if (isResult == true && coan == true) {
-			return new Json(true, "success", isResult, "终审到待出账确认成功");
-		} else {
-			return new Json(false, "fail", isResult, "终审到待出账确认失败");
-		}
-	}
-
-	/**
-	 * 初审批量拒绝回退到按揭员
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/refusegobackmortgage", method = RequestMethod.POST)
-	@ResponseBody
-	public Json batchRefuse(HttpServletRequest request, HttpServletResponse response) {
-		String items = request.getParameter("data");
-		String usernameindexof = null;
-		String rolenameindexof = null;
-		String cityindexof = null;
-		String parentnodeIdindexof = null;
-		// String items = "[2,3,4]";
-		// JSONObject jsonobj = new JSONObject().fromObject(items);
-		List<String> batchRefuse = new ArrayList<String>();
-		// String id = jsonobj.getString("id");
-		String[] split = items.split(",");
-		String sid = null;
-		for (String s : split) {
-			String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ")
-					.replace("\"", " ").trim();
-			sid = streplacee;
-			if (streplacee.contains("username")) {
-				String username = sid;
-				usernameindexof = username.substring(username.lastIndexOf(":") + 1);
-				System.out.println(usernameindexof);
-			} else if (streplacee.contains("parentnodeId")) {
-				String parentnodeId = sid;
-				parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":") + 1);
-				System.out.println(parentnodeIdindexof);
-			} else if (streplacee.contains("city")) {
-				String city = sid;
-				cityindexof = city.substring(city.lastIndexOf(":") + 1);
-				System.out.println(cityindexof);
-			} else if (streplacee.contains("rolename")) {
-				String rolename = sid;
-				rolenameindexof = rolename.substring(rolename.lastIndexOf(":") + 1);
-				System.out.println(rolenameindexof);
-			} else {
-				batchRefuse.add(streplacee);
-			}
-
-		}
-		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-		// circulation record = new
-		// circulation("0","贷款初审退回到贷款创建",createDate,updatedata,spare);
-		String t = null;
-		boolean coan = false;
-
-		for (String str : batchRefuse) {
-			System.out.println(str);
-			t = str;
-			circulation record = new circulation("0", "贷款初审退回到贷款创建", createDate, usernameindexof, parentnodeIdindexof,
-					cityindexof, rolenameindexof, updatedata, t);
-			coan = cService.save2(record);
-			CircuLationRecord c = new CircuLationRecord();
-			c.setSubmit(t);
-			c.setCity(cityindexof.trim());
-			c.setState(1);
-			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-				boolean bo = recordSubmitService.updateDateStateCancel(t);
-			}
-
-		}
-		boolean isResult = imagedataservice.FirsttrialbatchRefuse(batchRefuse);
-
-		if (isResult == true && coan == true) {
-			return new Json(true, "success", isResult, "初审审批回退成功");
-		} else {
-			return new Json(false, "fail", isResult, "初审审批回退失败");
-		}
-	}
-
-	/**
-	 * 初审批通过待终审审批成功
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-
-	@RequestMapping(value = "/pastgobackfinalreview", method = RequestMethod.POST)
-	@ResponseBody
-	public Json batchPast(HttpServletRequest request, HttpServletResponse response) {
-		String item = request.getParameter("data");
-		// JSONObject jsonobj = new JSONObject().fromObject(item);
-		String usernameindexof = null;
-		String rolenameindexof = null;
-		String cityindexof = null;
-		String parentnodeIdindexof = null;
-		List<String> batchPast = new ArrayList<String>();
-		String[] split = item.split(",");
-		String sid = null;
-		for (String s : split) {
-			String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ")
-					.replace("\"", " ").trim();
-			sid = streplacee;
-
-			if (streplacee.contains("username")) {
-				String username = sid;
-				usernameindexof = username.substring(username.lastIndexOf(":") + 1);
-				System.out.println(usernameindexof);
-			} else if (streplacee.contains("parentnodeId")) {
-				String parentnodeId = sid;
-				parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":") + 1);
-				System.out.println(parentnodeIdindexof);
-			} else if (streplacee.contains("city")) {
-				String city = sid;
-				cityindexof = city.substring(city.lastIndexOf(":") + 1);
-				System.out.println(cityindexof);
-			} else if (streplacee.contains("rolename")) {
-				String rolename = sid;
-				rolenameindexof = rolename.substring(rolename.lastIndexOf(":") + 1);
-				System.out.println(rolenameindexof);
-			} else {
-				batchPast.add(streplacee);
-			}
-
-		}
-
-		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-		// circulation record = new
-		// circulation("2","待终审审批中",createDate,"","","","");
-		String t = null;
-		boolean coan = false;
-		for (String str : batchPast) {
-			System.out.println(str);
-			t = str;
-			circulation record = new circulation("2", "待终审审批中", createDate, usernameindexof, parentnodeIdindexof,
-					cityindexof, rolenameindexof, updatedata, t);
-			coan = circulationservice.save(record);
-			CircuLationRecord c = new CircuLationRecord();
-			c.setSubmit(t);
-			c.setCity(cityindexof.trim());
-			c.setState(1);
-			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-				boolean bo = recordSubmitService.updateDateStateCancel(t);
-			}
-
-		}
-		boolean isResult = imagedataservice.FirsttrialbatchPast(batchPast);
-		if (isResult == true && coan == true) {
-			return new Json(true, "success", isResult, "初审批通过待终审审批");
-		} else {
-			return new Json(false, "fail", isResult, "初审批通过待终审审批失败");
-		}
-	}
-
-	/**
-	 * 财务批量审核通过 待放款
-	 * 
-	 * @param request
-	 *            请求参数
-	 * @param response
-	 *            JSON格式
-	 * @return
-	 */
-	@RequestMapping(value = "/batchupdatestudent", method = RequestMethod.POST)
-	@ResponseBody
-	public Json batchUpdateStudent(HttpServletRequest request, HttpServletResponse response) {
-		String items = request.getParameter("data");
-		String usernameindexof = null;
-		String rolenameindexof = null;
-		String cityindexof = null;
-		String parentnodeIdindexof = null;
-		String[] split = items.split(",");
-		String sid = null;
-		List<String> updatelist = new ArrayList<String>();
-		for (String s : split) {
-			String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ")
-					.replace("\"", " ").trim();
-			sid = streplacee;
-			if (streplacee.contains("username")) {
-				String username = sid;
-				usernameindexof = username.substring(username.lastIndexOf(":") + 1);
-				System.out.println(usernameindexof);
-			} else if (streplacee.contains("parentnodeId")) {
-				String parentnodeId = sid;
-				parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":") + 1);
-				System.out.println(parentnodeIdindexof);
-			} else if (streplacee.contains("city")) {
-				String city = sid;
-				cityindexof = city.substring(city.lastIndexOf(":") + 1);
-				System.out.println(cityindexof);
-			} else if (streplacee.contains("rolename")) {
-				String rolename = sid;
-				rolenameindexof = rolename.substring(rolename.lastIndexOf(":") + 1);
-				System.out.println(rolenameindexof);
-			} else {
-				updatelist.add(streplacee);
-			}
-
-		}
-		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-		String t = null;
-		boolean coan = false;
-		for (String str : updatelist) {
-			System.out.println(str);
-			t = str;
-			circulation record = new circulation("4", "待出账确认成功", createDate, usernameindexof, parentnodeIdindexof,
-					cityindexof, rolenameindexof, updatedata, t);
-			coan = circulationservice.save(record);
-			CircuLationRecord c = new CircuLationRecord();
-			c.setSubmit(t);
-			c.setCity(cityindexof.trim());
-			System.out.println(cityindexof);
-			c.setState(3);
-			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-				boolean bo = recordSubmitService.updateDateStateCancel(t);
-			}
-		}
-		boolean isResult = imagedataservice.batchUpdateStudent(updatelist);
-
-		if (isResult == true && coan == true) {
-			return new Json(true, "success", isResult, "待出账确认成功");
-		} else {
-			return new Json(false, "fail", isResult, "待出账确认失败");
-		}
-	}
-
-	/**
-	 * 财务批量审核拒绝退回到终审
-	 * 
-	 * @param request
-	 *            请求参数
-	 * @param response
-	 *            JSON格式
-	 * @return
-	 */
-	@RequestMapping(value = "batchupdateadopt")
-	@ResponseBody
-	public Json batchUpdateadopt(HttpServletRequest request, HttpServletResponse response) {
-		// String items = request.getParameter("data");
-		// JSONObject obj = new JSONObject().fromObject(items);
-		// String id = obj.getString("id");
-		// String dt = id.replace("[\"","").replace("\"]","").replace("\"", "");
-		// List<String> adoptlist = new ArrayList<String>();
-		// String[] splist = dt.split(",");
-		// for(String s :splist){
-		// adoptlist.add(s);
-		// }
-		String items = request.getParameter("data");
-		String usernameindexof = null;
-		String rolenameindexof = null;
-		String cityindexof = null;
-		String parentnodeIdindexof = null;
-		// JSONObject obj = new JSONObject().fromObject(items);
-		// String id = obj.getString("id");
-		List<String> updatelist = new ArrayList<String>();
-		String[] splist = items.split(",");
-		String sid = null;
-		for (String s : splist) {
-			String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ")
-					.replace("\"", " ").trim();
-			sid = streplacee;
-			if (streplacee.contains("username")) {
-				String username = sid;
-				usernameindexof = username.substring(username.lastIndexOf(":") + 1);
-				System.out.println(usernameindexof);
-			} else if (streplacee.contains("parentnodeId")) {
-				String parentnodeId = sid;
-				parentnodeIdindexof = parentnodeId.substring(parentnodeId.lastIndexOf(":") + 1);
-				System.out.println(parentnodeIdindexof);
-			} else if (streplacee.contains("city")) {
-				String city = sid;
-				cityindexof = city.substring(city.lastIndexOf(":") + 1);
-				System.out.println(cityindexof);
-			} else if (streplacee.contains("rolename")) {
-				String rolename = sid;
-				rolenameindexof = rolename.substring(rolename.lastIndexOf(":") + 1);
-				System.out.println(rolenameindexof);
-			} else {
-				updatelist.add(streplacee);
-			}
-
-		}
-		
-		
-//
-//		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-//		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-//
-//		String t = null;
-//		boolean coan = false;
-//
-//		for (String str : updatelist) {
-//			t = str;
-//			circulation record = new circulation("2", "回退到终审成功", createDate, usernameindexof, parentnodeIdindexof,
-//					cityindexof, rolenameindexof, updatedata, t);
-//			System.out.println(str);
-//			coan = circulationservice.save2(record);
-//			CircuLationRecord c = new CircuLationRecord();
-//			c.setSubmit(t);
-//			c.setCity(cityindexof.trim());
-//			c.setState(3);
-//			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-//			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-//				boolean bo = recordSubmitService.updateDateStateCancel(t);
-//			}
-//		}
-//		boolean isResult = imagedataservice.loanFinalReviewRefuse(updatelist);
-//		if (isResult == true && coan) {
-//			return new Json(true, "success", isResult, "回退到终审成功");
-//		} else {
-//			return new Json(false, "fail", isResult, "回退到终审成功失败");
-//		}
-//		
-		
-		
-		
-		String createDate = DateUtils.getInDateTime2((new Date()));// 日期
-		String updatedata = DateUtils.getInDateTime2((new Date()));// 日期
-
-		String t = null;
-		boolean coan = false;
-		for (String str : updatelist) {
-			System.out.println(str);
-			t = str;
-			circulation record = new circulation("2", "回退到终审成功", createDate, usernameindexof, parentnodeIdindexof,
-					cityindexof, rolenameindexof, updatedata, t);
-			coan = circulationservice.save2(record);
-			CircuLationRecord c = new CircuLationRecord();
-			c.setSubmit(t);
-			c.setCity(cityindexof.trim());
-			System.out.println(cityindexof);
-			c.setState(3);
-			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
-			if (cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")) {
-				boolean bo = recordSubmitService.updateDateStateCancel(t);
-			}
-		}
-		boolean isResult = imagedataservice.batchUpdateadopt(updatelist);
-		if (isResult == true && coan == true) {
-			return new Json(true, "success", isResult, "回退到终审成功");
-		} else {
-			return new Json(false, "fail", isResult, "回退到终审失败");
-		}
-	}
-
-	/**
-	 * 文件类型
-	 * 
-	 * @param str
-	 *            文件类型
-	 * @return jpg,png,jpge,png,bmp
-	 */
-	private boolean filetype(String str) {
-		if (str.contains("jpg") || str.contains("png") || str.contains("jpeg") || str.contains("bmp")
-				|| str.contains("png")) {
-			return true;
-		} else
+				c.setState(2);
+				CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+				if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+					boolean bo = recordSubmitService.updateDateStateCancel(t);
+				}
+	    	if(isResult == true&& coan == true){
+	    		return new Json(true,"success",isResult,"回退到终审成功");
+	    	}else{
+	    		return new Json(false,"fail",isResult,"回退到终审失败");
+	    	}
+	    }
+	    
+	    
+	    
+	    
+	  /**
+	   * 文件类型
+	   * @param str 文件类型
+	   * @return jpg,png,jpge,png,bmp
+	   */
+	  private boolean filetype(String str) {
+	    	if(str.contains("jpg")|| str.contains("png") || str.contains("jpeg")
+	    			 || str.contains("bmp")
+	    			 || str.contains("png")|| str.contains("zip")){
+	    		return true;
+	    	}else
 			return false;
-	}
-
-	/**
-	 * 文件重命名
-	 * 
-	 * @param tmpFileName
-	 */
-	public static String renameFileName(String city, String renameFileName, String fileName) {
-		String formatDate = new SimpleDateFormat("yyMMddHHmmss").format(new Date()); // 当前时间字符串
-		int random = new Random().nextInt(10000);
-		String extension = fileName.substring(fileName.lastIndexOf(".") + 1); // 文件后缀
-
-		return formatDate + random + "_" + city + "_" + fileName;
-	}
+		}
+	  
+	  /**
+	     * 文件重命名
+	     * @param tmpFileName 
+	     */
+	    public static String renameFileName(String city,String renameFileName,String fileName) {
+	        String formatDate = new SimpleDateFormat("yyMMddHHmmss").format(new Date()); // 当前时间字符串
+	        int random = new Random().nextInt(10000);
+	        String extension = fileName.substring(fileName.lastIndexOf(".")+1); // 文件后缀
+	 
+	        return formatDate + random+"_"+city+"_"+fileName;
+	    }
 }

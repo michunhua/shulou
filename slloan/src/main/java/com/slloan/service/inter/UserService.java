@@ -127,5 +127,7 @@ public interface UserService {
     public UserLogin selectroleUserName(Map<Object,Object>map);
     
     public boolean updateUserCity (String rolename, String belongs_city,int rid, int id);
+    
+    public UserLogin selectRandomNumber(String distribution_role, String city);
 	
 }

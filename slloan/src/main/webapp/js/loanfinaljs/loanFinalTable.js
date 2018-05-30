@@ -446,7 +446,11 @@ var refuseAjax = function(method, url, datas) {
 				saveSend.length = 0
 				initData()
 				unselected('#alls')
-			} else {
+			} 
+			else if(data.msg == 'fail'){
+	    		alert(data.value)
+	    	}
+			else {
 				alert('服务器错误')
 			}
 		}, 
@@ -494,7 +498,12 @@ var passAjax = function(method, url, datas) {
 				saveSend.length = 0
 				initData()
 				unselected('#alls')
-			} else {
+			} 
+			else if(data.msg == 'fail'){
+	    		alert(data.value)
+	    	}
+
+			else {
 				alert('服务器错误')
 			}
 		}, 

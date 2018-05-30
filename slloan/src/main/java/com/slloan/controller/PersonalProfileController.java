@@ -64,6 +64,7 @@ public class PersonalProfileController {
 
 	@Autowired
 	private PersonalProfileService personalproFileService;
+	
 
 	@ResponseBody
 	@RequestMapping("/loanApplypersonaldata")

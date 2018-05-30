@@ -17,4 +17,6 @@ public interface SpousesOfBorrowersService {
 	List<SpousesOfBorrowers> findAll();
 
 	SpousesOfBorrowers SelectById(int id);
+	
+	SpousesOfBorrowers SelectByIdSpo(int id);
 }

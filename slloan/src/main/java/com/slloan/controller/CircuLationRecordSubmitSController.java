@@ -39,7 +39,7 @@ public class CircuLationRecordSubmitSController {
 		 String parentnodeId = req.getParameter("parentnodeId");
 		 String city = req.getParameter("city");
 		String rolename = req.getParameter("rolename");
-		String createDate =  DateUtils.getInDateTime((new Date()));//日期
+		String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 		CircuLationRecord circuLationRecord = new CircuLationRecord(fallbackname,stateid,createDate,username,parentnodeId,city,rolename);
 		
 		boolean isResultInsert = recordSubmitService.fallbackinsert(circuLationRecord);

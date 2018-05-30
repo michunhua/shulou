@@ -198,9 +198,9 @@
 	<!-- 按揭员回退按揭员状态 -->
 	<select id="getPersonalProfileCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		FROM recordsubmit_table WHERE state='0' and city=#{2} and username=#{0}
-		<!-- FROM recordsubmit_table WHERE state='0' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
+<!-- 		FROM recordsubmit_table WHERE state='0' and city=#{2} and username=#{0} -->
+	 FROM recordsubmit_table WHERE state='0' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3}
 	</select>
 	<select id="getPersonalProfileCount2" resultType="Integer">
 		SELECT
@@ -226,39 +226,39 @@
 	<!-- 初审状态 -->
 	<select id="getFirsttrialPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		<!-- FROM recordsubmit_table WHERE state='1' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='1' and city=#{2} 
+		 FROM recordsubmit_table WHERE state='1' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3}
+<!-- 		FROM recordsubmit_table WHERE state='1' and city=#{2} -->
 	</select>
 	<!-- 终审状态 -->
 	<select id="getFinalreviewPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		<!-- FROM recordsubmit_table WHERE state='2' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='2' and city=#{2}
+		 FROM recordsubmit_table WHERE state='2' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3}
+<!-- 		FROM recordsubmit_table WHERE state='2' and city=#{2} -->
 	</select>
 	<!-- 财务状态 -->
 	<select id="getFinancePageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM
-		<!-- recordsubmit_table WHERE state='3' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		recordsubmit_table WHERE state='3' and city=#{2}
+		recordsubmit_table WHERE state='3' and username=#{0} and rolename=#{1} 
+ 			and city=#{2} and parentnodeId=#{3} 
+<!-- 		recordsubmit_table WHERE state='3' and city=#{2} -->
 	</select>
 	<!-- 结算状态 -->
 	<select id="getjsloanPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM
-		<!-- recordsubmit_table WHERE state='9' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		recordsubmit_table WHERE state='9' and city=#{2}
+		 recordsubmit_table WHERE state='9' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3}
+		<!--recordsubmit_table WHERE state='9' and city=#{2} -->
 	</select>
 	<!-- 转账凭证状态 -->
 	<select id="getTransferloanPageCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		<!-- FROM recordsubmit_table WHERE state='4' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='4' and city=#{2}
+		 FROM recordsubmit_table WHERE state='4' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3} 
+		<!--FROM recordsubmit_table WHERE state='4' and city=#{2}-->
 	</select>
 
 	<!-- 贷款信息状态 -->
@@ -280,33 +280,33 @@
 	<select id="getReturnMoneyCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
 		FROM
-		<!-- recordsubmit_table WHERE state='8' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		recordsubmit_table WHERE state='8' and city=#{2}
+		 recordsubmit_table WHERE state='8' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3} 
+		<!--recordsubmit_table WHERE state='8' and city=#{2}-->
 	</select>
 
 	<!-- 取证状态 -->
 	<select id="getObtainEvidenceCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		<!-- FROM recordsubmit_table WHERE state='5' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='5' and city=#{2}
+		 FROM recordsubmit_table WHERE state='5' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3} 
+		<!--FROM recordsubmit_table WHERE state='5' and city=#{2}-->
 	</select>
 
 	<!-- 解压状态 -->
 	<select id="getDecompressionCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		<!-- FROM recordsubmit_table WHERE state='6' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='6' and city=#{2}
+		 FROM recordsubmit_table WHERE state='6' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3} 
+		<!--FROM recordsubmit_table WHERE state='6' and city=#{2}-->
 	</select>
 
 	<!-- 进押状态 -->
 	<select id="getLoanPressureCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
-		<!-- FROM recordsubmit_table WHERE state='7' and username=#{0} and rolename=#{1} 
-			and city=#{2} and parentnodeId=#{3} -->
-		FROM recordsubmit_table WHERE state='7' and city=#{2}
+		 FROM recordsubmit_table WHERE state='7' and username=#{0} and rolename=#{1} 
+			and city=#{2} and parentnodeId=#{3} 
+		<!--FROM recordsubmit_table WHERE state='7' and city=#{2}-->
 	</select>
 	<select id="checkHangDataCount" resultType="Integer">
 		SELECT COUNT(USERNAME),COUNT(parentnodeId),count(city),count(rolename)
@@ -321,14 +321,15 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='0' and c.city=#{city} and a.username = #{username}
+		where c.state='0'  and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} and c.rolename = #{rolename}
 		<!-- ORDER BY case a.id when #{id} then 1 else 2 END,a.id -->
-		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
+		order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -342,13 +343,13 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber,c.marked
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber,c.marked
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
 		where c.state='1'
-		and c.city=#{city} 
+		and  c.username = #{username} and c.ParentnodeId = #{parentnodeId} and c.city = #{city} and c.rolename = #{rolename}
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -361,12 +362,14 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber,c.marked,c.id
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber,c.marked
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='2' and c.city=#{city} 
+		where c.state='2' 
+		and c.username = #{username} and c.ParentnodeId = #{parentnodeId} 
+		and c.city = #{city} and c.rolename = #{rolename}
 
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		<if test="test =page !=null and limit !=''">
@@ -383,12 +386,14 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber,c.marked,c.id
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber,c.marked
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='3' and c.city=#{city} 
+		where c.state='3' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
 		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
 		
 		<if test="test =page !=null and limit !=''">
@@ -403,12 +408,14 @@
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='9' and c.city=#{city} 
+		where c.state='9' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
 		order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
@@ -423,20 +430,22 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='4' and c.city=#{city}
-		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
+		where c.state='4' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
+			order by a.id
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
 	</select>
 
 
-	<!-- 贷款信息列表 -->
+	<!-- 贷款信息列表  admin-->
 	<select id="getLoanInformation" resultType="Map" resultMap="personalpr">
 		<!-- SELECT a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,c.state,c.fallbackname,a.unit_industry,a.ctime -->
 		<!-- FROM borrow_information a LEFT JOIN apply_for_loan_information b on(a.id 
@@ -444,7 +453,7 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
@@ -466,7 +475,7 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
@@ -486,12 +495,14 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='8' and c.city=#{city} 
+		where c.state='8' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -505,12 +516,14 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='5' and c.city=#{city}
+		where c.state='5' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -523,12 +536,14 @@
 			= b.id) ,recordsubmit_table c where c.state='0' order by a.id limit 1,10 -->
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='6' and c.city=#{city}
+		where c.state='6' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -542,12 +557,14 @@
 
 
 		SELECT
-		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,c.fallbackname,a.unit_industry,a.ctime,a.home_address_now,b.time_Limit,a.applicationnumber
+		a.id,a.`name`,b.amount,a.mobile_phone,a.id_number,b.time_Limit,b.time_Limits,c.state,a.unit_industry,a.ctime,a.home_address_now,c.fallbackname,a.applicationnumber
 		FROM borrow_information a
 		LEFT JOIN recordsubmit_table c on(a.id =
 		c.submit)
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
-		where c.state='7' and c.city=#{city}
+		where c.state='7' and c.username = #{username} 
+		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
+		and c.rolename = #{rolename}
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>

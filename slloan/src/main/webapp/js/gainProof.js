@@ -250,7 +250,7 @@ var uploadCertificate = function(element) {
 				  title: '上传凭证'
 					  ,content: '<form  id="frm-reg"  enctype="multipart/form-data"><fieldset>'+
 						'<legend>上传凭证</legend>'+
-						'上传类型 <input type="text" id="uploadtype1" value="转账凭证" name="upload_type" /><br>'+
+						'上传类型 <input type="text" id="uploadtype1" value="取证凭证" name="upload_type" /><br>'+
 						'用户名：<input type="text" value="" id="username1" name="username" readonly="readonly"/><br/> '+
 						'city：<input type="text" value="" id="city1" name="city" readonly="readonly"/><br/>'+
 						'id：<input type="text" id="id1"  value="" name="id" readonly="readonly"/><br/>'+
@@ -290,6 +290,20 @@ function certificate(){
 	    input.setAttribute('style', ' height: 28px;');  
 	 document.getElementById('filewidth').appendChild(input );
 }
+
+function myFunction(){
+	var node=document.getElementById("aabbccddeeff").dis;
+	var textnode=document.createTextNode("Water");
+	node.appendChild(textnode);
+	document.getElementById("aabbccddeeff").appendChild(node);
+	document.getElementById("aabbccddeeff").style.display="block";
+}
+// 获取 Id 给到 状态值
+var gainIdToState = function() {
+	
+		if(event.target.parentNode == '[   上传     ]') {
+		}
+	}
 
 //添加默认上传相关的用户值
 var userInitUpload = function(element, elements, elementss, elementes) {
