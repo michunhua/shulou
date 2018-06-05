@@ -55,6 +55,7 @@ public interface PersonalProfileService {
 		     * @return
 		     */
 		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,String parentnodeId , int intid);
+		 	
 		 	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,String parentnodeId);
 		 		/**
 			     * 初审用户记录总数
@@ -183,5 +184,6 @@ public interface PersonalProfileService {
 		 	int checkHangDataCount(String state);
 		 	
 		 	Page<PersonalProfile> vaguelikeSelectCreatetwoAll(Map<Object,Object> param);
+			Page<PersonalProfile> vaguelikeSelectCreatethere(Map<Object,Object> param);
 		 	
 }

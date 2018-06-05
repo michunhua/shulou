@@ -47,6 +47,7 @@ import net.sf.json.JSONObject;
 @RequestMapping("/loan")
 public class JointApplicantController {
 	
+	
 	private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
@@ -57,7 +58,6 @@ public class JointApplicantController {
 
 	@Autowired
 	private CircuLationRecordSubmitService recordSubmitService;
-	
 	
 	@Autowired
 	private CoborrowerSpouseService notedesc;

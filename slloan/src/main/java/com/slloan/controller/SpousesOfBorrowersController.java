@@ -112,6 +112,7 @@ public class SpousesOfBorrowersController {
 		String uid = json.getString("id");
 		int id = Integer.parseInt(uid);
 		SpousesOfBorrowers isResults = spousesofborrowers.SelectById(id);
+
 		if (isResults != null) {
 			return new Json(true, "success", isResults);
 		} else

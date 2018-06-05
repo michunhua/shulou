@@ -36,11 +36,23 @@ var setSearchData = function(data) {
   firstNote = e('.first-note')
   finalNote = e('.final-note')
   financeNote = e('.financeNote')
-  
-  note.value = data.note_Description1
-  firstNote.value = data.note_Description2
-  finalNote.value = data.note_Description3
-  financeNote.value = data.note_Description4
+ 
+   if(back.note_Description1 && back.note_Description1 != "null") {
+    	note.value =  back.note_Description1
+	  }
+	
+	  if(back.note_Description2 && back.note_Description2 != "null") {
+		  firstNote.value =  back.note_Description2
+	  }
+	
+	  if(back.note_Description3 && back.note_Description3 != "null") {
+
+			  finalNote.value =  back.note_Description3
+	  } 
+	  if(back.note_Description4 && back.note_Description4 != "null") {
+		
+			  financeNote.value = back.note_Description4
+	  }
 }
 
 

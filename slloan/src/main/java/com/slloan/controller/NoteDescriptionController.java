@@ -304,19 +304,7 @@ public class NoteDescriptionController {
 				return new Json(false, "fail", notes, state);
 			}
 		}
-//
-//		NoteDescription contact = new NoteDescription(id, note_Description1, note_Description2, note_Description3,
-//				note_Description4, state, ctime);
-//		// NoteDescription con = notedesc.findById(stateid);
-//		// boolean isResult = notedesc.update(contact);
-//		boolean isResult = notedesc.updatetwo(contact);
-//		if (isResult == true) {
-//			return new Json(true, "success", isResult, "");
-//
-//		} else {
-//			return new Json(false, "fail", isResult, "");// JSON.toJSONString(isResult);
-//		}
-//
+
 	}
 
 	/**

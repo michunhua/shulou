@@ -88,6 +88,8 @@ var addTable = function(data) {
 	console.log('添加表格儿')
 	var datas = data
 	var len = (datas.lists).length
+    var count = document.querySelector('#count')
+    count.innerText = data.totalCount
 	var pageElement = document.querySelector('.tab-data')
 	var totalPage = document.querySelector('.totalPage')
 	totalPage.innerText = datas.totalPage
@@ -413,7 +415,7 @@ var previoupage = function() {
 	envs.addEventListener('click', function() {
 		if(init.pages > 1) {
 			init.pages = init.pages - 1
-			initData ()
+			initData()
 			currpages()
 		} else {
 			layer.open({
@@ -722,8 +724,8 @@ var HangAjax = function(method, url, datas) {
       url: url,
       data: {data:JSON.stringify(datas)},
       success: function(data) {
-        console.log(data)
          initData()
+         unselected('#alls')
       }, 
       error: function() {
     	  layer.msg('服务器错误')

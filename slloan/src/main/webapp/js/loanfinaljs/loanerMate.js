@@ -82,6 +82,31 @@ var searchExport = function(back) {
 	  
 }
 
+//婚姻状态
+var MarryState = ''
+//查询
+//发送数据方法
+var MarryStateAjax = function(method, url, datas) {
+	$.ajax({
+		type : method,
+		url : url,
+		data : {
+			data : JSON.stringify(datas)
+		},
+		success : function(data) {
+			if (data.msg == 'success') {
+				MarryState = data.obj.marital_status
+				searchData()
+			} else {
+				alert('服务器错误')
+			}
+		},
+		error: function() {
+			alert('服务器错误')
+		}
+	})
+}
+
 //查询
 //发送数据方法
 var searchAjax = function(method, url, datas) {
@@ -90,8 +115,10 @@ type: method,
 url: url,
 data: {data:JSON.stringify(datas)},
 success: function(data) {
-	if(data.msg == 'success') {
-		searchExport(data.obj)
+	if(data.msg == 'success' || MarryState == "1") {
+		if(data.msg == 'success' ) {
+			searchExport(data.obj)
+		}
 	}else {
 		alert('这页资料尚未填写')
 	}
@@ -101,6 +128,18 @@ error: function(){
  }
 })
 }
+
+//查询是否已婚
+var searchMarry = function() {
+	var method = 'GET'
+	var url = '/slloan/loan/personalpmake'
+	var data = {}
+	data.id = localStorage.finalID
+	if(data.id) {
+		MarryStateAjax(method, url, data)
+	}
+}
+
 
 // 查询数据
 var searchData = function() {
@@ -125,7 +164,8 @@ var cancelBtn = function(element) {
 
 //
 var __main = function() {
-  searchData()
+  searchMarry()
+//  searchData()
   sendData('#save-data')
   cancelBtn('#cancel')
 }

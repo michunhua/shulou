@@ -77,3 +77,21 @@ input.error {
 .unusual {
 	width: 160px !important;
 }
+
+/*统计人数*/
+#people {
+	margin-top: -25px;
+	margin-left: 85%;
+}
+#peoples {
+	margin-top: -45px;
+	margin-left: 85%;
+}
+#peopless {
+	margin-top: -35px;
+	margin-left: 85%;
+}
+#count {
+	font-size: 20px;
+	color: red;
+}

@@ -197,20 +197,21 @@ var submitAjax = function(method, url, datas) {
 			data : JSON.stringify(datas)
 		},
 		success : function(data) {
-		localStorage.createID = ""
-	    localStorage.createTemporaryId = ""
-    	if(data.msg == 'success') {
-    		layer.msg('提交成功', {
-  			  icon: 2,
-  			  time: 2000 
-  			}, function(){
-  				localStorage.createID = ""
-  				window.location.href = "/slloan/loan/loancrea"
-  			});
-    	} else {
-    		localStorage.createID = ""
-    		alert('服务器错误')
-    	}
+			if(data.msg == 'success') {
+	    		layer.msg('提交成功', {
+	  			  icon: 2,
+	  			  time: 2000 
+	  			}, function(){
+	  				localStorage.createID = ""
+	  				localStorage.createTemporaryId = ""
+	  				window.location.href = "/slloan/loan/loancrea"
+	  			});
+	    	} else if(data.msg == 'fail') { 
+	    		alert(data.value)
+	    	} else {
+	    		localStorage.createID = ""
+	    		alert('服务器错误')
+	    	}
 	 },
      error: function(){
     	 localStorage.createID = ""

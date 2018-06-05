@@ -16,12 +16,9 @@ public interface personalProfileDao{
 	boolean save(PersonalProfile personalProfile);
 	
 	PersonalProfile findById(int id); 
-		
 		boolean delete(int id); 
 		
-	
-		PersonalProfile SelectByIdMarital(int id); 
-		
+
 		
 		List<PersonalProfile> findAll();
 
@@ -46,20 +43,7 @@ public interface personalProfileDao{
 	     */
 	 	int getPersonalProfileCount(String username,String rolename,String city,String parentnodeId);
 	 	
-	 	/**
-	 	 * 初审列表查询
-	 	 * @param param
-	 	 * @return
-	 	 */
-	 	List<PersonalProfile> vaguelikeSelectCreateone(Map<String,String> param);
-
-	 	/**
-	 	 * 终审列表查询
-	 	 * @param param
-	 	 * @return
-	 	 */
-	 	List<PersonalProfile> vaguelikeSelectCreatetwo(Map<Object,Object> param);
-	 	
+	 
 	 	
 	 	/**
 	 	 * 按揭员列表查询
@@ -217,11 +201,31 @@ public interface personalProfileDao{
 	 	
 	 	public PersonalProfile getSelectById(Map<String,Object> param);
 	 	
-	 	public PersonalProfile getSelectByIdAdmin(Map<String,Object> param);
-	 	
 	 	public List<PersonalProfile> checkHangData(Map<String,Object> param);
 		int checkHangDataCount(String state);
+		
 		int getPersonalProfileCountAll(Map<Object,Object> map);
 
 		List<PersonalProfile> vaguelikeSelectCreateoneAll(Map<Object,Object> param);
+		List<PersonalProfile> vaguelikeSelectCreatethere(Map<Object,Object> param);
+
+		int getFirsttrialPageCount(Map<Object, Object> map);
+
+		int getFinalreviewPageCount(Map<Object, Object> map);
+
+		int getFinancePageCount(Map<Object, Object> map);
+
+		int getTransferloanPageCount(Map<Object, Object> map);
+
+		int getObtainEvidenceCount(Map<Object, Object> map);
+
+		int getDecompressionCount(Map<Object, Object> map);
+
+		int getReturnMoneyCount(Map<Object, Object> map);
+
+		int getLoanPressureCount(Map<Object, Object> map);
+
+		int getjsloanPageCount(Map<Object, Object> map);
+
+		int getLoanInformationCount(Map<Object, Object> map);
 }

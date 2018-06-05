@@ -40,29 +40,23 @@ var setSearchData = function(data) {
   
  
  
-//  finalNote.value = data.note_Description3
-  financeNote.value = data.note_Description4
-  if(data.note_Description2 == "undefined" & data.note_Description2 == undefined|| data.note_Description2 == "null" || data.note_Description2 == null){
-	  firstNote.value = ""
-  }else if(data.note_Description2 != "undefined" & data.note_Description2 != undefined || data.note_Description2 != "null" & data.note_Description2 == null){
-	  firstNote.value = data.note_Description2
-  }
-  
-  if(data.note_Description1 != "undefined" & data.note_Description1 != undefined || data.note_Description1 != "null" & data.note_Description1 == null){
-	  note.value = data.note_Description1
-  }else if(data.note_Description1 != "undefined" & data.note_Description1 == undefined || data.note_Description1 == "null" & data.note_Description1 == null){
-	  note.value = ""
-  }
-  if(data.note_Description3 != "undefined" & data.note_Description3 != undefined || data.note_Description3 != "null" & data.note_Description3 == null){
-	  finalNote.value = data.note_Description3
-  }else if(data.note_Description3 != "undefined" & data.note_Description3 == undefined || data.note_Description3 == "null" & data.note_Description3 == null){
-	  finalNote.value = ""
-  }
-  if(data.note_Description4 != "undefined" & data.note_Description4 == undefined || data.note_Description4 != "null" & data.note_Description4 == null){
-	  financeNote.value =  data.note_Description4
-  }else if(data.note_Description4 != "undefined" & data.note_Description4 == undefined || data.note_Description4 == "null" & data.note_Description4 == null){
-	  financeNote.value = ""
-  }
+
+   if(back.note_Description1 && back.note_Description1 != "null") {
+    	note.value =  back.note_Description1
+	  }
+	
+	  if(back.note_Description2 && back.note_Description2 != "null") {
+		  firstNote.value =  back.note_Description2
+	  }
+	
+	  if(back.note_Description3 && back.note_Description3 != "null") {
+
+			  finalNote.value =  back.note_Description3
+	  } 
+	  if(back.note_Description4 && back.note_Description4 != "null") {
+		
+			  financeNote.value = back.note_Description4
+	  }
 }
 
 

@@ -158,6 +158,8 @@ var myFilter = function(data) {
 var addTable = function(data) {
 	var datas = data
 	var len = (datas.lists).length
+    var count = document.querySelector('#count')
+    count.innerText = data.totalCount
 	var pageElement = document.querySelector('.tab-data')
 	var totalPage = document.querySelector('.totalPage')
 	totalPage.innerText = datas.totalPage
@@ -404,7 +406,8 @@ var nextpage = function() {
 		var flag = Number(document.querySelector('.totalPage').innerText)
 		if (init.pages >= 1 && init.pages < flag) {
 			init.pages = init.pages + 1
-			firtLoadlist()
+//			firtLoadlist()
+			initData()
 			currpages()
 		} else {
 			layer.open({
@@ -423,7 +426,8 @@ var previoupage = function() {
 	envs.addEventListener('click', function() {
 		if (init.pages > 1) {
 			init.pages = init.pages - 1
-			firtLoadlist()
+//			firtLoadlist()
+			initData()
 			currpages()
 		} else {
 			layer.open({
@@ -707,6 +711,7 @@ var HangAjax = function(method, url, datas) {
       data: {data:JSON.stringify(datas)},
       success: function(data) {
         initData()
+        unselected('#alls')
       }, 
       error: function() {
     	  layer.msg('服务器错误')

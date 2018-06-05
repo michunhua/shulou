@@ -111,6 +111,8 @@ var addTable = function(data) {
     var datas = data
 //    var len = 
     var len = (datas.lists).length
+    var count = document.querySelector('#count')
+    count.innerText = data.totalCount
     var pageElement = document.querySelector('.tab-data')
     var totalPage = document.querySelector('.totalPage')
 	totalPage.innerText = datas.totalPage
@@ -256,9 +258,9 @@ var envs = function(element) {
     var url = '/slloan/loan/vaguelikeselectcreate?page='+init.pages+'&limit='+ init.limit
     var datas = collectData()
      datas.rolename = localStorage.purrole
-  datas.username = localStorage.purusername
-  datas.city = localStorage.purcity
-  datas.parentnodeId = localStorage.purid
+     datas.username = localStorage.purusername
+     datas.city = localStorage.purcity
+     datas.parentnodeId = localStorage.purid
     sendAjax(method, url, datas)
   })
 }
