@@ -1574,20 +1574,17 @@ public class FinanceTransferAccountsvoucherController {
 	    @RequestMapping(value="/loaninalreviewbatchpast",method=RequestMethod.POST)
 	    @ResponseBody
 	    public Json loaninalreviewbatchpast(HttpServletRequest request,HttpServletResponse response){
-	    	String items = request.getParameter("data");
+	    	String item = request.getParameter("data");
+//	    	JSONObject jsonobj = new JSONObject().fromObject(item);
 	    	String usernameindexof = null;
 	    	String rolenameindexof = null ;
 	    	String cityindexof= null;
 	    	String parentnodeIdindexof= null;
-//	    	String item = "[2,3,4]";
-//	    	JSONObject jsonobject = new JSONObject().fromObject(item);
-//	    	String id = jsonobject.getString("id");
-	    	List<String> loanFinal = new ArrayList<String>();
-	    	String [] split = items.split(",");
+	    	List<String> batchPast = new ArrayList<String>();
+	    	String [] split = item.split(",");
 	    	String sid = null;
 	    	for(String s : split){
 	    		String streplacee = s.replace("[", " ").replace("]", " ").replace("{", " ").replace("}", " ").replace("\"", " ").trim();
-	    		
 	    		sid = streplacee;
 	    		if(streplacee.contains("username")){
 	    			String username = sid;
@@ -1606,24 +1603,33 @@ public class FinanceTransferAccountsvoucherController {
 	    			 rolenameindexof = rolename.substring(rolename.lastIndexOf(":")+1);
 	    			System.out.println(rolenameindexof);
 	    		}else{
-	    			loanFinal.add(streplacee);
+	    			batchPast.add(streplacee);
 	    		}
 	    		
-	    		System.out.println(streplacee);
+	    		
+	    		
 	    	}
-	    	
-	    	
-	    	String createDate =  DateUtils.getInDateTime2((new Date()));//日期
+	    
+			String createDate =  DateUtils.getInDateTime2((new Date()));//日期
 			String updatedata =  DateUtils.getInDateTime2((new Date()));//日期
+//	    	circulation record = new  circulation("2","待终审审批中",createDate,"","","","");
 			String t = null;
-			boolean coan = false;
-			for(String str: loanFinal){
+			boolean coan =false;
+			for(String str: batchPast){
 				System.out.println(str);
 				t= str;
-				circulation record = new  circulation("3","终审审批通过待出账确认",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
-				 coan = circulationservice.save(record);
-				 
-				 UserLogin userLogin = userservice.selectRandomNumber("财务审批",cityindexof.trim());
+				circulation record = new  circulation("2","待财务审批中",createDate,usernameindexof,parentnodeIdindexof,cityindexof,rolenameindexof,updatedata,t);
+				coan = circulationservice.save(record);
+				 CircuLationRecord c  = new CircuLationRecord();
+					c.setSubmit(t);
+					c.setCity(cityindexof.trim());
+					c.setState(2);
+					CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+					if(cir.getSubmit().equals(t) || cir.getMarked().equals("己挂起")){
+						boolean bo = recordSubmitService.updateDateStateCancel(t);
+					}
+					
+					UserLogin userLogin = userservice.selectRandomNumber("财务审批",cityindexof.trim());
 					if(userLogin !=null){
 //						for(UserLogin userLogin: user){
 							System.out.println(userLogin.getId());
@@ -1638,18 +1644,20 @@ public class FinanceTransferAccountsvoucherController {
 		     	    		map.put("parentnodeId", ParentnodeId);
 		     	    		map.put("rolename", roleName2);
 		     	    		map.put("id", t);
-		     	    		imagedataservice.initialbatch(map);
+		     	    		imagedataservice.loanFinalReviewPastMap(map);
 //						}
 					}else{
 						return new Json(false,"fail",userLogin,"无下一步操作人");
 					}
+					
+
 			}
-			boolean isResult = imagedataservice.loanFinalReviewPast(loanFinal);
-	    	if(isResult == true && coan== true){
-	    		return new Json(true,"success",isResult,"终审到待出账确认成功");
-	    	}else{
-	    		return new Json(false,"fail",isResult,"终审到待出账确认失败");
-	    	}
+			boolean isResult = imagedataservice.loanFinalReviewPast(batchPast);
+			    	if(isResult == true && coan == true){
+			    		return new Json(true,"success",isResult,"终审审批通过待财务审批");
+			    	}else{
+			    		return new Json(false,"fail",isResult,"终审审批通过待财务审批失败");
+			    	}
 	    }
 	    
 	    /**

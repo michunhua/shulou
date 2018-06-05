@@ -167,7 +167,7 @@ var searchList = function() {
 	var method = 'GET'
 	var url = '/slloan/loan/notedescriptis'
 	var data = {}
-	data.id = localStorage.createTemporaryId || localStorage.createID
+	data.id =localStorage.createID || localStorage.createTemporaryId  
 	if(data.id) {
 		console.log('可提交查询')
 		searchListAjax(method, url, data)

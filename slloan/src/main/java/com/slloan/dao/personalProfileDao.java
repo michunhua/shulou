@@ -209,23 +209,5 @@ public interface personalProfileDao{
 		List<PersonalProfile> vaguelikeSelectCreateoneAll(Map<Object,Object> param);
 		List<PersonalProfile> vaguelikeSelectCreatethere(Map<Object,Object> param);
 
-		int getFirsttrialPageCount(Map<Object, Object> map);
-
-		int getFinalreviewPageCount(Map<Object, Object> map);
-
-		int getFinancePageCount(Map<Object, Object> map);
-
-		int getTransferloanPageCount(Map<Object, Object> map);
-
-		int getObtainEvidenceCount(Map<Object, Object> map);
-
-		int getDecompressionCount(Map<Object, Object> map);
-
-		int getReturnMoneyCount(Map<Object, Object> map);
-
-		int getLoanPressureCount(Map<Object, Object> map);
-
-		int getjsloanPageCount(Map<Object, Object> map);
-
-		int getLoanInformationCount(Map<Object, Object> map);
+		PersonalProfile SelectByIdMarital(int id); 
 }

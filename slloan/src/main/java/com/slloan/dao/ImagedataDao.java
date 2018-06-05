@@ -74,6 +74,7 @@ public interface ImagedataDao {
 		 boolean tobeforensics(Map<Object,Object> param);//待取证
 		 boolean pendingconfirmation(Map<Object,Object> param);//待取证
 		 boolean loanClearing(Map<Object,Object> param);//待结算
+		 boolean loanFinalReviewPastMap(Map<Object,Object> param);//
 		 
 		 ImageDataUpdate imagedataUpdateNote(Map<String,Object> image);
 		 /**

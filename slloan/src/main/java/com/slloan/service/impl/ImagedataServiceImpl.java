@@ -273,4 +273,17 @@ public class ImagedataServiceImpl implements ImagedataService {
 		}
 		return imagedatadao.initialbatch(map);
 	}
+
+	@Override
+	public boolean loanFinalReviewPastMap(Map<Object, Object> param) {
+		Map<Object,Object> map = new HashMap<Object,Object>();
+		Iterator it = param.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry entry = (Map.Entry) it.next();
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+			map.put(key, value);
+		}
+		return imagedatadao.loanFinalReviewPastMap(map);
+	}
 }

@@ -158,6 +158,11 @@ delete from imagedata
 	where submit=#{id}
 </update>
 
+<update id="loanFinalReviewPastMap" parameterType="Map">
+	update 	recordsubmit_table set fallbackname  = '待出账确认'  , state = '3',
+	username=#{username},ParentnodeId = #{parentnodeId},rolename=#{rolename}
+	where	submit=#{id}
+</update>
 <!--
 财务列表审批是否通过 
  财务审核通过待放款 -->

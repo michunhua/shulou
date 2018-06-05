@@ -82,6 +82,7 @@ public interface ImagedataService {
 		 boolean tobedetained(Map<Object,Object>param);//待进押
 		 boolean pendingconfirmation(Map<Object,Object>param);//待确认回款
 		 boolean loanClearing(Map<Object,Object>param);//待结算
+		 boolean loanFinalReviewPastMap(Map<Object,Object> param);//
 		 
 		  ObjectSeq addSeq();
 		  

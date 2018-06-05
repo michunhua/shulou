@@ -68,7 +68,7 @@ var sendAjax = function(method, url, datas, callback) {
   			}, function(){
   				localStorage.loanerinfo = data.value
 //  				sendsearchData(localStorage.createTemporaryId)
-//  				window.location.href = '../../slloan/loan/loanesta'
+  				window.location.href = '../../slloan/loan/loanesta'
   			});
     	} else {
     		alert('服务器错误')

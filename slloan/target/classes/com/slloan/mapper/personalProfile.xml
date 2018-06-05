@@ -357,7 +357,9 @@
 		left JOIN apply_for_loan_information b on(c.submit = b.state)
 		where c.state='1'
 		and  c.username = #{username} and c.ParentnodeId = #{parentnodeId} and c.city = #{city} and c.rolename = #{rolename}
-		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
+		<!-- ORDER BY case a.id when #{id} then 1 else 2 END,a.id -->
+		ORDER BY  c.marked desc ,a.id asc
+		
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -378,7 +380,9 @@
 		and c.username = #{username} and c.ParentnodeId = #{parentnodeId} 
 		and c.city = #{city} and c.rolename = #{rolename}
 
-		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
+	<!-- 	ORDER BY case a.id when #{id} then 1 else 2 END,a.id -->
+		
+		ORDER BY  c.marked desc ,a.id asc
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>
@@ -401,8 +405,8 @@
 		where c.state='3' and c.username = #{username} 
 		and c.ParentnodeId = #{parentnodeId} and c.city = #{city} 
 		and c.rolename = #{rolename}
-		ORDER BY case a.id when #{id} then 1 else 2 END,a.id
-		
+		<!-- ORDER BY case a.id when #{id} then 1 else 2 END,a.id -->
+		ORDER BY  c.marked desc ,a.id asc
 		<if test="test =page !=null and limit !=''">
 			limit #{page},#{limit}
 		</if>

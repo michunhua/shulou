@@ -188,18 +188,7 @@ public class PersonalProfileController {
 		    			logger.info("数据插入失败!");
 		    			return new Json(false, "fail", pe,submit);
 		}
-//		return null;
-//		return null;
-			
 	
-    		
-		
-
-		
-//	 	p.setParentnodeId("27");
-//	 	p.setCity("北京");
-		
-		
 
 	}
 
@@ -217,6 +206,26 @@ public class PersonalProfileController {
 		String uid = json.getString("id");
 		int id = Integer.parseInt(uid);
 		PersonalProfile isResult = personalprofileservice.SelectById(id);
+		if (isResult != null) {
+			return new Json(true, "success", isResult);
+		} else
+			return new Json(false, "fail", isResult);
+	}
+	
+	/**
+	 * 按揭员查询Id
+	 * 
+	 * @param req
+	 * @return
+	 */
+	@RequestMapping(value = "/personalpmake", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+	@ResponseBody
+	public Json UserSelectByIds(HttpServletRequest req) {
+		String dataid = req.getParameter("data");
+		JSONObject json = new JSONObject().fromObject(dataid);
+		String uid = json.getString("id");
+		int id = Integer.parseInt(uid);
+		PersonalProfile isResult = personalprofileservice.SelectByIdMarital(id);
 		if (isResult != null) {
 			return new Json(true, "success", isResult);
 		} else

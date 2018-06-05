@@ -742,6 +742,16 @@ public class NoteDescriptionController {
 			circuLationRecord.setUsername(userName);
 			circuLationRecord.setRolename(roleName2);
 			circuLationRecord.setParentnodeId(ParentnodeId);
+			circuLationRecord.setSubmit(reqid);
+			circuLationRecord.setCity(city.trim());
+			 CircuLationRecord c  = new CircuLationRecord();
+				c.setSubmit(reqid);
+				c.setCity(city.trim());
+				c.setState(1);
+			CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+			if(cir.getSubmit().equals(reqid) || cir.getMarked().equals("己挂起")){
+				boolean bo = recordSubmitService.updateDateStateCancel(reqid);
+			}
 			boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 			circulation record = new  circulation();
 				record.setState("0");
@@ -786,35 +796,45 @@ public class NoteDescriptionController {
 		circulation userLogin = circulationservice.selectRandomNumbersecond(sid,city,"初审");
 		if(userLogin !=null){
 			System.out.println(userLogin.getId());
-				System.out.println(userLogin.getCity());
-				System.out.println(userLogin.getRolename());
-				String userName = userLogin.getUsername();
-//				int intid = userLogin.getId();
-				String ParentnodeId = userLogin.getParentnodeId();
-				String roleName2= userLogin.getRolename();
-			CircuLationRecord circuLationRecord = new CircuLationRecord();
-			circuLationRecord.setFallbackname("初审审批回退");
-			circuLationRecord.setState(1);// 退回后状态改为1
-			circuLationRecord.setId(id);
-			
-			String updatedate = DateUtils.getInDateTime2((new Date()));
-			circuLationRecord.setUpdatedate(updatedate);
-			circuLationRecord.setUpdatedate(updatedate);
-			circuLationRecord.setUsername(userName);
-			circuLationRecord.setRolename(roleName2);
-			circuLationRecord.setParentnodeId(ParentnodeId);
+			System.out.println(userLogin.getCity());
+			System.out.println(userLogin.getRolename());
+			String userName = userLogin.getUsername();
+//			int intid = userLogin.getId();
+			String ParentnodeId = userLogin.getParentnodeId();
+			String roleName2= userLogin.getRolename();
+		
+		CircuLationRecord circuLationRecord = new CircuLationRecord();
+		circuLationRecord.setFallbackname("初审审批回退");
+		circuLationRecord.setState(1);// 退回后状态改为1
+		circuLationRecord.setId(id);
+		String updatedate = DateUtils.getInDateTime2((new Date()));
+		String spare = String.valueOf(id);
+		circuLationRecord.setUpdatedate(updatedate);
+		circuLationRecord.setUsername(userName);
+		circuLationRecord.setRolename(roleName2);
+		circuLationRecord.setParentnodeId(ParentnodeId);
+		circuLationRecord.setSubmit(sid);
+		circuLationRecord.setCity(city.trim());
+		 CircuLationRecord c  = new CircuLationRecord();
+			c.setSubmit(sid);
+			c.setCity(city.trim());
+			c.setState(2);
+		CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+		if(cir.getSubmit().equals(sid) || cir.getMarked().equals("己挂起")){
+			boolean bo = recordSubmitService.updateDateStateCancel(sid);
+		}
 			boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 
 			circulation record = new  circulation();
-			String spare = String.valueOf(id);
+			String spare1 = String.valueOf(id);
 			record.setState("1");
-			record.setCirculation("初审审批回退");
+			record.setCirculation("终审审批回退");
 			record.setUsername(username);
 			record.setParentnodeId(parentnodeId);
 			record.setCity(city);
 			record.setRolename(rolename);
 			record.setUpdatedata(updatedate);
-			record.setSpare(spare);
+			record.setSpare(spare1);
 		boolean coan = circulationservice.save2(record);
 			if (isResultInsert == true && coan == true) {
 				return new Json(true,"success",isResultInsert,""); //System.out.println("插入流程表成功");
@@ -845,23 +865,33 @@ public class NoteDescriptionController {
 	circulation userLogin = circulationservice.selectRandomNumbersecond(reqid,city,"终审");
 	if(userLogin !=null){
 		System.out.println(userLogin.getId());
-			System.out.println(userLogin.getCity());
-			System.out.println(userLogin.getRolename());
-			String userName = userLogin.getUsername();
-//			int intid = userLogin.getId();
-			String ParentnodeId = userLogin.getParentnodeId();
-			String roleName2= userLogin.getRolename();
-		
-		CircuLationRecord circuLationRecord = new CircuLationRecord();
-		circuLationRecord.setFallbackname("财务审批回退");
-		circuLationRecord.setState(2);// 退回后状态改为1
-		circuLationRecord.setId(id);
-		String updatedate = DateUtils.getInDateTime2((new Date()));
-		String spare = String.valueOf(id);
-		circuLationRecord.setUpdatedate(updatedate);
-		circuLationRecord.setUsername(userName);
-		circuLationRecord.setRolename(roleName2);
-		circuLationRecord.setParentnodeId(ParentnodeId);
+		System.out.println(userLogin.getCity());
+		System.out.println(userLogin.getRolename());
+		String userName = userLogin.getUsername();
+//		int intid = userLogin.getId();
+		String ParentnodeId = userLogin.getParentnodeId();
+		String roleName2= userLogin.getRolename();
+	
+	CircuLationRecord circuLationRecord = new CircuLationRecord();
+	circuLationRecord.setFallbackname("终审审批回退");
+	circuLationRecord.setState(2);// 退回后状态改为1
+	circuLationRecord.setId(id);
+	String updatedate = DateUtils.getInDateTime2((new Date()));
+	String spare = String.valueOf(id);
+	circuLationRecord.setUpdatedate(updatedate);
+	circuLationRecord.setUsername(userName);
+	circuLationRecord.setRolename(roleName2);
+	circuLationRecord.setParentnodeId(ParentnodeId);
+	circuLationRecord.setSubmit(reqid);
+	circuLationRecord.setCity(city.trim());
+	 CircuLationRecord c  = new CircuLationRecord();
+		c.setSubmit(reqid);
+		c.setCity(city.trim());
+		c.setState(3);
+	CircuLationRecord cir = recordSubmitService.selectByidHangup(c);
+	if(cir.getSubmit().equals(reqid) || cir.getMarked().equals("己挂起")){
+		boolean bo = recordSubmitService.updateDateStateCancel(reqid);
+	}
 		boolean isResultInsert = recordSubmitService.updatefallbackinsert(circuLationRecord);
 		circulation record = new  circulation();
 			record.setState("2");

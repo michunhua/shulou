@@ -844,18 +844,25 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 	@Override
 	public PersonalProfile SelectByIdMarital(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return personalProfiledao.SelectByIdMarital(id);
 	}
 
 	@Override
-	public Page<PersonalProfile> getFinalreviewPage(int currentPage, String username, String rolename, String city,
+	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String role, String city,
 			String parentnodeId, int intid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<PersonalProfile> getFinancePagePage(int currentPage, String username, String rolename, String city,
+	public Page<PersonalProfile> getFinalreviewPage(int currentPage, String username, String role, String city,
+			String parentnodeId, int intid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<PersonalProfile> getFinancePagePage(int currentPage, String username, String role, String city,
 			String parentnodeId, int intid) {
 		// TODO Auto-generated method stub
 		return null;
@@ -863,13 +870,6 @@ public class PersonalProfileServiceImpl implements PersonalProfileService {
 
 	@Override
 	public PersonalProfile getSelectByIdAdmin(PersonalProfile param) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Page<PersonalProfile> getFirsttrialPage(int currentPage, String username, String rolename, String city,
-			String parentnodeId, int intid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
